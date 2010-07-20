@@ -57,7 +57,7 @@ _IrrSetNodeMaterialType ( $SceneNode, $IRR_EMT_TRANSPARENT_ALPHA_CHANNEL )
 $OurCamera = _IrrAddCamera( 50,0,0, 0,0,0 )
 
 ; generate an initial random position
-dim $x = -500
+dim $x = -400
 dim $y = Random(0, 1) * 100-50
 dim $z = random(0, 1) * 100-50
 
@@ -69,7 +69,7 @@ WHILE _IrrRunning()
     ; is it time for another frame
 
     $timerDiff = TimerDiff($timer)
-    if $timerDiff > 5 then
+    if $timerDiff > 16.7 then
         ; record the start time of this frame
         $timer = TimerInit()
 
