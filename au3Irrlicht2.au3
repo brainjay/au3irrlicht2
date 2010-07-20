@@ -2,38 +2,32 @@
 ; Au3Irrlicht UDF Release 2.0.1
 ; JRowe's Version 5th, May 2010
 
-; modified Version 0.3 by linus 10-07-12
-; some of the fixes/changes compared to original 2.01:
+; modified Version 0.3 by linus 10-07-18
+; (not complete) list of the fixes/changes compared to original 2.01:
 
-; 100620 fixed _IrrAddHillPlaneMesh (wrong params)
-; 100620 fixed _IrrAddSkyDomeToScene (wrong params)
-; 100624 extend _IrrAddWaterSurfaceSceneNode (added defaults from IrrlichtWrapper.bi)
-; 100624 fixed _IrrAddHillPlaneMesh (""ptr", $s_Name" has to be "str", ...)
-; 100626 fixed _IrrHideMouse() and _IrrShowMouse()
-; 100626 added missing param to _IrrSetCameraClipDistance(..., $f_NearDistance = 1.0)
-; 100626 fixed param order of _IrrAddChildToParent($h_ChildNode, $h_ParentNode)
-; 100627 rewrote non-working _IrrGetNodePosition() + _IrrGetNodeAbsolutePosition() + _IrrGetNodeRotation()
-; 100627 rewrote non-working _IrrGetNodeBoundingBox($h_Node, ByRef $a_VectorA3df, ByRef $a_VectorB3df)
-; 100630 added _IrrCreateBatchingMesh / _IrrAddToBatchingMesh / _IrrFinalizeBatchingMesh
-; 100630 added _IrrSetMeshMaterialTexture
-; 100630 added Enum EKEY_CODE (for irrlicht Key Codes)
-; 100630 added helper function __CreatePtrKeyMapArray: returns pointer to a keymap for _IrrAddFPSCamera.
+; 100720 TODO: _IrrGetNodeAndCollisionPointFromRay
 
-; 100630 added error handlers for all functions WITHOUT return value:
-;		 should set now @error and return true or false depending on success of their dllcall
-;		 TODO: complete error handling for functions WITH return value
-
-; 100701 fixed _IrrGUISetText, _IrrAddWindow, _IrrAddStaticText, _IrrAddButton (param "str" to "wstr")
-; 100701 added several enums for examples from irrlichtwrapper.bi
-; 100701 fixed _IrrAddTerrain, _IrrAddTerrainTile, _IrrAddSphericalTerrain (patch size defaults caused problems)
-; 100701 added _IrrScaleMesh
-; 100701 fixed _IrrSetMeshHardwareAccelerated
-; 100703 fixed _IrrAddLight + _IrrAddNodeShadow + _IrrSetAmbientLight
-; 100703 fixed _IrrSetSkyDomeColorPoint (missing param)
-; 100703 fixed _IrrAddFlyCircleAnimator, _IrrAddFlyStraightAnimator
-; 100703 fixed _IrrGetCollisionGroupFromComplexMesh
-; 100703 fixed _IrrSetNodeAnimationSpeed / _IrrSetNodeAnimationFrame
-; 100703 rewrote non-working _IrrAddSplineAnimator
+; 100720 fixed _IrrGetNodeFirstChild, _IrrGetNodeNextChild, _IrrIsNodeLastChild
+; 100718 fixed _IrrGetCollisionGroupFromMesh
+; 100718 fixed _IrrGet3DPositionFromScreenCoordinates
+; 100717 changed return value from BOOL to VECTOR ARRAY for _IrrGetNodePosition, _IrrGetNodeAbsolutePosition, _IrrGetNodeRotation
+; 100712 a LOT of addons, fixes etc. to get the GUI-demo running.
+; 100711 added helper functions __getKeyEvt, __getMouseEvt, __getGuiEvt and needed enums
+; 100710 fixed _IrrSetTileColor (missing defaults)
+; 100710 fixed _IrrAddTerrainTile (wrong params)
+; 100710 fixed _IrrGetCameraOrientation
+; 100707 fixed _IrrGetScreenCoordinatesFrom3DPosition
+; 100706 added _IrrAddBeamSceneNode / _IrrSetBeamSize / _IrrSetBeamPosition
+; 100706 added _IrrAddBoltSceneNode / _IrrSetBoltProperties
+; 100706 added _IrrSetJointMode
+; 100706 added _IrrSetBillBoardSize / _IrrSetBillBoardColor
+; 100706 fixed (again) _IrrMakeARGB (not too easy to calculate 32bit unsigned int in au3 :X) Seems to be ok now
+; 100706 started to add xEffects extensions (freeBasic definitions still todo kept inside this UDF in #cs / #ce block:
+; done today: _IrrXEffectsStart / _IrrXEffectsSetAmbientColor / _IrrXEffectsSetShadowLightPosition / _IrrXEffectsAddShadowLight
+;	/ _IrrXEffectsAddShadowToNode / _IrrXEffectsEnableDepthPass / _IrrXEffectsAddNodeToDepthPass / _IrrXEffectsAddPostProcessingFromFile
+;	/ _IrrXEffectsSetClearColor / _IrrXEffectsSetPostProcessingUserTexture
+; 100705 rewrote _IrrGetCameraTarget / _IrrGetCameraUpDirection / _IrrGetCameraOrientation
+; 100705 fixed _IrrGetCollisionPoint / _IrrGetChildCollisionNodeFromRay
 ; 100704 fixed _IrrAddGrass
 ; 100704 added _IrrAddFadeAnimator
 ; 100704 fixed _IrrAddBillBoardToScene (missing defaults)
@@ -46,25 +40,34 @@
 
 ; 100704 fixed _IrrAddBillboardTextSceneNode (wrong params)
 ; 100704 rewrote non-working _IrrMakeARGB
-; 100705 rewrote _IrrGetCameraTarget / _IrrGetCameraUpDirection / _IrrGetCameraOrientation
-; 100705 fixed _IrrGetCollisionPoint / _IrrGetChildCollisionNodeFromRay
-; 100706 added _IrrAddBeamSceneNode / _IrrSetBeamSize / _IrrSetBeamPosition
-; 100706 added _IrrAddBoltSceneNode / _IrrSetBoltProperties
-; 100706 added _IrrSetJointMode
-; 100706 added _IrrSetBillBoardSize / _IrrSetBillBoardColor
-; 100706 fixed (again) _IrrMakeARGB (not too easy to calculate 32bit unsigned int in au3 :X) Seems to be ok now
+; 100703 fixed _IrrAddLight + _IrrAddNodeShadow + _IrrSetAmbientLight
+; 100703 fixed _IrrSetSkyDomeColorPoint (missing param)
+; 100703 fixed _IrrAddFlyCircleAnimator, _IrrAddFlyStraightAnimator
+; 100703 fixed _IrrGetCollisionGroupFromComplexMesh
+; 100703 fixed _IrrSetNodeAnimationSpeed / _IrrSetNodeAnimationFrame
+; 100703 rewrote non-working _IrrAddSplineAnimator
+; 100701 fixed _IrrGUISetText, _IrrAddWindow, _IrrAddStaticText, _IrrAddButton (param "str" to "wstr")
+; 100701 added several enums for examples from irrlichtwrapper.bi
+; 100701 fixed _IrrAddTerrain, _IrrAddTerrainTile, _IrrAddSphericalTerrain (patch size defaults caused problems)
+; 100701 added _IrrScaleMesh
+; 100701 fixed _IrrSetMeshHardwareAccelerated
+; 100630 added _IrrCreateBatchingMesh / _IrrAddToBatchingMesh / _IrrFinalizeBatchingMesh
+; 100630 added _IrrSetMeshMaterialTexture
+; 100630 added Enum EKEY_CODE (for irrlicht Key Codes)
+; 100630 added helper function __CreatePtrKeyMapArray: returns pointer to a keymap for _IrrAddFPSCamera.
 
-; 100706 started to add xEffects extensions (freeBasic definitions still todo kept inside this UDF in #cs / #ce block:
-; done today: _IrrXEffectsStart / _IrrXEffectsSetAmbientColor / _IrrXEffectsSetShadowLightPosition / _IrrXEffectsAddShadowLight
-;	/ _IrrXEffectsAddShadowToNode / _IrrXEffectsEnableDepthPass / _IrrXEffectsAddNodeToDepthPass / _IrrXEffectsAddPostProcessingFromFile
-;	/ _IrrXEffectsSetClearColor / _IrrXEffectsSetPostProcessingUserTexture
-; 100707 fixed _IrrGetScreenCoordinatesFrom3DPosition
-; 100710 fixed _IrrSetTileColor (missing defaults)
-; 100710 fixed _IrrAddTerrainTile (wrong params)
-; 100710 fixed _IrrGetCameraOrientation
-; 100711 added helper functions __getKeyEvt, __getMouseEvt, __getGuiEvt and needed enums
-; 100712 a LOT of addons, fixes etc. to get the GUI-demo running.
-
+; 100630 added error handlers for all functions WITHOUT return value:
+;		 should set now @error and return true or false depending on success of their dllcall
+;		 TODO: complete error handling for functions WITH return value
+; 100627 rewrote non-working _IrrGetNodePosition() + _IrrGetNodeAbsolutePosition() + _IrrGetNodeRotation()
+; 100627 rewrote non-working _IrrGetNodeBoundingBox($h_Node, ByRef $a_VectorA3df, ByRef $a_VectorB3df)
+; 100626 fixed _IrrHideMouse() and _IrrShowMouse()
+; 100626 added missing param to _IrrSetCameraClipDistance(..., $f_NearDistance = 1.0)
+; 100626 fixed param order of _IrrAddChildToParent($h_ChildNode, $h_ParentNode)
+; 100624 extend _IrrAddWaterSurfaceSceneNode (added defaults from IrrlichtWrapper.bi)
+; 100624 fixed _IrrAddHillPlaneMesh (""ptr", $s_Name" has to be "str", ...)
+; 100620 fixed _IrrAddHillPlaneMesh (wrong params)
+; 100620 fixed _IrrAddSkyDomeToScene (wrong params)
 
 
 #include-once
@@ -425,6 +428,10 @@ global Enum _ ; E_SHADOW_MODE shadow modes for lighting
 
 global Enum _ ; IRR_SHADER_CONSTANTS ' Pre-programmed shader constants
     $IRR_NO_PRESET, $IRR_INVERSE_WORLD, $IRR_WORLD_VIEW_PROJECTION, $IRR_CAMERA_POSITION, $IRR_TRANSPOSED_WORLD
+
+global Enum _ ; IRR_DEBUG
+	$EDS_OFF = 0, $EDS_BBOX = 1, $EDS_NORMALS = 2, $EDS_SKELETON = 4, $EDS_MESH_WIRE_OVERLAY = 8, _
+	$EDS_HALF_TRANSPARENCY = 16, $EDS_BBOX_BUFFERS = 32, $EDS_FULL = 0xffffffff
 
 
 
@@ -1275,7 +1282,9 @@ Func _IrrAddBillboardTextSceneNode($h_Font, $s_Text, $f_XSize, $f_YSize, $f_XPos
 	EndIf
 EndFunc   ;==>_IrrAddBillboardTextSceneNode
 
+
 Func _IrrAddParticleSystemToScene($i_AddEmitter, $h_Parent = 0, $i_Id = -1, $f_PosX = 0, $f_PosY = 0, $f_PosZ = 0, $f_RotX = 0, $f_RotY = 0, $f_RotZ = 0, $f_ScaleX = 1, $f_ScaleY = 1, $f_ScaleZ = 1)
+; add a particle system to the irrlicht scene manager
 	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddParticleSystemToScene", "int", $i_AddEmitter, "UINT_PTR", $h_Parent, "int", $i_Id, _
 	"float", $f_PosX = 0, "float", $f_PosY, "float", $f_PosZ, "float", $f_RotX, "float", $f_RotY, "float", $f_RotZ, _
 	"float", $f_ScaleX, "float", $f_ScaleY, "float", $f_ScaleZ)
@@ -1315,7 +1324,7 @@ Func _IrrAddEmptySceneNode()
 EndFunc   ;==>_IrrAddEmptySceneNode
 
 Func _IrrAddTestSceneNode()
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddTestSceneNode")
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddTestSceneNode")
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
@@ -1581,6 +1590,7 @@ Func _IrrSetNodePosition($h_Node, $f_X, $f_Y, $f_Z)
 	EndIf
 EndFunc   ;==>_IrrSetNodePosition
 
+
 Func _IrrSetNodeRotation($h_Node, $f_X, $f_Y, $f_Z)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeRotation", "ptr", $h_Node, "float", $f_X, "float", $f_Y, "float", $f_Z)
 	if @error Then
@@ -1617,9 +1627,10 @@ Func _IrrGetNodePosition($h_Node, ByRef $a_Vector3df)
 		$a_Vector3df[0] = $result[2]
 		$a_Vector3df[1] = $result[3]
 		$a_Vector3df[2] = $result[4]
-		Return True
+		Return $a_Vector3df
 	EndIf
 EndFunc   ;==>_IrrGetNodePosition
+
 
 Func _IrrGetNodeAbsolutePosition($h_Node, ByRef $a_Vector3df)
 	Dim $a_Vector3df[3]
@@ -1630,9 +1641,10 @@ Func _IrrGetNodeAbsolutePosition($h_Node, ByRef $a_Vector3df)
 		$a_Vector3df[0] = $result[2]
 		$a_Vector3df[1] = $result[3]
 		$a_Vector3df[2] = $result[4]
-		Return True
+		Return $a_Vector3df
 	EndIf
 EndFunc   ;==>_IrrGetNodeAbsolutePosition
+
 
 Func _IrrGetNodeRotation($h_Node, ByRef $a_Vector3df)
 	Dim $a_Vector3df[3]
@@ -1641,9 +1653,9 @@ Func _IrrGetNodeRotation($h_Node, ByRef $a_Vector3df)
 		Return Seterror(1,0,False)
 	Else
 		$a_Vector3df[0] = number($result[2])
-		$a_Vector3df[1] = $result[3]
-		$a_Vector3df[2] = $result[4]
-		Return True
+		$a_Vector3df[1] = number($result[3])
+		$a_Vector3df[2] = number($result[4])
+		Return $a_Vector3df
 	EndIf
 EndFunc   ;==>_IrrGetNodeRotation
 
@@ -1674,32 +1686,42 @@ Func _IrrAddChildToParent($h_ChildNode, $h_ParentNode)
 	EndIf
 EndFunc   ;==>_IrrAddChildToParent
 
-Func _IrrGetNodeFirstChild($h_Node, $i_SearchPos)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetNodeFirstChild", "ptr", $h_Node, "int", $i_SearchPos)
+
+Func _IrrGetNodeFirstChild($h_Node, ByRef $h_Position)
+; get the first child node of this node, returns 0 if there is no child
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetNodeFirstChild", "UINT_PTR", $h_Node, "UINT_PTR*", $h_Position)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
+		$h_Position = $result[2]
 		return $result[0]
 	EndIf
 EndFunc   ;==>_IrrGetNodeFirstChild
 
-Func _IrrGetNodeNextChild($h_Node, $i_SearchPos)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetNodeNextChild", "ptr", $h_Node, "int", $i_SearchPos)
+
+Func _IrrGetNodeNextChild($h_Node, ByRef $h_Position)
+; get the next child node of this node, returns 0 if there is no child
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetNodeNextChild", "UINT_PTR", $h_Node, "UINT_PTR*", $h_Position)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
+		$h_Position = $result[2]
 		return $result[0]
 	EndIf
 EndFunc   ;==>_IrrGetNodeNextChild
 
-Func _IrrIsNodeLastChild($h_Node, $h_Parent)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrIsNodeLastChild", "ptr", $h_Node, "ptr", $h_Parent)
+
+Func _IrrIsNodeLastChild($h_Node, ByRef $h_Position)
+; returns true if this is the last child of the parent
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrIsNodeLastChild", "UINT_PTR", $h_Node, "ptr*", $h_Position)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
+		$h_Position = $result[2]
 		return $result[0]
 	EndIf
 EndFunc   ;==>_IrrIsNodeLastChild
+
 
 Func _IrrAddNodeShadow($h_Node, $h_mesh = 0)
 	DllCall($_irrDll, "none:cdecl", "IrrAddNodeShadow", "ptr", $h_Node, "ptr", $h_mesh)
@@ -1944,15 +1966,20 @@ Func _IrrRemoveAnimator($h_Node, $h_Animator)
 	EndIf
 EndFunc   ;==>_IrrRemoveAnimator
 
+
+
 ;Collision Functions
-Func _IrrGetCollisionGroupFromMesh($h_Mesh, $h_Node)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetCollisionGroupFromMesh", "ptr", $h_Mesh, "ptr", $h_Node)
+
+Func _IrrGetCollisionGroupFromMesh($h_Mesh, $h_Node, $i_Frame = 0)
+; gets a collision object from an animated mesh
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetCollisionGroupFromMesh", "UINT_PTR", $h_Mesh, "UINT_PTR", $h_Node, "int", $i_Frame)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		Return $result[0]
 	EndIf
 EndFunc   ;==>_IrrGetCollisionGroupFromMesh
+
 
 Func _IrrGetCollisionGroupFromComplexMesh($h_Mesh, $h_Node, $i_Frame = 0)
 	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetCollisionGroupFromComplexMesh", "UINT_PTR", $h_Mesh, "UINT_PTR", $h_Node, "int", $i_Frame)
@@ -2106,15 +2133,25 @@ Func _IrrGetScreenCoordinatesFrom3DPosition(ByRef $i_ScreenX, ByRef $i_ScreenY, 
 	EndIf
 EndFunc   ;==>_IrrGetScreenCoordinatesFrom3DPosition
 
-Func _IrrGet3DPositionFromScreenCoordinates($i_X, $i_Y, $h_Camera, $f_NormalX, $f_NormalY, $f_NormalZ, $f_DistanceFromOrigin)
-	Local $f_X = DllStructCreate("float")
-	Local $f_Y = DllStructCreate("float")
-	Local $f_Z = DllStructCreate("float")
 
-	DllCall($_irrDll, "ptr:cdecl", "IrrGet3DPositionFromScreenCoordinates", "int", $i_X, "int", $i_Y, "float*", DllStructGetPtr($f_X), "float*", DllStructGetPtr($f_Y), "float*", DllStructGetPtr($f_Z), "ptr", $h_Camera, "float", $f_NormalX, "float", $f_NormalY, "float", $f_NormalZ, "float", $f_DistanceFromOrigin)
-	Local $result[3] = [DllStructGetData($f_X, 1), DllStructGetData($f_Y, 1), DllStructGetData($f_Z, 1)]
-	Return $result
+Func _IrrGet3DPositionFromScreenCoordinates($i_X, $i_Y, ByRef $a_Vector3df, $h_Camera, $f_NormalX=0.0, $f_NormalY=0.0, $f_NormalZ=1.0, $f_DistanceFromOrigin=0.0)
+; Calculates the intersection between a ray projected through the specified
+; screen co-ordinates and a plane defined a normal and distance from the
+; world origin (contributed by agamemnus)
+	$result = DllCall($_irrDll, "none:cdecl", "IrrGet3DPositionFromScreenCoordinates", "int", $i_X, "int", $i_Y, _
+	"float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2], _
+	"ptr", $h_Camera, "float", $f_NormalX, "float", $f_NormalY, "float", $f_NormalZ, "float", $f_DistanceFromOrigin)
+
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		$a_Vector3df[0] = $result[3]
+		$a_Vector3df[1] = $result[4]
+		$a_Vector3df[2] = $result[5]
+		Return $a_Vector3df
+	EndIf
 EndFunc   ;==>_IrrGet3DPositionFromScreenCoordinates
+
 
 Func _IrrGetChildCollisionNodeFromRay($h_Node, $i_Mask, $i_Recurse, $a_StartVector, $a_EndVector)
 	Local $StartVectorStruct = DllStructCreate("float;float;float")
@@ -2146,7 +2183,12 @@ Func _IrrGetChildCollisionNodeFromPoint($h_Node, $i_Mask, $i_Recurse, $a_PointVe
 	EndIf
 EndFunc   ;==>_IrrGetChildCollisionNodeFromPoint
 
-Func _IrrGetNodeAndCollisionPointFromRay($a_StartVector, $a_EndVector, $i_ID = 0, $h_RootNode = 0)
+;xxx
+Func _IrrGetNodeAndCollisionPointFromRay($a_StartVector, $a_EndVector, ByRef $h_Node, ByRef $f_PosX, ByRef $f_PosY, ByRef $f_PosZ, ByRef $f_NormalX, ByRef $f_NormalY, ByRef $f_NormalZ, $i_ID = 0, $h_RootNode = $IRR_NO_OBJECT)
+; a ray is cast through the specified co-ordinates and the nearest node that has
+; a collision selector object that is hit by the ray is returned along with the
+; coordinate of the collision and the normal of the triangle that is hit. if no
+; node is hit zero is returned for the object
 	Local $StartVectorStruct = DllStructCreate("float;float;float")
 	DllStructSetData($StartVectorStruct, 1, $a_StartVector[0])
 	DllStructSetData($StartVectorStruct, 2, $a_StartVector[1])
@@ -2155,20 +2197,26 @@ Func _IrrGetNodeAndCollisionPointFromRay($a_StartVector, $a_EndVector, $i_ID = 0
 	DllStructSetData($EndVectorStruct, 1, $a_EndVector[0])
 	DllStructSetData($EndVectorStruct, 2, $a_EndVector[1])
 	DllStructSetData($EndVectorStruct, 3, $a_EndVector[2])
-	Local $f_X = DllStructCreate("float")
-	Local $f_Y = DllStructCreate("float")
-	Local $f_Z = DllStructCreate("float")
-	Local $f_NormalX = DllStructCreate("float")
-	Local $f_NormalY = DllStructCreate("float")
-	Local $f_NormalZ = DllStructCreate("float")
-	Local $h_Node = DllStructCreate("ptr")
-	DllCall($_irrDll, "none:cdecl", "IrrGetNodeAndCollisionPointFromRay", "ptr", $StartVectorStruct, "ptr", $EndVectorStruct, "ptr*", DllStructGetPtr($h_Node), "float*", $f_X, "float*", $f_Y, "float*", $f_Z, "float*", $f_NormalX, "float*", $f_NormalY, "float*", $f_NormalZ, "int", $i_ID, "ptr", $h_RootNode)
-	If DllStructGetData($h_Node, 1) <> 0 Then
-		Local $result[7] = [DllStructGetData($h_Node, 1), DllStructGetData($f_X, 1), DllStructGetData($f_Y, 1), DllStructGetData($f_Z, 1), DllStructGetData($f_NormalX, 1), DllStructGetData($f_NormalY, 1), DllStructGetData($f_NormalZ, 1)]
-		Return $result
-	EndIf
-	Return 0
+;~ 	$f_PosX = DllStructCreate("float")
+;~ 	$f_PosY = DllStructCreate("float")
+;~ 	$f_PosZ = DllStructCreate("float")
+;~ 	$f_NormalX = DllStructCreate("float")
+;~ 	$f_NormalY = DllStructCreate("float")
+;~ 	$f_NormalZ = DllStructCreate("float")
+;~ 	$h_Node = DllStructCreate("UINT_PTR")
+	$result = DllCall($_irrDll, "none:cdecl", "IrrGetNodeAndCollisionPointFromRay", _
+			"ptr", DllStructGetPtr($StartVectorStruct), "ptr", DllStructGetPtr($EndVectorStruct), "ptr*", $h_Node, _
+			"float*", $f_PosX, "float*", $f_PosY, "float*", $f_PosZ, _
+			"float*", $f_NormalX, "float*", $f_NormalY, "float*", $f_NormalZ, _
+			"int", $i_ID, "ptr", $h_RootNode)
+;	If DllStructGetData($h_Node, 1) <> 0 Then
+
+;		Local $result[7] = [DllStructGetData($h_Node, 1), DllStructGetData($f_X, 1), DllStructGetData($f_Y, 1), DllStructGetData($f_Z, 1), DllStructGetData($f_NormalX, 1), DllStructGetData($f_NormalY, 1), DllStructGetData($f_NormalZ, 1)]
+;		Return $result
+;	EndIf
+	return $result[3]
 EndFunc   ;==>_IrrGetNodeAndCollisionPointFromRay
+
 
 Func _IrrGetDistanceBetweenNodes($h_NodeA, $h_NodeB)
 	$result = DllCall($_irrDll, "float:cdecl", "IrrGetDistanceBetweenNodes", "ptr", $h_NodeA, "ptr", $h_NodeB)
@@ -2514,33 +2562,6 @@ Func _IrrAddTerrainTile($h_Image, $i_TileSize = 256, $i_DataX = 0, $i_DataY = 0,
 	EndIf
 EndFunc   ;==>_IrrAddTerrainTile
 
-#cs xxxx
-' create a terrain node from a highfield map
-declare function IrrAddSphericalTerrain alias "IrrAddSphericalTerrain" ( _
-        byval topPath as zstring ptr, _
-        byval frontPath as zstring ptr, _
-        byval backPath as zstring ptr, _
-        byval leftPath as zstring ptr, _
-        byval rightPath as zstring ptr, _
-        byval bottomPath as zstring ptr, _
-        byval xPosition as single = 0.0, _
-        byval yPosition as single = 0.0, _
-        byval zPosition as single = 0.0, _
-        byval xRotation as single = 0.0, _
-        byval yRotation as single = 0.0, _
-        byval zRotation as single = 0.0, _
-        byval xScale as single = 1.0, _
-        byval yScale as single = 1.0, _
-        byval zScale as single = 1.0, _
-        byval vertexAlpha as integer = 255, _
-        byval vertexRed as integer = 255, _
-        byval vertexGreen as integer = 255, _
-        byval vertexBlue as integer = 255, _
-        byval smoothing as integer = 0, _
-        byval spherical as integer = 0, _
-        byval maxLOD as integer = 5, _
-        byval patchSize as IRR_TERRAIN_PATCH_SIZE = ETPS_17 ) as irr_terrain
-#ce
 
 Func _IrrAddSphericalTerrain($s_TopPath, $s_FrontPath, $s_BackPath, $s_LeftPath, $RightPath, $s_BottomPath, $f_PosX = 0.0, $f_PosY = 0.0, $f_PosZ = 0.0, $f_RotX = 0.0, $f_RotY = 0.0, $f_RotZ = 0.0, $f_ScaleX = 1.0, $f_ScaleY = 1.0, $f_ScaleZ = 1.0, $i_VertexAlpha = 255, $i_VertexRed = 255, $i_VertexGreen = 255, $i_VertexBlue = 255, $i_Smoothing = 0, $i_Spherical = 0, $i_MaxLOD = 5, $i_PatchSize = $ETPS_17)
 	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddSphericalTerrain", _
@@ -2693,14 +2714,6 @@ Func _IrrSetMaxParticleSize($h_Emitter, $f_X, $f_Y)
 	EndIf
 EndFunc   ;==>_IrrSetMaxParticleSize
 
-Func _IrrAddParticleEmitter($h_ParticleSystem, $h_SettingsStruct)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddParticleEmitter", "ptr", $h_ParticleSystem, "ptr", $h_SettingsStruct)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrAddParticleEmitter
 
 Func _IrrAddAnimatedMeshSceneNodeEmitter($h_ParticleSystem, $h_Node, $i_UseNormals, $f_NormalModifier, $i_AllVertices, $h_SettingsStruct)
 	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddAnimatedMeshSceneNodeEmitter", "ptr", $h_ParticleSystem, "ptr", $h_Node, "int", $i_UseNormals, "float", $f_NormalModifier, "int", $i_AllVertices, "ptr", $h_SettingsStruct)
@@ -2710,6 +2723,20 @@ Func _IrrAddAnimatedMeshSceneNodeEmitter($h_ParticleSystem, $h_Node, $i_UseNorma
 		Return $result[0]
 	EndIf
 EndFunc   ;==>_IrrAddAnimatedMeshSceneNodeEmitter
+
+
+Func _IrrAddRotationAffector($h_ParticleSystem, $f_SpeedX, $f_SpeedY, $f_SpeedZ, $f_PivotX, $f_pivotY, $f_pivotZ)
+; Creates a rotation affector. This affector modifies the positions of the
+; particles and attracts them to a specified point at a specified speed per second.
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddRotationAffector", "UINT_PTR", $h_ParticleSystem, _
+			"float", $f_SpeedX, "float", $f_SpeedY, "float", $f_SpeedZ, "float", $f_PivotX, "float", $f_PivotY, "float", $f_PivotZ)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
+	EndIf
+EndFunc   ;==>_IrrAddRotationAffector
+
 
 Func _IrrAddFadeOutParticleAffector($h_ParticleSystem, $i_FadeFactor, $i_Red, $i_Green, $i_Blue)
 	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddFadeOutParticleAffector", "ptr", $h_ParticleSystem, "int", $i_FadeFactor, "int", $i_Red, "int", $i_Green, "int", $i_Blue)
@@ -2721,7 +2748,7 @@ Func _IrrAddFadeOutParticleAffector($h_ParticleSystem, $i_FadeFactor, $i_Red, $i
 EndFunc   ;==>_IrrAddFadeOutParticleAffector
 
 Func _IrrAddGravityParticleAffector($h_ParticleSystem, $f_X, $f_Y, $f_Z)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddFadeOutParticleAffector", "ptr", $h_ParticleSystem, "float", $f_X, "float", $f_Y, "float", $f_Z)
+	$result = DllCall($_irrDll, "ptr:cdecl", "_IrrAddGravityParticleAffector", "ptr", $h_ParticleSystem, "float", $f_X, "float", $f_Y, "float", $f_Z)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
@@ -3542,9 +3569,11 @@ declare sub IrrXEffectsGetShadowLightColor alias "IrrXEffectsGetShadowLightColor
 ; ////////////////////////////////////////////////////////////////////////////
 
 
-
-Func __CreateParticleEmitter($f_MinBoxX, $f_MinBoxY, $f_MinBoxZ, $f_MaxBoxX, $f_MaxBoxY, $f_MaxBoxZ, $f_DirectionX, $f_DirectionY, $f_DirectionZ, $i_MinParticlesPerSecond, $i_MaxParticlesPerSecond, $i_MinStartRed, $i_MinStartGreen, $i_MinStartBlue, $i_MaxStartRed, $i_MaxStartGreen, $i_MaxStartBlue, $i_MinLifetime, $i_MaxLifetime, $f_MinStartSizeX, $f_MinStartSizeY, $f_MaxStartSizeX, $f_MaxStartSizeY, $i_MaxAngle)
-	Local $EmitterStruct = DllStructCreate("float;float;float;float;float;float;float;float;float;int;int;int;int;int;int;int;int;int;int;float;float;float;float;int")
+Func xxx__CreateParticleEmitter($f_MinBoxX, $f_MinBoxY, $f_MinBoxZ, $f_MaxBoxX, $f_MaxBoxY, $f_MaxBoxZ, $f_DirectionX, $f_DirectionY, $f_DirectionZ, $i_MinParticlesPerSecond, $i_MaxParticlesPerSecond, $i_MinStartRed, $i_MinStartGreen, $i_MinStartBlue, $i_MaxStartRed, $i_MaxStartGreen, $i_MaxStartBlue, $i_MinLifetime, $i_MaxLifetime, $f_MinStartSizeX, $f_MinStartSizeY, $f_MaxStartSizeX, $f_MaxStartSizeY, $i_MaxAngle)
+	local $EmitterStruct = DllStructCreate("float min_box_x;float min_box_y;float min_box_z;float max_box_x;float max_box_y;float max_box_z;float direction_x;float direction_y;float direction_z;" & _
+											"UINT min_paritlcles_per_second;UINT max_paritlcles_per_second;int min_start_color_red;int min_start_color_green;int min_start_color_blue;" & _
+											"int max_start_color_red;int max_start_color_green;int max_start_color_blue;UINT min_lifetime;UINT max_lifetime;float min_start_sizeX;float min_start_sizeY;" & _
+											"float max_start_sizeX;float max_start_sizeY;int max_angle_degrees")
 	DllStructSetData($EmitterStruct, 1, $f_MinBoxX)
 	DllStructSetData($EmitterStruct, 2, $f_MinBoxY)
 	DllStructSetData($EmitterStruct, 3, $f_MinBoxZ)
@@ -3670,3 +3699,65 @@ func __getGuiEvt($p_GUIEvent, $i_Element = $EVT_GUI_IID)
 		return $result
 	EndIf
 EndFunc ;==> __getGuiEvt
+
+; xxxx obsolete?!
+Func __CreateIrrModel()
+	Local $irrModel = DllStructCreate("UINT_PTR node;UINT_PTR camera;UINT_PTR terrain;UINT_PTR particles")
+	DllStructSetData($irrModel, "node", 0)
+	DllStructSetData($irrModel, "camera", 0)
+	DllStructSetData($irrModel, "terrain", 0)
+	DllStructSetData($irrModel, "particles", 0)
+	return $irrModel
+EndFunc ;==> __CreateIrrModel
+
+
+
+Func __CreateParticleEmitter($f_MinBoxX, $f_MinBoxY, $f_MinBoxZ, $f_MaxBoxX, $f_MaxBoxY, $f_MaxBoxZ, $f_DirectionX, $f_DirectionY, $f_DirectionZ, $i_MinParticlesPerSecond, $i_MaxParticlesPerSecond, $i_MinStartRed, $i_MinStartGreen, $i_MinStartBlue, $i_MaxStartRed, $i_MaxStartGreen, $i_MaxStartBlue, $i_MinLifetime, $i_MaxLifetime, $f_MinStartSizeX, $f_MinStartSizeY, $f_MaxStartSizeX, $f_MaxStartSizeY, $i_MaxAngle)
+
+local $struct = "float min_box_x;float min_box_y;float min_box_z;float max_box_x;float max_box_y;float max_box_z;" & _
+							"float direction_x;float direction_y;float direction_z;uint min_paritlcles_per_second;uint max_paritlcles_per_second;" & _
+							"int min_start_color_red;int min_start_color_green;int min_start_color_blue;" & _
+							"int max_start_color_red;int max_start_color_green;int max_start_color_blue;" & _
+							"uint min_lifetime;uint max_lifetime;" & _
+							"float min_start_sizeX;float min_start_sizeY;float max_start_sizeX;float max_start_sizeY;int max_angle_degrees"
+local $EmitterStruct = DllStructCreate($struct)
+	DllStructSetData($EmitterStruct, "min_box_x", $f_MinBoxX)
+	DllStructSetData($EmitterStruct, "min_box_y", $f_MinBoxY)
+	DllStructSetData($EmitterStruct, "min_box_z", $f_MinBoxZ)
+	DllStructSetData($EmitterStruct, "max_box_x", $f_MaxBoxX)
+	DllStructSetData($EmitterStruct, "max_box_y", $f_MaxBoxY)
+	DllStructSetData($EmitterStruct, "max_box_z", $f_MaxBoxZ)
+	DllStructSetData($EmitterStruct, "direction_x", $f_DirectionX)
+	DllStructSetData($EmitterStruct, "direction_y", $f_DirectionY)
+	DllStructSetData($EmitterStruct, "direction_z", $f_DirectionZ)
+	DllStructSetData($EmitterStruct, "min_paritlcles_per_second", $i_MinParticlesPerSecond)
+	DllStructSetData($EmitterStruct, "max_paritlcles_per_second", $i_MaxParticlesPerSecond)
+	DllStructSetData($EmitterStruct, "min_start_color_red", $i_MinStartRed)
+	DllStructSetData($EmitterStruct, "min_start_color_green", $i_MinStartGreen)
+	DllStructSetData($EmitterStruct, "min_start_color_blue", $i_MinStartBlue)
+	DllStructSetData($EmitterStruct, "max_start_color_red", $i_MaxStartRed)
+	DllStructSetData($EmitterStruct, "max_start_color_green", $i_MaxStartGreen)
+	DllStructSetData($EmitterStruct, "max_start_color_blue", $i_MaxStartBlue)
+	DllStructSetData($EmitterStruct, "min_lifetime", $i_MinLifetime)
+	DllStructSetData($EmitterStruct, "max_lifetime", $i_MaxLifetime)
+	DllStructSetData($EmitterStruct, "max_angle_degrees", $i_MaxAngle)
+	DllStructSetData($EmitterStruct, "min_start_sizeX", $f_MinStartSizeX)
+	DllStructSetData($EmitterStruct, "min_start_sizeY", $f_MinStartSizeY)
+	DllStructSetData($EmitterStruct, "max_start_sizeX", $f_MaxStartSizeX)
+	DllStructSetData($EmitterStruct, "max_start_sizeY", $f_MaxStartSizeY)
+
+	Return $EmitterStruct
+EndFunc   ;==>___CreateParticleEmitter
+
+
+
+Func _IrrAddParticleEmitter($h_ParticleSystem, $h_SettingsStruct)
+; create an emitter that can be added to a particle system
+
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddParticleEmitter", "UINT_PTR", $h_ParticleSystem, "UINT_PTR", $h_SettingsStruct)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
+	EndIf
+EndFunc   ;==>_IrrAddParticleEmitter
