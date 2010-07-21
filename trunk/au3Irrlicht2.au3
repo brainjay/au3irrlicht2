@@ -5,8 +5,8 @@
 ; modified Version 0.3 by linus 10-07-18
 ; (not complete) list of the fixes/changes compared to original 2.01:
 
-; 100720 TODO: _IrrGetNodeAndCollisionPointFromRay
 
+; 100721 fixed _IrrGetNodeAndCollisionPointFromRay
 ; 100720 fixed _IrrGetNodeFirstChild, _IrrGetNodeNextChild, _IrrIsNodeLastChild
 ; 100718 fixed _IrrGetCollisionGroupFromMesh
 ; 100718 fixed _IrrGet3DPositionFromScreenCoordinates
@@ -2183,7 +2183,7 @@ Func _IrrGetChildCollisionNodeFromPoint($h_Node, $i_Mask, $i_Recurse, $a_PointVe
 	EndIf
 EndFunc   ;==>_IrrGetChildCollisionNodeFromPoint
 
-;xxx
+
 Func _IrrGetNodeAndCollisionPointFromRay($a_StartVector, $a_EndVector, ByRef $h_Node, ByRef $f_PosX, ByRef $f_PosY, ByRef $f_PosZ, ByRef $f_NormalX, ByRef $f_NormalY, ByRef $f_NormalZ, $i_ID = 0, $h_RootNode = $IRR_NO_OBJECT)
 ; a ray is cast through the specified co-ordinates and the nearest node that has
 ; a collision selector object that is hit by the ray is returned along with the
@@ -2197,24 +2197,28 @@ Func _IrrGetNodeAndCollisionPointFromRay($a_StartVector, $a_EndVector, ByRef $h_
 	DllStructSetData($EndVectorStruct, 1, $a_EndVector[0])
 	DllStructSetData($EndVectorStruct, 2, $a_EndVector[1])
 	DllStructSetData($EndVectorStruct, 3, $a_EndVector[2])
-;~ 	$f_PosX = DllStructCreate("float")
-;~ 	$f_PosY = DllStructCreate("float")
-;~ 	$f_PosZ = DllStructCreate("float")
-;~ 	$f_NormalX = DllStructCreate("float")
-;~ 	$f_NormalY = DllStructCreate("float")
-;~ 	$f_NormalZ = DllStructCreate("float")
-;~ 	$h_Node = DllStructCreate("UINT_PTR")
+ 	$h_Node = DllStructCreate("UINT_PTR")
 	$result = DllCall($_irrDll, "none:cdecl", "IrrGetNodeAndCollisionPointFromRay", _
 			"ptr", DllStructGetPtr($StartVectorStruct), "ptr", DllStructGetPtr($EndVectorStruct), "ptr*", $h_Node, _
 			"float*", $f_PosX, "float*", $f_PosY, "float*", $f_PosZ, _
 			"float*", $f_NormalX, "float*", $f_NormalY, "float*", $f_NormalZ, _
-			"int", $i_ID, "ptr", $h_RootNode)
-;	If DllStructGetData($h_Node, 1) <> 0 Then
+			"int", $i_ID, "ptr", $h_Node)
 
-;		Local $result[7] = [DllStructGetData($h_Node, 1), DllStructGetData($f_X, 1), DllStructGetData($f_Y, 1), DllStructGetData($f_Z, 1), DllStructGetData($f_NormalX, 1), DllStructGetData($f_NormalY, 1), DllStructGetData($f_NormalZ, 1)]
-;		Return $result
-;	EndIf
-	return $result[3]
+	if @error Then
+		Return Seterror(1,0,False)
+	Elseif $result[3] = 0 Then
+		return 0
+	Else
+		$h_Node = $result[3]
+		$f_PosX = $result[4]
+		$f_PosY = $result[5]
+		$f_PosZ = $result[6]
+		$f_NormalX = $result[7]
+		$f_NormalY = $result[8]
+		$f_NormalZ = $result[9]
+		Return $h_Node
+	EndIf
+
 EndFunc   ;==>_IrrGetNodeAndCollisionPointFromRay
 
 

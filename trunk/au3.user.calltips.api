@@ -1,7 +1,7 @@
 
 
 ; userCallTips for jRowe's modified au3Irrlicht2
-; V0.3 10-07-12 by linus
+; V0.3 10-07-21 by linus
 
 ; ENUMS + CONSTANTS ====================================================================================
 
@@ -595,7 +595,7 @@ _IrrGetScreenCoordinatesFrom3DPosition(a_3DPositionVector)
 _IrrGet3DPositionFromScreenCoordinates(iX,iY,ByRef aVector3df,hCamera,fNormalX=0.0,fNormalY=0.0,fNormalZ=1.0,fDistanceFromOrigin=0.0)
 _IrrGetChildCollisionNodeFromRay(hNode,iMask,iRecurse,a_StartVector,a_EndVector)
 _IrrGetChildCollisionNodeFromPoint(hNode,iMask,iRecurse,a_PointVector)
-_IrrGetNodeAndCollisionPointFromRay(a_StartVector,a_EndVector,iID=0,hRootNode=0)
+_IrrGetNodeAndCollisionPointFromRay(aStartVector,aEndVector,ByRef hNode,ByRef fPosX,ByRef fPosY,ByRef fPosZ,ByRef fNormalX,ByRef fNormalY,ByRef fNormalZ,iID=0,hRootNode=$IRR_NO_OBJECT)
 _IrrGetDistanceBetweenNodes(hNodeA,hNodeB)
 _IrrAreNodesIntersecting(hNodeA,hNodeB)
 _IrrIsPointInsideNode(hNodeA,fX,fY,fZ)
