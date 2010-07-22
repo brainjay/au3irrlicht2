@@ -3,6 +3,7 @@
 ; (not complete) list of the fixes/changes:
 
 
+; 100722 added _IrrSetRenderTarget
 ; 100722 added _IrrStartAdvanced, _IrrBeginSceneAdvanced, _IrrIsFullscreen(), _IrrGet2DPositionFromScreenCoordinates
 ; 100722 added several window functions
 ; 100722 added _IrrSetNodeColorByVertex, _IrrSetNodeEmissiveColor, _IrrSetNodeSpecularColor, _IrrSetNodeDiffuseColor, _IrrSetNodeAmbientColor
@@ -520,6 +521,19 @@ Func _IrrDrawSceneToTexture($h_RenderTargetTexture)
 		Return $result[0]
 	EndIf
 EndFunc   ;==>_IrrDrawSceneToTexture
+
+
+Func _IrrSetRenderTarget($h_Texture, $i_SceneBGColor = 0, $i_ClearBackBuffer = 1, $i_ClearZBuffer = 1)
+; Sets a texture as a render target, or sets the device if the pointer is 0.
+	DllCall($_irrDll, "none:cdecl", "IrrSetRenderTarget", "ptr", $h_Texture, "uint", $i_SceneBGColor, _
+			"byte", $i_ClearBackBuffer, "byte", $i_ClearZBuffer)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetRenderTarget
+
 
 Func _IrrDrawGUI()
 	DllCall($_irrDll, "none:cdecl", "IrrDrawGUI")
