@@ -733,6 +733,7 @@ _IrrMaximizeWindow()
 _IrrMinimizeWindow()
 _IrrRestoreWindow()
 _IrrSetResizableWindow(iResizable)
+_IrrSetRenderTarget(hTexture,iSceneBGColor=0,iClearBackBuffer=1,iClearZBuffer=1)
 
 ; xEffects Extensions:
 _IrrXEffectsStart(iVsm=IRR_OFF,iSoftShadows=IRR_OFF,iBitdepth32=IRR_OFF)
