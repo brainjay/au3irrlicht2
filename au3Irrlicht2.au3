@@ -1,11 +1,11 @@
 
 ; Au3Irrlicht UDF Release 2.0.1
-; JRowe's Version 5th, May 2010
-
-; modified Version 0.3 by linus 10-07-18
-; (not complete) list of the fixes/changes compared to original 2.01:
+; (not complete) list of the fixes/changes:
 
 
+; 100722 added _IrrStartAdvanced, _IrrBeginSceneAdvanced, _IrrIsFullscreen(), _IrrGet2DPositionFromScreenCoordinates
+; 100722 added several window functions
+; 100722 added _IrrSetNodeColorByVertex, _IrrSetNodeEmissiveColor, _IrrSetNodeSpecularColor, _IrrSetNodeDiffuseColor, _IrrSetNodeAmbientColor
 ; 100721 fixed _IrrGetNodeAndCollisionPointFromRay
 ; 100720 fixed _IrrGetNodeFirstChild, _IrrGetNodeNextChild, _IrrIsNodeLastChild
 ; 100718 fixed _IrrGetCollisionGroupFromMesh
@@ -448,6 +448,20 @@ Func _IrrStart($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $
 	EndIf
 EndFunc   ;==>_IrrStart
 
+
+Func _IrrStartAdvanced($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel = 1, $i_FullScreen = 0, $i_Shadows = 0, $i_InputCapture = 0, $i_VSync = 0, $i_TypeOfDevice = 0, $i_DoublebufferEnabled = 0, $i_AntialiasEnabled = 0, $i_HighPrecisionFpu = 0)
+; an advanced method of starting the irrlicht interface
+	$result = DllCall($_irrDll, "uint:cdecl", "IrrStart", "int", $i_DeviceType, "int", $i_ScreenWidth, "int", $i_ScreenHeight, _
+			"int", $i_BitsPerPixel, "uint", $i_FullScreen, "uint", $i_Shadows, "uint", $i_InputCapture, "uint", $i_VSync, _
+			"uint", $i_TypeOfDevice, "uint", $i_DoublebufferEnabled, "uint", $i_AntialiasEnabled, "uint", $i_HighPrecisionFpu)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return $result[0]
+	EndIf
+EndFunc   ;==>_IrrStartAdvanced
+
+
 Func _IrrRunning()
 	$result = DllCall($_irrDll, "int:cdecl", "IrrRunning")
 	if @error Then
@@ -475,6 +489,18 @@ Func _IrrBeginScene($i_Red, $i_Green, $i_Blue)
 		return True
 	EndIf
 EndFunc   ;==>_IrrBeginScene
+
+
+Func _IrrBeginSceneAdvanced($i_SceneBGColor, $i_ClearBackBuffer = 1, $i_ClearZBuffer = 1)
+; Readies a scene for rendering, erasing the canvas and setting a background color.
+	DllCall($_irrDll, "none:cdecl", "IrrBeginSceneAdvanced", "uint", $i_SceneBGColor, "byte", $i_ClearBackBuffer, "byte", $i_ClearZBuffer)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrBeginSceneAdvanced
+
 
 Func _IrrDrawScene()
 	DllCall($_irrDll, "none:cdecl", "IrrDrawScene")
@@ -557,6 +583,99 @@ Func _IrrSetWindowCaption($s_Caption)
 		return True
 	EndIf
 EndFunc   ;==>_IrrSetWindowCaption
+
+
+Func _IrrIsFullscreen()
+; Checks if the Irrlicht window is running in fullscreen mode.
+	$result = DllCall($_irrDll, "int:cdecl", "IrrIsFullscreen")
+		if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
+	EndIf
+EndFunc   ;==>_IrrIsFullscreen
+
+Func _IrrIsWindowActive()
+; Returns if the window is active.
+	$result = DllCall($_irrDll, "int:cdecl", "IrrIsWindowActive")
+		if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
+	EndIf
+EndFunc   ;==>_IrrIsWindowActive
+
+Func _IrrIsWindowFocused()
+; Checks if the Irrlicht window has focus.
+	$result = DllCall($_irrDll, "int:cdecl", "IrrIsWindowFocused")
+		if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
+	EndIf
+EndFunc   ;==>_IrrIsWindowFocused
+
+Func _IrrIsWindowMinimized()
+; Checks if the Irrlicht window is minimized.
+	$result = DllCall($_irrDll, "int:cdecl", "IrrIsWindowMinimized")
+		if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
+	EndIf
+EndFunc   ;==>_IrrIsWindowMinimized
+
+Func _IrrGetScreenSize(ByRef $i_Width, ByRef $i_Height)
+; Gets the screen size.
+	$result = DllCall($_irrDll, "none:cdecl", "IrrGetScreenSize", "int*", $i_Width, "int*", $i_Height)
+		if @error Then
+		Return Seterror(1,0,False)
+	Else
+		$i_Width = $result[1]
+		$i_Height = $result[2]
+		Return true
+	EndIf
+EndFunc   ;==>_IrrGetScreenSize
+
+Func _IrrMaximizeWindow()
+; Maximizes the window if possible.
+	$result = DllCall($_irrDll, "none:cdecl", "IrrMaximizeWindow")
+		if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return true
+	EndIf
+EndFunc   ;==>_IrrMaximizeWindow
+
+Func _IrrMinimizeWindow()
+; Minimizes the window if possible.
+	$result = DllCall($_irrDll, "none:cdecl", "IrrMinimizeWindow")
+		if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return true
+	EndIf
+EndFunc   ;==>_IrrMinimizeWindow
+
+Func _IrrRestoreWindow()
+; Restore the window to normal size if possible.
+	$result = DllCall($_irrDll, "none:cdecl", "IrrRestoreWindow")
+		if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return true
+	EndIf
+EndFunc   ;==>_IrrRestoreWindow
+
+Func _IrrSetResizableWindow($i_Resizable)
+; Make the window resizable.
+	$result = DllCall($_irrDll, "none:cdecl", "IrrSetResizableWindow")
+		if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return true
+	EndIf
+EndFunc   ;==>_IrrSetResizableWindow
 
 
 Func _IrrMakeARGB($i_Alpha, $i_Red, $i_Green, $i_Blue)
@@ -1800,6 +1919,58 @@ Func _IrrGetNodeBoundingBox($h_Node, ByRef $a_VectorA3df, ByRef $a_VectorB3df)
 EndFunc   ;==>_IrrGetNodeBoundingBox
 
 
+; ////////////////////////////////////////////////////////////////////////////
+; Material and GPU Programming Functions
+
+Func _IrrSetNodeAmbientColor($h_Node, $i_Color)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeAmbientColor", "ptr", $h_Node, "uint", $i_Color)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetNodeAmbientColor
+
+Func _IrrSetNodeDiffuseColor($h_Node, $i_Color)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeDiffuseColor", "ptr", $h_Node, "uint", $i_Color)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetNodeDiffuseColor
+
+Func _IrrSetNodeSpecularColor($h_Node, $i_Color)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeSpecularColor", "ptr", $h_Node, "uint", $i_Color)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetNodeSpecularColor
+
+Func _IrrSetNodeEmissiveColor($h_Node, $i_Color)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeEmissiveColor", "ptr", $h_Node, "uint", $i_Color)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetNodeEmissiveColor
+
+
+Func _IrrSetNodeColorByVertex($h_Node, $i_ColorMaterial)
+; Set whether vertex color or material color is used to shade the surface of a node
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeColorByVertex", "ptr", $h_Node, "uint", $i_ColorMaterial)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetNodeColorByVertex
+
+
+; ////////////////////////////////////////////////////////////////////////////
 ;Animation functions
 Func _IrrSetNodeAnimationRange($h_Node, $i_Start, $i_End)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeAnimationRange", "ptr", $h_Node, "int", $i_Start, "int", $i_End)
@@ -2139,8 +2310,8 @@ Func _IrrGet3DPositionFromScreenCoordinates($i_X, $i_Y, ByRef $a_Vector3df, $h_C
 ; screen co-ordinates and a plane defined a normal and distance from the
 ; world origin (contributed by agamemnus)
 	$result = DllCall($_irrDll, "none:cdecl", "IrrGet3DPositionFromScreenCoordinates", "int", $i_X, "int", $i_Y, _
-	"float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2], _
-	"ptr", $h_Camera, "float", $f_NormalX, "float", $f_NormalY, "float", $f_NormalZ, "float", $f_DistanceFromOrigin)
+				"float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2], _
+				"ptr", $h_Camera, "float", $f_NormalX, "float", $f_NormalY, "float", $f_NormalZ, "float", $f_DistanceFromOrigin)
 
 	if @error Then
 		Return Seterror(1,0,False)
@@ -2151,6 +2322,22 @@ Func _IrrGet3DPositionFromScreenCoordinates($i_X, $i_Y, ByRef $a_Vector3df, $h_C
 		Return $a_Vector3df
 	EndIf
 EndFunc   ;==>_IrrGet3DPositionFromScreenCoordinates
+
+
+Func _IrrGet2DPositionFromScreenCoordinates($i_X, $i_Y, ByRef $f_X, ByRef $f_Y, $h_Camera)
+; Calculates the intersection between a ray projected through the specified
+; screen co-ordinates and a flat surface plane (contributed by agamemnus)
+	$result = DllCall($_irrDll, "none:cdecl", "IrrGet2DPositionFromScreenCoordinates", "int", $i_X, "int", $i_Y, _
+				"float*", $f_X, "float*", $f_Y, "ptr", $h_Camera)
+
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		$f_X = $result[3]
+		$f_Y = $result[4]
+		Return true
+	EndIf
+EndFunc   ;==>_IrrGet2DPositionFromScreenCoordinates
 
 
 Func _IrrGetChildCollisionNodeFromRay($h_Node, $i_Mask, $i_Recurse, $a_StartVector, $a_EndVector)
