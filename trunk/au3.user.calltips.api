@@ -602,7 +602,7 @@ _IrrGetNodeAndCollisionPointFromRay(aStartVector,aEndVector,ByRef hNode,ByRef fP
 _IrrGetDistanceBetweenNodes(hNodeA,hNodeB)
 _IrrAreNodesIntersecting(hNodeA,hNodeB)
 _IrrIsPointInsideNode(hNodeA,fX,fY,fZ)
-_IrrGetCollisionResultPosition(hCollisionGroup,a_VectorPosition,a_VectorRadius,a_VectorVelocity,a_VectorGravity,fSlidingSpeed,iAreFalling)
+_IrrGetCollisionResultPosition(hSelector, ByRef aEllipsoidPosition, ByRef aEllipsoidRadius, ByRef aVelocity, ByRef aGravity, fSlidingSpeed, ByRef aOutPosition, ByRef aOutHitPosition, ByRef iOutFalling)
 _IrrAddFPSCamera(hParentNode=0,fRotateSpeed=100.0,fMoveSpeed=0.5,iID=-1,hKeyMapArray=0,iKeyMapSize=0,iNoVerticalMovement=0,fJumpSpeed=0.0)
 _IrrAddCamera(fCamX,fCamY,fCamZ,fTargetX,fTargetY,fTargetZ)
 _IrrAddMayaCamera(hNode,fRotate,fZoom,fMove)
