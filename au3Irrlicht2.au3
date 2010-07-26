@@ -3,6 +3,7 @@
 ; (not complete) list of the fixes/changes:
 
 
+; 100726 fixed _IrrGetCollisionResultPosition
 ; 100722 added _IrrSetRenderTarget
 ; 100722 added _IrrStartAdvanced, _IrrBeginSceneAdvanced, _IrrIsFullscreen(), _IrrGet2DPositionFromScreenCoordinates
 ; 100722 added several window functions
@@ -1377,7 +1378,9 @@ Func _IrrSaveScene($s_Filename)
 	EndIf
 EndFunc   ;==>_IrrSaveScene
 
+
 Func _IrrGetSceneNodeFromId($i_ID)
+; get a scene node based on its ID and returns null if no node is found
 	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetSceneNodeFromId", "int", $i_ID)
 	if @error Then
 		Return Seterror(1,0,False)
@@ -1385,6 +1388,7 @@ Func _IrrGetSceneNodeFromId($i_ID)
 		Return $result[0]
 	EndIf
 EndFunc   ;==>_IrrGetSceneNodeFromId
+
 
 Func _IrrGetSceneNodeFromName($s_Name)
 	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetSceneNodeFromName", "str", $s_Name)
@@ -1901,12 +1905,16 @@ Func _IrrSetNodeParent($h_Node, $h_Parent)
 	EndIf
 EndFunc   ;==>_IrrSetNodeParent
 
+
 Func _IrrGetNodeID($h_Node)
+; get the ID of this node
 	$result = DllCall($_irrDll, "int:cdecl", "IrrGetNodeID", "ptr", $h_Node)
 	Return $result[0]
 EndFunc   ;==>_IrrGetNodeID
 
+
 Func _IrrSetNodeID($h_Node, $i_ID)
+; set the ID of this node
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeID", "ptr", $h_Node, "int", $i_ID)
 	if @error Then
 		Return Seterror(1,0,False)
@@ -1914,6 +1922,7 @@ Func _IrrSetNodeID($h_Node, $i_ID)
 		return True
 	EndIf
 EndFunc   ;==>_IrrSetNodeID
+
 
 Func _IrrGetNodeBoundingBox($h_Node, ByRef $a_VectorA3df, ByRef $a_VectorB3df)
 	Dim $a_VectorA3df[3]
@@ -2450,29 +2459,43 @@ Func _IrrIsPointInsideNode($h_NodeA, $f_X, $f_Y, $f_Z)
 	EndIf
 EndFunc   ;==>_IrrIsPointInsideNode
 
-Func _IrrGetCollisionResultPosition($h_CollisionGroup, $a_VectorPosition, $a_VectorRadius, $a_VectorVelocity, $a_VectorGravity, $f_SlidingSpeed, $i_AreFalling)
-	Local $VectorPositionStruct = DllStructCreate("float;float;float")
-	DllStructSetData($VectorPositionStruct, 1, $a_VectorPosition[0])
-	DllStructSetData($VectorPositionStruct, 2, $a_VectorPosition[1])
-	DllStructSetData($VectorPositionStruct, 3, $a_VectorPosition[2])
-	Local $VectorRadiusStruct = DllStructCreate("float;float;float")
-	DllStructSetData($VectorRadiusStruct, 1, $a_VectorRadius[0])
-	DllStructSetData($VectorRadiusStruct, 2, $a_VectorRadius[1])
-	DllStructSetData($VectorRadiusStruct, 3, $a_VectorRadius[2])
-	Local $VectorVelocityStruct = DllStructCreate("float;float;float")
-	DllStructSetData($VectorVelocityStruct, 1, $a_VectorVelocity[0])
-	DllStructSetData($VectorVelocityStruct, 2, $a_VectorVelocity[1])
-	DllStructSetData($VectorVelocityStruct, 3, $a_VectorVelocity[2])
-	Local $VectorGravityStruct = DllStructCreate("float;float;float")
-	DllStructSetData($VectorGravityStruct, 1, $a_VectorGravity[0])
-	DllStructSetData($VectorGravityStruct, 2, $a_VectorGravity[1])
-	DllStructSetData($VectorGravityStruct, 3, $a_VectorGravity[2])
-	Local $VectorResultPositionStruct = DllStructCreate("float;float;float")
-	Local $VectorHitPositionStruct = DllStructCreate("float;float;float")
-	DllCall($_irrDll, "none:cdecl", "IrrGetCollisionResultPosition", "ptr", $h_CollisionGroup, "ptr", DllStructGetPtr($VectorPositionStruct), "ptr", DllStructGetPtr($VectorRadiusStruct), "ptr", DllStructGetPtr($VectorVelocityStruct), "ptr", DllStructGetPtr($VectorGravityStruct), "float", $f_SlidingSpeed, "ptr*", DllStructGetPtr($VectorResultPositionStruct), "ptr*", DllStructGetPtr($VectorHitPositionStruct), "int", $i_AreFalling)
-	Local $result[2][3] = [[DllStructGetData($VectorHitPositionStruct, 1), DllStructGetData($VectorHitPositionStruct, 2), DllStructGetData($VectorHitPositionStruct, 3)],[DllStructGetData($VectorResultPositionStruct, 1), DllStructGetData($VectorResultPositionStruct, 2), DllStructGetData($VectorResultPositionStruct, 3)]]
-	Return $result
+
+Func _IrrGetCollisionResultPosition($h_Selector, ByRef $a_EllipsoidPosition, ByRef $a_EllipsoidRadius, ByRef $a_Velocity, ByRef $a_Gravity, $f_SlidingSpeed, ByRef $a_OutPosition, ByRef $a_OutHitPosition, ByRef $i_OutFalling)
+; Collides a moving ellipsoid with a 3d world with gravity and returns the
+; resulting new position of the ellipsoid. (contributed by The Car)
+	Local $structEllipsoidPosition = DllStructCreate("float;float;float")
+	DllStructSetData($structEllipsoidPosition, 1, $a_EllipsoidPosition[0])
+	DllStructSetData($structEllipsoidPosition, 2, $a_EllipsoidPosition[1])
+	DllStructSetData($structEllipsoidPosition, 3, $a_EllipsoidPosition[2])
+	Local $structEllipsoidRadius = DllStructCreate("float;float;float")
+	DllStructSetData($structEllipsoidRadius, 1, $a_EllipsoidRadius[0])
+	DllStructSetData($structEllipsoidRadius, 2, $a_EllipsoidRadius[1])
+	DllStructSetData($structEllipsoidRadius, 3, $a_EllipsoidRadius[2])
+	Local $structVelocity = DllStructCreate("float;float;float")
+	DllStructSetData($structVelocity, 1, $a_Velocity[0])
+	DllStructSetData($structVelocity, 2, $a_Velocity[1])
+	DllStructSetData($structVelocity, 3, $a_Velocity[2])
+	Local $structGravity = DllStructCreate("float;float;float")
+	DllStructSetData($structGravity, 1, $a_Gravity[0])
+	DllStructSetData($structGravity, 2, $a_Gravity[1])
+	DllStructSetData($structGravity, 3, $a_Gravity[2])
+	Local $structOutPosition = DllStructCreate("float;float;float")
+	Local $structOutHitPosition = DllStructCreate("float;float;float")
+
+	$result = DllCall($_irrDll, "none:cdecl", "IrrGetCollisionResultPosition", "ptr", $h_Selector, "ptr", DllStructGetPtr($structEllipsoidPosition), "ptr", DllStructGetPtr($structEllipsoidRadius), _
+			"ptr", DllStructGetPtr($structVelocity), "ptr", DllStructGetPtr($structGravity), "float", $f_SlidingSpeed, _
+			"ptr", DllStructGetPtr($structOutPosition), "ptr", DllStructGetPtr($structOutHitPosition), "int*", $i_OutFalling)
+
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		dim $a_OutPosition[3] = [ DllStructGetData($structOutPosition, 1), DllStructGetData($structOutPosition, 2), DllStructGetData($structOutPosition, 3) ]
+		dim $a_OutHitPosition[3] = [ DllStructGetData($structOutHitPosition, 1), DllStructGetData($structOutHitPosition, 2), DllStructGetData($structOutHitPosition, 3) ]
+		$i_OutFalling = $result[9]
+		Return True
+	EndIf
 EndFunc   ;==>_IrrGetCollisionResultPosition
+
 
 ;Camera functions
 Func _IrrAddFPSCamera($h_ParentNode = 0, $f_RotateSpeed = 100.0, $f_MoveSpeed = 0.5, $i_ID = -1, $h_KeyMapArray = 0, $i_KeyMapSize = 0, $i_NoVerticalMovement = 0, $f_JumpSpeed = 0.0)
