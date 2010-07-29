@@ -10,7 +10,7 @@
 
 ; ////////////////////////////////////////////////////////////////////////////
 ; Includes for extension libraries
-#include "au3Irrlicht2.au3"
+#include "..\au3Irrlicht2.au3"
 opt("MustDeclareVars", True)
 HotKeySet("{ESC}", "_exit")
 
@@ -44,10 +44,10 @@ _IrrSetWindowCaption( "Example 110: Fade Animator" )
 _IrrAddStaticText( "Zumlin model by Rowan 'Sumaleth; Crawford", 4,0,200,16, $IRR_GUI_NO_BORDER, $IRR_GUI_NO_WRAP )
 
 ; load a mesh this acts ; a blue print for the model
-$MD2Mesh = _IrrGetMesh( "./media/zumlin.md2" )
+$MD2Mesh = _IrrGetMesh( "../media/zumlin.md2" )
 
 ; load texture resources for texturing the scene nodes
-$MeshTexture = _IrrGetTexture( "./media/zumlin.pcx" )
+$MeshTexture = _IrrGetTexture( "../media/zumlin.pcx" )
 
 ; add the mesh to the scene ; a new node, the node is an instance of the
 ; mesh object supplied here

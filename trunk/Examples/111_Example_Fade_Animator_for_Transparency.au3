@@ -9,7 +9,7 @@
 
 ; ////////////////////////////////////////////////////////////////////////////
 ; Includes for extension libraries
-#include "au3Irrlicht2.au3"
+#include "..\au3Irrlicht2.au3"
 opt("MustDeclareVars", True)
 HotKeySet("{ESC}", "_exit")
 
@@ -40,7 +40,7 @@ _IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
 _IrrSetWindowCaption( "Example 111: Fade Animator for Transparency" )
 
 ; load the texture resource for the billboard
-$BillboardTexture = _IrrGetTexture( "./media/beam.png" )
+$BillboardTexture = _IrrGetTexture( "../media/beam.png" )
 
 ; add the billboard to the scene, the first two parameters are the size of the
 ; billboard in this instance they match the pixel size of the bitmap to give

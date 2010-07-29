@@ -14,7 +14,7 @@
 
 ; ////////////////////////////////////////////////////////////////////////////
 ; Includes for extension libraries
-#include "au3Irrlicht2.au3"
+#include "..\au3Irrlicht2.au3"
 opt("MustDeclareVars", True)
 HotKeySet("{ESC}", "_exit")
 
@@ -67,19 +67,19 @@ _IrrXEffectsEnableDepthPass( $IRR_ON )
 ; the water. these are then turned into normal maps for the shader to use
 for $i = 0 to $WATER_FRAMES - 1
 	$filename = StringRight("000" & $i + 1, 4)
-    $filename = "./media/water/water_" & $filename & ".png"
+    $filename = "../media/water/water_" & $filename & ".png"
     $WaterTexture[$i] = _IrrGetTexture( $filename )
     _IrrMakeNormalMapTexture( $WaterTexture[$i], 6.0 )
 Next ; $i
 
 ; load the shader associated with water rendering
-_IrrXEffectsAddPostProcessingFromFile( "./media/shaders/ScreenWater.glsl" )
+_IrrXEffectsAddPostProcessingFromFile( "../media/shaders/ScreenWater.glsl" )
 
 ; load a mesh this acts ; a blue print for the model
-$RoomMesh = _IrrGetMesh( "./media/temple.obj" )
+$RoomMesh = _IrrGetMesh( "../media/temple.obj" )
 
 ; load texture resources for texturing the scene nodes
-$MeshTexture = _IrrGetTexture( "./media/temple_lightmap.jpg" )
+$MeshTexture = _IrrGetTexture( "../media/temple_lightmap.jpg" )
 
 ; add the mesh to the scene ; a new node, the node is an instance of the
 ; mesh object supplied here
