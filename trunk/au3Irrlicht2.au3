@@ -3,6 +3,7 @@
 ; (not complete) list of the fixes/changes:
 
 
+; 100728 fixed _IrrGetCollisionNodeFromRay
 ; 100726 fixed _IrrGetCollisionResultPosition
 ; 100722 added _IrrSetRenderTarget
 ; 100722 added _IrrStartAdvanced, _IrrBeginSceneAdvanced, _IrrIsFullscreen(), _IrrGet2DPositionFromScreenCoordinates
@@ -2288,8 +2289,22 @@ Func _IrrGetCollisionNodeFromCamera($h_Camera)
 	EndIf
 EndFunc   ;==>_IrrGetCollisionNodeFromCamera
 
-Func _IrrGetCollisionNodeFromRay($h_StartVector, $h_EndVector)
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetCollisionNodeFromRay", "ptr", $h_StartVector, "ptr", $h_EndVector)
+
+Func _IrrGetCollisionNodeFromRay(byRef $h_StartVector, byRef $h_EndVector)
+; a ray is cast through the supplied coordinates and the nearest node that is
+; hit by the ray is returned. if no node is hit zero is returned for the object
+
+local $structStartVector = DllStructCreate("float;float;float")
+DllStructSetData($structStartVector, 1, $h_StartVector[0])
+DllStructSetData($structStartVector, 2, $h_StartVector[1])
+DllStructSetData($structStartVector, 3, $h_StartVector[2])
+local $structEndVector = DllStructCreate("float;float;float")
+DllStructSetData($structEndVector, 1, $h_EndVector[0])
+DllStructSetData($structEndVector, 2, $h_EndVector[1])
+DllStructSetData($structEndVector, 3, $h_EndVector[2])
+
+$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetCollisionNodeFromRay", "ptr", _
+					DllStructGetPtr($structStartVector), "ptr", DllStructGetPtr($structEndVector) )
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
