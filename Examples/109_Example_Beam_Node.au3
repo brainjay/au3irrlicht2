@@ -9,7 +9,7 @@
 
 ; ////////////////////////////////////////////////////////////////////////////
 ; Includes for extension libraries
-#include "au3Irrlicht2.au3"
+#include "..\au3Irrlicht2.au3"
 opt("MustDeclareVars", True)
 HotKeySet("{ESC}", "_exit")
 
@@ -40,7 +40,7 @@ _IrrStart( $IRR_EDT_OPENGL, 800, 400, $IRR_BITS_PER_PIXEL_32, _
 _IrrSetWindowCaption( "Example 109: Beam node" )
 
 ; load texture resources for texturing the scene nodes
-$MeshTexture = _IrrGetTexture( "./media/beam.png" )
+$MeshTexture = _IrrGetTexture( "../media/beam.png" )
 
 ; add a new beam node to the scene
 $SceneNode = _IrrAddBeamSceneNode()

@@ -1,8 +1,10 @@
 
-; Au3Irrlicht UDF Release 2.0.1
+; Au3Irrlicht UDF Release 2.0.2
 ; (not complete) list of the fixes/changes:
 
 
+; 100729 changed _IrrStart + _IrrStartAdvanced + IrrStop: IrrlichtWrapper.dll is now loaded/unloaded there, loading is now
+;        checked + has a "fallback" feature - see comments in functions
 ; 100728 fixed _IrrGetCollisionNodeFromRay
 ; 100726 fixed _IrrGetCollisionResultPosition
 ; 100722 added _IrrSetRenderTarget
@@ -76,7 +78,7 @@
 #include-once
 
 global $result
-
+global $_irrDll
 
 Global Enum $IRR_EDT_NULL, $IRR_EDT_SOFTWARE, $IRR_EDT_SOFTWARE2, $IRR_EDT_OPENGL, $IRR_EDT_DIRECT3D8, $IRR_EDT_DIRECT3D9
 Global Enum Step *16 $IRR_BITS_PER_PIXEL_16 , $IRR_BITS_PER_PIXEL_32
@@ -438,11 +440,30 @@ global Enum _ ; IRR_DEBUG
 
 
 
-Global $_irrDll = DllOpen("IrrlichtWrapper.dll")
-
 
 
 Func _IrrStart($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel = 1, $i_FullScreen = 0, $i_Shadows = 0, $i_InputCapture = 0, $i_VSync = 0)
+; opens the IrrlichtWrapper.dll and starts Irrlicht engine.
+; if .dll cannot be opened, path environment is extended with .\bin (so program can have its
+; binaries in separate dir) and .\.. (so e.g. au3irrlicht2-examples can be run from sub-dir)
+; Nevertheless, this is a fallback. EnvUpdate can take some time, so best is to be sure .dll can be found at once!
+; Other needed .dll's (Irrlicht.dll + maybe msvcp71.dll are NOT checked but simply expected to be at last in same
+; dir as the IrrlichtWrapper.dll.
+; Return value:
+; Success: True
+; Failure: 1: error occured on dll call / 2: IrrlichtWrapper.dll not found
+
+	$_irrDll = DllOpen("IrrlichtWrapper.dll")
+	if $_irrDll = -1 Then ; .dll cannot be opened - try to get it by extending %path%:
+		EnvSet("PATH", @ScriptDir & "\bin;" & @ScriptDir & "\..\;" & EnvGet("PATH"))
+		EnvUpdate()
+
+		$_irrDll = DllOpen("IrrlichtWrapper.dll")
+		if $_irrDll = -1 Then ; no chance, so return error:
+			Return Seterror(2,0,False)
+		EndIf
+	EndIf
+
 	DllCall($_irrDll, "none:cdecl", "IrrStart", "int", $i_DeviceType, "int", $i_ScreenWidth, "int", $i_ScreenHeight, "int", $i_BitsPerPixel, "uint", $i_FullScreen, "int", $i_Shadows, "int", $i_InputCapture, "int", $i_VSync)
 	if @error Then
 		Return Seterror(1,0,False)
@@ -453,7 +474,27 @@ EndFunc   ;==>_IrrStart
 
 
 Func _IrrStartAdvanced($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel = 1, $i_FullScreen = 0, $i_Shadows = 0, $i_InputCapture = 0, $i_VSync = 0, $i_TypeOfDevice = 0, $i_DoublebufferEnabled = 0, $i_AntialiasEnabled = 0, $i_HighPrecisionFpu = 0)
-; an advanced method of starting the irrlicht interface
+; opens the IrrlichtWrapper.dll and starts Irrlicht engine with advanced method.
+; if .dll cannot be opened, path environment is extended with .\bin (so program can have its
+; binaries in separate dir) and .\.. (so e.g. au3irrlicht2-examples can be run from sub-dir)
+; Nevertheless, this is a fallback. EnvUpdate can take some time, so best is to be sure .dll can be found at once!
+; Other needed .dll's (Irrlicht.dll + maybe msvcp71.dll are NOT checked but simply expected to be at last in same
+; dir as the IrrlichtWrapper.dll.
+; Return value:
+; Success: Return value from the dll call.
+; Failure: 1: error occured on dll call / 2: IrrlichtWrapper.dll not found
+
+	$_irrDll = DllOpen("IrrlichtWrapper.dll")
+	if $_irrDll = -1 Then ; .dll cannot be opened - try to get it by extending %path%:
+		EnvSet("PATH", @ScriptDir & "\bin;" & @ScriptDir & "\..\;" & EnvGet("PATH"))
+		EnvUpdate()
+
+		$_irrDll = DllOpen("IrrlichtWrapper.dll")
+		if $_irrDll = -1 Then ; no chance, so return error:
+			Return Seterror(2,0,False)
+		EndIf
+	EndIf
+
 	$result = DllCall($_irrDll, "uint:cdecl", "IrrStart", "int", $i_DeviceType, "int", $i_ScreenWidth, "int", $i_ScreenHeight, _
 			"int", $i_BitsPerPixel, "uint", $i_FullScreen, "uint", $i_Shadows, "uint", $i_InputCapture, "uint", $i_VSync, _
 			"uint", $i_TypeOfDevice, "uint", $i_DoublebufferEnabled, "uint", $i_AntialiasEnabled, "uint", $i_HighPrecisionFpu)
@@ -556,10 +597,13 @@ Func _IrrEndScene()
 EndFunc   ;==>_IrrEndScene
 
 Func _IrrStop()
+; stops Irrlicht engine and closes the IrrlichtWrapper.dll
+
 	DllCall($_irrDll, "none:cdecl", "IrrStop")
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
+		DllClose($_irrDll)
 		Return true
 	EndIf
 EndFunc   ;==>_IrrStop

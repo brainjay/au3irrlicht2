@@ -9,7 +9,7 @@
 
 ; ////////////////////////////////////////////////////////////////////////////
 ; Includes for extension libraries
-#include "au3Irrlicht2.au3"
+#include "..\au3Irrlicht2.au3"
 opt("MustDeclareVars", True)
 HotKeySet("{ESC}", "_exit")
 
@@ -38,10 +38,10 @@ _IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
 _IrrSetWindowCaption( "Example 108: Lighting Bolt Node" )
 
 ; load a mesh this acts ; a blue print for the model
-Dim $Mesh = _IrrGetMesh( "./media/cylinderX.obj" )
+Dim $Mesh = _IrrGetMesh( "../media/cylinderX.obj" )
 
 ; load texture resources for texturing the scene nodes
-Dim $Texture = _IrrGetTexture( "./media/water.png" )
+Dim $Texture = _IrrGetTexture( "../media/water.png" )
 
 ; create the a base for the effect and move, scale and rotate it into position
 $SceneNode = _IrrAddMeshToScene( $Mesh )
@@ -60,7 +60,7 @@ _IrrSetNodeMaterialFlag( $SceneNode, $IRR_EMF_LIGHTING, $IRR_OFF )
 $SceneNode = _IrrAddBoltSceneNode()
 
 ; apply a material to the beam to give its surface color
-$Texture = _IrrGetTexture( "./media/beam.png" )
+$Texture = _IrrGetTexture( "../media/beam.png" )
 _IrrSetNodeMaterialTexture( $SceneNode, $Texture, 0 )
 
 ; set the bolt properties

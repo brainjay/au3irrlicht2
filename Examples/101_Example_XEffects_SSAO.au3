@@ -19,7 +19,7 @@
 
 ; ////////////////////////////////////////////////////////////////////////////
 ; Includes for extension libraries
-#include "au3Irrlicht2.au3"
+#include "..\au3Irrlicht2.au3"
 opt("MustDeclareVars", True)
 HotKeySet("{ESC}", "_exit")
 
@@ -69,13 +69,13 @@ _IrrXEffectsEnableDepthPass( $IRR_ON )
 
 ; add the SSAO shader effect to the scene and two blur shaders (horizontal and
 ; vertical) the SSAO effect uses random noise that needs to be blurred out.
-_IrrXEffectsAddPostProcessingFromFile( "./media/shaders/SSAO.glsl", 1 )
-_IrrXEffectsAddPostProcessingFromFile( "./media/shaders/BlurVLowHP.glsl" )
-_IrrXEffectsAddPostProcessingFromFile( "./media/shaders/BlurVLowVP.glsl" )
-_IrrXEffectsAddPostProcessingFromFile( "./media/shaders/SSAOCombine.glsl" )
+_IrrXEffectsAddPostProcessingFromFile( "../media/shaders/SSAO.glsl", 1 )
+_IrrXEffectsAddPostProcessingFromFile( "../media/shaders/BlurVLowHP.glsl" )
+_IrrXEffectsAddPostProcessingFromFile( "../media/shaders/BlurVLowVP.glsl" )
+_IrrXEffectsAddPostProcessingFromFile( "../media/shaders/SSAOCombine.glsl" )
 
 ; load a mesh this acts ; a blue print for the model
-$RoomMesh = _IrrGetMesh( "./media/temple.obj" )
+$RoomMesh = _IrrGetMesh( "../media/temple.obj" )
 
 ; add the mesh to the scene ; a new node, the node is an instance of the
 ; mesh object supplied here

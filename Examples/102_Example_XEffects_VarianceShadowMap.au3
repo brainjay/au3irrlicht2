@@ -16,7 +16,7 @@
 
 ; ////////////////////////////////////////////////////////////////////////////
 ; Includes for extension libraries
-#include "au3Irrlicht2.au3"
+#include "..\au3Irrlicht2.au3"
 opt("MustDeclareVars", True)
 HotKeySet("{ESC}", "_exit")
 
@@ -51,10 +51,10 @@ _IrrXEffectsStart( $IRR_ON, $IRR_ON, $IRR_ON )
 _IrrSetWindowCaption( "Example 99: XEffects Dynamic Shadows" )
 
 ; load a mesh this acts ; a blue print for the model
-$RoomMesh = _IrrGetMesh( "./media/temple.obj" )
+$RoomMesh = _IrrGetMesh( "../media/temple.obj" )
 
 ; load texture resources for texturing the scene nodes
-$MeshTexture = _IrrGetTexture( "./media/temple_lightmap.jpg" )
+$MeshTexture = _IrrGetTexture( "../media/temple_lightmap.jpg" )
 
 ; add the mesh to the scene ; a new node, the node is an instance of the
 ; mesh object supplied here
