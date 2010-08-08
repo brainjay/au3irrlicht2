@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+
+  <style type="text/css">
+<!--
+.style1 {font-family: "Courier New", Courier, mono}
+.style2 {font-weight: bold}
+.style3 {font-weight: bold}
+.style4 {font-weight: bold}
+.style5 {
+	font-size: 24px;
+	font-weight: bold;
+}
+.style6 {
+	font-size: 18px;
+	font-weight: bold;
+}
+-->
+  </style></head><body>
+<p align="center"><u><span class="style5">User Defined Functions Public Build Templates</span></u> </p>
+
+<p align="left">This Page contains instructions on using the BuildTemplates Application:</p><p align="left">This
+version of the application is trimmed down from the one I use that
+helps me not miss any steps in getting the UDFs submitted.</p><p align="left">This is for those who wish to check the includes they are going to submit.</p><p align="left">The below seems like a lot of work to get an include file submitted but in the long run it saves a lot of time and trouble.</p><p align="left">Download: <a href="http://www.autoitscript.com/autoit3/udfs/BuildTemplates.ZIP">Build Templates Application</a></p><p align="left"><span style="font-weight: bold;">Instructions for setting up include file(s)</span></p>
+
+  <span class="style2"><em></em></span><ol><li>The include file will need some custom sections/Tokens for the application to work correctly </li>
+
+  <li>The header information needs to be formatted so that text to be displayed starts on column 20 </li>
+
+  <li>Flags in Headers:</li><ul><li>+ in column 20 is the continuation flag for the previous line (<span style="font-weight: bold;">used in Parameters, Return Values</span>)</li></ul><ul><li>| in column 20 is a new line in the right side of the table when the help file is generated (<span style="font-weight: bold;">used in Parameters, Return Values</span>)</li></ul><ul><li>- in column 20 will create new row in the table, used for things like Defaults for a style (<span style="font-weight: bold;">used in Parameters, Return Values</span>)</li></ul><ul><li>+ in column 2 of <span style="font-weight: bold;">Remarks</span> is a blank line</li></ul>
+
+  <li>Tokens that the application processes:</li><ul><li>1st Token must be the <span style="font-weight: bold;">; #INDEX#&nbsp;</span></li></ul><ol><ul><li>1st line after the token must contain the Title line for example:</li></ul><ol><ul><li><table style="text-align: left; width: 432px; height: 28px;"><tbody><tr><td style="background-color: silver;"><pre class="style1">; Title .........: Array</pre></td></tr></tbody></table></li><li>Any lines after the above line in the index section is ignored</li></ul></ol></ol><ul><li>2nd Token &nbsp;must be the <span style="font-weight: bold;">; #CURRENT#</span></li><ul><li>each
+line after the token is the function names to process with a ; in the
+1st column and the function name starting in the 2nd column</li><li>to end this section place ; with at least 1 space after it after the last function in the list</li></ul><li>Function tokens can be 1 of 2 tokens:</li><ul><li style="font-weight: bold;">; #FUNCTION#</li><ul><li>Note functions using token must be in the same order as in the&nbsp;<span style="font-weight: bold;">; #CURRENT#</span></li><li>Only Parameters, Return Values, and Remarks can have multiple lines</li><ul><li>Parameters and Return Values</li><ul><li>Variable name starts on column 20</li><li>followed by at least 1 space and - and another space followed by the description of the variable, for Example:</li><ul><li><table style="text-align: left; width: 499px; height: 210px;"><tbody><tr><td style="background-color: silver;">; Parameters ....: $hWnd - Handle to the control<br>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;$aItems - Array with the following format:<br>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;|[0][0] - Item 1 Text<br>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;|[0][1] - Item 1 Subitem 1 text<br>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;|[0][2] - Item 1 Subitem 2 text<br>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;|[0][n] - Item 1 Subitem n text<br>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;|[1][0] - Item 2 Text<br>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;|[1][1] - Item 2 Subitem 1 text<br>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;|[1][2] - Item 2 Subitem 2 text<br>;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;|[1][n] - Item 2 Subitem n text</td></tr></tbody></table></li></ul></ul></ul></ul><li style="font-weight: bold;">; #INTERNAL_USE_ONLY#</li><ul><li>Functions with these tokens will be skipped by the application</li><li>be sure these are <span style="font-weight: bold;">NOT</span> in the <span style="font-weight: bold;">; #CURRENT# </span>section</li><li>These functions can be any where in the file after the <span style="font-weight: bold;">; #CURRENT# </span>section</li></ul></ul></ul><li>Not
+all the UDF include files have this format at this time, but when I
+have to work on one it will be converted over to use this process</li><li>Look at an include if not sure, a good example would be EventLog.au3 <span style="font-weight: bold;"></span></li>
+
+</ol>
+
+</body></html>

@@ -45,7 +45,7 @@ _IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
 _IrrSetWindowCaption( "Example 61: Mouse Wheel Events" )
 
 ; load the test cube texture
-$MeshTexture = _IrrGetTexture( "../media/texture.jpg" )
+$MeshTexture = _IrrGetTexture( "../media/au3irr2_logo.jpg" )
 
 ; load the bitmap font ; a texture
 $BitmapFont = _IrrGetFont ( "../media/bitmapfont.bmp" )
