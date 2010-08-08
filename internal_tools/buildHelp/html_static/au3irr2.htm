@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>AutoIt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="css/default.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p align="center"><img src="images/au3irr2_logo.jpg" width="240" height="100" border="1"></p>
+<p align="center"><strong>v2.02a</strong></p>
+<p align="center">&copy;2010-08-08 <a href="credits.htm">Credits</a></p>
+<p align="center"><a class="ext" href="http://www.autoitscript.com/autoit3/">AutoIt v3 Homepage</a></p>
+<H1>Introduction</H1>
+
+au3Irrlicht2 is a "wrapper for a wrapper" - jRowe started the au3Irrlicht2 UDF 
+project on top of Frank Dodd's great FreeBasic Irrlicht Wrapper. 
+<br>
+It is still not complete, but definetly useable for starting, learning, 
+doing some nice 3D apps/games.
+<br>
+This release of au3Irrlicht2 includes everything to use the Irrlicht 3D engine
+together with autoIt3. This includes .dll's, ressources and documentation
+from the original freeBasic wrapper (0.7.7). 
+Thanks a lot to Frank Dodd and all the other authors for this! 
+<p>
+  jRowe's au3Irrlicht2 topic on autoitscript.com:
+  http://www.autoitscript.com/forum/index.php?showtopic=113881
+  Don't be shy, post there your feedback and questions.
+  <br>
+  The project page with latest releases + source:
+  http://code.google.com/p/au3irrlicht2/
+  <br>
+  Frank Dodd's FreeBasic Irrlicht Wrapper can be found here:
+  http://www.frankdodd.screaming.net/IrrlichtWrapper/IrrlichtWrapperPortal.htm
+  and discussion about it in the freeBasic forum:
+  http://www.freebasic.net/forum/viewtopic.php?t=3584
+  <br>
+  Of course also the "mother" of it all is worth a look:
+  http://irrlicht.sourceforge.net/ 
+  <br>
+</p>
+
+            <p align="center">
+			<img src="images/intro_screenshot.jpg" width="400" height="240" alt="Screenshot"></p>
+            <p>&nbsp;</p>
+
+
+<p><b>This release includes:</b><br>
+<ul>
+  <li>81 examples (converted to au3 from original freeBasic examples)</li>
+  <li>Example launcher</li>
+  <li>up-to-date UDF au3Irrlicht2.au3.
+  See comments at top of UDF what has changed.</li> 
+  <li>updated au3.user.calltips.api including all constants for UDF.</li>
+  <li>all required .dll's</li>
+  <li>original documentation. Also for freeBasic, a good start (besides the
+  examples) to au3Irrlicht2, until there is some documentation for 
+  this project ...</li>
+</ul>
+</p>
+
+<p>
+<b>How to use:</b><br>
+<ul>
+  <li>Extract .zip.</li>
+  <li>Run & enjoy the examples.</li>
+</ul>
+</p>
+<p>
+  When you feel (hopefully) inspired to do some 3D on your own, you may also 
+  want to use (or update) your usercalltips in scite, e.g. via 
+  Tools > UserCallTipEntries and there add content of attached included 
+  au3.user.calltips.api
+</p>
+
+
+<h1>Found & known problems:</h1>
+strange effect of round() while running irrlicht (means: after _irrstart() ): 
+round(1.666666,1) does NOT return 1.6 but long floating value?!
+Only occures with $IRR_EDT_DIRECT3D9 / $IRR_EDT_DIRECT3D8, with
+$IRR_EDT_OPENGL round() works as expected ... 
+
+================================
+scripts terminate after calling _irrstop() - all code after _irrstop() is 
+not executed?!
+
+================================
+_IrrCreateRenderTargetTexture (Example 33 : Rendering to a texture):
+very slow and destroyed texts from _IrrAddStaticText() when using openGL.
+Direct3D modes are ok. 
+Seems to depend on used graphics hardware (128MB Intel onboard graphic has 
+problems with DirectX, GeForce9800GT seems to be completely ok) 
+
+================================
+
+
+<p><img src="images/blue_gradient_1024x24.jpg" width="1024" height="1"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>
