@@ -8,6 +8,7 @@
  2010-08-01: Fixed header blocks so GuiTemplateBuilder.exe accepts them
  2010-08-08: Added handling of several .au3 (for \include), cleanup of files + dirs,
              building of Categories.toc + includes.txt
+ 2010-08-08: Fixed handling of #INTERNAL_USE_ONLY# and #NO_DOC_FUNCTION# blocks
 
  Script Function:
 	Helper tool for documentation of the au3Irrlicht2 UDF.
@@ -24,7 +25,7 @@
 
 Opt("MustDeclareVars", True)
 
-const $SCRIPTTITLE = "Help tool V0.2 - 2010 by linus"
+const $SCRIPTTITLE = "Help tool V0.201 - 2010 by linus"
 global $sLastMsg = ""
 
 global const $TAG_PRE_INCLONCE = "#include-once"
@@ -285,6 +286,8 @@ func parseUDF($pathFile, ByRef $sHeader, byRef $sIndex, ByRef $sNoDoc, ByRef $sC
 
 				if NOT ( StringLeft($sLine, 18) = "; Name...........:" ) then ; function indicator?
 					$parseFlag = $TAG_CURRENT ; info blocks are rebuild, so ignore same way as for #current#
+					; ... but be sure we have not already reached the end line of the block:
+					if StringLeft($sLine, StringLen($TAG_ENDBLOCK)) = $TAG_ENDBLOCK then $parseFlag = ""
 					ContinueLoop
 				Else ; it's for a function
 					$boolFuncHeader = True ; keep info it's there
@@ -328,8 +331,7 @@ func parseUDF($pathFile, ByRef $sHeader, byRef $sIndex, ByRef $sNoDoc, ByRef $sC
 		EndSwitch ; $parseFlag
 
 		; all special cases should be filtered out now and "continueLooped" if needed - so store current line:
-		$sBody &= $sLine & @LF
-
+		if NOT ( $sBody = "" AND $sLine = "" ) then $sBody &= $sLine & @LF
 	WEnd
 
 
