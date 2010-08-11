@@ -1,7 +1,7 @@
 #cs ----------------------------------------------------------------------------
 
  AutoIt Version: 3.3.6.1
- Author:         Linus
+ Author:         linus
 
  History:
  2010-07-31: Init
@@ -9,6 +9,8 @@
  2010-08-08: Added handling of several .au3 (for \include), cleanup of files + dirs,
              building of Categories.toc + includes.txt
  2010-08-08: Fixed handling of #INTERNAL_USE_ONLY# and #NO_DOC_FUNCTION# blocks
+ 2010-08-11: Deletes now also *.bck in \include when cleaning
+
 
  Script Function:
 	Helper tool for documentation of the au3Irrlicht2 UDF.
@@ -18,14 +20,16 @@
 	Not too much error handling - so final file should be compared with original.
 	UDF files are replaced, so should be compared CAREFULLY with their backup files!
 
-	TODO: creation of usercalltips file.
-
+ TODO:
+ - automatic creation of the usercalltips file.
+ - automatic conversion of changelog.txt to .html (maybe in general for different .txt's?)
+ - remove all the empty lines from updated UDF's
 #ce ----------------------------------------------------------------------------
 
 
 Opt("MustDeclareVars", True)
 
-const $SCRIPTTITLE = "Help tool V0.201 - 2010 by linus"
+const $SCRIPTTITLE = "Help tool V0.202 - 2010 by linus"
 global $sLastMsg = ""
 
 global const $TAG_PRE_INCLONCE = "#include-once"
@@ -111,6 +115,7 @@ func main()
 		FileDelete($pathBuild & "*.toc")
 		FileDelete($pathBuild & "*.hhk")
 		FileDelete($pathBuild & "*.tmp")
+		FileDelete($pathBuild & "..\..\include\*.bck")
 		FileDelete($pathBuild & "*.log")
 		FileDelete($pathBuild & "includes.txt")
 		DirRemove($pathBuild & "txt2htm\", 1)
@@ -131,6 +136,10 @@ func main()
 		EndIf
 
 	ElseIf $ret = 6 then ; YES: update all .au3 in a dir
+
+; Copy also files needed for help file:
+	FileCopy(@ScriptDir & "\..\include\_au3Irr2_changelog.txt", $pathBuild & "html\", 1 + 8)
+
 		$pathDir = FileSelectFolder("Include dir", "", 0, @ScriptDir)
 		$hFile = FileFindFirstFile($pathDir & "\*.au3")
 		if $hFile = -1 then

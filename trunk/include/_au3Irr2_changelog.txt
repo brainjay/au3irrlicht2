@@ -1,0 +1,24 @@
+au3Irrlicht2 Changelog
+======================
+
+
+
+2.xx (xx-xx-xx) ================================================================
+???
+
+UDF:
+- changed structure: now a main UDF including module-wise sub-UDF's from \include)
+
+Internal tools:
+- Added: helper scripts and files for building a help file
+         (see \internal tools\help_building_readme.txt) 
+
+
+
+2.02 (10-07-29) ================================================================
+First release in one package (UDF + all needed .dll's, examples, ExampleLauncher)
+
+
+
+2.0 (10-05-03) =================================================================
+First release of jRowe

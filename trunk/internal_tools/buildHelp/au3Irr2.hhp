@@ -1,20 +1,20 @@
 
 [OPTIONS]
 Compatibility=1.1 or later
-Compiled file=UDFs3.chm
-Contents file=UDFs3 TOC.hhc
+Compiled file=au3Irr2.chm
+Contents file=au3Irr2 TOC.hhc
 Default Window=Help Window
-Default topic=html\au3irr2.htm
+Default topic=html_static\au3irr2.htm
 Display compile progress=Yes
 Enhanced decompilation=Yes
-Error log file=_errorlogUDF3.txt
+Error log file=_errorlogau3Irr2.txt
 Full-text search=Yes
-Index file=UDFs3 Index.hhk
+Index file=au3Irr2 Index.hhk
 Language=0x809 English (United Kingdom)
-Title=AutoIt UDFs Help File
+Title=au3Irrlicht2 Help File
 
 [WINDOWS]
-Help Window="AutoIt UDFs Help","UDFs3 TOC.hhc","UDFs3 Index.hhk","html/au3irr2.htm","",,,,,0x63520,,0x102806,[0,0,640,480],0x80000,,,,,,0
+Help Window="au3Irrlicht2 Help","au3Irr2 TOC.hhc","au3Irr2 Index.hhk","html_static/au3irr2.htm","",,,,,0x63520,,0x102806,[0,0,640,480],0x80000,,,,,,0
 
 
 [INFOTYPES]
