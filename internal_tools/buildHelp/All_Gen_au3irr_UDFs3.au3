@@ -4,6 +4,9 @@
 ; Platform:       Win9x/NT
 ; Author: Jos van der Zande
 ; Email : jdeb@autoitscript.com
+
+; Modificated for the au3Irrlicht2 UDF from linus
+; 10-08-11
 ;
 ; Script Function:
 ; Store this script in the Helpfile directory where the project file is stored.
@@ -33,7 +36,7 @@ Global $L_MSG = ""
 FileChangeDir(@ScriptDir)
 
 _OutputBuildWrite("Generate HTM files for all changed UDFs" & @CRLF)
-RunWait('"' & @AUTOITEXE & '"' & ' All_txt2Htm.au3 /UDFs')
+RunWait('"' & @AUTOITEXE & '"' & ' All_txt2Htm.au3 /RegenAll')
 
 _OutputBuildWrite("Generate Reference HTM files for UDFs" & @CRLF)
 RunWait('"' & @AUTOITEXE & '"' & ' All_Gen_RefPage.au3 /UDFs')
@@ -52,7 +55,7 @@ Func Main()
    ; **********************************************************
    ;
 
-   $FO_TOC_HND = FileOpen("UDFs3 TOC.hhc", 2)
+   $FO_TOC_HND = FileOpen("au3Irr2 TOC.hhc", 2)
    FileWriteLine($FO_TOC_HND, '<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">')
    FileWriteLine($FO_TOC_HND, '<HTML>')
    FileWriteLine($FO_TOC_HND, '<HEAD>')
@@ -65,16 +68,35 @@ Func Main()
    FileWriteLine($FO_TOC_HND, '</OBJECT>')
    FileWriteLine($FO_TOC_HND, '<UL>')
    FileWriteLine($FO_TOC_HND, '<LI> <OBJECT type="text/sitemap">')
-   FileWriteLine($FO_TOC_HND, '<param name="Name" value="User Defined Functions Reference">')
+   FileWriteLine($FO_TOC_HND, '<param name="Name" value="au3Irr2 Functions Reference">')
    FileWriteLine($FO_TOC_HND, '<param name="Local" value="html\libfunctions.htm">')
    FileWriteLine($FO_TOC_HND, '</OBJECT>')
    FileWriteLine($FO_TOC_HND, '<UL>')
    FileWriteLine($FO_TOC_HND, '<LI> <OBJECT type="text/sitemap">')
-   FileWriteLine($FO_TOC_HND, '<param name="Name" value="User Defined Function Notes">')
-   FileWriteLine($FO_TOC_HND, '<param name="Local" value="html\libfunction_notes.htm">')
+   FileWriteLine($FO_TOC_HND, '<param name="Name" value="au3Irrlicht2 Introduction">')
+   FileWriteLine($FO_TOC_HND, '<param name="Local" value="html_static\au3irr2.htm">')
+   FileWriteLine($FO_TOC_HND, '</OBJECT>')
+   FileWriteLine($FO_TOC_HND, '<LI> <OBJECT type="text/sitemap">')
+   FileWriteLine($FO_TOC_HND, '<param name="Name" value="License">')
+   FileWriteLine($FO_TOC_HND, '<param name="Local" value="html_static\license.htm">')
+   FileWriteLine($FO_TOC_HND, '</OBJECT>')
+   FileWriteLine($FO_TOC_HND, '<LI> <OBJECT type="text/sitemap">')
+   FileWriteLine($FO_TOC_HND, '<param name="Name" value="History/Changelog">')
+   FileWriteLine($FO_TOC_HND, '<param name="Local" value="html\_au3Irr2_changelog.txt">')
    FileWriteLine($FO_TOC_HND, '</OBJECT>')
 
-   $FO_INDEX_HND = FileOpen("UDFs3 Index.hhk", 2)
+   FileWriteLine($FO_TOC_HND, '<LI> <OBJECT type="text/sitemap">')
+   FileWriteLine($FO_TOC_HND, '<param name="Name" value="Tutorials">')
+   FileWriteLine($FO_TOC_HND, '</OBJECT>')
+   FileWriteLine($FO_TOC_HND, '<UL>')
+   FileWriteLine($FO_TOC_HND, '<LI> <OBJECT type="text/sitemap">')
+   FileWriteLine($FO_TOC_HND, '<param name="Name" value="Readme">')
+   FileWriteLine($FO_TOC_HND, '<param name="Local" value="html_static\tutorials_readme.htm">')
+   FileWriteLine($FO_TOC_HND, '</OBJECT>')
+   FileWriteLine($FO_TOC_HND, '</UL>')
+
+
+   $FO_INDEX_HND = FileOpen("au3Irr2 Index.hhk", 2)
    FileWriteLine($FO_INDEX_HND, '<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">')
    FileWriteLine($FO_INDEX_HND, '<HTML>')
    FileWriteLine($FO_INDEX_HND, '<HEAD>')
@@ -83,12 +105,8 @@ Func Main()
    FileWriteLine($FO_INDEX_HND, '</HEAD><BODY>')
    FileWriteLine($FO_INDEX_HND, '<UL>')
    FileWriteLine($FO_INDEX_HND, '<LI> <OBJECT type="text/sitemap">')
-   FileWriteLine($FO_INDEX_HND, '<param name="Name" value="User Defined Functions Reference">')
+   FileWriteLine($FO_INDEX_HND, '<param name="Name" value="au3Irr2 Functions Reference">')
    FileWriteLine($FO_INDEX_HND, '<param name="Local" value="html\libfunctions.htm">')
-   FileWriteLine($FO_INDEX_HND, '</OBJECT>')
-   FileWriteLine($FO_INDEX_HND, '<LI> <OBJECT type="text/sitemap">')
-   FileWriteLine($FO_INDEX_HND, '<param name="Name" value="User Defined Function Notes">')
-   FileWriteLine($FO_INDEX_HND, '<param name="Local" value="html\libfunction_notes.htm">')
    FileWriteLine($FO_INDEX_HND, '</OBJECT>')
 
    FileDelete("Userfunctions.txt")
@@ -151,16 +169,12 @@ Func Main()
    Wend
    ; close off the Category FileChangeDir and end the TOC UL for the last include file
    FileWriteLine($FO_TOC_HND, "</UL>")
-   ; Add entry for libfunction_renaming.htm
+   ; Add entry for credits.htm
    FileWriteLine($FO_TOC_HND, '<LI> <OBJECT type="text/sitemap">')
-   FileWriteLine($FO_TOC_HND, '<param name="Name" value="UDFs renaming">')
-   FileWriteLine($FO_TOC_HND, '<param name="Local" value="html\libfunction_renaming.htm">')
+   FileWriteLine($FO_TOC_HND, '<param name="Name" value="Credits">')
+   FileWriteLine($FO_TOC_HND, '<param name="Local" value="html_static\credits.htm">')
    FileWriteLine($FO_TOC_HND, '</OBJECT>')
-   ; Add entry for ChangeLog.txt
-   FileWriteLine($FO_TOC_HND, '<LI> <OBJECT type="text/sitemap">')
-   FileWriteLine($FO_TOC_HND, '<param name="Name" value="UDF History">')
-   FileWriteLine($FO_TOC_HND, '<param name="Local" value="html\libfunctions\ChangeLog.txt">')
-   FileWriteLine($FO_TOC_HND, '</OBJECT>')
+
    ;
    ; end the TOC UL for UDF's
    FileWriteLine($FO_TOC_HND, "</UL>")

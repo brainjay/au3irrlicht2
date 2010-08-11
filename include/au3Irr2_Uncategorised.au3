@@ -9014,21 +9014,3 @@ EndFunc   ;==>_IrrAddParticleEmitter
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

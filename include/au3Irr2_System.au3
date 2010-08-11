@@ -406,20 +406,3 @@ Func _IrrStop()
 EndFunc   ;==>_IrrStop
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

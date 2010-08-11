@@ -43,6 +43,10 @@
 ;           - search MSDN : @@IncludeMsdnLink@@
 ;   Added: @scriptdir & "\txt2htm_error.log" which will contain the generated errors/warnings
 ;          to allow easy verification and review of the errors.
+
+; Modificated for the au3Irrlicht2 UDF from linus
+; 10-08-11
+
 ;==============================================================================
 ; Generate HTM files (which comprise the help file source docs)
 ; from specially formatted TXT files.
@@ -229,6 +233,7 @@ EndFunc   ;==>Rebuild
 ; The main conversion function
 ;------------------------------------------------------------------------------
 Func Convert()
+	local $sTmp
 
 	$RefType = StringStripWS(get(""), 3)
 
@@ -264,7 +269,7 @@ Func Convert()
 	EndIf
 
 	If StringInStr($RefType, "Function") > 0 Then
-		put('<h1>Function Reference</h1>')
+		put('<h1>au3Irr2 Function Reference</h1>')
 	Else
 		put('<h1>Keyword Reference</h1>')
 	EndIf
@@ -279,7 +284,12 @@ Func Convert()
 	;	put('</tr>')
 	;	put('</table>')
 	put('<p class="codeheader">')
-	put(get("###Syntax###"))
+
+	; fix the include text for au3Irr2:
+	$sTmp = get("###Syntax###")
+	$sTmp = StringRegExpReplace($sTmp, 'au3Irr2_.*?au3', 'au3Irrlicht2.au3')
+
+	put($sTmp)
 	put('</p>')
 
 	put('<p>&nbsp;</p>')

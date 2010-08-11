@@ -5,6 +5,7 @@
 
  History:
  2010-07-28: First Version 0.9
+ 2010-08-11: 0.91: Replaced launching _readme.txt with helpfile
 
  Script Function:
 	Launcher for example scripts of the au3Irrlicht2 UDF.
@@ -28,7 +29,7 @@
 opt("MustDeclareVars", True)
 
 
-const $SCRIPTTITLE = "au3Irr2 Example Launcher V0.9 - 2010 by linus"
+const $SCRIPTTITLE = "au3Irr2 Example Launcher V0.91 - 2010 by linus"
 global $nMsg
 Global $pathScite = RegRead("HKLM\Software\Microsoft\Windows\Currentversion\App Paths\Scite.Exe", "")
 global $pathAu3 = RegRead("HKLM\Software\Microsoft\Windows\Currentversion\App Paths\AutoIt3.Exe", "")
@@ -53,7 +54,7 @@ Global $Form1_1 = GUICreate("au3Irr2 Example Launcher by linus", 378, 250, 396, 
 Global $btnRun = GUICtrlCreateButton("Run selected example", 16, 113, 145, 41, $WS_GROUP)
 Global $btnQuit = GUICtrlCreateButton("Quit Launcher", 225, 137, 143, 41, $WS_GROUP)
 Global $btnScite = GUICtrlCreateButton("Open example with SciTe", 224, 89, 145, 41, $WS_GROUP)
-Global $btnReadme = GUICtrlCreateButton("Readme", 296, 9, 73, 25, $WS_GROUP)
+Global $btnReadme = GUICtrlCreateButton("Help file", 296, 9, 73, 25, $WS_GROUP)
 
 Global $cmbExamples = GUICtrlCreateCombo("", 16, 57, 353, 25, BitOR($WS_VSCROLL,$ES_READONLY,$CBS_DROPDOWNLIST,$CBS_AUTOHSCROLL))
 Global $picBackground = GUICtrlCreatePic("", 0, 0, 377, 249, BitOR($SS_NOTIFY,$WS_GROUP,$WS_CLIPSIBLINGS))
@@ -74,10 +75,10 @@ While true
 			RunWait('"' & $pathAu3 & '" ' & @ScriptDir & '\' & $pathExamples & '\' & GUICtrlRead($cmbExamples), $pathExamples)
 
 		case $btnReadme
-			if not FileExists($pathExamples & "\..\_readme.txt") Then
-				MsgBox(48, $SCRIPTTITLE, "Cannot find _readme.txt, sorry!")
+			if not FileExists($pathExamples & "\..\au3Irr2.chm") Then
+				MsgBox(48, $SCRIPTTITLE, "Cannot find help file, sorry!")
 			Else
-				ShellExecute($pathExamples & "\..\_readme.txt")
+				ShellExecute($pathExamples & "\..\au3Irr2.chm")
 			EndIf
 
 		Case $btnScite

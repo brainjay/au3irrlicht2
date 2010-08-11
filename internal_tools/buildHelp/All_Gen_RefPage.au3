@@ -14,6 +14,10 @@
 ;             - Added /AutoIt /UDFs command parameters
 ; 09 Oct 2007 - jpm - jpm@autoitscript.com
 ;             - Ignored $Tag... files
+
+; Modificated for the au3Irrlicht2 UDF from linus
+; 10-08-11
+
 ;==============================================================================
 
 Opt("TrayIconDebug", 1)
@@ -31,7 +35,7 @@ EndIf
 Global $ReGen_AutoIt = StringInStr($CmdLineRaw, "/AutoIt")
 Global $ReGen_UDFs = StringInStr($CmdLineRaw, "/UDFs")
 If $ReGen_AutoIt = 0 AND $ReGen_UDFs = 0 Then
-	$ReGen_AutoIt = 1
+	$ReGen_AutoIt = 0
 	$ReGen_UDFs = 1
 EndIf
 
@@ -69,7 +73,7 @@ If $ReGen_UDFs Then
 	; ### Added this section for UDFS
 	;
 	ProgressSet(0, "","UDF's")
-	$RefType = "User Defined Function"
+	$RefType = "au3Irr2 Function"
 	$hOut = FileOpen($OUTPUT_DIR & "libfunctions.htm", 2)  ;overwrite mode
 	$INPUT_DIR = $UDFs_IN_DIR
 	; ### Added this to determine the link to the htm file
@@ -83,12 +87,12 @@ Func genFile()
    put('<head>')
    put('  <title>' & $RefType & "s" & '</title>')
    put('  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">')
-   put('  <link href="css/default.css" rel="stylesheet" type="text/css">')
+   put('  <link href="../html_static/css/default.css" rel="stylesheet" type="text/css">')
    put('</head>')
    put('')
    put('<body>')
    put('<h1>' & $RefType & ' Reference</h1>')
-   put('<p>Below is a complete list of the ' & StringLower($RefType) & 's available in AutoIt.&nbsp;')
+   put('<p>Below is a complete list of the ' & StringLower($RefType) & 's.&nbsp;')
    put('Click on a ' & StringLower($RefType) & ' name for a detailed description.</p>')
    put('<p>&nbsp;</p>')
    put('')
@@ -141,6 +145,8 @@ Func genFile()
       ; Loop thru each line in the current input file
       $line = FileReadLine($hIn)
       While Not @error
+		  ; reset $RefType for case of au3irr2 functions:
+		 if $ReGen_UDFs then $RefType = "User Defined Function"
          If StringInStr($line, "###" & $RefType & "###") Then
             $line = StringStripWS( FileReadLine($hIn), 3)
             ;Get 1st non-blank line; (assume it's the keyword/function name)
