@@ -15,167 +15,714 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
-;_IrrSetViewPort
-;_IrrBeginScene
-;_IrrBeginSceneAdvanced
-;_IrrDrawScene
-;_IrrDrawSceneToTexture
-;_IrrSetRenderTarget
-;_IrrDrawGUI
-;_IrrEndScene
-;_IrrTransparentZWrite
-;_IrrGetFPS
-;_IrrGetPrimitivesDrawn
-;_IrrSetWindowCaption
-;_IrrIsFullscreen
-;_IrrIsWindowActive
-;_IrrIsWindowFocused
-;_IrrIsWindowMinimized
-;_IrrGetScreenSize
-;_IrrMaximizeWindow
-;_IrrMinimizeWindow
-;_IrrRestoreWindow
-;_IrrSetResizableWindow
-;_IrrMakeARGB
-;_IrrQueryFeature
-;_IrrDisableFeature
-;_IrrGetTime
-;_IrrSetTime
+;_IrrSetNodeAmbientColor
+;_IrrSetNodeDiffuseColor
+;_IrrSetNodeSpecularColor
+;_IrrSetNodeEmissiveColor
+;_IrrSetNodeColorByVertex
+;_IrrMaterialVertexColorAffects
+;_IrrSetMaterialBlend
+;_IrrMaterialSetShininess
+;_IrrMaterialSetSpecularColor
+;_IrrMaterialSetDiffuseColor
+;_IrrMaterialSetAmbientColor
+;_IrrMaterialSetEmissiveColor
+;_IrrMaterialSetMaterialTypeParam
+;_IrrSetMaterialLineThickness
+;_IrrAddHighLevelShaderMaterial
+;_IrrAddHighLevelShaderMaterialFromFiles
+;_IrrAddShaderMaterial
+;_IrrAddShaderMaterialFromFiles
+;_IrrCreateNamedVertexShaderConstant
+;_IrrCreateNamedPixelShaderConstant
+;_IrrCreateAddressedVertexShaderConstant
+;_IrrCreateAddressedPixelShaderConstant
+;_IrrXEffectsStart
+;_IrrXEffectsAddShadowToNode
+;_IrrXEffectsAddShadowLight
+;_IrrXEffectsSetAmbientColor
+;_IrrXEffectsSetClearColor
+;_IrrXEffectsSetShadowLightPosition
+;_IrrXEffectsEnableDepthPass
+;_IrrXEffectsAddPostProcessingFromFile
+;_IrrXEffectsAddNodeToDepthPass
+;_IrrXEffectsSetPostProcessingUserTexture
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
-;_IrrStart
-;_IrrStartAdvanced
-;_IrrRunning
-;_IrrStop
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; ===============================================================================================================================
 
-; #FUNCTION# =============================================================================================================
-; Name...........: _IrrStart
-; Description ...: opens the IrrlichtWrapper.dll and starts Irrlicht engine.;
-; Syntax.........: _IrrStart($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel = 1, $i_FullScreen = 0, $i_Shadows = 0, $i_InputCapture = 0, $i_VSync = 0)
+; ////////////////////////////////////////////////////////////////////////////
+; Material and GPU Programming Functions
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetNodeAmbientColor
+; Description ...: [todo]
+; Syntax.........: _IrrSetNodeAmbientColor($h_Node, $i_Color)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
-; Return values .: Success - True
-;                  Failure - 1: error occured on dll call
-;                  |2: IrrlichtWrapper.dll not found
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: if .dll cannot be opened, path environment is extended with .\bin (so program can have its
-;                  binaries in separate dir) and .\.. (so e.g. au3irrlicht2-examples can be run from sub-dir)
-;                  Nevertheless, this is a fallback. EnvUpdate can take some time, so best is to be sure .dll
-;                  can be found at once!
-;                  Other needed .dll's (Irrlicht.dll + maybe msvcp71.dll are NOT checked but simply expected
-;                  to be at last in same dir as the IrrlichtWrapper.dll.
-; Related .......: _IrrStartAdvanced, _IrrRunning, _IrrStop
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
 ; Link ..........:
-; Example .......: Yes
+; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrStart($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel = 1, $i_FullScreen = 0, $i_Shadows = 0, $i_InputCapture = 0, $i_VSync = 0)
-
-	$_irrDll = DllOpen("IrrlichtWrapper.dll")
-	if $_irrDll = -1 Then ; .dll cannot be opened - try to get it by extending %path%:
-		EnvSet("PATH", @ScriptDir & "\bin;" & @ScriptDir & "\..\;" & EnvGet("PATH"))
-		EnvUpdate()
-
-		$_irrDll = DllOpen("IrrlichtWrapper.dll")
-		if $_irrDll = -1 Then ; no chance, so return error:
-			Return Seterror(2,0,False)
-		EndIf
-	EndIf
-
-	DllCall($_irrDll, "none:cdecl", "IrrStart", "int", $i_DeviceType, "int", $i_ScreenWidth, "int", $i_ScreenHeight, "int", $i_BitsPerPixel, "uint", $i_FullScreen, "int", $i_Shadows, "int", $i_InputCapture, "int", $i_VSync)
+Func _IrrSetNodeAmbientColor($h_Node, $i_Color)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeAmbientColor", "ptr", $h_Node, "uint", $i_Color)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrStart
+EndFunc   ;==>_IrrSetNodeAmbientColor
 
 
-
-; #FUNCTION# =============================================================================================================
-; Name...........: _IrrStartAdvanced
-; Description ...: opens the IrrlichtWrapper.dll and starts Irrlicht engine with advanced method.
-; Syntax.........: _IrrStartAdvanced($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel = 1, $i_FullScreen = 0, $i_Shadows = 0, $i_InputCapture = 0, $i_VSync = 0, $i_TypeOfDevice = 0, $i_DoublebufferEnabled = 0, $i_AntialiasEnabled = 0, $i_HighPrecisionFpu = 0)
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetNodeDiffuseColor
+; Description ...: [todo]
+; Syntax.........: _IrrSetNodeDiffuseColor($h_Node, $i_Color)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
-; Return values .: Success - Return value from the dll call.
-;                  Failure - 1: error occured on dll call
-;                  |2: IrrlichtWrapper.dll not found
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: if .dll cannot be opened, path environment is extended with .\bin (so program can have its
-;                  binaries in separate dir) and .\.. (so e.g. au3irrlicht2-examples can be run from sub-dir)
-;                  Nevertheless, this is a fallback. EnvUpdate can take some time, so best is to be sure .dll
-;                  can be found at once!
-;                  Other needed .dll's (Irrlicht.dll + maybe msvcp71.dll are NOT checked but simply expected
-;                  to be at last in same dir as the IrrlichtWrapper.dll.
-; Related .......: _IrrStart, _IrrRunning, _IrrStop
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
 ; Link ..........:
-; Example .......: No
+; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrStartAdvanced($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel = 1, $i_FullScreen = 0, $i_Shadows = 0, $i_InputCapture = 0, $i_VSync = 0, $i_TypeOfDevice = 0, $i_DoublebufferEnabled = 0, $i_AntialiasEnabled = 0, $i_HighPrecisionFpu = 0)
-
-	$_irrDll = DllOpen("IrrlichtWrapper.dll")
-	if $_irrDll = -1 Then ; .dll cannot be opened - try to get it by extending %path%:
-		EnvSet("PATH", @ScriptDir & "\bin;" & @ScriptDir & "\..\;" & EnvGet("PATH"))
-		EnvUpdate()
-
-		$_irrDll = DllOpen("IrrlichtWrapper.dll")
-		if $_irrDll = -1 Then ; no chance, so return error:
-			Return Seterror(2,0,False)
-		EndIf
+Func _IrrSetNodeDiffuseColor($h_Node, $i_Color)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeDiffuseColor", "ptr", $h_Node, "uint", $i_Color)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
 	EndIf
+EndFunc   ;==>_IrrSetNodeDiffuseColor
 
-	$result = DllCall($_irrDll, "uint:cdecl", "IrrStart", "int", $i_DeviceType, "int", $i_ScreenWidth, "int", $i_ScreenHeight, _
-			"int", $i_BitsPerPixel, "uint", $i_FullScreen, "uint", $i_Shadows, "uint", $i_InputCapture, "uint", $i_VSync, _
-			"uint", $i_TypeOfDevice, "uint", $i_DoublebufferEnabled, "uint", $i_AntialiasEnabled, "uint", $i_HighPrecisionFpu)
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetNodeSpecularColor
+; Description ...: [todo]
+; Syntax.........: _IrrSetNodeSpecularColor($h_Node, $i_Color)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetNodeSpecularColor($h_Node, $i_Color)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeSpecularColor", "ptr", $h_Node, "uint", $i_Color)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetNodeSpecularColor
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetNodeEmissiveColor
+; Description ...: [todo]
+; Syntax.........: _IrrSetNodeEmissiveColor($h_Node, $i_Color)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetNodeEmissiveColor($h_Node, $i_Color)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeEmissiveColor", "ptr", $h_Node, "uint", $i_Color)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetNodeEmissiveColor
+
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetNodeColorByVertex
+; Description ...: [todo]
+; Syntax.........: _IrrSetNodeColorByVertex($h_Node, $i_ColorMaterial)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetNodeColorByVertex($h_Node, $i_ColorMaterial)
+; Set whether vertex color or material color is used to shade the surface of a node
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeColorByVertex", "ptr", $h_Node, "uint", $i_ColorMaterial)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetNodeColorByVertex
+
+
+;Materials functions
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrMaterialVertexColorAffects
+; Description ...: [todo]
+; Syntax.........: _IrrMaterialVertexColorAffects($h_Material, $i_AffectedProperty)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrMaterialVertexColorAffects($h_Material, $i_AffectedProperty)
+	DllCall($_irrDll, "none:cdecl", "IrrMaterialVertexColorAffects", "ptr", $h_Material, "int", $i_AffectedProperty)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrMaterialVertexColorAffects
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetMaterialBlend
+; Description ...: [todo]
+; Syntax.........: _IrrSetMaterialBlend($h_Material, $i_SrcBlend, $i_DstBlend)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetMaterialBlend($h_Material, $i_SrcBlend, $i_DstBlend)
+	DllCall($_irrDll, "none:cdecl", "IrrSetMaterialBlend", "ptr", $h_Material, "int", $i_SrcBlend, "int", $i_DstBlend)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetMaterialBlend
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrMaterialSetShininess
+; Description ...: [todo]
+; Syntax.........: _IrrMaterialSetShininess($h_Material, $f_Shininess)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrMaterialSetShininess($h_Material, $f_Shininess)
+	DllCall($_irrDll, "none:cdecl", "IrrMaterialSetShininess", "ptr", $h_Material, "float", $f_Shininess)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrMaterialSetShininess
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrMaterialSetSpecularColor
+; Description ...: [todo]
+; Syntax.........: _IrrMaterialSetSpecularColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrMaterialSetSpecularColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
+	DllCall($_irrDll, "none:cdecl", "IrrMaterialSetSpecularColor", "ptr", $h_Material, "uint", $i_Alpha, "uint", $i_Red, "uint", $i_Green, "uint", $i_Blue)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrMaterialSetSpecularColor
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrMaterialSetDiffuseColor
+; Description ...: [todo]
+; Syntax.........: _IrrMaterialSetDiffuseColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrMaterialSetDiffuseColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
+	DllCall($_irrDll, "none:cdecl", "IrrMaterialSetDiffuseColor", "ptr", $h_Material, "uint", $i_Alpha, "uint", $i_Red, "uint", $i_Green, "uint", $i_Blue)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrMaterialSetDiffuseColor
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrMaterialSetAmbientColor
+; Description ...: [todo]
+; Syntax.........: _IrrMaterialSetAmbientColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrMaterialSetAmbientColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
+	DllCall($_irrDll, "none:cdecl", "IrrMaterialSetAmbientColor", "ptr", $h_Material, "uint", $i_Alpha, "uint", $i_Red, "uint", $i_Green, "uint", $i_Blue)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrMaterialSetAmbientColor
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrMaterialSetEmissiveColor
+; Description ...: [todo]
+; Syntax.........: _IrrMaterialSetEmissiveColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrMaterialSetEmissiveColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
+	DllCall($_irrDll, "none:cdecl", "IrrMaterialSetEmissiveColor", "ptr", $h_Material, "uint", $i_Alpha, "uint", $i_Red, "uint", $i_Green, "uint", $i_Blue)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrMaterialSetEmissiveColor
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrMaterialSetMaterialTypeParam
+; Description ...: [todo]
+; Syntax.........: _IrrMaterialSetMaterialTypeParam($h_Material, $f_Param)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrMaterialSetMaterialTypeParam($h_Material, $f_Param)
+	DllCall($_irrDll, "none:cdecl", "IrrMaterialSetMaterialTypeParam", "ptr", $h_Material, "float", $f_Param)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrMaterialSetMaterialTypeParam
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetMaterialLineThickness
+; Description ...: [todo]
+; Syntax.........: _IrrSetMaterialLineThickness($h_Material, $f_Thickness)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetMaterialLineThickness($h_Material, $f_Thickness)
+	DllCall($_irrDll, "none:cdecl", "IrrSetMaterialLineThickness", "ptr", $h_Material, "float", $f_Thickness)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetMaterialLineThickness
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrAddHighLevelShaderMaterial
+; Description ...: [todo]
+; Syntax.........: _IrrAddHighLevelShaderMaterial($h_VertexProgram, $s_StartFunction, $i_ProgType, $s_pixelProg, $s_PixelStartFunction, $i_PixelProgTpe, $i_MaterialType)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrAddHighLevelShaderMaterial($h_VertexProgram, $s_StartFunction, $i_ProgType, $s_pixelProg, $s_PixelStartFunction, $i_PixelProgTpe, $i_MaterialType);IrrAddHighLevelShaderMaterial
+	$result = DllCall($_irrDll, "int:cdecl", "IrrAddHighLevelShaderMaterial", "ptr", $h_VertexProgram, "str", $s_StartFunction, "int", $i_ProgType, "str", $s_pixelProg, "str", $s_PixelStartFunction, "int", $i_PixelProgTpe, "int", $i_MaterialType)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
+	EndIf
+	;potentially screwed up
+EndFunc   ;==>_IrrAddHighLevelShaderMaterial
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrAddHighLevelShaderMaterialFromFiles
+; Description ...: [todo]
+; Syntax.........: _IrrAddHighLevelShaderMaterialFromFiles($s_VertexProgram, $s_StartFunction, $i_ProgType, $s_pixelProg, $s_PixelStartFunction, $i_PixelProgTpe, $i_MaterialType)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrAddHighLevelShaderMaterialFromFiles($s_VertexProgram, $s_StartFunction, $i_ProgType, $s_pixelProg, $s_PixelStartFunction, $i_PixelProgTpe, $i_MaterialType);IrrAddHighLevelShaderMaterial
+	$result = DllCall($_irrDll, "int:cdecl", "IrrAddHighLevelShaderMaterialFromFiles", "str", $s_VertexProgram, "str", $s_StartFunction, "int", $i_ProgType, "str", $s_pixelProg, "str", $s_PixelStartFunction, "int", $i_PixelProgTpe, "int", $i_MaterialType)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
+	EndIf
+	;potentially screwed up
+EndFunc   ;==>_IrrAddHighLevelShaderMaterialFromFiles
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrAddShaderMaterial
+; Description ...: [todo]
+; Syntax.........: _IrrAddShaderMaterial($h_VertexProgram, $h_PixelProgram, $i_MaterialType)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrAddShaderMaterial($h_VertexProgram, $h_PixelProgram, $i_MaterialType)
+	$result = DllCall($_irrDll, "int:cdecl", "IrrAddShaderMaterial", "ptr", $h_VertexProgram, "ptr", $h_PixelProgram, "int", $i_MaterialType)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
+	EndIf
+EndFunc   ;==>_IrrAddShaderMaterial
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrAddShaderMaterialFromFiles
+; Description ...: [todo]
+; Syntax.........: _IrrAddShaderMaterialFromFiles($s_VertexProgram, $s_PixelProgram, $i_MaterialType)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrAddShaderMaterialFromFiles($s_VertexProgram, $s_PixelProgram, $i_MaterialType)
+	$result = DllCall($_irrDll, "int:cdecl", "IrrAddShaderMaterialFromFiles", "str", $s_VertexProgram, "str", $s_PixelProgram, "int", $i_MaterialType)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
+	EndIf
+EndFunc   ;==>_IrrAddShaderMaterialFromFiles
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrCreateNamedVertexShaderConstant
+; Description ...: [todo]
+; Syntax.........: _IrrCreateNamedVertexShaderConstant($s_VertexProgram, $s_PixelProgram, $i_MaterialType)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrCreateNamedVertexShaderConstant($s_VertexProgram, $s_PixelProgram, $i_MaterialType)
+	$result = DllCall($_irrDll, "int:cdecl", "IrrCreateNamedVertexShaderConstant", "str", $s_VertexProgram, "str", $s_PixelProgram, "int", $i_MaterialType)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
+	EndIf
+EndFunc   ;==>_IrrCreateNamedVertexShaderConstant
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrCreateNamedPixelShaderConstant
+; Description ...: [todo]
+; Syntax.........: _IrrCreateNamedPixelShaderConstant($h_Shader, $s_Name, $i_Preset, $i_Data, $i_Count)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrCreateNamedPixelShaderConstant($h_Shader, $s_Name, $i_Preset, $i_Data, $i_Count)
+	$result = DllCall($_irrDll, "int:cdecl", "IrrCreateNamedPixelShaderConstant", "ptr", $h_Shader, "str", $s_Name, "int", $i_Preset, "int", $i_Data, "int", $i_Count)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
+	EndIf
+EndFunc   ;==>_IrrCreateNamedPixelShaderConstant
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrCreateAddressedVertexShaderConstant
+; Description ...: [todo]
+; Syntax.........: _IrrCreateAddressedVertexShaderConstant($h_Shader, $i_Address, $i_Preset, $i_Data, $i_Count)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrCreateAddressedVertexShaderConstant($h_Shader, $i_Address, $i_Preset, $i_Data, $i_Count)
+	$result = DllCall($_irrDll, "int:cdecl", "IrrCreateAddressedVertexShaderConstant", "ptr", $h_Shader, "int", $i_Address, "int", $i_Preset, "int", $i_Data, "int", $i_Count)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
+	EndIf
+EndFunc   ;==>_IrrCreateAddressedVertexShaderConstant
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrCreateAddressedPixelShaderConstant
+; Description ...: [todo]
+; Syntax.........: _IrrCreateAddressedPixelShaderConstant($h_Shader, $i_Address, $i_Preset, $i_Data, $i_Count)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrCreateAddressedPixelShaderConstant($h_Shader, $i_Address, $i_Preset, $i_Data, $i_Count)
+	$result = DllCall($_irrDll, "int:cdecl", "IrrCreateAddressedPixelShaderConstant", "ptr", $h_Shader, "int", $i_Address, "int", $i_Preset, "int", $i_Data, "int", $i_Count)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
+	EndIf
+EndFunc   ;==>_IrrCreateAddressedPixelShaderConstant
+
+
+; ////////////////////////////////////////////////////////////////////////////
+; Bitplanes XEffect Extension
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrXEffectsStart
+; Description ...: [todo]
+; Syntax.........: _IrrXEffectsStart($i_Vsm=$IRR_OFF, $i_SoftShadows=$IRR_OFF, $iBitdepth32=$IRR_OFF)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrXEffectsStart($i_Vsm=$IRR_OFF, $i_SoftShadows=$IRR_OFF, $iBitdepth32=$IRR_OFF)
+; start the XEffects system
+	$result = DllCall($_irrDll, "none:cdecl", "IrrXEffectsStart", "int", $i_Vsm, "int", $i_SoftShadows, "int", $iBitdepth32)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrXEffectsStart
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrXEffectsAddShadowToNode
+; Description ...: [todo]
+; Syntax.........: _IrrXEffectsAddShadowToNode($h_Node, $i_FilterType=$EFT_NONE, $i_shadowType=$ESM_BOTH)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrXEffectsAddShadowToNode($h_Node, $i_FilterType=$EFT_NONE, $i_shadowType=$ESM_BOTH)
+; start the XEffects system
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrXEffectsAddShadowToNode", "ptr", $h_Node, "int", $i_FilterType, "int", $i_shadowType)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return $result[0]
 	EndIf
-EndFunc   ;==>_IrrStartAdvanced
-
-
-
-; #FUNCTION# =============================================================================================================
-; Name...........: _IrrRunning
-; Description ...: [todo]
-; Syntax.........: _IrrRunning()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: _IrrStart, _IrrStartAdvanced, _IrrStop
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func _IrrRunning()
-	$result = DllCall($_irrDll, "int:cdecl", "IrrRunning")
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrRunning
+EndFunc   ;==>_IrrXEffectsAddShadowToNode
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetViewPort
+; Name...........: _IrrXEffectsAddShadowLight
 ; Description ...: [todo]
-; Syntax.........: _IrrSetViewPort($i_TopX, $i_TopY, $i_BottomX, $i_BottomY)
+; Syntax.........: _IrrXEffectsAddShadowLight($i_ShadowDimen, $f_PosX, $f_PosY, $f_PosZ, $f_TargetX, $f_TargetY, $f_TargetZ, $f_R, $f_G, $f_B, $f_Alpha, $f_LightNearDist, $f_LightFarDist, $f_AngleDegrees )
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -189,20 +736,36 @@ EndFunc   ;==>_IrrRunning
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrSetViewPort($i_TopX, $i_TopY, $i_BottomX, $i_BottomY)
-	DllCall($_irrDll, "none:cdecl", "IrrSetViewPort", "int", $i_TopX, "int", $i_TopY, "int", $i_BottomX, "int", $i_BottomY)
+Func _IrrXEffectsAddShadowLight($i_ShadowDimen, $f_PosX, $f_PosY, $f_PosZ, $f_TargetX, $f_TargetY, $f_TargetZ, $f_R, $f_G, $f_B, $f_Alpha, $f_LightNearDist, $f_LightFarDist, $f_AngleDegrees )
+; Add a special dynamic shadow casting light
+; The first parameter specifies the shadow map resolution for the shadow light.
+; The shadow map is always square, so you need only pass 1 dimension, preferably
+; a power of two between 512 and 2048, maybe larger depending on your quality
+; requirements and target hardware.
+; The second parameter is the light position, the third parameter is the (look at)
+; target, the next is the light color, and the next two are very important
+; values, the nearValue and farValue, be sure to set them appropriate to the current
+; scene. The last parameter is the FOV (Field of view), since the light is similar to
+; a spot light, the field of view will determine its area of influence. Anything that
+; is outside of a lights frustum (Too close, too far, or outside of it's field of view)
+; will be unlit by this particular light, similar to how a spot light works.
+	$result = DllCall($_irrDll, "none:cdecl", "IrrXEffectsAddShadowLight", "int", $i_ShadowDimen, _
+					"float", $f_PosX, "float", $f_PosY, "float", $f_PosZ, _
+					"float", $f_TargetX, "float", $f_TargetY, "float", $f_TargetZ, _
+					"float", $f_R, "float", $f_G, "float", $f_B, "float", $f_Alpha, _
+					"float", $f_LightNearDist, "float", $f_LightFarDist, "float", $f_AngleDegrees )
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrSetViewPort
+EndFunc   ;==>_IrrXEffectsAddShadowLight
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrBeginScene
+; Name...........: _IrrXEffectsSetAmbientColor
 ; Description ...: [todo]
-; Syntax.........: _IrrBeginScene($i_Red, $i_Green, $i_Blue)
+; Syntax.........: _IrrXEffectsSetAmbientColor($i_R, $i_G, $i_B, $i_Alpha)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -216,22 +779,21 @@ EndFunc   ;==>_IrrSetViewPort
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrBeginScene($i_Red, $i_Green, $i_Blue)
-; initialise the frame drawing cycle, erasing the canvas ready for drawing
-	DllCall($_irrDll, "none:cdecl", "IrrBeginScene", "int", $i_Red, "int", $i_Green, "int", $i_Blue)
+Func _IrrXEffectsSetAmbientColor($i_R, $i_G, $i_B, $i_Alpha)
+; sets the ambient lighting procuded in the scene by the XEffects system
+	$result = DllCall($_irrDll, "none:cdecl", "IrrXEffectsSetAmbientColor", "uint", $i_R, "uint", $i_G, "uint", $i_B, "uint", $i_Alpha)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrBeginScene
-
+EndFunc   ;==>_IrrXEffectsSetAmbientColor
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrBeginSceneAdvanced
+; Name...........: _IrrXEffectsSetClearColor
 ; Description ...: [todo]
-; Syntax.........: _IrrBeginSceneAdvanced($i_SceneBGColor, $i_ClearBackBuffer = 1, $i_ClearZBuffer = 1)
+; Syntax.........: _IrrXEffectsSetClearColor($i_R, $i_G, $i_B, $i_Alpha)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -245,22 +807,22 @@ EndFunc   ;==>_IrrBeginScene
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrBeginSceneAdvanced($i_SceneBGColor, $i_ClearBackBuffer = 1, $i_ClearZBuffer = 1)
-; Readies a scene for rendering, erasing the canvas and setting a background color.
-	DllCall($_irrDll, "none:cdecl", "IrrBeginSceneAdvanced", "uint", $i_SceneBGColor, "byte", $i_ClearBackBuffer, "byte", $i_ClearZBuffer)
+Func _IrrXEffectsSetClearColor($i_R, $i_G, $i_B, $i_Alpha)
+; the XEffects system uses a different background color to the one specified in
+; the IrrBeginScene call use this call to set this default background color
+	$result = DllCall($_irrDll, "none:cdecl", "IrrXEffectsSetClearColor", "float", $i_R, "uint", $i_G, "uint", $i_B, "uint", $i_Alpha)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrBeginSceneAdvanced
-
+EndFunc   ;==>_IrrXEffectsSetClearColor
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrDrawScene
+; Name...........: _IrrXEffectsSetShadowLightPosition
 ; Description ...: [todo]
-; Syntax.........: _IrrDrawScene()
+; Syntax.........: _IrrXEffectsSetShadowLightPosition($i_Index, $f_PosX, $f_PosY, $f_PosZ)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -274,20 +836,23 @@ EndFunc   ;==>_IrrBeginSceneAdvanced
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrDrawScene()
-	DllCall($_irrDll, "none:cdecl", "IrrDrawScene")
+Func _IrrXEffectsSetShadowLightPosition($i_Index, $f_PosX, $f_PosY, $f_PosZ)
+; Set the position of a shadow light. the index refers to the numerical order
+; in which the lights were added.
+	$result = DllCall($_irrDll, "none:cdecl", "IrrXEffectsSetShadowLightPosition", "int", $i_Index, _
+				"float", $f_PosX, "float", $f_PosY, "float", $f_PosZ)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrDrawScene
+EndFunc   ;==>_IrrXEffectsSetShadowLightPosition
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrDrawSceneToTexture
+; Name...........: _IrrXEffectsEnableDepthPass
 ; Description ...: [todo]
-; Syntax.........: _IrrDrawSceneToTexture($h_RenderTargetTexture)
+; Syntax.........: _IrrXEffectsEnableDepthPass($i_Enable)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -301,52 +866,21 @@ EndFunc   ;==>_IrrDrawScene
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrDrawSceneToTexture($h_RenderTargetTexture)
-;use IrrCreateRenderTargetTexture to get $h_RenderTargetTexture
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrDrawSceneToTexture", "ptr", $h_RenderTargetTexture)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrDrawSceneToTexture
-
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetRenderTarget
-; Description ...: [todo]
-; Syntax.........: _IrrSetRenderTarget($h_Texture, $i_SceneBGColor = 0, $i_ClearBackBuffer = 1, $i_ClearZBuffer = 1)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrSetRenderTarget($h_Texture, $i_SceneBGColor = 0, $i_ClearBackBuffer = 1, $i_ClearZBuffer = 1)
-; Sets a texture as a render target, or sets the device if the pointer is 0.
-	DllCall($_irrDll, "none:cdecl", "IrrSetRenderTarget", "ptr", $h_Texture, "uint", $i_SceneBGColor, _
-			"byte", $i_ClearBackBuffer, "byte", $i_ClearZBuffer)
+Func _IrrXEffectsEnableDepthPass($i_Enable)
+; enable XEffects depth pass
+	$result = DllCall($_irrDll, "none:cdecl", "IrrXEffectsEnableDepthPass", "int", $i_Enable)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrSetRenderTarget
-
+EndFunc   ;==>_IrrXEffectsEnableDepthPass
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrDrawGUI
+; Name...........: _IrrXEffectsAddPostProcessingFromFile
 ; Description ...: [todo]
-; Syntax.........: _IrrDrawGUI()
+; Syntax.........: _IrrXEffectsAddPostProcessingFromFile($s_Name, $i_Enable=0)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -360,20 +894,21 @@ EndFunc   ;==>_IrrSetRenderTarget
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrDrawGUI()
-	DllCall($_irrDll, "none:cdecl", "IrrDrawGUI")
+Func _IrrXEffectsAddPostProcessingFromFile($s_Name, $i_Enable=0)
+; enable XEffects depth pass
+	$result = DllCall($_irrDll, "none:cdecl", "IrrXEffectsAddPostProcessingFromFile", "str", $s_Name, "int", $i_Enable)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrDrawGUI
+EndFunc   ;==>_IrrXEffectsAddPostProcessingFromFile
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrEndScene
+; Name...........: _IrrXEffectsAddNodeToDepthPass
 ; Description ...: [todo]
-; Syntax.........: _IrrEndScene()
+; Syntax.........: _IrrXEffectsAddNodeToDepthPass($h_Node)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -387,47 +922,21 @@ EndFunc   ;==>_IrrDrawGUI
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrEndScene()
-	DllCall($_irrDll, "none:cdecl", "IrrEndScene")
+Func _IrrXEffectsAddNodeToDepthPass($h_Node)
+; adds a node to the list of nodes used for calculating the depth pass
+	$result = DllCall($_irrDll, "none:cdecl", "IrrXEffectsAddNodeToDepthPass", "ptr", $h_Node)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrEndScene
-
-
-; #FUNCTION# =============================================================================================================
-; Name...........: _IrrStop
-; Description ...: Stops Irrlicht engine and closes the IrrlichtWrapper.dll
-; Syntax.........: _IrrStop()
-; Parameters ....: None
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: _IrrStart, _IrrStartAdvanced, _IrrRunning
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func _IrrStop()
-
-	DllCall($_irrDll, "none:cdecl", "IrrStop")
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		DllClose($_irrDll)
-		Return true
-	EndIf
-EndFunc   ;==>_IrrStop
+EndFunc   ;==>_IrrXEffectsAddNodeToDepthPass
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrTransparentZWrite
+; Name...........: _IrrXEffectsSetPostProcessingUserTexture
 ; Description ...: [todo]
-; Syntax.........: _IrrTransparentZWrite()
+; Syntax.........: _IrrXEffectsSetPostProcessingUserTexture($h_Texture)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -441,476 +950,59 @@ EndFunc   ;==>_IrrStop
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrTransparentZWrite()
-	DllCall($_irrDll, "none:cdecl", "IrrTransparentZWrite")
+Func _IrrXEffectsSetPostProcessingUserTexture($h_Texture)
+; Sets the user defined post processing texture. This is used internally for
+; the SSAO shader but is used primarily for the water shader where it defines
+; the specular surface pattern of the water.
+	$result = DllCall($_irrDll, "none:cdecl", "IrrXEffectsSetPostProcessingUserTexture", "ptr", $h_Texture)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrTransparentZWrite
+EndFunc   ;==>_IrrXEffectsSetPostProcessingUserTexture
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrGetFPS
-; Description ...: [todo]
-; Syntax.........: _IrrGetFPS()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrGetFPS()
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGetFPS")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrGetFPS
+#cs - TODO of bitplanes XEffect Extension:
+'' ////////////////////////////////////////////////////////////////////////////
+'' Bitplanes XEffect Extension
 
+' remove a shadowing effect from a node
+declare sub IrrXEffectsRemoveShadowFromNode alias "IrrXEffectsRemoveShadowFromNode" ( _
+        byval node as irr_node )
 
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrGetPrimitivesDrawn
-; Description ...: [todo]
-; Syntax.........: _IrrGetPrimitivesDrawn()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrGetPrimitivesDrawn()
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGetPrimitivesDrawn")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrGetPrimitivesDrawn
+' exclude a node from being calculated in shadowing equations
+declare sub IrrXEffectsExcludeNodeFromLightingCalculations alias "IrrXEffectsExcludeNodeFromLightingCalculations" ( _
+        byval node as irr_node )
 
+' Get the position of a shadow light. the index refers to the numerical order
+' in which the lights were added.
+declare sub IrrXEffectsGetShadowLightPosition alias "IrrXEffectsGetShadowLightPosition" ( _
+	byval index as uinteger, byref posX as single, byref posY as single, byref posZ as single )
 
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetWindowCaption
-; Description ...: [todo]
-; Syntax.........: _IrrSetWindowCaption($s_Caption)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrSetWindowCaption($s_Caption)
-	DllCall($_irrDll, "none:cdecl", "IrrSetWindowCaption", "wstr", $s_Caption)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
-EndFunc   ;==>_IrrSetWindowCaption
+' Set the target location of a shadow light. the index refers to the numerical
+' order in which the lights were added.
+declare sub IrrXEffectsSetShadowLightTarget alias "IrrXEffectsSetShadowLightTarget" ( _
+	byval index as uinteger, byVal posX as single, byVal posY as single, byVal posZ as single )
 
+' Get the target location of a shadow light. the index refers to the numerical
+' order in which the lights were added.
+declare sub IrrXEffectsGetShadowLightTarget alias "IrrXEffectsGetShadowLightTarget" ( _
+	byval index as uinteger, byref posX as single, byref posY as single, byref posZ as single )
 
+' Set the target location of a shadow light. the index refers to the numerical
+' order in which the lights were added.
+declare sub IrrXEffectsSetShadowLightColor alias "IrrXEffectsSetShadowLightColor" ( _
+	byval index as uinteger, byval R as single, byval G as single, byval B as single, _
+    byval Alpha as single )
 
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrIsFullscreen
-; Description ...: [todo]
-; Syntax.........: _IrrIsFullscreen()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrIsFullscreen()
-; Checks if the Irrlicht window is running in fullscreen mode.
-	$result = DllCall($_irrDll, "int:cdecl", "IrrIsFullscreen")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrIsFullscreen
+' Get the target location of a shadow light. the index refers to the numerical
+' order in which the lights were added.
+declare sub IrrXEffectsGetShadowLightColor alias "IrrXEffectsGetShadowLightColor" ( _
+	byval index as uinteger, byref R as single, byref G as single, byref B as single, _
+    byref Alpha as single )
+#ce
+; end of definitions: Bitplanes XEffect Extension
+; ////////////////////////////////////////////////////////////////////////////
 
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrIsWindowActive
-; Description ...: [todo]
-; Syntax.........: _IrrIsWindowActive()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrIsWindowActive()
-; Returns if the window is active.
-	$result = DllCall($_irrDll, "int:cdecl", "IrrIsWindowActive")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrIsWindowActive
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrIsWindowFocused
-; Description ...: [todo]
-; Syntax.........: _IrrIsWindowFocused()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrIsWindowFocused()
-; Checks if the Irrlicht window has focus.
-	$result = DllCall($_irrDll, "int:cdecl", "IrrIsWindowFocused")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrIsWindowFocused
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrIsWindowMinimized
-; Description ...: [todo]
-; Syntax.........: _IrrIsWindowMinimized()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrIsWindowMinimized()
-; Checks if the Irrlicht window is minimized.
-	$result = DllCall($_irrDll, "int:cdecl", "IrrIsWindowMinimized")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrIsWindowMinimized
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrGetScreenSize
-; Description ...: [todo]
-; Syntax.........: _IrrGetScreenSize(ByRef $i_Width, ByRef $i_Height)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrGetScreenSize(ByRef $i_Width, ByRef $i_Height)
-; Gets the screen size.
-	$result = DllCall($_irrDll, "none:cdecl", "IrrGetScreenSize", "int*", $i_Width, "int*", $i_Height)
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		$i_Width = $result[1]
-		$i_Height = $result[2]
-		Return true
-	EndIf
-EndFunc   ;==>_IrrGetScreenSize
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrMaximizeWindow
-; Description ...: [todo]
-; Syntax.........: _IrrMaximizeWindow()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrMaximizeWindow()
-; Maximizes the window if possible.
-	$result = DllCall($_irrDll, "none:cdecl", "IrrMaximizeWindow")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return true
-	EndIf
-EndFunc   ;==>_IrrMaximizeWindow
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrMinimizeWindow
-; Description ...: [todo]
-; Syntax.........: _IrrMinimizeWindow()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrMinimizeWindow()
-; Minimizes the window if possible.
-	$result = DllCall($_irrDll, "none:cdecl", "IrrMinimizeWindow")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return true
-	EndIf
-EndFunc   ;==>_IrrMinimizeWindow
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrRestoreWindow
-; Description ...: [todo]
-; Syntax.........: _IrrRestoreWindow()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrRestoreWindow()
-; Restore the window to normal size if possible.
-	$result = DllCall($_irrDll, "none:cdecl", "IrrRestoreWindow")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return true
-	EndIf
-EndFunc   ;==>_IrrRestoreWindow
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetResizableWindow
-; Description ...: [todo]
-; Syntax.........: _IrrSetResizableWindow($i_Resizable)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrSetResizableWindow($i_Resizable)
-; Make the window resizable.
-	$result = DllCall($_irrDll, "none:cdecl", "IrrSetResizableWindow")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return true
-	EndIf
-EndFunc   ;==>_IrrSetResizableWindow
-
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrMakeARGB
-; Description ...: [todo]
-; Syntax.........: _IrrMakeARGB($i_Alpha, $i_Red, $i_Green, $i_Blue)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrMakeARGB($i_Alpha, $i_Red, $i_Green, $i_Blue)
-; make 32 bit representation of an Alpha, Red, Green, Blue color
-	return int( ( "0x" & Hex($i_Alpha, 2) & Hex($i_Red, 2) & Hex($i_Green, 2) & Hex($i_Blue, 2) ) )
-EndFunc   ;==>_IrrMakeARGB
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrQueryFeature
-; Description ...: [todo]
-; Syntax.........: _IrrQueryFeature($i_Feature)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrQueryFeature($i_Feature)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrQueryFeature", "int", $i_Feature)
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrQueryFeature
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrDisableFeature
-; Description ...: [todo]
-; Syntax.........: _IrrDisableFeature($i_Feature, $i_Flag)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrDisableFeature($i_Feature, $i_Flag)
-	DllCall($_irrDll, "int:cdecl", "IrrDisableFeature", "int", $i_Feature, "int", $i_Flag)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
-EndFunc   ;==>_IrrDisableFeature
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrGetTime
-; Description ...: [todo]
-; Syntax.........: _IrrGetTime()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrGetTime()
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGetTime")
-	Return $result[0]
-EndFunc   ;==>_IrrGetTime
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetTime
-; Description ...: [todo]
-; Syntax.........: _IrrSetTime($i_Time)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrSetTime($i_Time)
-	DllCall($_irrDll, "none:cdecl", "IrrSetTime", "int", $i_Time)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
-EndFunc   ;==>_IrrSetTime
 

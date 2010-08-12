@@ -15,34 +15,33 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
-;_IrrAddCamera
-;_IrrAddMayaCamera
-;_IrrSetCameraTarget
-;_IrrGetCameraTarget
-;_IrrGetCameraUpDirection
-;_IrrSetCameraUpDirection
-;_IrrGetCameraOrientation
-;_IrrRevolveCamera
-;_IrrSetCameraUpAtRightAngle
-;_IrrSetCameraOrthagonal
-;_IrrSetCameraClipDistance
-;_IrrSetActiveCamera
-;_IrrSetCameraFOV
-;_IrrSetCameraAspectRatio
+;_IrrSetNodeAnimationRange
+;_IrrPlayNodeMD2Animation
+;_IrrSetNodeAnimationSpeed
+;_IrrGetNodeAnimationFrame
+;_IrrSetNodeAnimationFrame
+;_IrrSetTransitionTime
+;_IrrAnimateJoints
+;_IrrAddCollisionAnimator
+;_IrrAddDeleteAnimator
+;_IrrAddFlyCircleAnimator
+;_IrrAddFlyStraightAnimator
+;_IrrAddRotationAnimator
+;_IrrAddSplineAnimator
+;_IrrAddFadeAnimator
+;_IrrRemoveAnimator
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
-;_IrrAddFPSCamera
-;__CreatePtrKeyMapArray
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; ===============================================================================================================================
 
-; #FUNCTION# =============================================================================================================
-; Name...........: _IrrAddFPSCamera
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetNodeAnimationRange
 ; Description ...: [todo]
-; Syntax.........: _IrrAddFPSCamera($h_ParentNode = 0, $f_RotateSpeed = 100.0, $f_MoveSpeed = 0.5, $i_ID = -1, $h_KeyMapArray = 0, $i_KeyMapSize = 0, $i_NoVerticalMovement = 0, $f_JumpSpeed = 0.0)
+; Syntax.........: _IrrSetNodeAnimationRange($h_Node, $i_Start, $i_End)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -52,24 +51,105 @@
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: [todo]
-; Related .......: __CreatePtrKeyMapArray
+; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrAddFPSCamera($h_ParentNode = 0, $f_RotateSpeed = 100.0, $f_MoveSpeed = 0.5, $i_ID = -1, $h_KeyMapArray = 0, $i_KeyMapSize = 0, $i_NoVerticalMovement = 0, $f_JumpSpeed = 0.0)
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddFPSCamera", "UINT_PTR", $h_ParentNode, "float", $f_RotateSpeed, "float", $f_MoveSpeed, "int", $i_ID, "ptr", $h_KeyMapArray, "int", $i_KeyMapSize, "int", $i_NoVerticalMovement, "float", $f_JumpSpeed)
+Func _IrrSetNodeAnimationRange($h_Node, $i_Start, $i_End)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeAnimationRange", "ptr", $h_Node, "int", $i_Start, "int", $i_End)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetNodeAnimationRange
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrPlayNodeMD2Animation
+; Description ...: [todo]
+; Syntax.........: _IrrPlayNodeMD2Animation($h_Node, $i_Animation)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrPlayNodeMD2Animation($h_Node, $i_Animation)
+	DllCall($_irrDll, "none:cdecl", "IrrPlayNodeMD2Animation", "ptr", $h_Node, "int", $i_Animation)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrPlayNodeMD2Animation
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetNodeAnimationSpeed
+; Description ...: [todo]
+; Syntax.........: _IrrSetNodeAnimationSpeed($h_Node, $f_Speed)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetNodeAnimationSpeed($h_Node, $f_Speed)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeAnimationSpeed", "ptr", $h_Node, "float", $f_Speed)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetNodeAnimationSpeed
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrGetNodeAnimationFrame
+; Description ...: [todo]
+; Syntax.........: _IrrGetNodeAnimationFrame($h_Node)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrGetNodeAnimationFrame($h_Node)
+	$result = DllCall($_irrDll, "int:cdecl", "IrrGetNodeAnimationFrame", "ptr", $h_Node)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		Return $result[0]
 	EndIf
-EndFunc   ;==>_IrrAddFPSCamera
+EndFunc   ;==>_IrrGetNodeAnimationFrame
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrAddCamera
+; Name...........: _IrrSetNodeAnimationFrame
 ; Description ...: [todo]
-; Syntax.........: _IrrAddCamera($f_CamX, $f_CamY, $f_CamZ, $f_TargetX, $f_TargetY, $f_TargetZ)
+; Syntax.........: _IrrSetNodeAnimationFrame($h_Node, $f_Frame)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -83,20 +163,75 @@ EndFunc   ;==>_IrrAddFPSCamera
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrAddCamera($f_CamX, $f_CamY, $f_CamZ, $f_TargetX, $f_TargetY, $f_TargetZ)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddCamera", "float", $f_CamX, "float", $f_CamY, "float", $f_CamZ, "float", $f_TargetX, "float", $f_TargetY, "float", $f_TargetZ)
+Func _IrrSetNodeAnimationFrame($h_Node, $f_Frame)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeAnimationFrame", "ptr", $h_Node, "float", $f_Frame)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetNodeAnimationFrame
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetTransitionTime
+; Description ...: [todo]
+; Syntax.........: _IrrSetTransitionTime($h_Node, $f_Speed)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetTransitionTime($h_Node, $f_Speed)
+	DllCall($_irrDll, "none:cdecl", "IrrSetTransitionTime", "ptr", $h_Node, "float", $f_Speed)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetTransitionTime
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrAnimateJoints
+; Description ...: [todo]
+; Syntax.........: _IrrAnimateJoints($h_Node)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrAnimateJoints($h_Node)
+	DllCall($_irrDll, "int:cdecl", "IrrAnimateJoints", "ptr", $h_Node)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		Return $result[0]
 	EndIf
-EndFunc   ;==>_IrrAddCamera
+EndFunc   ;==>_IrrAnimateJoints
+
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrAddMayaCamera
+; Name...........: _IrrAddCollisionAnimator
 ; Description ...: [todo]
-; Syntax.........: _IrrAddMayaCamera($h_Node, $f_Rotate, $f_Zoom, $f_Move)
+; Syntax.........: _IrrAddCollisionAnimator($h_IrrSelector, $h_Node, $f_RadiusX, $f_RadiusY, $f_RadiusZ, $f_GravityX, $f_GravityY, $f_GravityZ, $f_OffsetX, $f_OffsetY, $f_OffsetZ)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -110,20 +245,20 @@ EndFunc   ;==>_IrrAddCamera
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrAddMayaCamera($h_Node, $f_Rotate, $f_Zoom, $f_Move)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddMayaCamera", "ptr", $h_Node, "float", $f_Rotate, "float", $f_Zoom, "float", $f_Move)
+Func _IrrAddCollisionAnimator($h_IrrSelector, $h_Node, $f_RadiusX, $f_RadiusY, $f_RadiusZ, $f_GravityX, $f_GravityY, $f_GravityZ, $f_OffsetX, $f_OffsetY, $f_OffsetZ)
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddCollisionAnimator", "ptr", $h_IrrSelector, "ptr", $h_Node, "float", $f_RadiusX, "float", $f_RadiusY, "float", $f_RadiusZ, "float", $f_GravityX, "float", $f_GravityY, "float", $f_GravityZ, "float", $f_OffsetX, "float", $f_OffsetY, "float", $f_OffsetZ)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
-		Return $result[0]
+		return $result[0]
 	EndIf
-EndFunc   ;==>_IrrAddMayaCamera
+EndFunc   ;==>_IrrAddCollisionAnimator
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetCameraTarget
+; Name...........: _IrrAddDeleteAnimator
 ; Description ...: [todo]
-; Syntax.........: _IrrSetCameraTarget($h_Camera, $f_CamX, $f_CamY, $f_CamZ)
+; Syntax.........: _IrrAddDeleteAnimator($h_Node, $i_Time)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -137,20 +272,20 @@ EndFunc   ;==>_IrrAddMayaCamera
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrSetCameraTarget($h_Camera, $f_CamX, $f_CamY, $f_CamZ)
-	DllCall($_irrDll, "none:cdecl", "IrrSetCameraTarget", "ptr", $h_Camera, "float", $f_CamX, "float", $f_CamY, "float", $f_CamZ)
+Func _IrrAddDeleteAnimator($h_Node, $i_Time)
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddDeleteAnimator", "ptr", $h_Node, "int", $i_Time)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
-		return True
+		return $result[0]
 	EndIf
-EndFunc   ;==>_IrrSetCameraTarget
+EndFunc   ;==>_IrrAddDeleteAnimator
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrGetCameraTarget
+; Name...........: _IrrAddFlyCircleAnimator
 ; Description ...: [todo]
-; Syntax.........: _IrrGetCameraTarget($h_Camera, ByRef $a_Vector3df)
+; Syntax.........: _IrrAddFlyCircleAnimator($h_Node, $f_CenterX, $f_CenterY, $f_CenterZ, $f_Radius, $f_Speed)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -164,24 +299,20 @@ EndFunc   ;==>_IrrSetCameraTarget
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrGetCameraTarget($h_Camera, ByRef $a_Vector3df)
-	Dim $a_Vector3df[3]
-	$result = DllCall($_irrDll, "none:cdecl", "IrrGetCameraTarget", "ptr", $h_Camera, "float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2])
+Func _IrrAddFlyCircleAnimator($h_Node, $f_CenterX, $f_CenterY, $f_CenterZ, $f_Radius, $f_Speed)
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddFlyCircleAnimator", "ptr", $h_Node, "float", $f_CenterX, "float", $f_CenterY, "float", $f_CenterZ, "float", $f_Radius, "float", $f_Speed)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
-		$a_Vector3df[0] = $result[2]
-		$a_Vector3df[1] = $result[3]
-		$a_Vector3df[2] = $result[4]
-		Return True
+		return $result[0]
 	EndIf
-EndFunc   ;==>_IrrGetCameraTarget
+EndFunc   ;==>_IrrAddFlyCircleAnimator
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrGetCameraUpDirection
+; Name...........: _IrrAddFlyStraightAnimator
 ; Description ...: [todo]
-; Syntax.........: _IrrGetCameraUpDirection($h_Camera, ByRef $a_Vector3df)
+; Syntax.........: _IrrAddFlyStraightAnimator($h_Node, $f_StartX, $f_StartY, $f_StartZ, $f_EndX, $f_EndY, $f_EndZ, $i_Time, $i_DoLoop)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -195,24 +326,20 @@ EndFunc   ;==>_IrrGetCameraTarget
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrGetCameraUpDirection($h_Camera, ByRef $a_Vector3df)
-	Dim $a_Vector3df[3]
-	$result = DllCall($_irrDll, "none:cdecl", "IrrGetCameraUpDirection", "ptr", $h_Camera, "float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2])
+Func _IrrAddFlyStraightAnimator($h_Node, $f_StartX, $f_StartY, $f_StartZ, $f_EndX, $f_EndY, $f_EndZ, $i_Time, $i_DoLoop)
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddFlyStraightAnimator", "ptr", $h_Node, "float", $f_StartX, "float", $f_StartY, "float", $f_StartZ, "float", $f_EndX, "float", $f_EndY, "float", $f_EndZ, "uint", $i_Time, "int", $i_DoLoop)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
-		$a_Vector3df[0] = $result[2]
-		$a_Vector3df[1] = $result[3]
-		$a_Vector3df[2] = $result[4]
-		Return True
+		return $result[0]
 	EndIf
-EndFunc   ;==>_IrrGetCameraUpDirection
+EndFunc   ;==>_IrrAddFlyStraightAnimator
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetCameraUpDirection
+; Name...........: _IrrAddRotationAnimator
 ; Description ...: [todo]
-; Syntax.........: _IrrSetCameraUpDirection($h_Camera, $f_CamX, $f_CamY, $f_CamZ)
+; Syntax.........: _IrrAddRotationAnimator($h_Node, $f_RotX, $f_RotY, $f_RotZ)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -226,21 +353,21 @@ EndFunc   ;==>_IrrGetCameraUpDirection
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrSetCameraUpDirection($h_Camera, $f_CamX, $f_CamY, $f_CamZ)
-	DllCall($_irrDll, "none:cdecl", "IrrSetCameraUpDirection", "UINT_PTR", $h_Camera, "float", $f_CamX, "float", $f_CamY, "float", $f_CamZ)
+Func _IrrAddRotationAnimator($h_Node, $f_RotX, $f_RotY, $f_RotZ)
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddRotationAnimator", "ptr", $h_Node, "float", $f_RotX, "float", $f_RotY, "float", $f_RotZ)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
-		return True
+		return $result[0]
 	EndIf
-EndFunc   ;==>_IrrSetCameraUpDirection
+EndFunc   ;==>_IrrAddRotationAnimator
 
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrGetCameraOrientation
+; Name...........: _IrrAddSplineAnimator
 ; Description ...: [todo]
-; Syntax.........: _IrrGetCameraOrientation($h_Camera, ByRef $a_Vector1, ByRef $a_Vector2, ByRef $a_Vector3)
+; Syntax.........: _IrrAddSplineAnimator($h_Node, $i_ArraySize, $a_ArrayFloatsX, $a_ArrayFloatsY, $a_ArrayFloatsZ, $i_Start, $f_Speed, $f_Tightness)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -254,36 +381,40 @@ EndFunc   ;==>_IrrSetCameraUpDirection
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrGetCameraOrientation($h_Camera, ByRef $a_Vector1, ByRef $a_Vector2, ByRef $a_Vector3)
-	Dim $a_Vector1[3], $a_Vector2[3], $a_Vector3[3]
-	local $v1 = DllStructCreate("float;float;float")
-	local $v2 = DllStructCreate("float;float;float")
-	local $v3 = DllStructCreate("float;float;float")
+Func _IrrAddSplineAnimator($h_Node, $i_ArraySize, $a_ArrayFloatsX, $a_ArrayFloatsY, $a_ArrayFloatsZ, $i_Start, $f_Speed, $f_Tightness)
 
-	$result = DllCall($_irrDll, "none:cdecl", "IrrGetCameraOrientation", "UINT_PTR", $h_Camera, _
-		"ptr", DllStructGetPtr($v1), "ptr", DllStructGetPtr($v2), "ptr", DllStructGetPtr($v3))
+	if UBound($a_ArrayFloatsX) <> $i_arraySize OR _
+	    UBound($a_ArrayFloatsY) <> $i_arraySize OR _
+		UBound($a_ArrayFloatsZ) <> $i_arraySize Then
+		return SetError(2, 0, False)
+	EndIf
+
+	Local $XArrayStruct = DllStructCreate("float[" & $i_arraySize & "]")
+	Local $YArrayStruct = DllStructCreate("float[" & $i_arraySize & "]")
+	Local $ZArrayStruct = DllStructCreate("float[" & $i_arraySize & "]")
+
+	For $i = 1 To $i_arraySize
+		DllStructSetData($XArrayStruct, 1, $a_ArrayFloatsX[$i - 1], $i)
+		DllStructSetData($YArrayStruct, 1, $a_ArrayFloatsY[$i - 1], $i)
+		DllStructSetData($ZArrayStruct, 1, $a_ArrayFloatsZ[$i - 1], $i)
+	Next
+
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddSplineAnimator", "ptr", $h_Node, "int", $i_arraySize, _
+	"ptr", DllStructGetPtr($XArrayStruct,1), "ptr", DllStructGetPtr($YArrayStruct,1), "ptr", DllStructGetPtr($ZArrayStruct,1), _
+	"int", $i_Start, "float", $f_Speed, "float", $f_Tightness)
+
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
-		$a_Vector1[0] = DllStructGetData($v1, 1)
-		$a_Vector1[1] = DllStructGetData($v1, 2)
-		$a_Vector1[2] = DllStructGetData($v1, 3)
-		$a_Vector2[0] = DllStructGetData($v2, 1)
-		$a_Vector2[1] = DllStructGetData($v2, 2)
-		$a_Vector2[2] = DllStructGetData($v2, 3)
-		$a_Vector3[0] = DllStructGetData($v3, 1)
-		$a_Vector3[1] = DllStructGetData($v3, 2)
-		$a_Vector3[2] = DllStructGetData($v3, 3)
-		return true
+		return $result[0]
 	EndIf
-EndFunc   ;==>_IrrGetCameraOrientation
-
+EndFunc   ;==>_IrrAddSplineAnimator
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrRevolveCamera
+; Name...........: _IrrAddFadeAnimator
 ; Description ...: [todo]
-; Syntax.........: _IrrRevolveCamera($h_Camera, $f_Yaw, $f_Pitch, $f_Roll, $f_Drive, $f_Strafe, $f_Elevate)
+; Syntax.........: _IrrAddFadeAnimator($h_Node, $i_DeleteAfterMiliseconds, $f_Scale = 1.0)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -297,20 +428,20 @@ EndFunc   ;==>_IrrGetCameraOrientation
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrRevolveCamera($h_Camera, $f_Yaw, $f_Pitch, $f_Roll, $f_Drive, $f_Strafe, $f_Elevate)
-	DllCall($_irrDll, "none:cdecl", "IrrSetCameraUpDirection", "UINT_PTR", $h_Camera, "float", $f_Yaw, "float", $f_Pitch, "float", $f_Roll, "float", $f_Drive, "float", $f_Strafe, "float", $f_Elevate)
+Func _IrrAddFadeAnimator($h_Node, $i_DeleteAfterMiliseconds, $f_Scale = 1.0)
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddFadeAnimator", "ptr", $h_Node, "int", $i_DeleteAfterMiliseconds, "float", $f_Scale)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
-		return True
+		return $result[0]
 	EndIf
-EndFunc   ;==>_IrrRevolveCamera
+EndFunc   ;==>_IrrAddFadeAnimator
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetCameraUpAtRightAngle
+; Name...........: _IrrRemoveAnimator
 ; Description ...: [todo]
-; Syntax.........: _IrrSetCameraUpAtRightAngle($h_Camera)
+; Syntax.........: _IrrRemoveAnimator($h_Node, $h_Animator)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -324,186 +455,13 @@ EndFunc   ;==>_IrrRevolveCamera
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrSetCameraUpAtRightAngle($h_Camera)
-	DllCall($_irrDll, "none:cdecl", "IrrSetCameraUpAtRightAngle", "UINT_PTR", $h_Camera)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
-EndFunc   ;==>_IrrSetCameraUpAtRightAngle
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetCameraOrthagonal
-; Description ...: [todo]
-; Syntax.........: _IrrSetCameraOrthagonal($h_Camera, $f_DistanceX, $f_DistanceY, $f_DistanceZ)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrSetCameraOrthagonal($h_Camera, $f_DistanceX, $f_DistanceY, $f_DistanceZ)
-	DllCall($_irrDll, "none:cdecl", "IrrSetCameraOrthagonal", "UINT_PTR", $h_Camera, "float", $f_DistanceX, "float", $f_DistanceY, "float", $f_DistanceZ)
+Func _IrrRemoveAnimator($h_Node, $h_Animator)
+	DllCall($_irrDll, "none:cdecl", "IrrRemoveAnimator", "ptr", $h_Node, "ptr", $h_Animator)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrSetCameraOrthagonal
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetCameraClipDistance
-; Description ...: [todo]
-; Syntax.........: _IrrSetCameraClipDistance($h_Camera, $f_Distance, $f_NearDistance = 1.0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrSetCameraClipDistance($h_Camera, $f_Distance, $f_NearDistance = 1.0)
-	DllCall($_irrDll, "none:cdecl", "IrrSetCameraClipDistance", "ptr", $h_Camera, "float", $f_Distance, "float", $f_NearDistance)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
-EndFunc   ;==>_IrrSetCameraClipDistance
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetActiveCamera
-; Description ...: [todo]
-; Syntax.........: _IrrSetActiveCamera($h_Camera)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrSetActiveCamera($h_Camera)
-	DllCall($_irrDll, "none:cdecl", "IrrSetActiveCamera", "UINT_PTR", $h_Camera)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
-EndFunc   ;==>_IrrSetActiveCamera
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetCameraFOV
-; Description ...: [todo]
-; Syntax.........: _IrrSetCameraFOV($h_Camera, $f_FOV)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrSetCameraFOV($h_Camera, $f_FOV)
-	DllCall($_irrDll, "none:cdecl", "IrrSetCameraFOV", "ptr", $h_Camera, "float", $f_FOV)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
-EndFunc   ;==>_IrrSetCameraFOV
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetCameraAspectRatio
-; Description ...: [todo]
-; Syntax.........: _IrrSetCameraAspectRatio($h_Camera, $f_AspectRatio)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrSetCameraAspectRatio($h_Camera, $f_AspectRatio)
-	DllCall($_irrDll, "none:cdecl", "IrrSetCameraAspectRatio", "ptr", $h_Camera, "float", $f_AspectRatio)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
-EndFunc   ;==>_IrrSetCameraAspectRatio
-
-
-; #FUNCTION# =============================================================================================================
-; Name...........: __CreatePtrKeyMapArray
-; Description ...: Helper function: returns pointer to a keymap for _IrrAddFPSCamera.
-; Syntax.........: __CreatePtrKeyMapArray(ByRef $keyStruct, $i_kForward = $KEY_KEY_W, $i_kBackward = $KEY_KEY_S, $i_kLeft = $KEY_KEY_A, $i_kRight = $KEY_KEY_D, $i_kJump = $KEY_SPACE)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: Keymap itself is created into any (empty) var which can be set to '0' after call of _IrraddFPSCamera.
-;                  Usage with defaults creates WASD keys:
-;                  usage e.g. _IrrAddFPSCamera (..., __CreatePtrKeyMapArray($keyStruct), [numberOfKeysToPassFromMapArray - max. 5], ...)
-; Related .......: _IrraddFPSCamera
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func __CreatePtrKeyMapArray(ByRef $keyStruct, $i_kForward = $KEY_KEY_W, $i_kBackward = $KEY_KEY_S, $i_kLeft = $KEY_KEY_A, $i_kRight = $KEY_KEY_D, $i_kJump = $KEY_SPACE)
-
-	$keyStruct = DllStructCreate("int action1;int key1;int action2;int key2;int action3;int key3;int action4;int key4;int action5;int key5")
-	dllstructsetdata($keyStruct, "action1", 0)
-	dllstructsetdata($keyStruct, "key1", $i_kForward)
-	dllstructsetdata($keyStruct, "action2", 1)
-	dllstructsetdata($keyStruct, "key2", $i_kBackward)
-	dllstructsetdata($keyStruct, "action3", 2)
-	dllstructsetdata($keyStruct, "key3", $i_kLeft)
-	dllstructsetdata($keyStruct, "action4", 3)
-	dllstructsetdata($keyStruct, "key4", $i_kRight)
-	dllstructsetdata($keyStruct, "action5", 4)
-	dllstructsetdata($keyStruct, "key5", $i_kJump)
-	return DllStructGetPtr($keyStruct)
-EndFunc   ;==>__CreatePtrKeyMapArray
-
-
+EndFunc   ;==>_IrrRemoveAnimator
 
 

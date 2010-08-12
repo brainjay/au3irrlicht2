@@ -15,34 +15,41 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
-;_IrrAddCamera
-;_IrrAddMayaCamera
-;_IrrSetCameraTarget
-;_IrrGetCameraTarget
-;_IrrGetCameraUpDirection
-;_IrrSetCameraUpDirection
-;_IrrGetCameraOrientation
-;_IrrRevolveCamera
-;_IrrSetCameraUpAtRightAngle
-;_IrrSetCameraOrthagonal
-;_IrrSetCameraClipDistance
-;_IrrSetActiveCamera
-;_IrrSetCameraFOV
-;_IrrSetCameraAspectRatio
+;_IrrSetTextureCreationFlag
+;_IrrGetTexture
+;_IrrGetImage
+;_IrrCreateTexture
+;_IrrCreateImage
+;_IrrRemoveTexture
+;_IrrRemoveImage
+;_IrrLockTexture
+;_IrrLockOpenGLTexture
+;_IrrUnlockTexture
+;_IrrLockImage
+;_IrrUnlockImage
+;_IrrCreateRenderTargetTexture
+;_IrrMakeNormalMapTexture
+;_IrrColorKeyTexture
+;_IrrDraw2DImage
+;_IrrDraw2DImageElement
+;_IrrGetFont
+;_Irr2DFontDraw
+;_IrrSaveScreenShot
+;_IrrGetScreenShot
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
-;_IrrAddFPSCamera
-;__CreatePtrKeyMapArray
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; ===============================================================================================================================
 
-; #FUNCTION# =============================================================================================================
-; Name...........: _IrrAddFPSCamera
+;2D functions
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetTextureCreationFlag
 ; Description ...: [todo]
-; Syntax.........: _IrrAddFPSCamera($h_ParentNode = 0, $f_RotateSpeed = 100.0, $f_MoveSpeed = 0.5, $i_ID = -1, $h_KeyMapArray = 0, $i_KeyMapSize = 0, $i_NoVerticalMovement = 0, $f_JumpSpeed = 0.0)
+; Syntax.........: _IrrSetTextureCreationFlag($i_Flag, $i_Value)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -52,24 +59,51 @@
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: [todo]
-; Related .......: __CreatePtrKeyMapArray
+; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrAddFPSCamera($h_ParentNode = 0, $f_RotateSpeed = 100.0, $f_MoveSpeed = 0.5, $i_ID = -1, $h_KeyMapArray = 0, $i_KeyMapSize = 0, $i_NoVerticalMovement = 0, $f_JumpSpeed = 0.0)
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddFPSCamera", "UINT_PTR", $h_ParentNode, "float", $f_RotateSpeed, "float", $f_MoveSpeed, "int", $i_ID, "ptr", $h_KeyMapArray, "int", $i_KeyMapSize, "int", $i_NoVerticalMovement, "float", $f_JumpSpeed)
+Func _IrrSetTextureCreationFlag($i_Flag, $i_Value)
+	DllCall($_irrDll, "none:cdecl", "IrrSetTextureCreationFlag", "int", $i_Flag, "int", $i_Value)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetTextureCreationFlag
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrGetTexture
+; Description ...: [todo]
+; Syntax.........: _IrrGetTexture($s_TextureFile)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrGetTexture($s_TextureFile)
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetTexture", "str", $s_TextureFile)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		Return $result[0]
 	EndIf
-EndFunc   ;==>_IrrAddFPSCamera
+EndFunc   ;==>_IrrGetTexture
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrAddCamera
+; Name...........: _IrrGetImage
 ; Description ...: [todo]
-; Syntax.........: _IrrAddCamera($f_CamX, $f_CamY, $f_CamZ, $f_TargetX, $f_TargetY, $f_TargetZ)
+; Syntax.........: _IrrGetImage($s_ImageFile)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -83,20 +117,20 @@ EndFunc   ;==>_IrrAddFPSCamera
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrAddCamera($f_CamX, $f_CamY, $f_CamZ, $f_TargetX, $f_TargetY, $f_TargetZ)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddCamera", "float", $f_CamX, "float", $f_CamY, "float", $f_CamZ, "float", $f_TargetX, "float", $f_TargetY, "float", $f_TargetZ)
+Func _IrrGetImage($s_ImageFile)
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetImage", "str", $s_ImageFile)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		Return $result[0]
 	EndIf
-EndFunc   ;==>_IrrAddCamera
+EndFunc   ;==>_IrrGetImage
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrAddMayaCamera
+; Name...........: _IrrCreateTexture
 ; Description ...: [todo]
-; Syntax.........: _IrrAddMayaCamera($h_Node, $f_Rotate, $f_Zoom, $f_Move)
+; Syntax.........: _IrrCreateTexture($s_TextureName, $i_XSize, $i_YSize, $i_ColorFormat)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -110,20 +144,20 @@ EndFunc   ;==>_IrrAddCamera
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrAddMayaCamera($h_Node, $f_Rotate, $f_Zoom, $f_Move)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddMayaCamera", "ptr", $h_Node, "float", $f_Rotate, "float", $f_Zoom, "float", $f_Move)
+Func _IrrCreateTexture($s_TextureName, $i_XSize, $i_YSize, $i_ColorFormat)
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrCreateTexture", "str", $s_TextureName, "int", $i_XSize, "int", $i_YSize, "int", $i_ColorFormat)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		Return $result[0]
 	EndIf
-EndFunc   ;==>_IrrAddMayaCamera
+EndFunc   ;==>_IrrCreateTexture
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetCameraTarget
+; Name...........: _IrrCreateImage
 ; Description ...: [todo]
-; Syntax.........: _IrrSetCameraTarget($h_Camera, $f_CamX, $f_CamY, $f_CamZ)
+; Syntax.........: _IrrCreateImage($i_XSize, $i_YSize, $i_ColorFormat)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -137,20 +171,47 @@ EndFunc   ;==>_IrrAddMayaCamera
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrSetCameraTarget($h_Camera, $f_CamX, $f_CamY, $f_CamZ)
-	DllCall($_irrDll, "none:cdecl", "IrrSetCameraTarget", "ptr", $h_Camera, "float", $f_CamX, "float", $f_CamY, "float", $f_CamZ)
+Func _IrrCreateImage($i_XSize, $i_YSize, $i_ColorFormat)
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrCreateImage", "int", $i_XSize, "int", $i_YSize, "int", $i_ColorFormat)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
+	EndIf
+EndFunc   ;==>_IrrCreateImage
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrRemoveTexture
+; Description ...: [todo]
+; Syntax.........: _IrrRemoveTexture($h_Texture)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrRemoveTexture($h_Texture)
+	DllCall($_irrDll, "none:cdecl", "IrrRemoveTexture", "ptr", $h_Texture)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrSetCameraTarget
+EndFunc   ;==>_IrrRemoveTexture
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrGetCameraTarget
+; Name...........: _IrrRemoveImage
 ; Description ...: [todo]
-; Syntax.........: _IrrGetCameraTarget($h_Camera, ByRef $a_Vector3df)
+; Syntax.........: _IrrRemoveImage($h_Image)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -164,83 +225,20 @@ EndFunc   ;==>_IrrSetCameraTarget
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrGetCameraTarget($h_Camera, ByRef $a_Vector3df)
-	Dim $a_Vector3df[3]
-	$result = DllCall($_irrDll, "none:cdecl", "IrrGetCameraTarget", "ptr", $h_Camera, "float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2])
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		$a_Vector3df[0] = $result[2]
-		$a_Vector3df[1] = $result[3]
-		$a_Vector3df[2] = $result[4]
-		Return True
-	EndIf
-EndFunc   ;==>_IrrGetCameraTarget
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrGetCameraUpDirection
-; Description ...: [todo]
-; Syntax.........: _IrrGetCameraUpDirection($h_Camera, ByRef $a_Vector3df)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrGetCameraUpDirection($h_Camera, ByRef $a_Vector3df)
-	Dim $a_Vector3df[3]
-	$result = DllCall($_irrDll, "none:cdecl", "IrrGetCameraUpDirection", "ptr", $h_Camera, "float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2])
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		$a_Vector3df[0] = $result[2]
-		$a_Vector3df[1] = $result[3]
-		$a_Vector3df[2] = $result[4]
-		Return True
-	EndIf
-EndFunc   ;==>_IrrGetCameraUpDirection
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetCameraUpDirection
-; Description ...: [todo]
-; Syntax.........: _IrrSetCameraUpDirection($h_Camera, $f_CamX, $f_CamY, $f_CamZ)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrSetCameraUpDirection($h_Camera, $f_CamX, $f_CamY, $f_CamZ)
-	DllCall($_irrDll, "none:cdecl", "IrrSetCameraUpDirection", "UINT_PTR", $h_Camera, "float", $f_CamX, "float", $f_CamY, "float", $f_CamZ)
+Func _IrrRemoveImage($h_Image)
+	DllCall($_irrDll, "none:cdecl", "IrrRemoveImage", "ptr", $h_Image)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrSetCameraUpDirection
-
+EndFunc   ;==>_IrrRemoveImage
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrGetCameraOrientation
+; Name...........: _IrrLockTexture
 ; Description ...: [todo]
-; Syntax.........: _IrrGetCameraOrientation($h_Camera, ByRef $a_Vector1, ByRef $a_Vector2, ByRef $a_Vector3)
+; Syntax.........: _IrrLockTexture($h_Texture)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -254,36 +252,20 @@ EndFunc   ;==>_IrrSetCameraUpDirection
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrGetCameraOrientation($h_Camera, ByRef $a_Vector1, ByRef $a_Vector2, ByRef $a_Vector3)
-	Dim $a_Vector1[3], $a_Vector2[3], $a_Vector3[3]
-	local $v1 = DllStructCreate("float;float;float")
-	local $v2 = DllStructCreate("float;float;float")
-	local $v3 = DllStructCreate("float;float;float")
-
-	$result = DllCall($_irrDll, "none:cdecl", "IrrGetCameraOrientation", "UINT_PTR", $h_Camera, _
-		"ptr", DllStructGetPtr($v1), "ptr", DllStructGetPtr($v2), "ptr", DllStructGetPtr($v3))
+Func _IrrLockTexture($h_Texture)
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrLockTexture", "ptr", $h_Texture)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
-		$a_Vector1[0] = DllStructGetData($v1, 1)
-		$a_Vector1[1] = DllStructGetData($v1, 2)
-		$a_Vector1[2] = DllStructGetData($v1, 3)
-		$a_Vector2[0] = DllStructGetData($v2, 1)
-		$a_Vector2[1] = DllStructGetData($v2, 2)
-		$a_Vector2[2] = DllStructGetData($v2, 3)
-		$a_Vector3[0] = DllStructGetData($v3, 1)
-		$a_Vector3[1] = DllStructGetData($v3, 2)
-		$a_Vector3[2] = DllStructGetData($v3, 3)
-		return true
+		Return $result[0]
 	EndIf
-EndFunc   ;==>_IrrGetCameraOrientation
-
+EndFunc   ;==>_IrrLockTexture
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrRevolveCamera
+; Name...........: _IrrLockOpenGLTexture
 ; Description ...: [todo]
-; Syntax.........: _IrrRevolveCamera($h_Camera, $f_Yaw, $f_Pitch, $f_Roll, $f_Drive, $f_Strafe, $f_Elevate)
+; Syntax.........: _IrrLockOpenGLTexture($h_Texture)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -297,20 +279,20 @@ EndFunc   ;==>_IrrGetCameraOrientation
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrRevolveCamera($h_Camera, $f_Yaw, $f_Pitch, $f_Roll, $f_Drive, $f_Strafe, $f_Elevate)
-	DllCall($_irrDll, "none:cdecl", "IrrSetCameraUpDirection", "UINT_PTR", $h_Camera, "float", $f_Yaw, "float", $f_Pitch, "float", $f_Roll, "float", $f_Drive, "float", $f_Strafe, "float", $f_Elevate)
+Func _IrrLockOpenGLTexture($h_Texture)
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrLockOpenGLTexture", "ptr", $h_Texture)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
-		return True
+		Return $result[0]
 	EndIf
-EndFunc   ;==>_IrrRevolveCamera
+EndFunc   ;==>_IrrLockOpenGLTexture
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetCameraUpAtRightAngle
+; Name...........: _IrrUnlockTexture
 ; Description ...: [todo]
-; Syntax.........: _IrrSetCameraUpAtRightAngle($h_Camera)
+; Syntax.........: _IrrUnlockTexture($h_Texture)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -324,20 +306,20 @@ EndFunc   ;==>_IrrRevolveCamera
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrSetCameraUpAtRightAngle($h_Camera)
-	DllCall($_irrDll, "none:cdecl", "IrrSetCameraUpAtRightAngle", "UINT_PTR", $h_Camera)
+Func _IrrUnlockTexture($h_Texture)
+	DllCall($_irrDll, "none:cdecl", "IrrUnlockTexture", "ptr", $h_Texture)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrSetCameraUpAtRightAngle
+EndFunc   ;==>_IrrUnlockTexture
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetCameraOrthagonal
+; Name...........: _IrrLockImage
 ; Description ...: [todo]
-; Syntax.........: _IrrSetCameraOrthagonal($h_Camera, $f_DistanceX, $f_DistanceY, $f_DistanceZ)
+; Syntax.........: _IrrLockImage($h_Image)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -351,20 +333,20 @@ EndFunc   ;==>_IrrSetCameraUpAtRightAngle
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrSetCameraOrthagonal($h_Camera, $f_DistanceX, $f_DistanceY, $f_DistanceZ)
-	DllCall($_irrDll, "none:cdecl", "IrrSetCameraOrthagonal", "UINT_PTR", $h_Camera, "float", $f_DistanceX, "float", $f_DistanceY, "float", $f_DistanceZ)
+Func _IrrLockImage($h_Image)
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrLockImage", "ptr", $h_Image)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
-		return True
+		Return $result[0]
 	EndIf
-EndFunc   ;==>_IrrSetCameraOrthagonal
+EndFunc   ;==>_IrrLockImage
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetCameraClipDistance
+; Name...........: _IrrUnlockImage
 ; Description ...: [todo]
-; Syntax.........: _IrrSetCameraClipDistance($h_Camera, $f_Distance, $f_NearDistance = 1.0)
+; Syntax.........: _IrrUnlockImage($h_Image)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -378,20 +360,20 @@ EndFunc   ;==>_IrrSetCameraOrthagonal
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrSetCameraClipDistance($h_Camera, $f_Distance, $f_NearDistance = 1.0)
-	DllCall($_irrDll, "none:cdecl", "IrrSetCameraClipDistance", "ptr", $h_Camera, "float", $f_Distance, "float", $f_NearDistance)
+Func _IrrUnlockImage($h_Image)
+	DllCall($_irrDll, "none:cdecl", "IrrUnlockImage", "ptr", $h_Image)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrSetCameraClipDistance
+EndFunc   ;==>_IrrUnlockImage
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetActiveCamera
+; Name...........: _IrrCreateRenderTargetTexture
 ; Description ...: [todo]
-; Syntax.........: _IrrSetActiveCamera($h_Camera)
+; Syntax.........: _IrrCreateRenderTargetTexture($i_XSize, $i_YSize)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -405,20 +387,20 @@ EndFunc   ;==>_IrrSetCameraClipDistance
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrSetActiveCamera($h_Camera)
-	DllCall($_irrDll, "none:cdecl", "IrrSetActiveCamera", "UINT_PTR", $h_Camera)
+Func _IrrCreateRenderTargetTexture($i_XSize, $i_YSize)
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrCreateRenderTargetTexture", "uint", $i_XSize, "uint", $i_YSize)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
-		return True
+		Return $result[0]
 	EndIf
-EndFunc   ;==>_IrrSetActiveCamera
+EndFunc   ;==>_IrrCreateRenderTargetTexture
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetCameraFOV
+; Name...........: _IrrMakeNormalMapTexture
 ; Description ...: [todo]
-; Syntax.........: _IrrSetCameraFOV($h_Camera, $f_FOV)
+; Syntax.........: _IrrMakeNormalMapTexture($h_Texture, $f_Amplitude)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -432,20 +414,20 @@ EndFunc   ;==>_IrrSetActiveCamera
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrSetCameraFOV($h_Camera, $f_FOV)
-	DllCall($_irrDll, "none:cdecl", "IrrSetCameraFOV", "ptr", $h_Camera, "float", $f_FOV)
+Func _IrrMakeNormalMapTexture($h_Texture, $f_Amplitude)
+	DllCall($_irrDll, "none:cdecl", "IrrMakeNormalMapTexture", "ptr", $h_Texture, "float", $f_Amplitude)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrSetCameraFOV
+EndFunc   ;==>_IrrMakeNormalMapTexture
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetCameraAspectRatio
+; Name...........: _IrrColorKeyTexture
 ; Description ...: [todo]
-; Syntax.........: _IrrSetCameraAspectRatio($h_Camera, $f_AspectRatio)
+; Syntax.........: _IrrColorKeyTexture($h_Texture, $i_Red, $i_Green, $i_Blue)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -459,20 +441,20 @@ EndFunc   ;==>_IrrSetCameraFOV
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrSetCameraAspectRatio($h_Camera, $f_AspectRatio)
-	DllCall($_irrDll, "none:cdecl", "IrrSetCameraAspectRatio", "ptr", $h_Camera, "float", $f_AspectRatio)
+Func _IrrColorKeyTexture($h_Texture, $i_Red, $i_Green, $i_Blue)
+	DllCall($_irrDll, "none:cdecl", "IrrColorKeyTexture", "ptr", $h_Texture, "int", $i_Red, "int", $i_Green, "int", $i_Blue)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrSetCameraAspectRatio
+EndFunc   ;==>_IrrColorKeyTexture
 
 
-; #FUNCTION# =============================================================================================================
-; Name...........: __CreatePtrKeyMapArray
-; Description ...: Helper function: returns pointer to a keymap for _IrrAddFPSCamera.
-; Syntax.........: __CreatePtrKeyMapArray(ByRef $keyStruct, $i_kForward = $KEY_KEY_W, $i_kBackward = $KEY_KEY_S, $i_kLeft = $KEY_KEY_A, $i_kRight = $KEY_KEY_D, $i_kJump = $KEY_SPACE)
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrDraw2DImage
+; Description ...: [todo]
+; Syntax.........: _IrrDraw2DImage($h_Image, $i_XPos, $i_YPos)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -481,29 +463,152 @@ EndFunc   ;==>_IrrSetCameraAspectRatio
 ;                  |[moreExplanationIndented]
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: Keymap itself is created into any (empty) var which can be set to '0' after call of _IrraddFPSCamera.
-;                  Usage with defaults creates WASD keys:
-;                  usage e.g. _IrrAddFPSCamera (..., __CreatePtrKeyMapArray($keyStruct), [numberOfKeysToPassFromMapArray - max. 5], ...)
-; Related .......: _IrraddFPSCamera
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func __CreatePtrKeyMapArray(ByRef $keyStruct, $i_kForward = $KEY_KEY_W, $i_kBackward = $KEY_KEY_S, $i_kLeft = $KEY_KEY_A, $i_kRight = $KEY_KEY_D, $i_kJump = $KEY_SPACE)
-
-	$keyStruct = DllStructCreate("int action1;int key1;int action2;int key2;int action3;int key3;int action4;int key4;int action5;int key5")
-	dllstructsetdata($keyStruct, "action1", 0)
-	dllstructsetdata($keyStruct, "key1", $i_kForward)
-	dllstructsetdata($keyStruct, "action2", 1)
-	dllstructsetdata($keyStruct, "key2", $i_kBackward)
-	dllstructsetdata($keyStruct, "action3", 2)
-	dllstructsetdata($keyStruct, "key3", $i_kLeft)
-	dllstructsetdata($keyStruct, "action4", 3)
-	dllstructsetdata($keyStruct, "key4", $i_kRight)
-	dllstructsetdata($keyStruct, "action5", 4)
-	dllstructsetdata($keyStruct, "key5", $i_kJump)
-	return DllStructGetPtr($keyStruct)
-EndFunc   ;==>__CreatePtrKeyMapArray
+Func _IrrDraw2DImage($h_Image, $i_XPos, $i_YPos)
+	DllCall($_irrDll, "none:cdecl", "IrrDraw2DImage", "ptr", $h_Image, "int", $i_XPos, "int", $i_YPos)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrDraw2DImage
 
 
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrDraw2DImageElement
+; Description ...: [todo]
+; Syntax.........: _IrrDraw2DImageElement($h_Texture, $i_XPos, $i_YPos, $i_SourceTopX, $i_SourceTopY, $i_SourceBottomX, $i_SourceBottomY, $i_UseAlpha)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrDraw2DImageElement($h_Texture, $i_XPos, $i_YPos, $i_SourceTopX, $i_SourceTopY, $i_SourceBottomX, $i_SourceBottomY, $i_UseAlpha)
+	DllCall($_irrDll, "none:cdecl", "IrrDraw2DImageElement", "ptr", $h_Texture, "int", $i_XPos, "int", $i_YPos, "int", $i_SourceTopX, "int", $i_SourceTopY, "int", $i_SourceBottomX, "int", $i_SourceBottomY, "int", $i_UseAlpha)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrDraw2DImageElement
 
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrGetFont
+; Description ...: [todo]
+; Syntax.........: _IrrGetFont($s_Font)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrGetFont($s_Font)
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetFont", "str", $s_Font)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
+	EndIf
+EndFunc   ;==>_IrrGetFont
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _Irr2DFontDraw
+; Description ...: [todo]
+; Syntax.........: _Irr2DFontDraw($h_Font, $s_Text, $i_XPos, $i_YPos, $i_BottomX, $i_BottomY)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _Irr2DFontDraw($h_Font, $s_Text, $i_XPos, $i_YPos, $i_BottomX, $i_BottomY)
+	DllCall($_irrDll, "none:cdecl", "Irr2DFontDraw", "ptr", $h_Font, "wstr", $s_Text, "int", $i_XPos, "int", $i_YPos, "int", $i_BottomX, "int", $i_BottomY)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_Irr2DFontDraw
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSaveScreenShot
+; Description ...: [todo]
+; Syntax.........: _IrrSaveScreenShot($s_Filename)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSaveScreenShot($s_Filename)
+	DllCall($_irrDll, "none:cdecl", "IrrSaveScreenShot", "str", $s_Filename)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSaveScreenShot
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrGetScreenShot
+; Description ...: [todo]
+; Syntax.........: _IrrGetScreenShot($i_XPos, $i_YPos, $i_Width, $i_Height)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrGetScreenShot($i_XPos, $i_YPos, $i_Width, $i_Height)
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetScreenShot", "int", $i_XPos, "int", $i_YPos, "int", $i_Width, "int", $i_Height)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
+	EndIf
+EndFunc   ;==>_IrrGetScreenShot
 
