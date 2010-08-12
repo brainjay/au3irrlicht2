@@ -77,7 +77,7 @@ Func putHeader()
 	put('<p>Below is a complete list of the au3Irr2 ' & $NAME & ' functions.&nbsp;')
 	put('Click on a function name for a detailed description.</p>')
 	If $RefType = "au3Irr2 Function" Then
-		put('<p>When using them you need to add a<br><b>#include au3Irrlicht2.au3&gt;</b> or <b>#include &lt;.&#x05c;include&#x05c;au3Irr2_' & $NAME & '.au3&gt;</b>.</p>')
+		put('<p>When using them you need to add a<br><b>#include &lt;au3Irrlicht2.au3&gt;</b> or <b>#include &lt;.&#x05c;include&#x05c;au3Irr2_' & $NAME & '.au3&gt;</b>.</p>')
 	Else
 		If StringInStr($NAME, "GUI") = 1 Then
 			put('<p>See <a href="..\guiref\GUIConstants.htm">Gui Constants include files</a> if you need to use the related controls Constants .</p>')

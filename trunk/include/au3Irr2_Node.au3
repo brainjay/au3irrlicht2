@@ -15,167 +15,467 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
-;_IrrSetViewPort
-;_IrrBeginScene
-;_IrrBeginSceneAdvanced
-;_IrrDrawScene
-;_IrrDrawSceneToTexture
-;_IrrSetRenderTarget
-;_IrrDrawGUI
-;_IrrEndScene
-;_IrrTransparentZWrite
-;_IrrGetFPS
-;_IrrGetPrimitivesDrawn
-;_IrrSetWindowCaption
-;_IrrIsFullscreen
-;_IrrIsWindowActive
-;_IrrIsWindowFocused
-;_IrrIsWindowMinimized
-;_IrrGetScreenSize
-;_IrrMaximizeWindow
-;_IrrMinimizeWindow
-;_IrrRestoreWindow
-;_IrrSetResizableWindow
-;_IrrMakeARGB
-;_IrrQueryFeature
-;_IrrDisableFeature
-;_IrrGetTime
-;_IrrSetTime
+;_IrrGetNodeName
+;_IrrSetNodeName
+;_IrrGetMaterialCount
+;_IrrGetMaterial
+;_IrrSetNodeMaterialTexture
+;_IrrSetNodeMaterialFlag
+;_IrrSetNodeMaterialType
+;_IrrSetNodePosition
+;_IrrSetNodeRotation
+;_IrrSetNodeScale
+;_IrrDebugDataVisible
+;_IrrGetNodePosition
+;_IrrGetNodeAbsolutePosition
+;_IrrGetNodeRotation
+;_IrrGetJointNode
+;_IrrSetJointMode
+;_IrrAddChildToParent
+;_IrrGetNodeFirstChild
+;_IrrGetNodeNextChild
+;_IrrIsNodeLastChild
+;_IrrAddNodeShadow
+;_IrrSetNodeVisibility
+;_IrrRemoveNode
+;_IrrRemoveAllNodes
+;_IrrSetNodeParent
+;_IrrGetNodeID
+;_IrrSetNodeID
+;_IrrGetNodeBoundingBox
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
-;_IrrStart
-;_IrrStartAdvanced
-;_IrrRunning
-;_IrrStop
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; ===============================================================================================================================
 
-; #FUNCTION# =============================================================================================================
-; Name...........: _IrrStart
-; Description ...: opens the IrrlichtWrapper.dll and starts Irrlicht engine.;
-; Syntax.........: _IrrStart($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel = 1, $i_FullScreen = 0, $i_Shadows = 0, $i_InputCapture = 0, $i_VSync = 0)
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrGetNodeName
+; Description ...: [todo]
+; Syntax.........: _IrrGetNodeName($h_Node)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
-; Return values .: Success - True
-;                  Failure - 1: error occured on dll call
-;                  |2: IrrlichtWrapper.dll not found
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: if .dll cannot be opened, path environment is extended with .\bin (so program can have its
-;                  binaries in separate dir) and .\.. (so e.g. au3irrlicht2-examples can be run from sub-dir)
-;                  Nevertheless, this is a fallback. EnvUpdate can take some time, so best is to be sure .dll
-;                  can be found at once!
-;                  Other needed .dll's (Irrlicht.dll + maybe msvcp71.dll are NOT checked but simply expected
-;                  to be at last in same dir as the IrrlichtWrapper.dll.
-; Related .......: _IrrStartAdvanced, _IrrRunning, _IrrStop
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
 ; Link ..........:
-; Example .......: Yes
+; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrStart($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel = 1, $i_FullScreen = 0, $i_Shadows = 0, $i_InputCapture = 0, $i_VSync = 0)
-
-	$_irrDll = DllOpen("IrrlichtWrapper.dll")
-	if $_irrDll = -1 Then ; .dll cannot be opened - try to get it by extending %path%:
-		EnvSet("PATH", @ScriptDir & "\bin;" & @ScriptDir & "\..\;" & EnvGet("PATH"))
-		EnvUpdate()
-
-		$_irrDll = DllOpen("IrrlichtWrapper.dll")
-		if $_irrDll = -1 Then ; no chance, so return error:
-			Return Seterror(2,0,False)
-		EndIf
+Func _IrrGetNodeName($h_Node)
+	$result = DllCall($_irrDll, "str:cdecl", "IrrGetNodeName", "ptr", $h_Node)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
 	EndIf
+EndFunc   ;==>_IrrGetNodeName
 
-	DllCall($_irrDll, "none:cdecl", "IrrStart", "int", $i_DeviceType, "int", $i_ScreenWidth, "int", $i_ScreenHeight, "int", $i_BitsPerPixel, "uint", $i_FullScreen, "int", $i_Shadows, "int", $i_InputCapture, "int", $i_VSync)
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetNodeName
+; Description ...: [todo]
+; Syntax.........: _IrrSetNodeName($h_Node, $s_Name)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetNodeName($h_Node, $s_Name)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeName", "ptr", $h_Node, "str", $s_Name)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrStart
+EndFunc   ;==>_IrrSetNodeName
 
 
-
-; #FUNCTION# =============================================================================================================
-; Name...........: _IrrStartAdvanced
-; Description ...: opens the IrrlichtWrapper.dll and starts Irrlicht engine with advanced method.
-; Syntax.........: _IrrStartAdvanced($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel = 1, $i_FullScreen = 0, $i_Shadows = 0, $i_InputCapture = 0, $i_VSync = 0, $i_TypeOfDevice = 0, $i_DoublebufferEnabled = 0, $i_AntialiasEnabled = 0, $i_HighPrecisionFpu = 0)
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrGetMaterialCount
+; Description ...: [todo]
+; Syntax.........: _IrrGetMaterialCount($h_Node)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
-; Return values .: Success - Return value from the dll call.
-;                  Failure - 1: error occured on dll call
-;                  |2: IrrlichtWrapper.dll not found
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: if .dll cannot be opened, path environment is extended with .\bin (so program can have its
-;                  binaries in separate dir) and .\.. (so e.g. au3irrlicht2-examples can be run from sub-dir)
-;                  Nevertheless, this is a fallback. EnvUpdate can take some time, so best is to be sure .dll
-;                  can be found at once!
-;                  Other needed .dll's (Irrlicht.dll + maybe msvcp71.dll are NOT checked but simply expected
-;                  to be at last in same dir as the IrrlichtWrapper.dll.
-; Related .......: _IrrStart, _IrrRunning, _IrrStop
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
 ; Link ..........:
-; Example .......: No
+; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrStartAdvanced($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel = 1, $i_FullScreen = 0, $i_Shadows = 0, $i_InputCapture = 0, $i_VSync = 0, $i_TypeOfDevice = 0, $i_DoublebufferEnabled = 0, $i_AntialiasEnabled = 0, $i_HighPrecisionFpu = 0)
-
-	$_irrDll = DllOpen("IrrlichtWrapper.dll")
-	if $_irrDll = -1 Then ; .dll cannot be opened - try to get it by extending %path%:
-		EnvSet("PATH", @ScriptDir & "\bin;" & @ScriptDir & "\..\;" & EnvGet("PATH"))
-		EnvUpdate()
-
-		$_irrDll = DllOpen("IrrlichtWrapper.dll")
-		if $_irrDll = -1 Then ; no chance, so return error:
-			Return Seterror(2,0,False)
-		EndIf
+Func _IrrGetMaterialCount($h_Node)
+	$result = DllCall($_irrDll, "uint:cdecl", "IrrGetMaterialCount", "ptr", $h_Node)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
 	EndIf
+EndFunc   ;==>_IrrGetMaterialCount
 
-	$result = DllCall($_irrDll, "uint:cdecl", "IrrStart", "int", $i_DeviceType, "int", $i_ScreenWidth, "int", $i_ScreenHeight, _
-			"int", $i_BitsPerPixel, "uint", $i_FullScreen, "uint", $i_Shadows, "uint", $i_InputCapture, "uint", $i_VSync, _
-			"uint", $i_TypeOfDevice, "uint", $i_DoublebufferEnabled, "uint", $i_AntialiasEnabled, "uint", $i_HighPrecisionFpu)
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrGetMaterial
+; Description ...: [todo]
+; Syntax.........: _IrrGetMaterial($h_Node, $i_Material)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrGetMaterial($h_Node, $i_Material)
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetMaterial", "ptr", $h_Node, "uint", $i_Material)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
+	EndIf
+EndFunc   ;==>_IrrGetMaterial
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetNodeMaterialTexture
+; Description ...: [todo]
+; Syntax.........: _IrrSetNodeMaterialTexture($h_Node, $h_Texture, $i_Index)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetNodeMaterialTexture($h_Node, $h_Texture, $i_Index)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeMaterialTexture", "UINT_PTR", $h_Node, "UINT_PTR", $h_Texture, "int", $i_Index)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetNodeMaterialTexture
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetNodeMaterialFlag
+; Description ...: [todo]
+; Syntax.........: _IrrSetNodeMaterialFlag($h_Node, $i_Type, $i_Flag)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetNodeMaterialFlag($h_Node, $i_Type, $i_Flag)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeMaterialFlag", "UINT_PTR", $h_Node, "int", $i_Type, "uint", $i_Flag)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetNodeMaterialFlag
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetNodeMaterialType
+; Description ...: [todo]
+; Syntax.........: _IrrSetNodeMaterialType($h_Node, $i_Type)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetNodeMaterialType($h_Node, $i_Type)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeMaterialType", "UINT_PTR", $h_Node, "int", $i_Type)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetNodeMaterialType
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetNodePosition
+; Description ...: [todo]
+; Syntax.........: _IrrSetNodePosition($h_Node, $f_X, $f_Y, $f_Z)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetNodePosition($h_Node, $f_X, $f_Y, $f_Z)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodePosition", "UINT_PTR", $h_Node, "float", $f_X, "float", $f_Y, "float", $f_Z)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetNodePosition
+
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetNodeRotation
+; Description ...: [todo]
+; Syntax.........: _IrrSetNodeRotation($h_Node, $f_X, $f_Y, $f_Z)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetNodeRotation($h_Node, $f_X, $f_Y, $f_Z)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeRotation", "ptr", $h_Node, "float", $f_X, "float", $f_Y, "float", $f_Z)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetNodeRotation
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetNodeScale
+; Description ...: [todo]
+; Syntax.........: _IrrSetNodeScale($h_Node, $f_X, $f_Y, $f_Z)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetNodeScale($h_Node, $f_X, $f_Y, $f_Z)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeScale", "UINT_PTR", $h_Node, "float", $f_X, "float", $f_Y, "float", $f_Z)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrSetNodeScale
+
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrDebugDataVisible
+; Description ...: [todo]
+; Syntax.........: _IrrDebugDataVisible($h_Node, $i_Visible)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrDebugDataVisible($h_Node, $i_Visible)
+	DllCall($_irrDll, "none:cdecl", "IrrDebugDataVisible", "ptr", $h_Node, "int", $i_Visible)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		return True
+	EndIf
+EndFunc   ;==>_IrrDebugDataVisible
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrGetNodePosition
+; Description ...: [todo]
+; Syntax.........: _IrrGetNodePosition($h_Node, ByRef $a_Vector3df)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrGetNodePosition($h_Node, ByRef $a_Vector3df)
+	Dim $a_Vector3df[3]
+	$result = DllCall($_irrDll, "none:cdecl", "IrrGetNodePosition", "ptr", $h_Node, "float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2])
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		$a_Vector3df[0] = $result[2]
+		$a_Vector3df[1] = $result[3]
+		$a_Vector3df[2] = $result[4]
+		Return $a_Vector3df
+	EndIf
+EndFunc   ;==>_IrrGetNodePosition
+
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrGetNodeAbsolutePosition
+; Description ...: [todo]
+; Syntax.........: _IrrGetNodeAbsolutePosition($h_Node, ByRef $a_Vector3df)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrGetNodeAbsolutePosition($h_Node, ByRef $a_Vector3df)
+	Dim $a_Vector3df[3]
+	$result = DllCall($_irrDll, "none:cdecl", "IrrGetNodeAbsolutePosition", "ptr", $h_Node, "float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2])
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		$a_Vector3df[0] = $result[2]
+		$a_Vector3df[1] = $result[3]
+		$a_Vector3df[2] = $result[4]
+		Return $a_Vector3df
+	EndIf
+EndFunc   ;==>_IrrGetNodeAbsolutePosition
+
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrGetNodeRotation
+; Description ...: [todo]
+; Syntax.........: _IrrGetNodeRotation($h_Node, ByRef $a_Vector3df)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrGetNodeRotation($h_Node, ByRef $a_Vector3df)
+	Dim $a_Vector3df[3]
+	$result = DllCall($_irrDll, "none:cdecl", "IrrGetNodeRotation", "ptr", $h_Node, "float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2])
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		$a_Vector3df[0] = number($result[2])
+		$a_Vector3df[1] = number($result[3])
+		$a_Vector3df[2] = number($result[4])
+		Return $a_Vector3df
+	EndIf
+EndFunc   ;==>_IrrGetNodeRotation
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrGetJointNode
+; Description ...: [todo]
+; Syntax.........: _IrrGetJointNode($h_Node, $s_Joint)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrGetJointNode($h_Node, $s_Joint)
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetJointNode", "ptr", $h_Node, "str", $s_Joint)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return $result[0]
 	EndIf
-EndFunc   ;==>_IrrStartAdvanced
-
-
-
-; #FUNCTION# =============================================================================================================
-; Name...........: _IrrRunning
-; Description ...: [todo]
-; Syntax.........: _IrrRunning()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: _IrrStart, _IrrStartAdvanced, _IrrStop
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func _IrrRunning()
-	$result = DllCall($_irrDll, "int:cdecl", "IrrRunning")
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrRunning
+EndFunc   ;==>_IrrGetJointNode
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetViewPort
+; Name...........: _IrrSetJointMode
 ; Description ...: [todo]
-; Syntax.........: _IrrSetViewPort($i_TopX, $i_TopY, $i_BottomX, $i_BottomY)
+; Syntax.........: _IrrSetJointMode($h_Node, $i_Mode)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -189,20 +489,20 @@ EndFunc   ;==>_IrrRunning
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrSetViewPort($i_TopX, $i_TopY, $i_BottomX, $i_BottomY)
-	DllCall($_irrDll, "none:cdecl", "IrrSetViewPort", "int", $i_TopX, "int", $i_TopY, "int", $i_BottomX, "int", $i_BottomY)
+Func _IrrSetJointMode($h_Node, $i_Mode)
+	$result = DllCall($_irrDll, "none:cdecl", "IrrSetJointMode", "ptr", $h_Node, "int", $i_Mode)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrSetViewPort
+EndFunc   ;==>_IrrSetJointMode
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrBeginScene
+; Name...........: _IrrAddChildToParent
 ; Description ...: [todo]
-; Syntax.........: _IrrBeginScene($i_Red, $i_Green, $i_Blue)
+; Syntax.........: _IrrAddChildToParent($h_ChildNode, $h_ParentNode)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -216,22 +516,21 @@ EndFunc   ;==>_IrrSetViewPort
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrBeginScene($i_Red, $i_Green, $i_Blue)
-; initialise the frame drawing cycle, erasing the canvas ready for drawing
-	DllCall($_irrDll, "none:cdecl", "IrrBeginScene", "int", $i_Red, "int", $i_Green, "int", $i_Blue)
+Func _IrrAddChildToParent($h_ChildNode, $h_ParentNode)
+	DllCall($_irrDll, "none:cdecl", "IrrAddChildToParent", "ptr", $h_ChildNode, "ptr", $h_ParentNode)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrBeginScene
+EndFunc   ;==>_IrrAddChildToParent
 
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrBeginSceneAdvanced
+; Name...........: _IrrGetNodeFirstChild
 ; Description ...: [todo]
-; Syntax.........: _IrrBeginSceneAdvanced($i_SceneBGColor, $i_ClearBackBuffer = 1, $i_ClearZBuffer = 1)
+; Syntax.........: _IrrGetNodeFirstChild($h_Node, ByRef $h_Position)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -245,22 +544,110 @@ EndFunc   ;==>_IrrBeginScene
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrBeginSceneAdvanced($i_SceneBGColor, $i_ClearBackBuffer = 1, $i_ClearZBuffer = 1)
-; Readies a scene for rendering, erasing the canvas and setting a background color.
-	DllCall($_irrDll, "none:cdecl", "IrrBeginSceneAdvanced", "uint", $i_SceneBGColor, "byte", $i_ClearBackBuffer, "byte", $i_ClearZBuffer)
+Func _IrrGetNodeFirstChild($h_Node, ByRef $h_Position)
+; get the first child node of this node, returns 0 if there is no child
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetNodeFirstChild", "UINT_PTR", $h_Node, "UINT_PTR*", $h_Position)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		$h_Position = $result[2]
+		return $result[0]
+	EndIf
+EndFunc   ;==>_IrrGetNodeFirstChild
+
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrGetNodeNextChild
+; Description ...: [todo]
+; Syntax.........: _IrrGetNodeNextChild($h_Node, ByRef $h_Position)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrGetNodeNextChild($h_Node, ByRef $h_Position)
+; get the next child node of this node, returns 0 if there is no child
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetNodeNextChild", "UINT_PTR", $h_Node, "UINT_PTR*", $h_Position)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		$h_Position = $result[2]
+		return $result[0]
+	EndIf
+EndFunc   ;==>_IrrGetNodeNextChild
+
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrIsNodeLastChild
+; Description ...: [todo]
+; Syntax.........: _IrrIsNodeLastChild($h_Node, ByRef $h_Position)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrIsNodeLastChild($h_Node, ByRef $h_Position)
+; returns true if this is the last child of the parent
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrIsNodeLastChild", "UINT_PTR", $h_Node, "ptr*", $h_Position)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		$h_Position = $result[2]
+		return $result[0]
+	EndIf
+EndFunc   ;==>_IrrIsNodeLastChild
+
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrAddNodeShadow
+; Description ...: [todo]
+; Syntax.........: _IrrAddNodeShadow($h_Node, $h_mesh = 0)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrAddNodeShadow($h_Node, $h_mesh = 0)
+	DllCall($_irrDll, "none:cdecl", "IrrAddNodeShadow", "ptr", $h_Node, "ptr", $h_mesh)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrBeginSceneAdvanced
-
+EndFunc   ;==>_IrrAddNodeShadow
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrDrawScene
+; Name...........: _IrrSetNodeVisibility
 ; Description ...: [todo]
-; Syntax.........: _IrrDrawScene()
+; Syntax.........: _IrrSetNodeVisibility($h_Node, $i_Visible)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -274,20 +661,20 @@ EndFunc   ;==>_IrrBeginSceneAdvanced
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrDrawScene()
-	DllCall($_irrDll, "none:cdecl", "IrrDrawScene")
+Func _IrrSetNodeVisibility($h_Node, $i_Visible)
+	DllCall($_irrDll, "none:cdecl", "IrrAddNodeShadow", "ptr", $h_Node, "int", $i_Visible)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrDrawScene
+EndFunc   ;==>_IrrSetNodeVisibility
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrDrawSceneToTexture
+; Name...........: _IrrRemoveNode
 ; Description ...: [todo]
-; Syntax.........: _IrrDrawSceneToTexture($h_RenderTargetTexture)
+; Syntax.........: _IrrRemoveNode($h_Node)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -301,52 +688,20 @@ EndFunc   ;==>_IrrDrawScene
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrDrawSceneToTexture($h_RenderTargetTexture)
-;use IrrCreateRenderTargetTexture to get $h_RenderTargetTexture
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrDrawSceneToTexture", "ptr", $h_RenderTargetTexture)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrDrawSceneToTexture
-
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetRenderTarget
-; Description ...: [todo]
-; Syntax.........: _IrrSetRenderTarget($h_Texture, $i_SceneBGColor = 0, $i_ClearBackBuffer = 1, $i_ClearZBuffer = 1)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrSetRenderTarget($h_Texture, $i_SceneBGColor = 0, $i_ClearBackBuffer = 1, $i_ClearZBuffer = 1)
-; Sets a texture as a render target, or sets the device if the pointer is 0.
-	DllCall($_irrDll, "none:cdecl", "IrrSetRenderTarget", "ptr", $h_Texture, "uint", $i_SceneBGColor, _
-			"byte", $i_ClearBackBuffer, "byte", $i_ClearZBuffer)
+Func _IrrRemoveNode($h_Node)
+	DllCall($_irrDll, "none:cdecl", "IrrRemoveNode", "ptr", $h_Node)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrSetRenderTarget
-
+EndFunc   ;==>_IrrRemoveNode
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrDrawGUI
+; Name...........: _IrrRemoveAllNodes
 ; Description ...: [todo]
-; Syntax.........: _IrrDrawGUI()
+; Syntax.........: _IrrRemoveAllNodes()
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -360,20 +715,20 @@ EndFunc   ;==>_IrrSetRenderTarget
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrDrawGUI()
-	DllCall($_irrDll, "none:cdecl", "IrrDrawGUI")
+Func _IrrRemoveAllNodes()
+	DllCall($_irrDll, "none:cdecl", "IrrRemoveAllNodes")
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrDrawGUI
+EndFunc   ;==>_IrrRemoveAllNodes
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrEndScene
+; Name...........: _IrrSetNodeParent
 ; Description ...: [todo]
-; Syntax.........: _IrrEndScene()
+; Syntax.........: _IrrSetNodeParent($h_Node, $h_Parent)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -387,47 +742,21 @@ EndFunc   ;==>_IrrDrawGUI
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrEndScene()
-	DllCall($_irrDll, "none:cdecl", "IrrEndScene")
+Func _IrrSetNodeParent($h_Node, $h_Parent)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeParent", "ptr", $h_Node, "ptr", $h_Parent)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrEndScene
+EndFunc   ;==>_IrrSetNodeParent
 
-
-; #FUNCTION# =============================================================================================================
-; Name...........: _IrrStop
-; Description ...: Stops Irrlicht engine and closes the IrrlichtWrapper.dll
-; Syntax.........: _IrrStop()
-; Parameters ....: None
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: _IrrStart, _IrrStartAdvanced, _IrrRunning
-; Link ..........:
-; Example .......: No
-; ===============================================================================================================================
-Func _IrrStop()
-
-	DllCall($_irrDll, "none:cdecl", "IrrStop")
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		DllClose($_irrDll)
-		Return true
-	EndIf
-EndFunc   ;==>_IrrStop
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrTransparentZWrite
+; Name...........: _IrrGetNodeID
 ; Description ...: [todo]
-; Syntax.........: _IrrTransparentZWrite()
+; Syntax.........: _IrrGetNodeID($h_Node)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -441,457 +770,18 @@ EndFunc   ;==>_IrrStop
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrTransparentZWrite()
-	DllCall($_irrDll, "none:cdecl", "IrrTransparentZWrite")
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
-EndFunc   ;==>_IrrTransparentZWrite
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrGetFPS
-; Description ...: [todo]
-; Syntax.........: _IrrGetFPS()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrGetFPS()
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGetFPS")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrGetFPS
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrGetPrimitivesDrawn
-; Description ...: [todo]
-; Syntax.........: _IrrGetPrimitivesDrawn()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrGetPrimitivesDrawn()
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGetPrimitivesDrawn")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrGetPrimitivesDrawn
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetWindowCaption
-; Description ...: [todo]
-; Syntax.........: _IrrSetWindowCaption($s_Caption)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrSetWindowCaption($s_Caption)
-	DllCall($_irrDll, "none:cdecl", "IrrSetWindowCaption", "wstr", $s_Caption)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
-EndFunc   ;==>_IrrSetWindowCaption
-
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrIsFullscreen
-; Description ...: [todo]
-; Syntax.........: _IrrIsFullscreen()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrIsFullscreen()
-; Checks if the Irrlicht window is running in fullscreen mode.
-	$result = DllCall($_irrDll, "int:cdecl", "IrrIsFullscreen")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrIsFullscreen
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrIsWindowActive
-; Description ...: [todo]
-; Syntax.........: _IrrIsWindowActive()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrIsWindowActive()
-; Returns if the window is active.
-	$result = DllCall($_irrDll, "int:cdecl", "IrrIsWindowActive")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrIsWindowActive
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrIsWindowFocused
-; Description ...: [todo]
-; Syntax.........: _IrrIsWindowFocused()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrIsWindowFocused()
-; Checks if the Irrlicht window has focus.
-	$result = DllCall($_irrDll, "int:cdecl", "IrrIsWindowFocused")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrIsWindowFocused
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrIsWindowMinimized
-; Description ...: [todo]
-; Syntax.........: _IrrIsWindowMinimized()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrIsWindowMinimized()
-; Checks if the Irrlicht window is minimized.
-	$result = DllCall($_irrDll, "int:cdecl", "IrrIsWindowMinimized")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrIsWindowMinimized
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrGetScreenSize
-; Description ...: [todo]
-; Syntax.........: _IrrGetScreenSize(ByRef $i_Width, ByRef $i_Height)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrGetScreenSize(ByRef $i_Width, ByRef $i_Height)
-; Gets the screen size.
-	$result = DllCall($_irrDll, "none:cdecl", "IrrGetScreenSize", "int*", $i_Width, "int*", $i_Height)
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		$i_Width = $result[1]
-		$i_Height = $result[2]
-		Return true
-	EndIf
-EndFunc   ;==>_IrrGetScreenSize
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrMaximizeWindow
-; Description ...: [todo]
-; Syntax.........: _IrrMaximizeWindow()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrMaximizeWindow()
-; Maximizes the window if possible.
-	$result = DllCall($_irrDll, "none:cdecl", "IrrMaximizeWindow")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return true
-	EndIf
-EndFunc   ;==>_IrrMaximizeWindow
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrMinimizeWindow
-; Description ...: [todo]
-; Syntax.........: _IrrMinimizeWindow()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrMinimizeWindow()
-; Minimizes the window if possible.
-	$result = DllCall($_irrDll, "none:cdecl", "IrrMinimizeWindow")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return true
-	EndIf
-EndFunc   ;==>_IrrMinimizeWindow
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrRestoreWindow
-; Description ...: [todo]
-; Syntax.........: _IrrRestoreWindow()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrRestoreWindow()
-; Restore the window to normal size if possible.
-	$result = DllCall($_irrDll, "none:cdecl", "IrrRestoreWindow")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return true
-	EndIf
-EndFunc   ;==>_IrrRestoreWindow
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetResizableWindow
-; Description ...: [todo]
-; Syntax.........: _IrrSetResizableWindow($i_Resizable)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrSetResizableWindow($i_Resizable)
-; Make the window resizable.
-	$result = DllCall($_irrDll, "none:cdecl", "IrrSetResizableWindow")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return true
-	EndIf
-EndFunc   ;==>_IrrSetResizableWindow
-
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrMakeARGB
-; Description ...: [todo]
-; Syntax.........: _IrrMakeARGB($i_Alpha, $i_Red, $i_Green, $i_Blue)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrMakeARGB($i_Alpha, $i_Red, $i_Green, $i_Blue)
-; make 32 bit representation of an Alpha, Red, Green, Blue color
-	return int( ( "0x" & Hex($i_Alpha, 2) & Hex($i_Red, 2) & Hex($i_Green, 2) & Hex($i_Blue, 2) ) )
-EndFunc   ;==>_IrrMakeARGB
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrQueryFeature
-; Description ...: [todo]
-; Syntax.........: _IrrQueryFeature($i_Feature)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrQueryFeature($i_Feature)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrQueryFeature", "int", $i_Feature)
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrQueryFeature
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrDisableFeature
-; Description ...: [todo]
-; Syntax.........: _IrrDisableFeature($i_Feature, $i_Flag)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrDisableFeature($i_Feature, $i_Flag)
-	DllCall($_irrDll, "int:cdecl", "IrrDisableFeature", "int", $i_Feature, "int", $i_Flag)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
-EndFunc   ;==>_IrrDisableFeature
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrGetTime
-; Description ...: [todo]
-; Syntax.........: _IrrGetTime()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrGetTime()
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGetTime")
+Func _IrrGetNodeID($h_Node)
+; get the ID of this node
+	$result = DllCall($_irrDll, "int:cdecl", "IrrGetNodeID", "ptr", $h_Node)
 	Return $result[0]
-EndFunc   ;==>_IrrGetTime
+EndFunc   ;==>_IrrGetNodeID
+
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetTime
+; Name...........: _IrrSetNodeID
 ; Description ...: [todo]
-; Syntax.........: _IrrSetTime($i_Time)
+; Syntax.........: _IrrSetNodeID($h_Node, $i_ID)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -905,12 +795,50 @@ EndFunc   ;==>_IrrGetTime
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrSetTime($i_Time)
-	DllCall($_irrDll, "none:cdecl", "IrrSetTime", "int", $i_Time)
+Func _IrrSetNodeID($h_Node, $i_ID)
+; set the ID of this node
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeID", "ptr", $h_Node, "int", $i_ID)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrSetTime
+EndFunc   ;==>_IrrSetNodeID
+
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrGetNodeBoundingBox
+; Description ...: [todo]
+; Syntax.........: _IrrGetNodeBoundingBox($h_Node, ByRef $a_VectorA3df, ByRef $a_VectorB3df)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrGetNodeBoundingBox($h_Node, ByRef $a_VectorA3df, ByRef $a_VectorB3df)
+	Dim $a_VectorA3df[3]
+	Dim $a_VectorB3df[3]
+	$result = DllCall($_irrDll, "none:cdecl", "IrrGetNodeBoundingBox", "ptr", $h_Node, "float*", $a_VectorA3df[0], "float*", $a_VectorA3df[1], "float*", $a_VectorA3df[2], "float*", $a_VectorB3df[0], "float*", $a_VectorB3df[1], "float*", $a_VectorB3df[2])
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		$a_VectorA3df[0] = $result[2]
+		$a_VectorA3df[1] = $result[3]
+		$a_VectorA3df[2] = $result[4]
+		$a_VectorB3df[0] = $result[5]
+		$a_VectorB3df[1] = $result[6]
+		$a_VectorB3df[2] = $result[7]
+		Return True
+	EndIf
+EndFunc   ;==>_IrrGetNodeBoundingBox
+
 

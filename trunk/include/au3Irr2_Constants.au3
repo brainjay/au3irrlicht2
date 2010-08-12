@@ -388,3 +388,4 @@ global Enum _ ; IRR_DEBUG
 	$EDS_HALF_TRANSPARENCY = 16, $EDS_BBOX_BUFFERS = 32, $EDS_FULL = 0xffffffff
 
 
+
