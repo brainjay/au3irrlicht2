@@ -3,14 +3,14 @@
 #include "au3Irr2_constants.au3"
 
 ; #INDEX# =======================================================================================================================
-; Title .........: [todo]
-; AutoIt Version : [todo]
+; Title .........: System
+; AutoIt Version : v3.3.6.1
 ; Language ......: English
-; Description ...: [todo]
-;                  [todo]
-;                  [todo]
-; Author(s) .....: [todo]
-; Dll(s) ........: [todo]
+; Description ...: These calls deal with starting, running and stopping the Irrlicht engine,
+;                  it also includes calls that get system metrics and some other miscellaneous tools.
+; Author(s) .....: jRowe, linus.
+;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
@@ -55,22 +55,45 @@
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrStart
-; Description ...: opens the IrrlichtWrapper.dll and starts Irrlicht engine.;
-; Syntax.........: _IrrStart($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel = 1, $i_FullScreen = 0, $i_Shadows = 0, $i_InputCapture = 0, $i_VSync = 0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: Success - True
-;                  Failure - 1: error occured on dll call
-;                  |2: IrrlichtWrapper.dll not found
-; Author ........: [todo]
+; Description ...: Opens the IrrlichtWrapper.dll, starts Irrlicht interface and opens a window for rendering.
+; Syntax.........: _IrrStart($i_DeviceType=3, $i_ScreenWidth=800, $i_ScreenHeight=600, $i_BitsPerPixel=1, $i_FullScreen=0, $i_Shadows=0, $i_InputCapture=0, $i_VSync=0)
+; Parameters ....: $i_DeviceType - [optional] specifies the renderer to use when drawing to the display this may be one of the following types:
+;                  |$IRR_EDT_NULL - A NULL device with no display
+;                  |$IRR_EDT_SOFTWARE - Irrlichts default software renderer
+;                  |$IRR_EDT_SOFTWARE2 - An improved quality software renderer
+;                  |$IRR_EDT_OPENGL - Hardware accelerated OpenGL renderer
+;                  |$IRR_EDT_DIRECT3D8 - Hardware accelerated DirectX 8 renderer
+;                  |$IRR_EDT_DIRECT3D9 - Hardware accelerated DirectX 9 renderer
+;                  $i_ScreenWidth - [optional] Screen width specifies the width of the viewport in pixels
+;                  $i_ScreenHeight - [optional] Screen height specifies the height of the viewport in pixels
+;                  $i_BitsPerPixel - [optional] The number of color bits that is used for each pixel 32 bit color gives 24 million different colors whereas 16 bit color gives only 32,000 colors. However the advantage of 16 bit color is that some operations use half the memory and can run at up to twice the speed.
+;                  +This setting can be either of:
+;                  |$IRR_BITS_PER_PIXEL_16
+;                  |$IRR_BITS_PER_PIXEL_32
+;                  $i_FullScreen - [optional] Specifies whether the display is to opened in full screen mode or in a window:
+;                  |$IRR_WINDOWED - For window mode
+;                  |$IRR_FULLSCREEN - For fullscreen mode. When using full screen mode you will need to adjust the window size to the same dimensions as a supported screen resolution on the target display 640x400 for example.
+;                  $i_Shadows - [optional] Use shadows starts the engine in a mode that supports the rendering of stencil shadows.
+;                  |$IRR_NO_SHADOWS - For a display that does not support shadows.
+;                  |$IRR_SHADOWS - For a display that supports shadows.
+;                  $i_InputCapture - [optional] Capture mouse and keyboard specified whether you want to capture keyboard and mouse events, if you choose to ignore them they will be handled by Irrlicht for FPS camera control. This parameter should be either of:
+;                  |$IRR_IGNORE_EVENTS
+;                  |$IRR_CAPTURE_EVENTS
+;                  $i_VSync - [optional] Vertical syncronisation specifies whether the display of each new frame is syncronised with vertical refresh of the graphics card. This produces a smoother display and avoids 'tearing' where the viewer can see parts of two different frames at the same time. The setting can be either of:
+;                  |$IRR_VERTICAL_SYNC_OFF
+;                  |$IRR_VERTICAL_SYNC_ON
+; Return values .: Success		- True
+;                  Failure		- False and sets @error:
+;                  |1 - error occured on dll call
+;                  |2 - IrrlichtWrapper.dll not found
+; Author ........:
 ; Modified.......:
-; Remarks .......: if .dll cannot be opened, path environment is extended with .\bin (so program can have its
-;                  binaries in separate dir) and .\.. (so e.g. au3irrlicht2-examples can be run from sub-dir)
-;                  Nevertheless, this is a fallback. EnvUpdate can take some time, so best is to be sure .dll
-;                  can be found at once!
-;                  Other needed .dll's (Irrlicht.dll + maybe msvcp71.dll are NOT checked but simply expected
-;                  to be at last in same dir as the IrrlichtWrapper.dll.
+; Remarks .......: if .dll cannot be opened, path environment is extended with:
+;                  - <b>.\bin</b> (allows an au3Irr2 script to have its binaries in a subdir) and
+;                  - <b>.\..</b>  (allows au3Irr2 examples to be started from their \include subdir).
+;                  Nevertheless, ensuring DLL's in a permanent dir reachable via path may be the better way, as the temporary update of environment can be time-consuming.
+;+
+;                  <b>Other needed .dll's</b> (Irrlicht.dll + maybe msvcp71.dll) <b>are NOT checked</b> but simply expected to be at last in same dir as the IrrlichtWrapper.dll.
 ; Related .......: _IrrStartAdvanced, _IrrRunning, _IrrStop
 ; Link ..........:
 ; Example .......: Yes
@@ -100,25 +123,54 @@ EndFunc   ;==>_IrrStart
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrStartAdvanced
-; Description ...: opens the IrrlichtWrapper.dll and starts Irrlicht engine with advanced method.
-; Syntax.........: _IrrStartAdvanced($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel = 1, $i_FullScreen = 0, $i_Shadows = 0, $i_InputCapture = 0, $i_VSync = 0, $i_TypeOfDevice = 0, $i_DoublebufferEnabled = 0, $i_AntialiasEnabled = 0, $i_HighPrecisionFpu = 0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: Success - Return value from the dll call.
-;                  Failure - 1: error occured on dll call
-;                  |2: IrrlichtWrapper.dll not found
-; Author ........: [todo]
+; Description ...: Opens the IrrlichtWrapper.dll and starts Irrlicht engine with advanced method.
+; Syntax.........: _IrrStartAdvanced($i_DeviceType=3, $i_ScreenWidth=800, $i_ScreenHeight=600, $i_BitsPerPixel=1, $i_FullScreen=0, $i_Shadows=0, $i_InputCapture=0, $i_VSync=0, $i_TypeOfDevice=0, $i_DoublebufferEnabled=0, $i_AntialiasEnabled=0, $i_HighPrecisionFpu=0)
+; Parameters ....: $i_DeviceType - [optional] specifies the renderer to use when drawing to the display this may be one of the following types:
+;                  |$IRR_EDT_NULL - A NULL device with no display
+;                  |$IRR_EDT_SOFTWARE - Irrlichts default software renderer
+;                  |$IRR_EDT_SOFTWARE2 - An improved quality software renderer
+;                  |$IRR_EDT_OPENGL - Hardware accelerated OpenGL renderer
+;                  |$IRR_EDT_DIRECT3D8 - Hardware accelerated DirectX 8 renderer
+;                  |$IRR_EDT_DIRECT3D9 - Hardware accelerated DirectX 9 renderer
+;                  $i_ScreenWidth - [optional] Screen width specifies the width of the viewport in pixels
+;                  $i_ScreenHeight - [optional] Screen height specifies the height of the viewport in pixels
+;                  $i_BitsPerPixel - [optional] The number of color bits that is used for each pixel 32 bit color gives 24 million different colors whereas 16 bit color gives only 32,000 colors. However the advantage of 16 bit color is that some operations use half the memory and can run at up to twice the speed.
+;                  +This setting can be either of:
+;                  |$IRR_BITS_PER_PIXEL_16
+;                  |$IRR_BITS_PER_PIXEL_32
+;                  $i_FullScreen - [optional] Specifies whether the display is to opened in full screen mode or in a window:
+;                  |$IRR_WINDOWED - For window mode
+;                  |$IRR_FULLSCREEN - For fullscreen mode. When using full screen mode you will need to adjust the window size to the same dimensions as a supported screen resolution on the target display 640x400 for example.
+;                  $i_Shadows - [optional] Use shadows starts the engine in a mode that supports the rendering of stencil shadows.
+;                  |$IRR_NO_SHADOWS - For a display that does not support shadows.
+;                  |$IRR_SHADOWS - For a display that supports shadows.
+;                  $i_InputCapture - [optional] Capture mouse and keyboard specified whether you want to capture keyboard and mouse events, if you choose to ignore them they will be handled by Irrlicht for FPS camera control. This parameter should be either of:
+;                  |$IRR_IGNORE_EVENTS
+;                  |$IRR_CAPTURE_EVENTS
+;                  $i_VSync - [optional] Vertical syncronisation specifies whether the display of each new frame is syncronised with vertical refresh of the graphics card. This produces a smoother display and avoids 'tearing' where the viewer can see parts of two different frames at the same time. The setting can be either of:
+;                  |$IRR_VERTICAL_SYNC_OFF
+;                  |$IRR_VERTICAL_SYNC_ON
+;                  $i_TypeOfDevice - [optional] Devicetype allows a specific type of device for example a windows screen or a console to be selected. For the time being this should be set to 0 which automatically selects the best device.
+;                  $i_DoublebufferEnabled - [optional] Doublebufferenabled is used to control whether double buffering is used. When double buffering is used two drawing surfaces are created one for display and the other that is used for drawing too. Double buffering is required for anit-aliasing the options are:
+;                  |$IRR_ON or $IRR_OFF
+;                  $i_AntialiasEnabled - [optional] Antialiasenabled is used to enable the antialiasing effect, this effect produces a blurring at the edges of object giving their lines a smooth natural appearence. There is usually a big penalty for using this effect though sometimes as high as 30%  of the frame rate or more. This is a value for the anti-aliasing and should be a power of 2.
+;                  |(e.g: 2, 4, 8, 16)
+;                  $i_HighPrecisionFpu - [optional] Highprecisionfpu is used to enable high precision Floating point calculations, that produce more accurate result at the expense of a slower operating speed.
+; Return values .: Success		- True
+;                  Failure		- False and sets @error:
+;                  |1 - error occured on dll call
+;                  |2 - IrrlichtWrapper.dll not found
+; Author ........:
 ; Modified.......:
-; Remarks .......: if .dll cannot be opened, path environment is extended with .\bin (so program can have its
-;                  binaries in separate dir) and .\.. (so e.g. au3irrlicht2-examples can be run from sub-dir)
-;                  Nevertheless, this is a fallback. EnvUpdate can take some time, so best is to be sure .dll
-;                  can be found at once!
-;                  Other needed .dll's (Irrlicht.dll + maybe msvcp71.dll are NOT checked but simply expected
-;                  to be at last in same dir as the IrrlichtWrapper.dll.
+; Remarks .......: if .dll cannot be opened, path environment is extended with:
+;                  - <b>.\bin</b> (allows an au3Irr2 script to have its binaries in a subdir) and
+;                  - <b>.\..</b>  (allows au3Irr2 examples to be started from their \include subdir).
+;                  Nevertheless, ensuring DLL's in a permanent dir reachable via path may be the better way, as the temporary update of environment can be time-consuming.
+;+
+;                  <b>Other needed .dll's</b> (Irrlicht.dll + maybe msvcp71.dll) <b>are NOT checked</b> but simply expected to be at last in same dir as the IrrlichtWrapper.dll.
 ; Related .......: _IrrStart, _IrrRunning, _IrrStop
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrStartAdvanced($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel = 1, $i_FullScreen = 0, $i_Shadows = 0, $i_InputCapture = 0, $i_VSync = 0, $i_TypeOfDevice = 0, $i_DoublebufferEnabled = 0, $i_AntialiasEnabled = 0, $i_HighPrecisionFpu = 0)
 
@@ -147,17 +199,14 @@ EndFunc   ;==>_IrrStartAdvanced
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrRunning
-; Description ...: [todo]
+; Description ...: Used to determine if the Irrlicht engine is still running.
 ; Syntax.........: _IrrRunning()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: None
+; Return values .: True if running - False if not.
+;                  |Sets @error to true on failures.
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: None
 ; Related .......: _IrrStart, _IrrStartAdvanced, _IrrStop
 ; Link ..........:
 ; Example .......: No
@@ -399,18 +448,17 @@ EndFunc   ;==>_IrrEndScene
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrStop
-; Description ...: Stops Irrlicht engine and closes the IrrlichtWrapper.dll
+; Description ...: Stops the Irrlicht Engine freeing all of the resources, closing the display window and IrrlichtWrapper.dll.
 ; Syntax.........: _IrrStop()
 ; Parameters ....: None
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: None.
 ; Related .......: _IrrStart, _IrrStartAdvanced, _IrrRunning
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrStop()
 
@@ -913,4 +961,6 @@ Func _IrrSetTime($i_Time)
 		return True
 	EndIf
 EndFunc   ;==>_IrrSetTime
+
+
 

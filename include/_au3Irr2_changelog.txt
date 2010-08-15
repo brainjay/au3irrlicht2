@@ -7,7 +7,8 @@ au3Irrlicht2 Changelog
 ???
 
 UDF:
-- changed structure: now a main UDF including module-wise sub-UDF's from \include)
+- changed structure: Splitted UDF per category into \include. Main UDF (and only
+  one needed to be included) is au3Irrlicht2.au3
 
 Internal tools:
 - Added: helper scripts and files for building a help file
