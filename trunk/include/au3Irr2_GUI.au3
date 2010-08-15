@@ -15,7 +15,6 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
-;__getGuiEvt
 ;_IrrGUIClear
 ;_IrrGUIEvents
 ;_IrrGUIEventAvailable
@@ -43,13 +42,11 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
+;__getGuiEvt
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; ===============================================================================================================================
-
-;Irrlicht GUI functions
-
 
 Global enum _ ; enumeration GUI_EVENT for possible Elements readable by __getGuiEvt
 	$EVT_GUI_IID = 1,	_ 	; integer "id"
@@ -58,27 +55,27 @@ Global enum _ ; enumeration GUI_EVENT for possible Elements readable by __getGui
 	$EVT_GUI_IY				; integer "y"
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: __getGuiEvt
-; Description ...: [todo]
+; Description ...: Helper function: returns value of $i_Element inside a GuiEvent-structure.
 ; Syntax.........: __getGuiEvt($p_GUIEvent, $i_Element = $EVT_GUI_IID)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $p_GUIEvent - A pointer as returned from _IrrReadGUIEvent.
+;                  $i_Element - [optional] Event type to return:
+;                  |$EVT_GUI_IID - ID of GUI element as integer
+;                  |$EVT_GUI_IEVENT - Event type from enum $IRR_EGUI_EVENT_TYPE
+;                  |$EVT_GUI_IX - X as integer
+;                  |$EVT_GUI_IY	- Y as integer
+; Return values .: Success - Value of selected event type
+;                  Failure - Returns False and sets @error = 1
+; Author ........: linus
 ; Modified.......:
 ; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Related .......: _IrrReadGUIEvent
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 func __getGuiEvt($p_GUIEvent, $i_Element = $EVT_GUI_IID)
-; helper function:
-; returns value of $i_Element inside a GuiEvent-structure.
-; $p_GUIEvent is a pointer as returned from _IrrReadGUIEvent
+
 	local $EventStruct = DllStructCreate("int;int;int;int", $p_GUIEvent)
 	$result = DllStructGetData($EventStruct, $i_Element)
 	if @error Then
@@ -769,5 +766,7 @@ Func _IrrGetLastSelectedFile()
 		Return $result[0]
 	EndIf
 EndFunc   ;==>_IrrGetLastSelectedFile
+
+
 
 
