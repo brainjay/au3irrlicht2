@@ -25,7 +25,6 @@
 ;_IrrGUISetFont
 ;_IrrGUISetColor
 ;_IrrAddWindow
-;_IrrAddStaticText
 ;_IrrAddButton
 ;_IrrAddScrollBar
 ;_IrrAddListBox
@@ -43,6 +42,7 @@
 
 ; #CURRENT# =====================================================================================================================
 ;__getGuiEvt
+;_IrrAddStaticText
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -371,22 +371,30 @@ EndFunc   ;==>_IrrAddWindow
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddStaticText
-; Description ...: [todo]
+; Description ...: Creates a static text object on the Graphical User Interface, this simply displays the specifed text in the specified box.
 ; Syntax.........: _IrrAddStaticText($s_Text, $i_TopX, $i_TopY, $i_BottomX, $i_BottomY, $i_Border, $i_WordWrap, $h_Parent = 0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $s_Text - String that contains the text you want to display.
+;                  $i_TopX - Top X position of a box in which the text is drawn
+;                  $i_TopY - Top Y position of a box in which the text is drawn
+;                  $i_BottomX - Bottom X position of a box in which the text is drawn
+;                  $i_BottomY - Bottom Y position of a box in which the text is drawn
+;                  $i_Border - Border is used to draw a visible box around the text, its value should be either of:
+;                  |$IRR_GUI_NO_BORDER
+;                  |$IRR_GUI_BORDER
+;                  $i_WordWrap - Word wrap is used to define whether text is to be wrapped around into a second line when it fills the width of the text box, its value should be either of:
+;                  |$IRR_GUI_NO_WRAP
+;                  |$IRR_GUI_WRAP
+;                  $h_Parent - [optional] Parent defines the parent object of this window. This can be ommited if the object has no parent.
+; Return values .: Success - Pointer to the static text Object
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrDrawGUI
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddStaticText($s_Text, $i_TopX, $i_TopY, $i_BottomX, $i_BottomY, $i_Border, $i_WordWrap, $h_Parent = 0)
 	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddStaticText", "wstr", $s_Text, "int", $i_TopX, "int", $i_TopY, "int", $i_BottomX, "int", $i_BottomY, "uint", $i_Border, "uint", $i_WordWrap, "ptr", $h_Parent)
@@ -766,6 +774,7 @@ Func _IrrGetLastSelectedFile()
 		Return $result[0]
 	EndIf
 EndFunc   ;==>_IrrGetLastSelectedFile
+
 
 
 

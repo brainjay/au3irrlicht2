@@ -16,17 +16,12 @@
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
 ;_IrrSetViewPort
-;_IrrBeginScene
 ;_IrrBeginSceneAdvanced
-;_IrrDrawScene
 ;_IrrDrawSceneToTexture
 ;_IrrSetRenderTarget
-;_IrrDrawGUI
-;_IrrEndScene
 ;_IrrTransparentZWrite
 ;_IrrGetFPS
 ;_IrrGetPrimitivesDrawn
-;_IrrSetWindowCaption
 ;_IrrIsFullscreen
 ;_IrrIsWindowActive
 ;_IrrIsWindowFocused
@@ -47,7 +42,12 @@
 ;_IrrStart
 ;_IrrStartAdvanced
 ;_IrrRunning
+;_IrrBeginScene
+;_IrrDrawScene
+;_IrrDrawGUI
+;_IrrEndScene
 ;_IrrStop
+;_IrrSetWindowCaption
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -209,7 +209,7 @@ EndFunc   ;==>_IrrStartAdvanced
 ; Remarks .......: None
 ; Related .......: _IrrStart, _IrrStartAdvanced, _IrrStop
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrRunning()
 	$result = DllCall($_irrDll, "int:cdecl", "IrrRunning")
@@ -248,22 +248,21 @@ Func _IrrSetViewPort($i_TopX, $i_TopY, $i_BottomX, $i_BottomY)
 EndFunc   ;==>_IrrSetViewPort
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrBeginScene
-; Description ...: [todo]
+; Description ...: Starts to draw a frame, erasing the canvas with the specified color.
 ; Syntax.........: _IrrBeginScene($i_Red, $i_Green, $i_Blue)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $i_Red -  Red value from 0 to 255 (full intensity)
+;                  $i_Green - Green value from 0 to 255 (full intensity)
+;                  $i_Blue - Blue value from 0 to 255 (full intensity)
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrBeginSceneAdvanced, _IrrDrawScene, _IrrDrawGUI, _IrrEndScene
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrBeginScene($i_Red, $i_Green, $i_Blue)
 ; initialise the frame drawing cycle, erasing the canvas ready for drawing
@@ -306,22 +305,19 @@ EndFunc   ;==>_IrrBeginSceneAdvanced
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrDrawScene
-; Description ...: [todo]
+; Description ...: This renders the 3D scene to the canvas, drawing all 3D elements: nodes, particles, billboards, etc .
 ; Syntax.........: _IrrDrawScene()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: None
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrBeginScene, _IrrBeginSceneAdvanced, _IrrDrawGUI, _IrrEndScene
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrDrawScene()
 	DllCall($_irrDll, "none:cdecl", "IrrDrawScene")
@@ -392,22 +388,19 @@ EndFunc   ;==>_IrrSetRenderTarget
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrDrawGUI
-; Description ...: [todo]
+; Description ...: This renders the 2D graphical user interface that has been created to the scene.
 ; Syntax.........: _IrrDrawGUI()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: None
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrBeginScene, _IrrBeginSceneAdvanced, _IrrDrawScene, _IrrEndScene
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrDrawGUI()
 	DllCall($_irrDll, "none:cdecl", "IrrDrawGUI")
@@ -419,22 +412,19 @@ Func _IrrDrawGUI()
 EndFunc   ;==>_IrrDrawGUI
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrEndScene
-; Description ...: [todo]
+; Description ...: This renders the 3D scene to the canvas, drawing all 3D elements: nodes, particles, billboards, etc .
 ; Syntax.........: _IrrEndScene()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: None
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrBeginScene, _IrrBeginSceneAdvanced, _IrrDrawScene, _IrrDrawGUI
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrEndScene()
 	DllCall($_irrDll, "none:cdecl", "IrrEndScene")
@@ -553,22 +543,19 @@ Func _IrrGetPrimitivesDrawn()
 EndFunc   ;==>_IrrGetPrimitivesDrawn
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetWindowCaption
-; Description ...: [todo]
+; Description ...: Set the caption in the Irrlicht window title bar.
 ; Syntax.........: _IrrSetWindowCaption($s_Caption)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $s_Caption - String for the title bar.
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......:
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetWindowCaption($s_Caption)
 	DllCall($_irrDll, "none:cdecl", "IrrSetWindowCaption", "wstr", $s_Caption)
@@ -961,6 +948,7 @@ Func _IrrSetTime($i_Time)
 		return True
 	EndIf
 EndFunc   ;==>_IrrSetTime
+
 
 
 
