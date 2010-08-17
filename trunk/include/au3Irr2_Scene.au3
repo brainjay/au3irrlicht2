@@ -3,32 +3,28 @@
 #include "au3Irr2_constants.au3"
 
 ; #INDEX# =======================================================================================================================
-; Title .........: [todo]
-; AutoIt Version : [todo]
+; Title .........: Scene
+; AutoIt Version : v3.3.6.1
 ; Language ......: English
-; Description ...: [todo]
-;                  [todo]
-;                  [todo]
-; Author(s) .....: [todo]
-; Dll(s) ........: [todo]
+; Description ...: Calls for managing the scene, loading and creating mesh objects and then adding them to the scene
+;                  as nodes to be rendered on the screen.
+; Author(s) .....: jRowe, linus.
+;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
 ;_IrrGetRootSceneNode
-;_IrrGetMesh
 ;_IrrCreateMesh
 ;_IrrAddHillPlaneMesh
 ;_IrrWriteMesh
-;_IrrRemoveMesh
 ;_IrrClearUnusedMeshes
 ;_IrrSetMeshHardwareAccelerated
 ;_IrrGetMeshFrameCount
 ;_IrrGetMeshBufferCount
 ;_IrrGetMeshIndexCount
 ;_IrrGetMeshVertexCount
-;_IrrAddMeshToScene
-;_IrrAddMeshToSceneAsOcttree
 ;_IrrAddStaticMeshForNormalMappingToScene
 ;_IrrLoadScene
 ;_IrrSaveScene
@@ -78,6 +74,10 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
+;_IrrGetMesh
+;_IrrRemoveMesh
+;_IrrAddMeshToScene
+;_IrrAddMeshToSceneAsOcttree
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -110,22 +110,35 @@ Func _IrrGetRootSceneNode()
 EndFunc   ;==>_IrrGetRootSceneNode
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetMesh
-; Description ...: [todo]
+; Description ...: Loads the specified mesh ready to be added to the scene.
 ; Syntax.........: _IrrGetMesh($s_MeshFile)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $s_MeshFile - Filename of the mesh object to load
+; Return values .: Success - Handle of the loaded mesh object
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: The Irrlicht engine supports a wide range of mesh types.
+;                  <br><b>Static objects:</b>
+;                  @@StandardTable@@
+;                  Irrlicht static meshes (.irrmesh, r/w)	3D Studio meshes (.3ds, r)
+;                  |Alias Wavefront Maya (.obj, r/w)	Lightwave Objects (.lwo, r)
+;                  |COLLADA 1.4 (.xml, .dae, r/w)	OGRE meshes (.mesh, r)
+;                  |My3DTools 3 (.my3D, r)	LMTools (.lmts, r)
+;                  |Quake 3 levels (.bsp, r)	DeleD (.dmf, r)
+;                  |FSRad oct (.oct, r)	Cartography shop 4 (.csm, r)
+;                  |STL 3D files (.stl, r/w)	PLY 3D files (.ply, r/w)
+;                  @@End@@
+;                  <br><b>Animated objects:</b>
+;                  @@StandardTable@@
+;                  B3D files (.b3d, r, skeleton)	Microsoft DirectX (.x, r) (binary & text, skeleton)
+;                  |Milkshape (.ms3d, r, skeleton)	Quake 3 models (.md3, r, morph)
+;                  |Quake 2 models (.md2, r, morph)
+;                  @@End@@
+; Related .......: _IrrAddMeshToScene, _IrrRemoveMesh
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrGetMesh($s_MeshFile)
 	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetMesh", "str", $s_MeshFile)
@@ -241,26 +254,27 @@ Func _IrrWriteMesh($h_Mesh, $i_FileFormat, $s_Filename)
 EndFunc   ;==>_IrrWriteMesh
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrRemoveMesh
-; Description ...: [todo]
+; Description ...: Removes a mesh from the scene cache, freeing up resources.
 ; Syntax.........: _IrrRemoveMesh($h_Mesh)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Mesh - Handle of a mesh object
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrGetMesh
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrRemoveMesh($h_Mesh)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrRemoveMesh", "ptr", $h_Mesh)
-	Return $result[0]
+	$result = DllCall($_irrDll, "none:cdecl", "IrrRemoveMesh", "ptr", $h_Mesh)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return True
+	EndIf
 EndFunc   ;==>_IrrRemoveMesh
 
 
@@ -462,22 +476,19 @@ EndFunc   ;==>_IrrGetMeshVertexCount
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddMeshToScene
-; Description ...: [todo]
+; Description ...: Adds a mesh to the scene as a new 3D 'node'.
 ; Syntax.........: _IrrAddMeshToScene($h_Mesh)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Mesh - Handle of a mesh object
+; Return values .: Success - Handle of the new node in the scene
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrGetMesh
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrAddMeshToScene($h_Mesh)
 	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddMeshToScene", "UINT_PTR", $h_Mesh)
@@ -489,22 +500,20 @@ Func _IrrAddMeshToScene($h_Mesh)
 EndFunc   ;==>_IrrAddMeshToScene
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddMeshToSceneAsOcttree
-; Description ...: [todo]
+; Description ...: Adds a mesh to the scene as a new 3D node, optimised with an Octtree.
 ; Syntax.........: _IrrAddMeshToSceneAsOcttree($h_Mesh)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Mesh - Handle of an mesh object
+; Return values .: Success - Handle to the irrlicht node object
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: This method optimise's the mesh with an Octtree, this is particularly useful for maps where there is a lot of geometry in the mesh but little of it can be seen at any one time.
+;                  Optimizing your node with this function will result in a large increase in performance.
+; Related .......: None
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: None
 ; ===============================================================================================================================
 Func _IrrAddMeshToSceneAsOcttree($h_Mesh)
 	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddMeshToSceneAsOcttree", "UINT_PTR", $h_Mesh)
@@ -1790,4 +1799,10 @@ Func __CreateVector($f_X, $f_Y, $f_Z)
 	DllStructSetData($VectorStruct, 3, $f_Z)
 	Return $VectorStruct
 EndFunc   ;==>___CreateVector
+
+
+
+
+
+
 

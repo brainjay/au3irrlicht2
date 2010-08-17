@@ -3,14 +3,13 @@
 #include "au3Irr2_constants.au3"
 
 ; #INDEX# =======================================================================================================================
-; Title .........: [todo]
-; AutoIt Version : [todo]
+; Title .........: Node
+; AutoIt Version : v3.3.6.1
 ; Language ......: English
-; Description ...: [todo]
-;                  [todo]
-;                  [todo]
-; Author(s) .....: [todo]
-; Dll(s) ........: [todo]
+; Description ...: Calls for manipulating, texturing and getting information from nodes in the scene.
+; Author(s) .....: jRowe, linus.
+;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
@@ -19,10 +18,7 @@
 ;_IrrSetNodeName
 ;_IrrGetMaterialCount
 ;_IrrGetMaterial
-;_IrrSetNodeMaterialTexture
-;_IrrSetNodeMaterialFlag
 ;_IrrSetNodeMaterialType
-;_IrrSetNodePosition
 ;_IrrSetNodeRotation
 ;_IrrSetNodeScale
 ;_IrrDebugDataVisible
@@ -46,6 +42,9 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
+;_IrrSetNodeMaterialTexture
+;_IrrSetNodeMaterialFlag
+;_IrrSetNodePosition
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -159,22 +158,22 @@ Func _IrrGetMaterial($h_Node, $i_Material)
 EndFunc   ;==>_IrrGetMaterial
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeMaterialTexture
-; Description ...: [todo]
+; Description ...: Applys a texture to a node in the scene.
 ; Syntax.........: _IrrSetNodeMaterialTexture($h_Node, $h_Texture, $i_Index)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Node - Handle of a node in the scene
+;                  $h_Texture - Handle of a texture object
+;                  $i_Index - Material index number of the material layer, usually 0 or 1.
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: How the texture is applied across the surface of the node will depend on the texturing coordinates in each of the vectors of the mesh and how they are plotted across the surface of the texture.
+;                  Some nodes can have several textures applied to them to create special material effects.
+; Related .......: _IrrSetNodeMaterialFlag, _IrrSetNodeMaterialType
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrSetNodeMaterialTexture($h_Node, $h_Texture, $i_Index)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeMaterialTexture", "UINT_PTR", $h_Node, "UINT_PTR", $h_Texture, "int", $i_Index)
@@ -186,22 +185,34 @@ Func _IrrSetNodeMaterialTexture($h_Node, $h_Texture, $i_Index)
 EndFunc   ;==>_IrrSetNodeMaterialTexture
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeMaterialFlag
-; Description ...: [todo]
+; Description ...: Sets material properies of a node that will effect its appearance on the screen.
 ; Syntax.........: _IrrSetNodeMaterialFlag($h_Node, $i_Type, $i_Flag)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Node - Handle of a node in the scene
+;                  $i_Type - Material type is one of the following properties:
+;                  |$IRR_EMF_WIREFRAME - Render as wireframe outline
+;                  |$IRR_EMF_GOURAUD_SHADING - Render smoothly across polygons
+;                  |$IRR_EMF_LIGHTING - Material is effected by lighting
+;                  |$IRR_EMF_ZBUFFER - Enable z buffer
+;                  |$IRR_EMF_ZWRITE_ENABLE - Can write as well as read z buffer
+;                  |$IRR_EMF_BACK_FACE_CULLING - Cull polygons facing away
+;                  |$IRR_EMF_BILINEAR_FILTER - Enable bilinear filtering
+;                  |$IRR_EMF_TRILINEAR_FILTER - Enable trilinear filtering
+;                  |$IRR_EMF_ANISOTROPIC_FILTER - Reduce blur in distant textures
+;                  |$IRR_EMF_FOG_ENABLE - Enable fogging in the distance
+;                  |$IRR_EMF_NORMALIZE_NORMALS - Use when scaling dynamically lighted models
+;                  $i_Flag - Switches selected property on or off:
+;                  |$IRR_ON
+;                  |$IRR_OFF
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrSetNodeMaterialTexture, _IrrSetNodeMaterialType
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrSetNodeMaterialFlag($h_Node, $i_Type, $i_Flag)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeMaterialFlag", "UINT_PTR", $h_Node, "int", $i_Type, "uint", $i_Flag)
@@ -226,9 +237,9 @@ EndFunc   ;==>_IrrSetNodeMaterialFlag
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Related .......: _IrrSetNodeMaterialTexture, _IrrSetNodeMaterialFlag
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrSetNodeMaterialType($h_Node, $i_Type)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeMaterialType", "UINT_PTR", $h_Node, "int", $i_Type)
@@ -240,22 +251,22 @@ Func _IrrSetNodeMaterialType($h_Node, $i_Type)
 EndFunc   ;==>_IrrSetNodeMaterialType
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodePosition
-; Description ...: [todo]
+; Description ...: Moves the node to the new position.
 ; Syntax.........: _IrrSetNodePosition($h_Node, $f_X, $f_Y, $f_Z)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Node - Handle of a scene node
+;                  $f_X - X value of new position
+;                  $f_Y - Y value of new position
+;                  $f_Z - Z value of new position
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: None
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: None
 ; ===============================================================================================================================
 Func _IrrSetNodePosition($h_Node, $f_X, $f_Y, $f_Z)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodePosition", "UINT_PTR", $h_Node, "float", $f_X, "float", $f_Y, "float", $f_Z)
@@ -840,5 +851,11 @@ Func _IrrGetNodeBoundingBox($h_Node, ByRef $a_VectorA3df, ByRef $a_VectorB3df)
 		Return True
 	EndIf
 EndFunc   ;==>_IrrGetNodeBoundingBox
+
+
+
+
+
+
 
 

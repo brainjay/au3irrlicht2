@@ -3,25 +3,21 @@
 #include "au3Irr2_constants.au3"
 
 ; #INDEX# =======================================================================================================================
-; Title .........: [todo]
-; AutoIt Version : [todo]
+; Title .........: 2D
+; AutoIt Version : v3.3.6.1
 ; Language ......: English
-; Description ...: [todo]
-;                  [todo]
-;                  [todo]
-; Author(s) .....: [todo]
-; Dll(s) ........: [todo]
+; Description ...: Support for 2D operations including the loading of bitmaps that can be used for texturing
+;                  3D objects or for display on the screen as 2D sprites.
+; Author(s) .....: jRowe, linus.
+;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
 ;_IrrSetTextureCreationFlag
-;_IrrGetTexture
-;_IrrGetImage
 ;_IrrCreateTexture
 ;_IrrCreateImage
-;_IrrRemoveTexture
-;_IrrRemoveImage
 ;_IrrLockTexture
 ;_IrrLockOpenGLTexture
 ;_IrrUnlockTexture
@@ -29,16 +25,20 @@
 ;_IrrUnlockImage
 ;_IrrCreateRenderTargetTexture
 ;_IrrMakeNormalMapTexture
-;_IrrColorKeyTexture
-;_IrrDraw2DImage
-;_IrrDraw2DImageElement
-;_IrrGetFont
-;_Irr2DFontDraw
 ;_IrrSaveScreenShot
 ;_IrrGetScreenShot
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
+;_IrrGetTexture
+;_IrrGetImage
+;_IrrRemoveTexture
+;_IrrRemoveImage
+;_IrrColorKeyTexture
+;_IrrDraw2DImage
+;_IrrDraw2DImageElement
+;_IrrGetFont
+;_Irr2DFontDraw
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -73,22 +73,26 @@ Func _IrrSetTextureCreationFlag($i_Flag, $i_Value)
 EndFunc   ;==>_IrrSetTextureCreationFlag
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetTexture
-; Description ...: [todo]
-; Syntax.........: _IrrGetTexture($s_TextureFile)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Description ...: Loads 2D texture from bitmap file into video memory that can then be used to texture a model or to draw onto the screen.
+; Syntax.........: _IrrGetTexture($s_ImageFile)
+; Parameters ....: $s_ImageFile - Full path to the bitmap file.
+; Return values .: Success - Handle of the device dependend irrlicht texture object
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: Irrlicht engine supports currently this image file formats:
+;                  @@StandardTable@@
+;                  JPEG File Interchange Format (.jpg, r/w)	Portable Network Graphics (.png, r/w)
+;                  Truevision Targa (.tga, r/w)	Windows Bitmap (.bmp, r/w)
+;                  Zsoft Paintbrush (.pcx, r/w)	Portable Pixmaps (.ppm, r/w)
+;                  Adobe Photoshop (.psd, r)	Quake 2 textures (.wal, r)
+;                  SGI truecolor textures (.rgb, r)
+;                  @@End@@
+; Related .......: _IrrRemoveTexture, _IrrGetImage
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrGetTexture($s_TextureFile)
 	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetTexture", "str", $s_TextureFile)
@@ -100,22 +104,28 @@ Func _IrrGetTexture($s_TextureFile)
 EndFunc   ;==>_IrrGetTexture
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetImage
-; Description ...: [todo]
+; Description ...: Loads 2D texture from bitmap file into main memory for CPU based operations.
 ; Syntax.........: _IrrGetImage($s_ImageFile)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $s_ImageFile - Full path to the bitmap file.
+; Return values .: Success - Handle of the irrlicht memory texture object
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: <b>This images can not be used to texture 3D objects!</b> Instead, they can be used to supply a heightmap to a terrain or other similar CPU based operations.
+;+
+;                  Irrlicht engine supports currently this image file formats:
+;                  @@StandardTable@@
+;                  JPEG File Interchange Format (.jpg, r/w)	Portable Network Graphics (.png, r/w)
+;                  Truevision Targa (.tga, r/w)	Windows Bitmap (.bmp, r/w)
+;                  Zsoft Paintbrush (.pcx, r/w)	Portable Pixmaps (.ppm, r/w)
+;                  Adobe Photoshop (.psd, r)	Quake 2 textures (.wal, r)
+;                  SGI truecolor textures (.rgb, r)
+;                  @@End@@
+; Related .......: _IrrRemoveImage, _IrrGetTexture
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrGetImage($s_ImageFile)
 	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetImage", "str", $s_ImageFile)
@@ -181,22 +191,19 @@ Func _IrrCreateImage($i_XSize, $i_YSize, $i_ColorFormat)
 EndFunc   ;==>_IrrCreateImage
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrRemoveTexture
-; Description ...: [todo]
+; Description ...: Removes the texture from memory freeing up the space it occupied.
 ; Syntax.........: _IrrRemoveTexture($h_Texture)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Texture - Handle of an device dependend irrlicht texture object
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: You should ensure that the texture is not in use by materials assigned to nodes.
+; Related .......: _IrrGetTexture, _IrrGetImage
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrRemoveTexture($h_Texture)
 	DllCall($_irrDll, "none:cdecl", "IrrRemoveTexture", "ptr", $h_Texture)
@@ -208,22 +215,19 @@ Func _IrrRemoveTexture($h_Texture)
 EndFunc   ;==>_IrrRemoveTexture
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrRemoveImage
-; Description ...: [todo]
+; Description ...: Removes the image from memory freeing up the space it occupied.
 ; Syntax.........: _IrrRemoveImage($h_Image)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Image - Handle of the irrlicht memory image object.
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: You should ensure that the image is not in use by other functions.
+; Related .......: _IrrGetImage, _IrrGetTexture
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrRemoveImage($h_Image)
 	DllCall($_irrDll, "none:cdecl", "IrrRemoveImage", "ptr", $h_Image)
@@ -424,22 +428,22 @@ Func _IrrMakeNormalMapTexture($h_Texture, $f_Amplitude)
 EndFunc   ;==>_IrrMakeNormalMapTexture
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrColorKeyTexture
-; Description ...: [todo]
+; Description ...: Copies any parts of the texture that are the same as the specified color into the textures alpha channel.
 ; Syntax.........: _IrrColorKeyTexture($h_Texture, $i_Red, $i_Green, $i_Blue)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Texture - Handle of the texture object
+;                  $i_Red -  Red value from 0 to 255
+;                  $i_Green - Green value from 0 to 255
+;                  $i_Blue - Blue value from 0 to 255
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: This can be used for special effects or to make these regions transparent.
+; Related .......: None
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrColorKeyTexture($h_Texture, $i_Red, $i_Green, $i_Blue)
 	DllCall($_irrDll, "none:cdecl", "IrrColorKeyTexture", "ptr", $h_Texture, "int", $i_Red, "int", $i_Green, "int", $i_Blue)
@@ -451,22 +455,21 @@ Func _IrrColorKeyTexture($h_Texture, $i_Red, $i_Green, $i_Blue)
 EndFunc   ;==>_IrrColorKeyTexture
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrDraw2DImage
-; Description ...: [todo]
+; Description ...: Draws the texture to the display at the supplied coordinates.
 ; Syntax.........: _IrrDraw2DImage($h_Image, $i_XPos, $i_YPos)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Image - Handle to an irrlicht image object
+;                  $i_XPos - X position on display from where drawing starts
+;                  $i_YPos - Y position on display from where drawing starts
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......:
+; Related .......: _IrrGetTexture, _IrrDraw2DImageElement
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrDraw2DImage($h_Image, $i_XPos, $i_YPos)
 	DllCall($_irrDll, "none:cdecl", "IrrDraw2DImage", "ptr", $h_Image, "int", $i_XPos, "int", $i_YPos)
@@ -478,22 +481,29 @@ Func _IrrDraw2DImage($h_Image, $i_XPos, $i_YPos)
 EndFunc   ;==>_IrrDraw2DImage
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrDraw2DImageElement
-; Description ...: [todo]
+; Description ...: Draws given rectangular section from a texture to the display at the supplied coordinates
 ; Syntax.........: _IrrDraw2DImageElement($h_Texture, $i_XPos, $i_YPos, $i_SourceTopX, $i_SourceTopY, $i_SourceBottomX, $i_SourceBottomY, $i_UseAlpha)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Image - Handle to an irrlicht image object
+;                  $i_XPos - X position on display from where drawing starts
+;                  $i_YPos - Y position on display from where drawing starts
+;                  $i_SourceTopX - X top position of rectangle in the source texture
+;                  $i_SourceTopY - Y top position of rectangle in the source texture
+;                  $i_SourceBottomX - X bottom position of rectangle in the source texture
+;                  $i_SourceBottomY - Y bottom position of rectangle in the source texture
+;                  $i_UseAlpha - Whether or not to use the alpha channel should be one of the following values:
+;                  |$IRR_IGNORE_ALPHA
+;                  |$IRR_USE_ALPHA
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: Draws the texture to the display at the supplied co-ordinates, the image is copied from the specified rectangle in the source texture, this enables you to put many images onto a single texture.
+;                  This function also supports the alpha channel when drawing the image to the display and can draw the image transparently.
+; Related .......: _IrrGetTexture, _IrrColorKeyTexture, _IrrDraw2DImage
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrDraw2DImageElement($h_Texture, $i_XPos, $i_YPos, $i_SourceTopX, $i_SourceTopY, $i_SourceBottomX, $i_SourceBottomY, $i_UseAlpha)
 	DllCall($_irrDll, "none:cdecl", "IrrDraw2DImageElement", "ptr", $h_Texture, "int", $i_XPos, "int", $i_YPos, "int", $i_SourceTopX, "int", $i_SourceTopY, "int", $i_SourceBottomX, "int", $i_SourceBottomY, "int", $i_UseAlpha)
@@ -505,22 +515,19 @@ Func _IrrDraw2DImageElement($h_Texture, $i_XPos, $i_YPos, $i_SourceTopX, $i_Sour
 EndFunc   ;==>_IrrDraw2DImageElement
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetFont
-; Description ...: [todo]
+; Description ...: Loads a bitmap containing a bitmap font.
 ; Syntax.........: _IrrGetFont($s_Font)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $s_Font - Filename of the bitmap font file
+; Return values .: Success - Handle of the irrlicht font texture object
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _Irr2DFontDraw
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrGetFont($s_Font)
 	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetFont", "str", $s_Font)
@@ -532,22 +539,24 @@ Func _IrrGetFont($s_Font)
 EndFunc   ;==>_IrrGetFont
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _Irr2DFontDraw
-; Description ...: [todo]
+; Description ...: Draws the text into the supplied rectangular area using the supplied font object.
 ; Syntax.........: _Irr2DFontDraw($h_Font, $s_Text, $i_XPos, $i_YPos, $i_BottomX, $i_BottomY)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Font - Handle of an irrlicht font texture object
+;                  $s_Text - Text string to display
+;                  $i_XPos - X top position of rectangle for the text
+;                  $i_YPos - Y top position of rectangle for the text
+;                  $i_BottomX - X bottom position of rectangle for the text
+;                  $i_BottomY - Y bottom position of rectangle for the text
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrGetFont
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _Irr2DFontDraw($h_Font, $s_Text, $i_XPos, $i_YPos, $i_BottomX, $i_BottomY)
 	DllCall($_irrDll, "none:cdecl", "Irr2DFontDraw", "ptr", $h_Font, "wstr", $s_Text, "int", $i_XPos, "int", $i_YPos, "int", $i_BottomX, "int", $i_BottomY)
@@ -611,4 +620,10 @@ Func _IrrGetScreenShot($i_XPos, $i_YPos, $i_Width, $i_Height)
 		Return $result[0]
 	EndIf
 EndFunc   ;==>_IrrGetScreenShot
+
+
+
+
+
+
 

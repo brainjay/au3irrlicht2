@@ -3,20 +3,19 @@
 #include "au3Irr2_constants.au3"
 
 ; #INDEX# =======================================================================================================================
-; Title .........: [todo]
-; AutoIt Version : [todo]
+; Title .........: Animation
+; AutoIt Version : v3.3.6.1
 ; Language ......: English
-; Description ...: [todo]
-;                  [todo]
-;                  [todo]
-; Author(s) .....: [todo]
-; Dll(s) ........: [todo]
+; Description ...: Calls that control the animation of nodes in the scene either by playing animation that is embedded
+;                  in the mesh or applying animator controls to automatically effect the nodes.
+; Author(s) .....: jRowe, linus.
+;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
 ;_IrrSetNodeAnimationRange
-;_IrrPlayNodeMD2Animation
 ;_IrrSetNodeAnimationSpeed
 ;_IrrGetNodeAnimationFrame
 ;_IrrSetNodeAnimationFrame
@@ -33,6 +32,7 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
+;_IrrPlayNodeMD2Animation
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -65,22 +65,41 @@ Func _IrrSetNodeAnimationRange($h_Node, $i_Start, $i_End)
 EndFunc   ;==>_IrrSetNodeAnimationRange
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrPlayNodeMD2Animation
-; Description ...: [todo]
+; Description ...: Selects the animation sequence of MD2 to be played.
 ; Syntax.........: _IrrPlayNodeMD2Animation($h_Node, $i_Animation)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Node -
+;                  $i_Animation - sequence should be one of the following values:
+;                  |$IRR_EMAT_STAND
+;                  |$IRR_EMAT_RUN
+;                  |$IRR_EMAT_ATTACK
+;                  |$IRR_EMAT_PAIN_A
+;                  |$IRR_EMAT_PAIN_B
+;                  |$IRR_EMAT_PAIN_C
+;                  |$IRR_EMAT_JUMP
+;                  |$IRR_EMAT_FLIP
+;                  |$IRR_EMAT_SALUTE
+;                  |$IRR_EMAT_FALLBACK
+;                  |$IRR_EMAT_WAVE
+;                  |$IRR_EMAT_POINT
+;                  |$IRR_EMAT_CROUCH_STAND
+;                  |$IRR_EMAT_CROUCH_WALK
+;                  |$IRR_EMAT_CROUCH_ATTACK
+;                  |$IRR_EMAT_CROUCH_PAIN
+;                  |$IRR_EMAT_CROUCH_DEATH
+;                  |$IRR_EMAT_DEATH_FALLBACK
+;                  |$IRR_EMAT_DEATH_FALLFORWARD
+;                  |$IRR_EMAT_DEATH_FALLBACKSLOW
+;                  |$IRR_EMAT_BOOM
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: MD2 format models have specific animation sequences contained within them that can be played back with a simple call.
+; Related .......: None
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrPlayNodeMD2Animation($h_Node, $i_Animation)
 	DllCall($_irrDll, "none:cdecl", "IrrPlayNodeMD2Animation", "ptr", $h_Node, "int", $i_Animation)
@@ -463,5 +482,11 @@ Func _IrrRemoveAnimator($h_Node, $h_Animator)
 		return True
 	EndIf
 EndFunc   ;==>_IrrRemoveAnimator
+
+
+
+
+
+
 
 

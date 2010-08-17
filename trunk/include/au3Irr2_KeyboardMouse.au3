@@ -3,14 +3,13 @@
 #include "au3Irr2_constants.au3"
 
 ; #INDEX# =======================================================================================================================
-; Title .........: [todo]
-; AutoIt Version : [todo]
+; Title .........: Keyboard and Mouse
+; AutoIt Version : v3.3.6.1
 ; Language ......: English
-; Description ...: [todo]
-;                  [todo]
-;                  [todo]
-; Author(s) .....: [todo]
-; Dll(s) ........: [todo]
+; Description ...: These calls allow you recover keyboard events and mouse actions that the user creates.
+; Author(s) .....: jRowe, linus.
+;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
@@ -22,12 +21,12 @@
 ;_IrrMouseEventAvailable
 ;_IrrReadMouseEvent
 ;_IrrSetMousePosition
-;_IrrHideMouse
-;_IrrShowMouse
-;_IrrDisplayMouse
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
+;_IrrHideMouse
+;_IrrShowMouse
+;_IrrDisplayMouse
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -246,66 +245,57 @@ Func _IrrSetMousePosition(ByRef $f_XPos, ByRef $f_YPos)
 EndFunc   ;==>_IrrSetMousePosition
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrHideMouse
-; Description ...: [todo]
+; Description ...: Hides the mouse pointer
 ; Syntax.........: _IrrHideMouse()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: None
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrShowMouse, _IrrDisplayMouse
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrHideMouse()
 	return _IrrDisplayMouse(False)
 EndFunc   ;==>_IrrHideMouse
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrShowMouse
-; Description ...: [todo]
+; Description ...: Shows the mouse pointer
 ; Syntax.........: _IrrShowMouse()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: None
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrHideMouse, _IrrDisplayMouse
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrShowMouse()
 	return _IrrDisplayMouse(True)
 EndFunc   ;==>_IrrShowMouse
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrDisplayMouse
-; Description ...: [todo]
+; Description ...: Hide or show the mouse pointer while it is within the Irrlicht display.
 ; Syntax.........: _IrrDisplayMouse($i_HideShow)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $i_HideShow - True shows and False hides the mouse pointer.
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: There are two functions available to simply hide or show the mouse: IrrHideMouse and IrrShowMouse.
+; Related .......: _IrrShowMouse, _IrrHideMouse
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrDisplayMouse($i_HideShow)
 	DllCall($_irrDll, "none:cdecl", "IrrDisplayMouse", "int", $i_HideShow)
@@ -315,4 +305,10 @@ Func _IrrDisplayMouse($i_HideShow)
 		return True
 	EndIf
 EndFunc   ;==>_IrrDisplayMouse
+
+
+
+
+
+
 

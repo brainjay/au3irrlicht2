@@ -1176,3 +1176,9 @@ Func xxx__CreateParticleEmitter($f_MinBoxX, $f_MinBoxY, $f_MinBoxZ, $f_MaxBoxX, 
 EndFunc   ;==>___CreateParticleEmitter
 
 
+
+
+
+
+
+

@@ -1,7 +1,15 @@
 
-; Au3Irrlicht2 main UDF
-
 #include-once
+
+; #INDEX# =======================================================================================================================
+; Title .........: au3Irrlicht2
+; AutoIt Version : v3.3.6.1
+; Language ......: English
+; Description ...: Main UDF for au3Irrlicht2 which includes all other irrLicht category specific UDF's.
+; Author(s) .....: jRowe, linus.
+;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll
+; ===============================================================================================================================
 
 #include ".\include\au3Irr2_Constants.au3"
 #include ".\include\au3Irr2_System.au3"

@@ -482,3 +482,9 @@ Func _IrrGetSphericalTerrainLogicalSurfacePosition($h_Terrain, $i_Face, $f_Logic
 	Local $result[3] = [DllStructGetData($X, 1), DllStructGetData($Y, 1), DllStructGetData($Z, 1)]
 EndFunc   ;==>_IrrGetSphericalTerrainLogicalSurfacePosition
 
+
+
+
+
+
+

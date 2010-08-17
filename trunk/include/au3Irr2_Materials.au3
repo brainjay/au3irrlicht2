@@ -1006,3 +1006,9 @@ declare sub IrrXEffectsGetShadowLightColor alias "IrrXEffectsGetShadowLightColor
 ; ////////////////////////////////////////////////////////////////////////////
 
 
+
+
+
+
+
+

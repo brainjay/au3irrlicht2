@@ -360,3 +360,9 @@ Func _IrrSetLightType($h_Light, $i_Type)
 	EndIf
 EndFunc   ;==>_IrrSetLightType
 
+
+
+
+
+
+
