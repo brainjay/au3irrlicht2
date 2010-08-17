@@ -825,3 +825,9 @@ Func _IrrGetCollisionResultPosition($h_Selector, ByRef $a_EllipsoidPosition, ByR
 EndFunc   ;==>_IrrGetCollisionResultPosition
 
 
+
+
+
+
+
+

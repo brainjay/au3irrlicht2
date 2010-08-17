@@ -3,47 +3,50 @@
 #include "au3Irr2_constants.au3"
 
 ; #INDEX# =======================================================================================================================
-; Title .........: [todo]
-; AutoIt Version : [todo]
+; Title .........: Filling System
+; AutoIt Version : v3.3.6.1
 ; Language ......: English
-; Description ...: [todo]
-;                  [todo]
-;                  [todo]
-; Author(s) .....: [todo]
-; Dll(s) ........: [todo]
+; Description ...: These calls deal with the way irrlicht operates with the filing system and adds archives to its
+;                  a virtual filling system allowing you to compress data into zipfiles that you can access without
+;                  decompressing them.
+; Author(s) .....: jRowe, linus.
+;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
-;_IrrAddZipFile
 ;_IrrChangeWorkingDirectory
 ;_IrrGetWorkingDirectory
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
+;_IrrAddZipFile
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; ===============================================================================================================================
 
-;File system functions
-
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddZipFile
-; Description ...: [todo]
+; Description ...: Adds a zip archive to the filing system allowing to load files out of the zip file.
 ; Syntax.........: _IrrAddZipFile($s_Zipfile, $i_IgnoreCase, $i_IgnorePaths)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $s_ZipFile - Path to the zipfile (or pk3 file)
+;                  $i_IgnoreCase - Should be one of the following values:
+;                  |$IRR_USE_CASE
+;                  |$IRR_IGNORE_CASE
+;                  $i_IgnorePaths - Ignore paths allows you to simply use the filename without the path, the filename should always be unique in the archive when using this option. The value should be one of the following:
+;                  |$IRR_USE_PATHS
+;                  |$IRR_IGNORE_PATHS
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: Files inside the .zip can be opened as if they were in the current working directory.
+;                  Common pk3 files are simply zip files.
+; Related .......: None
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: None
 ; ===============================================================================================================================
 Func _IrrAddZipFile($s_Zipfile, $i_IgnoreCase, $i_IgnorePaths)
 	DllCall($_irrDll, "none:cdecl", "IrrAddZipFile", "str", $s_Zipfile, "int", $i_IgnoreCase, "int", $i_IgnorePaths)
@@ -107,5 +110,11 @@ Func _IrrGetWorkingDirectory()
 		Return $result[0]
 	EndIf
 EndFunc   ;==>_IrrGetWorkingDirectory
+
+
+
+
+
+
 
 
