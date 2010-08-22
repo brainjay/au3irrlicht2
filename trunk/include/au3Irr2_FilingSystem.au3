@@ -46,7 +46,7 @@
 ;                  Common pk3 files are simply zip files.
 ; Related .......: None
 ; Link ..........:
-; Example .......: None
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddZipFile($s_Zipfile, $i_IgnoreCase, $i_IgnorePaths)
 	DllCall($_irrDll, "none:cdecl", "IrrAddZipFile", "str", $s_Zipfile, "int", $i_IgnoreCase, "int", $i_IgnorePaths)
@@ -110,11 +110,3 @@ Func _IrrGetWorkingDirectory()
 		Return $result[0]
 	EndIf
 EndFunc   ;==>_IrrGetWorkingDirectory
-
-
-
-
-
-
-
-

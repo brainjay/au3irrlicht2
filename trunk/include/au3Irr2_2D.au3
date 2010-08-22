@@ -23,10 +23,6 @@
 ;_IrrUnlockTexture
 ;_IrrLockImage
 ;_IrrUnlockImage
-;_IrrCreateRenderTargetTexture
-;_IrrMakeNormalMapTexture
-;_IrrSaveScreenShot
-;_IrrGetScreenShot
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
@@ -34,11 +30,15 @@
 ;_IrrGetImage
 ;_IrrRemoveTexture
 ;_IrrRemoveImage
+;_IrrCreateRenderTargetTexture
+;_IrrMakeNormalMapTexture
 ;_IrrColorKeyTexture
 ;_IrrDraw2DImage
 ;_IrrDraw2DImageElement
 ;_IrrGetFont
 ;_Irr2DFontDraw
+;_IrrSaveScreenShot
+;_IrrGetScreenShot
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -92,7 +92,7 @@ EndFunc   ;==>_IrrSetTextureCreationFlag
 ;                  @@End@@
 ; Related .......: _IrrRemoveTexture, _IrrGetImage
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetTexture($s_TextureFile)
 	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetTexture", "str", $s_TextureFile)
@@ -203,7 +203,7 @@ EndFunc   ;==>_IrrCreateImage
 ; Remarks .......: You should ensure that the texture is not in use by materials assigned to nodes.
 ; Related .......: _IrrGetTexture, _IrrGetImage
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrRemoveTexture($h_Texture)
 	DllCall($_irrDll, "none:cdecl", "IrrRemoveTexture", "ptr", $h_Texture)
@@ -374,7 +374,7 @@ Func _IrrUnlockImage($h_Image)
 EndFunc   ;==>_IrrUnlockImage
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrCreateRenderTargetTexture
 ; Description ...: [todo]
 ; Syntax.........: _IrrCreateRenderTargetTexture($i_XSize, $i_YSize)
@@ -401,7 +401,7 @@ Func _IrrCreateRenderTargetTexture($i_XSize, $i_YSize)
 EndFunc   ;==>_IrrCreateRenderTargetTexture
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMakeNormalMapTexture
 ; Description ...: [todo]
 ; Syntax.........: _IrrMakeNormalMapTexture($h_Texture, $f_Amplitude)
@@ -443,7 +443,7 @@ EndFunc   ;==>_IrrMakeNormalMapTexture
 ; Remarks .......: This can be used for special effects or to make these regions transparent.
 ; Related .......: None
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrColorKeyTexture($h_Texture, $i_Red, $i_Green, $i_Blue)
 	DllCall($_irrDll, "none:cdecl", "IrrColorKeyTexture", "ptr", $h_Texture, "int", $i_Red, "int", $i_Green, "int", $i_Blue)
@@ -469,7 +469,7 @@ EndFunc   ;==>_IrrColorKeyTexture
 ; Remarks .......:
 ; Related .......: _IrrGetTexture, _IrrDraw2DImageElement
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrDraw2DImage($h_Image, $i_XPos, $i_YPos)
 	DllCall($_irrDll, "none:cdecl", "IrrDraw2DImage", "ptr", $h_Image, "int", $i_XPos, "int", $i_YPos)
@@ -503,7 +503,7 @@ EndFunc   ;==>_IrrDraw2DImage
 ;                  This function also supports the alpha channel when drawing the image to the display and can draw the image transparently.
 ; Related .......: _IrrGetTexture, _IrrColorKeyTexture, _IrrDraw2DImage
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrDraw2DImageElement($h_Texture, $i_XPos, $i_YPos, $i_SourceTopX, $i_SourceTopY, $i_SourceBottomX, $i_SourceBottomY, $i_UseAlpha)
 	DllCall($_irrDll, "none:cdecl", "IrrDraw2DImageElement", "ptr", $h_Texture, "int", $i_XPos, "int", $i_YPos, "int", $i_SourceTopX, "int", $i_SourceTopY, "int", $i_SourceBottomX, "int", $i_SourceBottomY, "int", $i_UseAlpha)
@@ -527,7 +527,7 @@ EndFunc   ;==>_IrrDraw2DImageElement
 ; Remarks .......: None
 ; Related .......: _Irr2DFontDraw
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetFont($s_Font)
 	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetFont", "str", $s_Font)
@@ -556,7 +556,7 @@ EndFunc   ;==>_IrrGetFont
 ; Remarks .......: None
 ; Related .......: _IrrGetFont
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _Irr2DFontDraw($h_Font, $s_Text, $i_XPos, $i_YPos, $i_BottomX, $i_BottomY)
 	DllCall($_irrDll, "none:cdecl", "Irr2DFontDraw", "ptr", $h_Font, "wstr", $s_Text, "int", $i_XPos, "int", $i_YPos, "int", $i_BottomX, "int", $i_BottomY)
@@ -568,7 +568,7 @@ Func _Irr2DFontDraw($h_Font, $s_Text, $i_XPos, $i_YPos, $i_BottomX, $i_BottomY)
 EndFunc   ;==>_Irr2DFontDraw
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSaveScreenShot
 ; Description ...: [todo]
 ; Syntax.........: _IrrSaveScreenShot($s_Filename)
@@ -595,7 +595,7 @@ Func _IrrSaveScreenShot($s_Filename)
 EndFunc   ;==>_IrrSaveScreenShot
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetScreenShot
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetScreenShot($i_XPos, $i_YPos, $i_Width, $i_Height)
@@ -620,10 +620,3 @@ Func _IrrGetScreenShot($i_XPos, $i_YPos, $i_Width, $i_Height)
 		Return $result[0]
 	EndIf
 EndFunc   ;==>_IrrGetScreenShot
-
-
-
-
-
-
-

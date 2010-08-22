@@ -82,7 +82,7 @@ Func Main()
    FileWriteLine($FO_TOC_HND, '</OBJECT>')
    FileWriteLine($FO_TOC_HND, '<LI> <OBJECT type="text/sitemap">')
    FileWriteLine($FO_TOC_HND, '<param name="Name" value="History/Changelog">')
-   FileWriteLine($FO_TOC_HND, '<param name="Local" value="html\_au3Irr2_changelog.txt">')
+   FileWriteLine($FO_TOC_HND, '<param name="Local" value="html\history.htm">')
    FileWriteLine($FO_TOC_HND, '</OBJECT>')
 
    FileWriteLine($FO_TOC_HND, '<LI> <OBJECT type="text/sitemap">')

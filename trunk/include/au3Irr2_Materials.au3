@@ -15,6 +15,18 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
+;_IrrSetMaterialLineThickness
+;_IrrAddHighLevelShaderMaterial
+;_IrrAddHighLevelShaderMaterialFromFiles
+;_IrrAddShaderMaterial
+;_IrrAddShaderMaterialFromFiles
+;_IrrCreateNamedVertexShaderConstant
+;_IrrCreateNamedPixelShaderConstant
+;_IrrCreateAddressedVertexShaderConstant
+;_IrrCreateAddressedPixelShaderConstant
+; ===============================================================================================================================
+
+; #CURRENT# =====================================================================================================================
 ;_IrrSetNodeAmbientColor
 ;_IrrSetNodeDiffuseColor
 ;_IrrSetNodeSpecularColor
@@ -28,15 +40,6 @@
 ;_IrrMaterialSetAmbientColor
 ;_IrrMaterialSetEmissiveColor
 ;_IrrMaterialSetMaterialTypeParam
-;_IrrSetMaterialLineThickness
-;_IrrAddHighLevelShaderMaterial
-;_IrrAddHighLevelShaderMaterialFromFiles
-;_IrrAddShaderMaterial
-;_IrrAddShaderMaterialFromFiles
-;_IrrCreateNamedVertexShaderConstant
-;_IrrCreateNamedPixelShaderConstant
-;_IrrCreateAddressedVertexShaderConstant
-;_IrrCreateAddressedPixelShaderConstant
 ;_IrrXEffectsStart
 ;_IrrXEffectsAddShadowToNode
 ;_IrrXEffectsAddShadowLight
@@ -49,9 +52,6 @@
 ;_IrrXEffectsSetPostProcessingUserTexture
 ; ===============================================================================================================================
 
-; #CURRENT# =====================================================================================================================
-; ===============================================================================================================================
-
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; ===============================================================================================================================
 
@@ -59,7 +59,7 @@
 ; Material and GPU Programming Functions
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeAmbientColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetNodeAmbientColor($h_Node, $i_Color)
@@ -86,7 +86,7 @@ Func _IrrSetNodeAmbientColor($h_Node, $i_Color)
 EndFunc   ;==>_IrrSetNodeAmbientColor
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeDiffuseColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetNodeDiffuseColor($h_Node, $i_Color)
@@ -113,7 +113,7 @@ Func _IrrSetNodeDiffuseColor($h_Node, $i_Color)
 EndFunc   ;==>_IrrSetNodeDiffuseColor
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeSpecularColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetNodeSpecularColor($h_Node, $i_Color)
@@ -140,7 +140,7 @@ Func _IrrSetNodeSpecularColor($h_Node, $i_Color)
 EndFunc   ;==>_IrrSetNodeSpecularColor
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeEmissiveColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetNodeEmissiveColor($h_Node, $i_Color)
@@ -168,7 +168,7 @@ EndFunc   ;==>_IrrSetNodeEmissiveColor
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeColorByVertex
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetNodeColorByVertex($h_Node, $i_ColorMaterial)
@@ -198,7 +198,7 @@ EndFunc   ;==>_IrrSetNodeColorByVertex
 
 ;Materials functions
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMaterialVertexColorAffects
 ; Description ...: [todo]
 ; Syntax.........: _IrrMaterialVertexColorAffects($h_Material, $i_AffectedProperty)
@@ -225,7 +225,7 @@ Func _IrrMaterialVertexColorAffects($h_Material, $i_AffectedProperty)
 EndFunc   ;==>_IrrMaterialVertexColorAffects
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetMaterialBlend
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetMaterialBlend($h_Material, $i_SrcBlend, $i_DstBlend)
@@ -252,7 +252,7 @@ Func _IrrSetMaterialBlend($h_Material, $i_SrcBlend, $i_DstBlend)
 EndFunc   ;==>_IrrSetMaterialBlend
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMaterialSetShininess
 ; Description ...: [todo]
 ; Syntax.........: _IrrMaterialSetShininess($h_Material, $f_Shininess)
@@ -279,7 +279,7 @@ Func _IrrMaterialSetShininess($h_Material, $f_Shininess)
 EndFunc   ;==>_IrrMaterialSetShininess
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMaterialSetSpecularColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrMaterialSetSpecularColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
@@ -306,7 +306,7 @@ Func _IrrMaterialSetSpecularColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Bl
 EndFunc   ;==>_IrrMaterialSetSpecularColor
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMaterialSetDiffuseColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrMaterialSetDiffuseColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
@@ -333,7 +333,7 @@ Func _IrrMaterialSetDiffuseColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blu
 EndFunc   ;==>_IrrMaterialSetDiffuseColor
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMaterialSetAmbientColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrMaterialSetAmbientColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
@@ -360,7 +360,7 @@ Func _IrrMaterialSetAmbientColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blu
 EndFunc   ;==>_IrrMaterialSetAmbientColor
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMaterialSetEmissiveColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrMaterialSetEmissiveColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
@@ -387,7 +387,7 @@ Func _IrrMaterialSetEmissiveColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Bl
 EndFunc   ;==>_IrrMaterialSetEmissiveColor
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMaterialSetMaterialTypeParam
 ; Description ...: [todo]
 ; Syntax.........: _IrrMaterialSetMaterialTypeParam($h_Material, $f_Param)
@@ -663,7 +663,7 @@ EndFunc   ;==>_IrrCreateAddressedPixelShaderConstant
 ; Bitplanes XEffect Extension
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrXEffectsStart
 ; Description ...: [todo]
 ; Syntax.........: _IrrXEffectsStart($i_Vsm=$IRR_OFF, $i_SoftShadows=$IRR_OFF, $iBitdepth32=$IRR_OFF)
@@ -691,7 +691,7 @@ Func _IrrXEffectsStart($i_Vsm=$IRR_OFF, $i_SoftShadows=$IRR_OFF, $iBitdepth32=$I
 EndFunc   ;==>_IrrXEffectsStart
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrXEffectsAddShadowToNode
 ; Description ...: [todo]
 ; Syntax.........: _IrrXEffectsAddShadowToNode($h_Node, $i_FilterType=$EFT_NONE, $i_shadowType=$ESM_BOTH)
@@ -719,7 +719,7 @@ Func _IrrXEffectsAddShadowToNode($h_Node, $i_FilterType=$EFT_NONE, $i_shadowType
 EndFunc   ;==>_IrrXEffectsAddShadowToNode
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrXEffectsAddShadowLight
 ; Description ...: [todo]
 ; Syntax.........: _IrrXEffectsAddShadowLight($i_ShadowDimen, $f_PosX, $f_PosY, $f_PosZ, $f_TargetX, $f_TargetY, $f_TargetZ, $f_R, $f_G, $f_B, $f_Alpha, $f_LightNearDist, $f_LightFarDist, $f_AngleDegrees )
@@ -762,7 +762,7 @@ Func _IrrXEffectsAddShadowLight($i_ShadowDimen, $f_PosX, $f_PosY, $f_PosZ, $f_Ta
 EndFunc   ;==>_IrrXEffectsAddShadowLight
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrXEffectsSetAmbientColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrXEffectsSetAmbientColor($i_R, $i_G, $i_B, $i_Alpha)
@@ -790,7 +790,7 @@ Func _IrrXEffectsSetAmbientColor($i_R, $i_G, $i_B, $i_Alpha)
 EndFunc   ;==>_IrrXEffectsSetAmbientColor
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrXEffectsSetClearColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrXEffectsSetClearColor($i_R, $i_G, $i_B, $i_Alpha)
@@ -819,7 +819,7 @@ Func _IrrXEffectsSetClearColor($i_R, $i_G, $i_B, $i_Alpha)
 EndFunc   ;==>_IrrXEffectsSetClearColor
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrXEffectsSetShadowLightPosition
 ; Description ...: [todo]
 ; Syntax.........: _IrrXEffectsSetShadowLightPosition($i_Index, $f_PosX, $f_PosY, $f_PosZ)
@@ -849,7 +849,7 @@ Func _IrrXEffectsSetShadowLightPosition($i_Index, $f_PosX, $f_PosY, $f_PosZ)
 EndFunc   ;==>_IrrXEffectsSetShadowLightPosition
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrXEffectsEnableDepthPass
 ; Description ...: [todo]
 ; Syntax.........: _IrrXEffectsEnableDepthPass($i_Enable)
@@ -877,7 +877,7 @@ Func _IrrXEffectsEnableDepthPass($i_Enable)
 EndFunc   ;==>_IrrXEffectsEnableDepthPass
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrXEffectsAddPostProcessingFromFile
 ; Description ...: [todo]
 ; Syntax.........: _IrrXEffectsAddPostProcessingFromFile($s_Name, $i_Enable=0)
@@ -905,7 +905,7 @@ Func _IrrXEffectsAddPostProcessingFromFile($s_Name, $i_Enable=0)
 EndFunc   ;==>_IrrXEffectsAddPostProcessingFromFile
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrXEffectsAddNodeToDepthPass
 ; Description ...: [todo]
 ; Syntax.........: _IrrXEffectsAddNodeToDepthPass($h_Node)
@@ -933,7 +933,7 @@ Func _IrrXEffectsAddNodeToDepthPass($h_Node)
 EndFunc   ;==>_IrrXEffectsAddNodeToDepthPass
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrXEffectsSetPostProcessingUserTexture
 ; Description ...: [todo]
 ; Syntax.........: _IrrXEffectsSetPostProcessingUserTexture($h_Texture)
@@ -1004,11 +1004,4 @@ declare sub IrrXEffectsGetShadowLightColor alias "IrrXEffectsGetShadowLightColor
 #ce
 ; end of definitions: Bitplanes XEffect Extension
 ; ////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
 

@@ -14,6 +14,13 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
+;_IrrInsertListBoxItem
+;_IrrRemoveListBoxItem
+;_IrrCheckCheckBox
+; ===============================================================================================================================
+
+; #CURRENT# =====================================================================================================================
+;__getGuiEvt
 ;_IrrGUIClear
 ;_IrrGUIEvents
 ;_IrrGUIEventAvailable
@@ -24,24 +31,17 @@
 ;_IrrGUISetFont
 ;_IrrGUISetColor
 ;_IrrAddWindow
+;_IrrAddStaticText
 ;_IrrAddButton
 ;_IrrAddScrollBar
 ;_IrrAddListBox
 ;_IrrAddListBoxItem
-;_IrrInsertListBoxItem
-;_IrrRemoveListBoxItem
 ;_IrrSelectListBoxItem
 ;_IrrAddEditBox
 ;_IrrAddCheckBox
-;_IrrCheckCheckBox
 ;_IrrAddImage
 ;_IrrAddFileOpen
 ;_IrrGetLastSelectedFile
-; ===============================================================================================================================
-
-; #CURRENT# =====================================================================================================================
-;__getGuiEvt
-;_IrrAddStaticText
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -85,7 +85,7 @@ func __getGuiEvt($p_GUIEvent, $i_Element = $EVT_GUI_IID)
 EndFunc ;==> __getGuiEvt
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGUIClear
 ; Description ...: [todo]
 ; Syntax.........: _IrrGUIClear()
@@ -113,7 +113,7 @@ EndFunc   ;==>_IrrGUIClear
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGUIEvents
 ; Description ...: [todo]
 ; Syntax.........: _IrrGUIEvents($i_EventsForGUI)
@@ -142,7 +142,7 @@ EndFunc   ;==>_IrrGUIEvents
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGUIEventAvailable
 ; Description ...: [todo]
 ; Syntax.........: _IrrGUIEventAvailable()
@@ -173,7 +173,7 @@ EndFunc   ;==>_IrrGUIEventAvailable
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrReadGUIEvent
 ; Description ...: [todo]
 ; Syntax.........: _IrrReadGUIEvent()
@@ -202,7 +202,7 @@ EndFunc   ;==>_IrrReadGUIEvent
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGUIRemove
 ; Description ...: [todo]
 ; Syntax.........: _IrrGUIRemove($h_Widget)
@@ -229,7 +229,7 @@ Func _IrrGUIRemove($h_Widget)
 EndFunc   ;==>_IrrGUIRemove
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGUIGetText
 ; Description ...: [todo]
 ; Syntax.........: _IrrGUIGetText($h_Widget)
@@ -256,7 +256,7 @@ Func _IrrGUIGetText($h_Widget)
 EndFunc   ;==>_IrrGUIGetText
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGUISetText
 ; Description ...: [todo]
 ; Syntax.........: _IrrGUISetText($h_Widget, $s_Text)
@@ -284,7 +284,7 @@ EndFunc   ;==>_IrrGUISetText
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGUISetFont
 ; Description ...: [todo]
 ; Syntax.........: _IrrGUISetFont($h_Font)
@@ -312,7 +312,7 @@ EndFunc   ;==>_IrrGUISetFont
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGUISetColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrGUISetColor($i_Element, $i_Red, $i_Green, $i_Blue, $i_Alpha)
@@ -341,7 +341,7 @@ EndFunc   ;==>_IrrGUISetColor
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddWindow
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddWindow($s_Title, $i_TopX, $i_TopY, $i_BottomX, $i_BottomY, $i_Modal, $h_Parent = 0)
@@ -372,7 +372,7 @@ EndFunc   ;==>_IrrAddWindow
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddStaticText
-; Description ...: Creates a static text object on the Graphical User Interface, this simply displays the specifed text in the specified box.
+; Description ...: Creates a static text object on the Graphical User Interface.
 ; Syntax.........: _IrrAddStaticText($s_Text, $i_TopX, $i_TopY, $i_BottomX, $i_BottomY, $i_Border, $i_WordWrap, $h_Parent = 0)
 ; Parameters ....: $s_Text - String that contains the text you want to display.
 ;                  $i_TopX - Top X position of a box in which the text is drawn
@@ -390,7 +390,7 @@ EndFunc   ;==>_IrrAddWindow
 ;                  Failure - False
 ; Author ........:
 ; Modified.......:
-; Remarks .......: None
+; Remarks .......: This function simply displays the specifed text in the specified box.
 ; Related .......: _IrrDrawGUI
 ; Link ..........:
 ; Example .......: Yes
@@ -406,7 +406,7 @@ EndFunc   ;==>_IrrAddStaticText
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddButton
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddButton($i_TopX, $i_TopY, $i_BottomX, $i_BottomY, $i_ID, $s_Text = "", $s_TextTip = "", $h_Parent = 0)
@@ -436,7 +436,7 @@ EndFunc   ;==>_IrrAddButton
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddScrollBar
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddScrollBar($i_Horizontal, $i_TopX, $i_TopY, $i_BottomX, $i_BottomY, $i_ID, $i_CurrentValue, $i_MaxValue, $h_Parent = 0)
@@ -465,7 +465,7 @@ EndFunc   ;==>_IrrAddScrollBar
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddListBox
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddListBox($i_TopX, $i_TopY, $i_BottomX, $i_BottomY, $i_ID, $i_Background, $h_Parent=0)
@@ -493,7 +493,7 @@ Func _IrrAddListBox($i_TopX, $i_TopY, $i_BottomX, $i_BottomY, $i_ID, $i_Backgrou
 EndFunc   ;==>_IrrAddListBox
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddListBoxItem
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddListBoxItem($h_ListBox, $s_Text)
@@ -574,7 +574,7 @@ Func _IrrRemoveListBoxItem($h_ListBox, $i_Index)
 EndFunc   ;==>_IrrRemoveListBoxItem
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSelectListBoxItem
 ; Description ...: [todo]
 ; Syntax.........: _IrrSelectListBoxItem($h_ListBox, $i_Index)
@@ -602,7 +602,7 @@ EndFunc   ;==>_IrrSelectListBoxItem
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddEditBox
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddEditBox($s_Text, $i_TopX, $i_TopY, $i_BottomX, $i_BottomY, $i_ID, $i_Border, $i_Password = $IRR_GUI_NOT_PASSWORD, $h_Parent = 0)
@@ -632,7 +632,7 @@ EndFunc   ;==>_IrrAddEditBox
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddCheckBox
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddCheckBox($s_Text, $i_TopX, $i_TopY, $i_BottomX, $i_BottomY, $i_ID, $i_Checked, $h_Parent = 0)
@@ -689,7 +689,7 @@ EndFunc   ;==>_IrrCheckCheckBox
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddImage
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddImage($h_Texture, $i_X, $i_Y, $i_UseAlpha, $i_ID, $h_Parent = 0)
@@ -718,7 +718,7 @@ EndFunc   ;==>_IrrAddImage
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddFileOpen
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddFileOpen($s_Title, $i_ID, $i_Modal, $h_Parent = 0)
@@ -747,7 +747,7 @@ EndFunc   ;==>_IrrAddFileOpen
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetLastSelectedFile
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetLastSelectedFile()
@@ -773,14 +773,3 @@ Func _IrrGetLastSelectedFile()
 		Return $result[0]
 	EndIf
 EndFunc   ;==>_IrrGetLastSelectedFile
-
-
-
-
-
-
-
-
-
-
-

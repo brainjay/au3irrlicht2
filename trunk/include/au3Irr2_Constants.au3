@@ -386,12 +386,3 @@ global Enum _ ; IRR_SHADER_CONSTANTS ' Pre-programmed shader constants
 global Enum _ ; IRR_DEBUG
 	$EDS_OFF = 0, $EDS_BBOX = 1, $EDS_NORMALS = 2, $EDS_SKELETON = 4, $EDS_MESH_WIRE_OVERLAY = 8, _
 	$EDS_HALF_TRANSPARENCY = 16, $EDS_BBOX_BUFFERS = 32, $EDS_FULL = 0xffffffff
-
-
-
-
-
-
-
-
-

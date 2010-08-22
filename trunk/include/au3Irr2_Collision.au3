@@ -3,35 +3,37 @@
 #include "au3Irr2_constants.au3"
 
 ; #INDEX# =======================================================================================================================
-; Title .........: [todo]
-; AutoIt Version : [todo]
+; Title .........: Collision
+; AutoIt Version : v3.3.6.1
 ; Language ......: English
-; Description ...: [todo]
-;                  [todo]
-;                  [todo]
-; Author(s) .....: [todo]
-; Dll(s) ........: [todo]
+; Description ...: Calls for creating collision groups and for calculating collisions in the scene.
+; Author(s) .....: jRowe, linus.
+;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
+;_IrrGetCollisionGroupFromTerrain
+;_IrrRemoveCollisionGroup
+;_IrrRemoveAllCollisionGroupsFromCombination
+;_IrrRemoveCollisionGroupFromCombination
+;_IrrGetRayFromScreenCoordinates
+;_IrrGet2DPositionFromScreenCoordinates
+; ===============================================================================================================================
+
+; #CURRENT# =====================================================================================================================
 ;_IrrGetCollisionGroupFromMesh
 ;_IrrGetCollisionGroupFromComplexMesh
 ;_IrrGetCollisionGroupFromBox
-;_IrrGetCollisionGroupFromTerrain
-;_IrrRemoveCollisionGroup
 ;_IrrCreateCombinedCollisionGroup
 ;_IrrAddCollisionGroupToCombination
-;_IrrRemoveAllCollisionGroupsFromCombination
-;_IrrRemoveCollisionGroupFromCombination
 ;_IrrGetCollisionPoint
-;_IrrGetRayFromScreenCoordinates
 ;_IrrGetCollisionNodeFromCamera
 ;_IrrGetCollisionNodeFromRay
 ;_IrrGetCollisionNodeFromScreenCoordinates
 ;_IrrGetScreenCoordinatesFrom3DPosition
 ;_IrrGet3DPositionFromScreenCoordinates
-;_IrrGet2DPositionFromScreenCoordinates
 ;_IrrGetChildCollisionNodeFromRay
 ;_IrrGetChildCollisionNodeFromPoint
 ;_IrrGetNodeAndCollisionPointFromRay
@@ -41,13 +43,10 @@
 ;_IrrGetCollisionResultPosition
 ; ===============================================================================================================================
 
-; #CURRENT# =====================================================================================================================
-; ===============================================================================================================================
-
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; ===============================================================================================================================
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCollisionGroupFromMesh
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetCollisionGroupFromMesh($h_Mesh, $h_Node, $i_Frame = 0)
@@ -76,7 +75,7 @@ EndFunc   ;==>_IrrGetCollisionGroupFromMesh
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCollisionGroupFromComplexMesh
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetCollisionGroupFromComplexMesh($h_Mesh, $h_Node, $i_Frame = 0)
@@ -103,7 +102,7 @@ Func _IrrGetCollisionGroupFromComplexMesh($h_Mesh, $h_Node, $i_Frame = 0)
 EndFunc   ;==>_IrrGetCollisionGroupFromComplexMesh
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCollisionGroupFromBox
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetCollisionGroupFromBox($h_Node)
@@ -184,7 +183,7 @@ Func _IrrRemoveCollisionGroup($h_CollisionGroup, $h_Node)
 EndFunc   ;==>_IrrRemoveCollisionGroup
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrCreateCombinedCollisionGroup
 ; Description ...: [todo]
 ; Syntax.........: _IrrCreateCombinedCollisionGroup()
@@ -211,7 +210,7 @@ Func _IrrCreateCombinedCollisionGroup()
 EndFunc   ;==>_IrrCreateCombinedCollisionGroup
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddCollisionGroupToCombination
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddCollisionGroupToCombination($h_CombinedCollisionGroup, $h_CollisionGroup)
@@ -293,7 +292,7 @@ EndFunc   ;==>_IrrRemoveCollisionGroupFromCombination
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCollisionPoint
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetCollisionPoint($a_StartVector, $a_EndVector, $h_CollisionGroup, byRef $a_CollisionVector)
@@ -360,7 +359,7 @@ Func _IrrGetRayFromScreenCoordinates($i_X, $i_Y, $h_Camera)
 EndFunc   ;==>_IrrGetRayFromScreenCoordinates
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCollisionNodeFromCamera
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetCollisionNodeFromCamera($h_Camera)
@@ -388,7 +387,7 @@ EndFunc   ;==>_IrrGetCollisionNodeFromCamera
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCollisionNodeFromRay
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetCollisionNodeFromRay(byRef $h_StartVector, byRef $h_EndVector)
@@ -429,7 +428,7 @@ EndFunc   ;==>_IrrGetCollisionNodeFromRay
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCollisionNodeFromScreenCoordinates
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetCollisionNodeFromScreenCoordinates($i_X, $i_Y)
@@ -460,7 +459,7 @@ EndFunc   ;==>_IrrGetCollisionNodeFromScreenCoordinates
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetScreenCoordinatesFrom3DPosition
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetScreenCoordinatesFrom3DPosition(ByRef $i_ScreenX, ByRef $i_ScreenY, $a_3DPositionVector)
@@ -495,7 +494,7 @@ EndFunc   ;==>_IrrGetScreenCoordinatesFrom3DPosition
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGet3DPositionFromScreenCoordinates
 ; Description ...: [todo]
 ; Syntax.........: _IrrGet3DPositionFromScreenCoordinates($i_X, $i_Y, ByRef $a_Vector3df, $h_Camera, $f_NormalX=0.0, $f_NormalY=0.0, $f_NormalZ=1.0, $f_DistanceFromOrigin=0.0)
@@ -566,7 +565,7 @@ EndFunc   ;==>_IrrGet2DPositionFromScreenCoordinates
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetChildCollisionNodeFromRay
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetChildCollisionNodeFromRay($h_Node, $i_Mask, $i_Recurse, $a_StartVector, $a_EndVector)
@@ -601,7 +600,7 @@ Func _IrrGetChildCollisionNodeFromRay($h_Node, $i_Mask, $i_Recurse, $a_StartVect
 EndFunc   ;==>_IrrGetChildCollisionNodeFromRay
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetChildCollisionNodeFromPoint
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetChildCollisionNodeFromPoint($h_Node, $i_Mask, $i_Recurse, $a_PointVector)
@@ -633,7 +632,7 @@ EndFunc   ;==>_IrrGetChildCollisionNodeFromPoint
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetNodeAndCollisionPointFromRay
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetNodeAndCollisionPointFromRay($a_StartVector, $a_EndVector, ByRef $h_Node, ByRef $f_PosX, ByRef $f_PosY, ByRef $f_PosZ, ByRef $f_NormalX, ByRef $f_NormalY, ByRef $f_NormalZ, $i_ID = 0, $h_RootNode = $IRR_NO_OBJECT)
@@ -689,7 +688,7 @@ EndFunc   ;==>_IrrGetNodeAndCollisionPointFromRay
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetDistanceBetweenNodes
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetDistanceBetweenNodes($h_NodeA, $h_NodeB)
@@ -716,7 +715,7 @@ Func _IrrGetDistanceBetweenNodes($h_NodeA, $h_NodeB)
 EndFunc   ;==>_IrrGetDistanceBetweenNodes
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAreNodesIntersecting
 ; Description ...: [todo]
 ; Syntax.........: _IrrAreNodesIntersecting($h_NodeA, $h_NodeB)
@@ -743,7 +742,7 @@ Func _IrrAreNodesIntersecting($h_NodeA, $h_NodeB)
 EndFunc   ;==>_IrrAreNodesIntersecting
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrIsPointInsideNode
 ; Description ...: [todo]
 ; Syntax.........: _IrrIsPointInsideNode($h_NodeA, $f_X, $f_Y, $f_Z)
@@ -771,7 +770,7 @@ EndFunc   ;==>_IrrIsPointInsideNode
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCollisionResultPosition
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetCollisionResultPosition($h_Selector, ByRef $a_EllipsoidPosition, ByRef $a_EllipsoidRadius, ByRef $a_Velocity, ByRef $a_Gravity, $f_SlidingSpeed, ByRef $a_OutPosition, ByRef $a_OutHitPosition, ByRef $i_OutFalling)
@@ -823,11 +822,3 @@ Func _IrrGetCollisionResultPosition($h_Selector, ByRef $a_EllipsoidPosition, ByR
 		Return True
 	EndIf
 EndFunc   ;==>_IrrGetCollisionResultPosition
-
-
-
-
-
-
-
-

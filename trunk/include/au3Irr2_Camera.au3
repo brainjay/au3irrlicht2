@@ -15,24 +15,24 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
-;_IrrAddMayaCamera
-;_IrrSetCameraTarget
-;_IrrGetCameraTarget
 ;_IrrGetCameraUpDirection
 ;_IrrSetCameraUpDirection
-;_IrrGetCameraOrientation
 ;_IrrRevolveCamera
 ;_IrrSetCameraUpAtRightAngle
 ;_IrrSetCameraOrthagonal
-;_IrrSetCameraClipDistance
-;_IrrSetActiveCamera
 ;_IrrSetCameraFOV
-;_IrrSetCameraAspectRatio
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
 ;_IrrAddFPSCamera
 ;_IrrAddCamera
+;_IrrAddMayaCamera
+;_IrrSetCameraTarget
+;_IrrGetCameraTarget
+;_IrrGetCameraOrientation
+;_IrrSetCameraClipDistance
+;_IrrSetActiveCamera
+;_IrrSetCameraAspectRatio
 ;__CreatePtrKeyMapArray
 ; ===============================================================================================================================
 
@@ -59,7 +59,7 @@
 ;                  If you haven't captured mouse and keyboard events this camera can be controlled with the cursor keys and the mouse. If however you capture events when starting irrlicht this will become a normal camera that can only be moved by code
 ; Related .......: __CreatePtrKeyMapArray, _IrrAddCamera, _IrrAddMayaCamera
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddFPSCamera($h_ParentNode = 0, $f_RotateSpeed = 100.0, $f_MoveSpeed = 0.5, $i_ID = -1, $h_KeyMapArray = 0, $i_KeyMapSize = 0, $i_NoVerticalMovement = 0, $f_JumpSpeed = 0.0)
 	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddFPSCamera", "UINT_PTR", $h_ParentNode, "float", $f_RotateSpeed, "float", $f_MoveSpeed, "int", $i_ID, "ptr", $h_KeyMapArray, "int", $i_KeyMapSize, "int", $i_NoVerticalMovement, "float", $f_JumpSpeed)
@@ -89,7 +89,7 @@ EndFunc   ;==>_IrrAddFPSCamera
 ;                   Animators and other node functions can be applied to this node.
 ; Related .......: _IrrAddFPSCamera, _IrrAddMayaCamera
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddCamera($f_CamX, $f_CamY, $f_CamZ, $f_TargetX, $f_TargetY, $f_TargetZ)
 	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddCamera", "float", $f_CamX, "float", $f_CamY, "float", $f_CamZ, "float", $f_TargetX, "float", $f_TargetY, "float", $f_TargetZ)
@@ -101,7 +101,7 @@ Func _IrrAddCamera($f_CamX, $f_CamY, $f_CamZ, $f_TargetX, $f_TargetY, $f_TargetZ
 EndFunc   ;==>_IrrAddCamera
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddMayaCamera
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddMayaCamera($h_Node, $f_Rotate, $f_Zoom, $f_Move)
@@ -127,7 +127,7 @@ Func _IrrAddMayaCamera($h_Node, $f_Rotate, $f_Zoom, $f_Move)
 EndFunc   ;==>_IrrAddMayaCamera
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetCameraTarget
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetCameraTarget($h_Camera, $f_CamX, $f_CamY, $f_CamZ)
@@ -154,7 +154,7 @@ Func _IrrSetCameraTarget($h_Camera, $f_CamX, $f_CamY, $f_CamZ)
 EndFunc   ;==>_IrrSetCameraTarget
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCameraTarget
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetCameraTarget($h_Camera, ByRef $a_Vector3df)
@@ -244,7 +244,7 @@ EndFunc   ;==>_IrrSetCameraUpDirection
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCameraOrientation
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetCameraOrientation($h_Camera, ByRef $a_Vector1, ByRef $a_Vector2, ByRef $a_Vector3)
@@ -368,7 +368,7 @@ Func _IrrSetCameraOrthagonal($h_Camera, $f_DistanceX, $f_DistanceY, $f_DistanceZ
 EndFunc   ;==>_IrrSetCameraOrthagonal
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetCameraClipDistance
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetCameraClipDistance($h_Camera, $f_Distance, $f_NearDistance = 1.0)
@@ -395,7 +395,7 @@ Func _IrrSetCameraClipDistance($h_Camera, $f_Distance, $f_NearDistance = 1.0)
 EndFunc   ;==>_IrrSetCameraClipDistance
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetActiveCamera
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetActiveCamera($h_Camera)
@@ -449,7 +449,7 @@ Func _IrrSetCameraFOV($h_Camera, $f_FOV)
 EndFunc   ;==>_IrrSetCameraFOV
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetCameraAspectRatio
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetCameraAspectRatio($h_Camera, $f_AspectRatio)
@@ -494,7 +494,7 @@ EndFunc   ;==>_IrrSetCameraAspectRatio
 ;                  <i>_IrrAddFPSCamera (..., __CreatePtrKeyMapArray($keyStruct), 4, ...)</i>
 ; Related .......: _IrraddFPSCamera
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func __CreatePtrKeyMapArray(ByRef $keyStruct, $i_kForward = $KEY_KEY_W, $i_kBackward = $KEY_KEY_S, $i_kLeft = $KEY_KEY_A, $i_kRight = $KEY_KEY_D, $i_kJump = $KEY_SPACE)
 
@@ -511,14 +511,3 @@ Func __CreatePtrKeyMapArray(ByRef $keyStruct, $i_kForward = $KEY_KEY_W, $i_kBack
 	DllStructSetData($keyStruct, "key5", $i_kJump)
 	Return DllStructGetPtr($keyStruct)
 EndFunc   ;==>__CreatePtrKeyMapArray
-
-
-
-
-
-
-
-
-
-
-

@@ -14,6 +14,9 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
+; ===============================================================================================================================
+
+; #CURRENT# =====================================================================================================================
 ;__getKeyEvt
 ;__getMouseEvt
 ;_IrrKeyEventAvailable
@@ -21,9 +24,6 @@
 ;_IrrMouseEventAvailable
 ;_IrrReadMouseEvent
 ;_IrrSetMousePosition
-; ===============================================================================================================================
-
-; #CURRENT# =====================================================================================================================
 ;_IrrHideMouse
 ;_IrrShowMouse
 ;_IrrDisplayMouse
@@ -40,27 +40,24 @@ Global enum _ ; enumeration KEY_EVENT for possible Elements readable by __getKey
 	$EVT_KEY_IDIRECTION, _ 	; unsigned integer "direction"
 	$EVT_KEY_IFLAGS			; unsigned integer "flags"
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: __getKeyEvt
-; Description ...: [todo]
+; Description ...: helper function: returns value of $i_Element inside a keyEvent-structure.
 ; Syntax.........: __getKeyEvt($p_KeyEvent, $i_Element = $EVT_KEY_IKEY)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $p_KeyEvent - A pointer as returned from _IrrReadKeyEvent.
+;                  $i_Element - [optional] Event type to return:
+;                  |$EVT_KEY_IKEY - ID of pressed key.
+;                  |$EVT_KEY_IDIRECTION - Direction value.
+;                  |$EVT_KEY_IFLAGS - Key flags value
+; Return values .: Success - Value of selected event element.
+; Author ........: linus
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: $p_KeyEvent is a pointer as returned from _IrrReadKeyEvent.
+; Related .......: _IrrReadKeyEvent
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 func __getKeyEvt($p_KeyEvent, $i_Element = $EVT_KEY_IKEY)
-; helper function:
-; returns value of $i_Element inside a keyEvent-structure.
-; $p_KeyEvent is a pointer as returned from _IrrReadKeyEvent.
 	local $EventStruct = DllStructCreate("uint;uint;uint", $p_KeyEvent)
 	$result = DllStructGetData($EventStruct, $i_Element)
 	if @error Then
@@ -77,27 +74,25 @@ Global enum _ ; enumeration MOUSE_EVENT for possible Elements readable by __getM
 	$EVT_MOUSE_IY				; integer "y"
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: __getMouseEvt
-; Description ...: [todo]
+; Description ...: helper function: returns value of $i_Element inside a MouseEvent-structure.
 ; Syntax.........: __getMouseEvt($p_MouseEvent, $i_Element = $EVT_MOUSE_IACTION)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $p_MouseEvent - A pointer as returned from _IrrReadMouseEvent.
+;                  $i_Element - [optional] Event type to return:
+;                  |$EVT_MOUSE_IACTION - ID of mouse action
+;                  |$EVT_MOUSE_FDELTA - Delta value
+;                  |$EVT_MOUSE_IX - Mouse X value
+;                  |$EVT_MOUSE_IY - Mouse Y value
+; Return values .: Success - Value of selected event element.
+; Author ........: linus
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: $p_MouseEvent is a pointer as returned from _IrrReadMouseEvent.
+; Related .......: _IrrReadMouseEvent
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 func __getMouseEvt($p_MouseEvent, $i_Element = $EVT_MOUSE_IACTION)
-; helper function:
-; returns value of $i_Element inside a MouseEvent-structure.
-; $p_MouseEvent is a pointer as returned from _IrrReadMouseEvent.
 	local $EventStruct = DllStructCreate("uint;float;int;int", $p_MouseEvent)
 	$result = DllStructGetData($EventStruct, $i_Element)
 	if @error Then
@@ -108,7 +103,7 @@ func __getMouseEvt($p_MouseEvent, $i_Element = $EVT_MOUSE_IACTION)
 EndFunc ;==> __getMouseEvt
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrKeyEventAvailable
 ; Description ...: [todo]
 ; Syntax.........: _IrrKeyEventAvailable()
@@ -135,7 +130,7 @@ Func _IrrKeyEventAvailable()
 EndFunc   ;==>_IrrKeyEventAvailable
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrReadKeyEvent
 ; Description ...: [todo]
 ; Syntax.........: _IrrReadKeyEvent()
@@ -162,7 +157,7 @@ Func _IrrReadKeyEvent()
 EndFunc   ;==>_IrrReadKeyEvent
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMouseEventAvailable
 ; Description ...: [todo]
 ; Syntax.........: _IrrMouseEventAvailable()
@@ -189,7 +184,7 @@ Func _IrrMouseEventAvailable()
 EndFunc   ;==>_IrrMouseEventAvailable
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrReadMouseEvent
 ; Description ...: [todo]
 ; Syntax.........: _IrrReadMouseEvent()
@@ -216,7 +211,7 @@ Func _IrrReadMouseEvent()
 EndFunc   ;==>_IrrReadMouseEvent
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetMousePosition
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetMousePosition(ByRef $f_XPos, ByRef $f_YPos)
@@ -257,7 +252,7 @@ EndFunc   ;==>_IrrSetMousePosition
 ; Remarks .......: None
 ; Related .......: _IrrShowMouse, _IrrDisplayMouse
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrHideMouse()
 	return _IrrDisplayMouse(False)
@@ -276,7 +271,7 @@ EndFunc   ;==>_IrrHideMouse
 ; Remarks .......: None
 ; Related .......: _IrrHideMouse, _IrrDisplayMouse
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrShowMouse()
 	return _IrrDisplayMouse(True)
@@ -295,7 +290,7 @@ EndFunc   ;==>_IrrShowMouse
 ; Remarks .......: There are two functions available to simply hide or show the mouse: IrrHideMouse and IrrShowMouse.
 ; Related .......: _IrrShowMouse, _IrrHideMouse
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrDisplayMouse($i_HideShow)
 	DllCall($_irrDll, "none:cdecl", "IrrDisplayMouse", "int", $i_HideShow)
@@ -305,10 +300,3 @@ Func _IrrDisplayMouse($i_HideShow)
 		return True
 	EndIf
 EndFunc   ;==>_IrrDisplayMouse
-
-
-
-
-
-
-

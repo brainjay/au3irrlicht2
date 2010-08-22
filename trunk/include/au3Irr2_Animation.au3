@@ -15,7 +15,12 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
+;_IrrRemoveAnimator
+; ===============================================================================================================================
+
+; #CURRENT# =====================================================================================================================
 ;_IrrSetNodeAnimationRange
+;_IrrPlayNodeMD2Animation
 ;_IrrSetNodeAnimationSpeed
 ;_IrrGetNodeAnimationFrame
 ;_IrrSetNodeAnimationFrame
@@ -28,17 +33,12 @@
 ;_IrrAddRotationAnimator
 ;_IrrAddSplineAnimator
 ;_IrrAddFadeAnimator
-;_IrrRemoveAnimator
-; ===============================================================================================================================
-
-; #CURRENT# =====================================================================================================================
-;_IrrPlayNodeMD2Animation
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; ===============================================================================================================================
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeAnimationRange
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetNodeAnimationRange($h_Node, $i_Start, $i_End)
@@ -99,7 +99,7 @@ EndFunc   ;==>_IrrSetNodeAnimationRange
 ; Remarks .......: MD2 format models have specific animation sequences contained within them that can be played back with a simple call.
 ; Related .......: None
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrPlayNodeMD2Animation($h_Node, $i_Animation)
 	DllCall($_irrDll, "none:cdecl", "IrrPlayNodeMD2Animation", "ptr", $h_Node, "int", $i_Animation)
@@ -111,7 +111,7 @@ Func _IrrPlayNodeMD2Animation($h_Node, $i_Animation)
 EndFunc   ;==>_IrrPlayNodeMD2Animation
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeAnimationSpeed
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetNodeAnimationSpeed($h_Node, $f_Speed)
@@ -138,7 +138,7 @@ Func _IrrSetNodeAnimationSpeed($h_Node, $f_Speed)
 EndFunc   ;==>_IrrSetNodeAnimationSpeed
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetNodeAnimationFrame
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetNodeAnimationFrame($h_Node)
@@ -165,7 +165,7 @@ Func _IrrGetNodeAnimationFrame($h_Node)
 EndFunc   ;==>_IrrGetNodeAnimationFrame
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeAnimationFrame
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetNodeAnimationFrame($h_Node, $f_Frame)
@@ -192,7 +192,7 @@ Func _IrrSetNodeAnimationFrame($h_Node, $f_Frame)
 EndFunc   ;==>_IrrSetNodeAnimationFrame
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetTransitionTime
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetTransitionTime($h_Node, $f_Speed)
@@ -219,7 +219,7 @@ Func _IrrSetTransitionTime($h_Node, $f_Speed)
 EndFunc   ;==>_IrrSetTransitionTime
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAnimateJoints
 ; Description ...: [todo]
 ; Syntax.........: _IrrAnimateJoints($h_Node)
@@ -247,7 +247,7 @@ EndFunc   ;==>_IrrAnimateJoints
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddCollisionAnimator
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddCollisionAnimator($h_IrrSelector, $h_Node, $f_RadiusX, $f_RadiusY, $f_RadiusZ, $f_GravityX, $f_GravityY, $f_GravityZ, $f_OffsetX, $f_OffsetY, $f_OffsetZ)
@@ -274,7 +274,7 @@ Func _IrrAddCollisionAnimator($h_IrrSelector, $h_Node, $f_RadiusX, $f_RadiusY, $
 EndFunc   ;==>_IrrAddCollisionAnimator
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddDeleteAnimator
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddDeleteAnimator($h_Node, $i_Time)
@@ -301,7 +301,7 @@ Func _IrrAddDeleteAnimator($h_Node, $i_Time)
 EndFunc   ;==>_IrrAddDeleteAnimator
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddFlyCircleAnimator
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddFlyCircleAnimator($h_Node, $f_CenterX, $f_CenterY, $f_CenterZ, $f_Radius, $f_Speed)
@@ -328,7 +328,7 @@ Func _IrrAddFlyCircleAnimator($h_Node, $f_CenterX, $f_CenterY, $f_CenterZ, $f_Ra
 EndFunc   ;==>_IrrAddFlyCircleAnimator
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddFlyStraightAnimator
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddFlyStraightAnimator($h_Node, $f_StartX, $f_StartY, $f_StartZ, $f_EndX, $f_EndY, $f_EndZ, $i_Time, $i_DoLoop)
@@ -355,7 +355,7 @@ Func _IrrAddFlyStraightAnimator($h_Node, $f_StartX, $f_StartY, $f_StartZ, $f_End
 EndFunc   ;==>_IrrAddFlyStraightAnimator
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddRotationAnimator
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddRotationAnimator($h_Node, $f_RotX, $f_RotY, $f_RotZ)
@@ -383,7 +383,7 @@ EndFunc   ;==>_IrrAddRotationAnimator
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddSplineAnimator
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddSplineAnimator($h_Node, $i_ArraySize, $a_ArrayFloatsX, $a_ArrayFloatsY, $a_ArrayFloatsZ, $i_Start, $f_Speed, $f_Tightness)
@@ -430,7 +430,7 @@ Func _IrrAddSplineAnimator($h_Node, $i_ArraySize, $a_ArrayFloatsX, $a_ArrayFloat
 EndFunc   ;==>_IrrAddSplineAnimator
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddFadeAnimator
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddFadeAnimator($h_Node, $i_DeleteAfterMiliseconds, $f_Scale = 1.0)
@@ -482,11 +482,3 @@ Func _IrrRemoveAnimator($h_Node, $h_Animator)
 		return True
 	EndIf
 EndFunc   ;==>_IrrRemoveAnimator
-
-
-
-
-
-
-
-

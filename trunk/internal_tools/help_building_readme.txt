@@ -21,6 +21,10 @@ if I am not wrong - thanks again!)
 
 To create an up-to-date help file, do this:
 
+- be sure \include\_au3Irr2_changelog.txt is up-to-date: infos from this file
+  are used to build the history.html and also to update the introduction page
+  with newest release number + date.
+
 - run help_tool.au3
 - say "YES" to CleanUp
 - say "YES" to update all UDF and select the \include dir

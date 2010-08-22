@@ -1,25 +1,47 @@
-au3Irrlicht2 Changelog
-======================
+; au3Irrlicht2 Changelog
+; ======================
+; this file is used to create history of help file. So it need to be well formated:
+; empty lines or lines with leading ';' are ignored
+; '=' in row1 defines header for release information (all '=' are removed for .html): 
+; = [release number] ([date info]) ===========
+; First found release info is also used to update the static introduction .html
+; lines with '>' in row start a header
+; lines with '+' in row start a list point in .html (with a bullet)
+; lines with '-' in row start an ignored list point (history details not interesting for normal users)
+; all following indented lines (starting in row >= 3) belong to the current .html or ignored list point
+; '[' and ']' can be used to set text to bold in .html
+  
+
+=== 2.xx (xx-xx-xx) ============================================================
+Work in progress!
 
 
+> UDF:
 
-2.xx (xx-xx-xx) ================================================================
-???
++ changed structure: Splitted UDF per category into \include. Main UDF (and the only one which is
+  needed to be included) is still au3Irrlicht2.au3
 
-UDF:
-- changed structure: Splitted UDF per category into \include. Main UDF (and only
-  one needed to be included) is au3Irrlicht2.au3
 
-Internal tools:
-- Added: helper scripts and files for building a help file
+> Help file:
+
++ Added first version, as reference of all working + proven functions. Current status:
+  Topics completed including example code along examples 1 to 6.
+  Naked reference w/o detailed informations for other examples.
+
+
+> Internal tools:
+
++ Added: helper scripts and files for building a help file
          (see \internal tools\help_building_readme.txt) 
 
 
+> Media:
++ Fixed 'fonthaettenschweiler.bmp' (bogQ)
 
-2.02 (10-07-29) ================================================================
+=== 2.02 (10-07-29) ============================================================
 First release in one package (UDF + all needed .dll's, examples, ExampleLauncher)
 
 
 
-2.0 (10-05-03) =================================================================
+=== 2.0 (10-05-03) =============================================================
 First release of jRowe
