@@ -3,33 +3,32 @@
 #include "au3Irr2_constants.au3"
 
 ; #INDEX# =======================================================================================================================
-; Title .........: [todo]
-; AutoIt Version : [todo]
+; Title .........: Lighting
+; AutoIt Version : v3.3.6.1
 ; Language ......: English
-; Description ...: [todo]
-;                  [todo]
-;                  [todo]
-; Author(s) .....: [todo]
-; Dll(s) ........: [todo]
+; Description ...: Calls to create and effect lighting in the scene.
+; Author(s) .....: jRowe, linus.
+;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
+;_IrrSetLightCastShadows
+;_IrrSetLightRadius
+;_IrrSetLightSpecularColor
+; ===============================================================================================================================
+
+; #CURRENT# =====================================================================================================================
 ;_IrrAddLight
 ;_IrrSetAmbientLight
 ;_IrrSetLightAmbientColor
 ;_IrrSetLightAttenuation
-;_IrrSetLightCastShadows
 ;_IrrSetLightDiffuseColor
 ;_IrrSetLightFalloff
 ;_IrrSetLightInnerCone
 ;_IrrSetLightOuterCone
-;_IrrSetLightRadius
-;_IrrSetLightSpecularColor
 ;_IrrSetLightType
-; ===============================================================================================================================
-
-; #CURRENT# =====================================================================================================================
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -37,7 +36,7 @@
 
 ;Lighting functions
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddLight
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddLight($h_parentNode, $f_X, $f_Y, $f_Z, $f_Red, $f_Green, $f_Blue, $f_Size)
@@ -64,7 +63,7 @@ Func _IrrAddLight($h_parentNode, $f_X, $f_Y, $f_Z, $f_Red, $f_Green, $f_Blue, $f
 EndFunc   ;==>_IrrAddLight
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetAmbientLight
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetAmbientLight($f_Red, $f_Green, $f_Blue)
@@ -91,7 +90,7 @@ Func _IrrSetAmbientLight($f_Red, $f_Green, $f_Blue)
 EndFunc   ;==>_IrrSetAmbientLight
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetLightAmbientColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetLightAmbientColor($h_Light, $f_Red, $f_Green, $f_Blue)
@@ -118,7 +117,7 @@ Func _IrrSetLightAmbientColor($h_Light, $f_Red, $f_Green, $f_Blue)
 EndFunc   ;==>_IrrSetLightAmbientColor
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetLightAttenuation
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetLightAttenuation($h_Light, $f_Red, $f_Green, $f_Blue)
@@ -172,7 +171,7 @@ Func _IrrSetLightCastShadows($h_Light, $i_Shadows)
 EndFunc   ;==>_IrrSetLightCastShadows
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetLightDiffuseColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetLightDiffuseColor($h_Light, $f_Red, $f_Green, $f_Blue)
@@ -199,7 +198,7 @@ Func _IrrSetLightDiffuseColor($h_Light, $f_Red, $f_Green, $f_Blue)
 EndFunc   ;==>_IrrSetLightDiffuseColor
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetLightFalloff
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetLightFalloff($h_Light, $f_Falloff)
@@ -226,7 +225,7 @@ Func _IrrSetLightFalloff($h_Light, $f_Falloff)
 EndFunc   ;==>_IrrSetLightFalloff
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetLightInnerCone
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetLightInnerCone($h_Light, $f_InnerCone)
@@ -253,7 +252,7 @@ Func _IrrSetLightInnerCone($h_Light, $f_InnerCone)
 EndFunc   ;==>_IrrSetLightInnerCone
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetLightOuterCone
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetLightOuterCone($h_Light, $f_OuterCone)
@@ -334,7 +333,7 @@ Func _IrrSetLightSpecularColor($h_Light, $f_Red, $f_Green, $f_Blue)
 EndFunc   ;==>_IrrSetLightSpecularColor
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetLightType
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetLightType($h_Light, $i_Type)
@@ -359,10 +358,3 @@ Func _IrrSetLightType($h_Light, $i_Type)
 		return True
 	EndIf
 EndFunc   ;==>_IrrSetLightType
-
-
-
-
-
-
-

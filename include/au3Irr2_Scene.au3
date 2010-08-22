@@ -15,16 +15,30 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
-;_IrrGetRootSceneNode
 ;_IrrCreateMesh
-;_IrrAddHillPlaneMesh
 ;_IrrWriteMesh
-;_IrrClearUnusedMeshes
-;_IrrSetMeshHardwareAccelerated
 ;_IrrGetMeshFrameCount
 ;_IrrGetMeshBufferCount
 ;_IrrGetMeshIndexCount
 ;_IrrGetMeshVertexCount
+;_IrrAddParticleSystemToScene
+;_IrrAddEmptySceneNode
+;_IrrSetZoneManagerAttachTerrain
+;_IrrGetGrassDrawCount
+;_IrrSetFlareScale
+;__CreateVertex
+;__CreateVector
+; ===============================================================================================================================
+
+; #CURRENT# =====================================================================================================================
+;_IrrGetRootSceneNode
+;_IrrGetMesh
+;_IrrAddHillPlaneMesh
+;_IrrRemoveMesh
+;_IrrClearUnusedMeshes
+;_IrrSetMeshHardwareAccelerated
+;_IrrAddMeshToScene
+;_IrrAddMeshToSceneAsOcttree
 ;_IrrAddStaticMeshForNormalMappingToScene
 ;_IrrLoadScene
 ;_IrrSaveScene
@@ -32,10 +46,8 @@
 ;_IrrGetSceneNodeFromName
 ;_IrrAddBillBoardToScene
 ;_IrrAddBillboardTextSceneNode
-;_IrrAddParticleSystemToScene
 ;_IrrAddSkyBoxToScene
 ;_IrrAddSkyDomeToScene
-;_IrrAddEmptySceneNode
 ;_IrrAddTestSceneNode
 ;_IrrAddCubeSceneNode
 ;_IrrAddSphereSceneNode
@@ -52,11 +64,8 @@
 ;_IrrSetSkyDomeColorPoint
 ;_IrrSetZoneManagerProperties
 ;_IrrSetZoneManagerBoundingBox
-;_IrrSetZoneManagerAttachTerrain
 ;_IrrSetGrassDensity
 ;_IrrSetGrassWind
-;_IrrGetGrassDrawCount
-;_IrrSetFlareScale
 ;_IrrCreateBatchingMesh
 ;_IrrAddToBatchingMesh
 ;_IrrFinalizeBatchingMesh
@@ -69,21 +78,12 @@
 ;_IrrSetBoltProperties
 ;_IrrSetBillBoardSize
 ;_IrrSetBillBoardColor
-;__CreateVertex
-;__CreateVector
-; ===============================================================================================================================
-
-; #CURRENT# =====================================================================================================================
-;_IrrGetMesh
-;_IrrRemoveMesh
-;_IrrAddMeshToScene
-;_IrrAddMeshToSceneAsOcttree
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; ===============================================================================================================================
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetRootSceneNode
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetRootSceneNode()
@@ -138,7 +138,7 @@ EndFunc   ;==>_IrrGetRootSceneNode
 ;                  @@End@@
 ; Related .......: _IrrAddMeshToScene, _IrrRemoveMesh
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetMesh($s_MeshFile)
 	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetMesh", "str", $s_MeshFile)
@@ -199,7 +199,7 @@ EndFunc   ;==>_IrrCreateMesh
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddHillPlaneMesh
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddHillPlaneMesh($s_Name, $f_TileSizeX, $f_TileSizeY, $i_TileCountX, $i_TileCountY, $h_Material = 0, $f_HillHeight = 0, $f_CountHillsX = 0, $f_CountHillsY = 0, $f_TextureRepeatCountX = 1, $f_TextureRepeatCountY = 1)
@@ -266,7 +266,7 @@ EndFunc   ;==>_IrrWriteMesh
 ; Remarks .......: None
 ; Related .......: _IrrGetMesh
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrRemoveMesh($h_Mesh)
 	$result = DllCall($_irrDll, "none:cdecl", "IrrRemoveMesh", "ptr", $h_Mesh)
@@ -278,7 +278,7 @@ Func _IrrRemoveMesh($h_Mesh)
 EndFunc   ;==>_IrrRemoveMesh
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrClearUnusedMeshes
 ; Description ...: [todo]
 ; Syntax.........: _IrrClearUnusedMeshes()
@@ -305,7 +305,7 @@ Func _IrrClearUnusedMeshes()
 EndFunc   ;==>_IrrClearUnusedMeshes
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetMeshHardwareAccelerated
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetMeshHardwareAccelerated($h_mesh, $i_frame = 0)
@@ -488,7 +488,7 @@ EndFunc   ;==>_IrrGetMeshVertexCount
 ; Remarks .......: None
 ; Related .......: _IrrGetMesh
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddMeshToScene($h_Mesh)
 	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddMeshToScene", "UINT_PTR", $h_Mesh)
@@ -513,7 +513,7 @@ EndFunc   ;==>_IrrAddMeshToScene
 ;                  Optimizing your node with this function will result in a large increase in performance.
 ; Related .......: None
 ; Link ..........:
-; Example .......: None
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddMeshToSceneAsOcttree($h_Mesh)
 	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddMeshToSceneAsOcttree", "UINT_PTR", $h_Mesh)
@@ -525,7 +525,7 @@ Func _IrrAddMeshToSceneAsOcttree($h_Mesh)
 EndFunc   ;==>_IrrAddMeshToSceneAsOcttree
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddStaticMeshForNormalMappingToScene
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddStaticMeshForNormalMappingToScene($h_Mesh)
@@ -552,7 +552,7 @@ Func _IrrAddStaticMeshForNormalMappingToScene($h_Mesh)
 EndFunc   ;==>_IrrAddStaticMeshForNormalMappingToScene
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrLoadScene
 ; Description ...: [todo]
 ; Syntax.........: _IrrLoadScene($s_Filename)
@@ -579,7 +579,7 @@ Func _IrrLoadScene($s_Filename)
 EndFunc   ;==>_IrrLoadScene
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSaveScene
 ; Description ...: [todo]
 ; Syntax.........: _IrrSaveScene($s_Filename)
@@ -607,7 +607,7 @@ EndFunc   ;==>_IrrSaveScene
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetSceneNodeFromId
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetSceneNodeFromId($i_ID)
@@ -636,7 +636,7 @@ EndFunc   ;==>_IrrGetSceneNodeFromId
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetSceneNodeFromName
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetSceneNodeFromName($s_Name)
@@ -663,22 +663,23 @@ Func _IrrGetSceneNodeFromName($s_Name)
 EndFunc   ;==>_IrrGetSceneNodeFromName
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddBillBoardToScene
-; Description ...: [todo]
+; Description ...: Adds a billboard to the scene of the specified size and at the specified position.
 ; Syntax.........: _IrrAddBillBoardToScene($f_XSize, $f_YSize, $f_XPos = 0.0, $f_YPos = 0.0, $f_ZPos = 0.0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $f_XSize - X size of the node
+;                  $f_YSize - Y size of the node
+;                  $f_XPos - [optional] X position
+;                  $f_YPos - [optional] Y position
+;                  $f_ZPos - [optional] Z position
+; Return values .: Success - Handle of the new billboard scene node
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: A billboard is a flat 3D textured sprite that always faces towards the camera. You need to texture this element with a separate command.
+; Related .......: _IrrSetNodeMaterialTexture, _IrrSetNodeMaterialFlag
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddBillBoardToScene($f_XSize, $f_YSize, $f_XPos = 0.0, $f_YPos = 0.0, $f_ZPos = 0.0)
 	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddBillBoardToScene", "float", $f_XSize, "float", $f_YSize, "float", $f_XPos, "float", $f_YPos, "float", $f_ZPos)
@@ -690,7 +691,7 @@ Func _IrrAddBillBoardToScene($f_XSize, $f_YSize, $f_XPos = 0.0, $f_YPos = 0.0, $
 EndFunc   ;==>_IrrAddBillBoardToScene
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddBillboardTextSceneNode
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddBillboardTextSceneNode($h_Font, $s_Text, $f_XSize, $f_YSize, $f_XPos=0, $f_YPos=0, $f_ZPos=0, $h_Parent=0, $i_TopRGBA=0xFFFFFFFF, $i_BottomRGBA=0xFFFFFFFF)
@@ -750,7 +751,7 @@ Func _IrrAddParticleSystemToScene($i_AddEmitter, $h_Parent = 0, $i_Id = -1, $f_P
 EndFunc   ;==>_IrrAddParticleSystemToScene
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddSkyBoxToScene
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddSkyBoxToScene($h_UpTexture, $h_DownTexture, $h_LeftTexture, $h_RightTexture, $h_FrontTexture, $h_BackTexture)
@@ -778,7 +779,7 @@ EndFunc   ;==>_IrrAddSkyBoxToScene
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddSkyDomeToScene
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddSkyDomeToScene($h_Texture, $i_HorizontalRes, $i_VerticalRes, $d_TexturePercent, $d_SpherePercent, $d_SphereRadius = 1000.0)
@@ -832,7 +833,7 @@ Func _IrrAddEmptySceneNode()
 EndFunc   ;==>_IrrAddEmptySceneNode
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddTestSceneNode
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddTestSceneNode()
@@ -859,7 +860,7 @@ Func _IrrAddTestSceneNode()
 EndFunc   ;==>_IrrAddTestSceneNode
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddCubeSceneNode
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddCubeSceneNode($f_Size)
@@ -886,7 +887,7 @@ Func _IrrAddCubeSceneNode($f_Size)
 EndFunc   ;==>_IrrAddCubeSceneNode
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddSphereSceneNode
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddSphereSceneNode($f_Size, $i_PolyCount)
@@ -914,7 +915,7 @@ EndFunc   ;==>_IrrAddSphereSceneNode
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddWaterSurfaceSceneNode
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddWaterSurfaceSceneNode($h_Mesh, $f_WaveHeight = 2.0, $f_WaveSpeed = 300.0, $f_WaveLength = 10.0, $h_Parent = 0, $i_ID = -1, $f_PosX = 0, $f_PosY = 0, $f_PosZ = 0, $f_RotX = 0, $f_RotY = 0, $f_RotZ = 0, $f_ScaleX = 1.0, $f_ScaleY = 1.0, $f_ScaleZ = 1.0)
@@ -941,7 +942,7 @@ Func _IrrAddWaterSurfaceSceneNode($h_Mesh, $f_WaveHeight = 2.0, $f_WaveSpeed = 3
 EndFunc   ;==>_IrrAddWaterSurfaceSceneNode
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddZoneManager
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddZoneManager($f_NearDistance=0, $f_FarDistance=12000)
@@ -968,7 +969,7 @@ Func _IrrAddZoneManager($f_NearDistance=0, $f_FarDistance=12000)
 EndFunc   ;==>_IrrAddZoneManager
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddClouds
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddClouds($h_Texture, $i_Lod, $i_Depth, $i_Density)
@@ -995,7 +996,7 @@ Func _IrrAddClouds($h_Texture, $i_Lod, $i_Depth, $i_Density)
 EndFunc   ;==>_IrrAddClouds
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddLensFlare
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddLensFlare($h_Texture)
@@ -1022,7 +1023,7 @@ Func _IrrAddLensFlare($h_Texture)
 EndFunc   ;==>_IrrAddLensFlare
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddGrass
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddGrass($h_Terrain, $i_X, $i_Y, $i_PatchSize, $f_FadeDistance, $i_Crossed, $f_GrassScale, $i_MaxDensity, $i_DataPosX, $i_DataPosY, $h_HeightMap, $h_TextureMap, $h_GrassMap, $h_GrassTexture)
@@ -1051,7 +1052,7 @@ Func _IrrAddGrass($h_Terrain, $i_X, $i_Y, $i_PatchSize, $f_FadeDistance, $i_Cros
 EndFunc   ;==>_IrrAddGrass
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetShadowColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetShadowColor($i_Alpha, $i_Red, $i_Green, $i_Blue)
@@ -1078,7 +1079,7 @@ Func _IrrSetShadowColor($i_Alpha, $i_Red, $i_Green, $i_Blue)
 EndFunc   ;==>_IrrSetShadowColor
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetFog
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetFog($i_Red, $i_Green, $i_Blue, $i_FogType, $f_FogStart, $f_FogEnd, $f_Density)
@@ -1105,7 +1106,7 @@ Func _IrrSetFog($i_Red, $i_Green, $i_Blue, $i_FogType, $f_FogStart, $f_FogEnd, $
 EndFunc   ;==>_IrrSetFog
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrDraw3DLine
 ; Description ...: [todo]
 ; Syntax.........: _IrrDraw3DLine($f_XStart, $f_YStart, $f_ZStart, $f_XEnd, $f_YEnd, $f_ZEnd, $i_Red, $i_Green, $i_Blue)
@@ -1132,7 +1133,7 @@ Func _IrrDraw3DLine($f_XStart, $f_YStart, $f_ZStart, $f_XEnd, $f_YEnd, $f_ZEnd, 
 EndFunc   ;==>_IrrDraw3DLine
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetSkyDomeColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetSkyDomeColor($h_Dome, $i_HorizontalRed, $i_HorizontalGreen, $i_HorizontalBlue, $i_ZenithRed, $i_ZenithGreen, $i_ZenithBlue)
@@ -1159,7 +1160,7 @@ Func _IrrSetSkyDomeColor($h_Dome, $i_HorizontalRed, $i_HorizontalGreen, $i_Horiz
 EndFunc   ;==>_IrrSetSkyDomeColor
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetSkyDomeColorBand
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetSkyDomeColorBand($h_Dome, $i_HorizontalRed, $i_HorizontalGreen, $i_HorizontalBlue, $i_BandVerticalPosition, $f_BandFade, $i_Additive)
@@ -1186,7 +1187,7 @@ Func _IrrSetSkyDomeColorBand($h_Dome, $i_HorizontalRed, $i_HorizontalGreen, $i_H
 EndFunc   ;==>_IrrSetSkyDomeColorBand
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetSkyDomeColorPoint
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetSkyDomeColorPoint($h_Dome, $i_Red, $i_Green, $i_Blue, $f_PosX, $f_PosY, $f_PosZ, $f_Radius, $f_PointFade, $i_Additive)
@@ -1213,7 +1214,7 @@ Func _IrrSetSkyDomeColorPoint($h_Dome, $i_Red, $i_Green, $i_Blue, $f_PosX, $f_Po
 EndFunc   ;==>_IrrSetSkyDomeColorPoint
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetZoneManagerProperties
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetZoneManagerProperties($h_ZoneManager, $f_NearDistance, $f_FarDistance, $i_AccumulateBoxes)
@@ -1240,7 +1241,7 @@ Func _IrrSetZoneManagerProperties($h_ZoneManager, $f_NearDistance, $f_FarDistanc
 EndFunc   ;==>_IrrSetZoneManagerProperties
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetZoneManagerBoundingBox
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetZoneManagerBoundingBox($h_ZoneManager, $f_X, $f_Y, $f_Z, $f_BoxWidth, $f_BoxHeight, $f_BoxDepth)
@@ -1295,7 +1296,7 @@ Func _IrrSetZoneManagerAttachTerrain($h_ZoneNode, $h_Terrain, $s_StructureMapFil
 EndFunc   ;==>_IrrSetZoneManagerAttachTerrain
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetGrassDensity
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetGrassDensity($h_Grass, $f_Density, $f_Distance)
@@ -1322,7 +1323,7 @@ Func _IrrSetGrassDensity($h_Grass, $f_Density, $f_Distance)
 EndFunc   ;==>_IrrSetGrassDensity
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetGrassWind
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetGrassWind($h_Grass, $f_Strength, $f_Resolution)
@@ -1405,7 +1406,7 @@ EndFunc   ;==>_IrrSetFlareScale
 ;Scene Node functions
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrCreateBatchingMesh
 ; Description ...: [todo]
 ; Syntax.........: _IrrCreateBatchingMesh()
@@ -1432,7 +1433,7 @@ Func _IrrCreateBatchingMesh()
 EndFunc   ;==>_IrrCreateBatchingMesh
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddToBatchingMesh
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddToBatchingMesh($h_meshBatch, $h_mesh, $f_posX = 0.0, $f_posY = 0.0, $f_posZ = 0.0, $f_rotX = 0.0, $f_rotY = 0.0, $f_rotZ = 0.0, $f_scaleX = 1.0, $f_scaleY = 1.0, $f_scaleZ = 1.0)
@@ -1462,7 +1463,7 @@ Func _IrrAddToBatchingMesh($h_meshBatch, $h_mesh, $f_posX = 0.0, $f_posY = 0.0, 
 EndFunc   ;==>_IrrAddToBatchingMesh
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrFinalizeBatchingMesh
 ; Description ...: [todo]
 ; Syntax.........: _IrrFinalizeBatchingMesh($h_meshBatch)
@@ -1489,7 +1490,7 @@ Func _IrrFinalizeBatchingMesh($h_meshBatch)
 EndFunc   ;==>_IrrFinalizeBatchingMesh
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetMeshMaterialTexture
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetMeshMaterialTexture($h_mesh, $h_texture, $i_index, $i_buffer = 0)
@@ -1516,7 +1517,7 @@ Func _IrrSetMeshMaterialTexture($h_mesh, $h_texture, $i_index, $i_buffer = 0)
 EndFunc   ;==>_IrrSetMeshMaterialTexture
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrScaleMesh
 ; Description ...: [todo]
 ; Syntax.........: _IrrScaleMesh($h_mesh, $f_scale, $i_frame = 0, $i_meshBuffer = 0, $h_sourceMesh = 0)
@@ -1543,7 +1544,7 @@ Func _IrrScaleMesh($h_mesh, $f_scale, $i_frame = 0, $i_meshBuffer = 0, $h_source
 EndFunc   ;==>_IrrScaleMesh
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddBeamSceneNode
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddBeamSceneNode()
@@ -1571,7 +1572,7 @@ Func _IrrAddBeamSceneNode()
 EndFunc   ;==>_IrrAddBeamSceneNode
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetBeamSize
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetBeamSize($h_BeamNode, $f_Size)
@@ -1599,7 +1600,7 @@ Func _IrrSetBeamSize($h_BeamNode, $f_Size)
 EndFunc   ;==>_IrrSetBeamSize
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetBeamPosition
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetBeamPosition($h_BeamNode, $f_SX, $f_SY, $f_SZ, $f_EX, $f_EY, $f_EZ)
@@ -1628,7 +1629,7 @@ Func _IrrSetBeamPosition($h_BeamNode, $f_SX, $f_SY, $f_SZ, $f_EX, $f_EY, $f_EZ)
 EndFunc   ;==>_IrrSetBeamPosition
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddBoltSceneNode
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddBoltSceneNode()
@@ -1656,7 +1657,7 @@ Func _IrrAddBoltSceneNode()
 EndFunc   ;==>_IrrAddBoltSceneNode
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetBoltProperties
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetBoltProperties($h_BoltNode, $f_SX, $f_SY, $f_SZ, $f_EX, $f_EY, $f_EZ, $i_UpdateTime=50, $i_Height=10, $f_Thickness=5.0, $i_Parts=10, $i_Bolts=6, $i_Steadyend=$IRR_OFF, $i_Color=0x0000FFFF)
@@ -1687,7 +1688,7 @@ Func _IrrSetBoltProperties($h_BoltNode, $f_SX, $f_SY, $f_SZ, $f_EX, $f_EY, $f_EZ
 EndFunc   ;==>_IrrSetBoltProperties
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetBillBoardSize
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetBillBoardSize($h_Node, $f_Width, $f_Height)
@@ -1715,7 +1716,7 @@ Func _IrrSetBillBoardSize($h_Node, $f_Width, $f_Height)
 EndFunc   ;==>_IrrSetBillBoardSize
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetBillBoardColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetBillBoardColor($h_Node, $i_TopColor, $i_BottomColor)
@@ -1799,10 +1800,3 @@ Func __CreateVector($f_X, $f_Y, $f_Z)
 	DllStructSetData($VectorStruct, 3, $f_Z)
 	Return $VectorStruct
 EndFunc   ;==>___CreateVector
-
-
-
-
-
-
-

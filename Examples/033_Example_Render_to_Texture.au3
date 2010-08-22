@@ -96,10 +96,6 @@ WHILE _IrrRunning()
     _IrrSetActiveCamera ( $StaticCamera )
     _IrrDrawSceneToTexture ( $RenderTexture )
 
-;    pixels = IrrLockTexture( RenderTexture )
-;    IrrUnlockTexture( RenderTexture )
-
-
     ; begin the scene, erasing the canvas with sky-blue before rendering
     _IrrBeginScene( 240, 255, 255 )
 

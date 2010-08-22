@@ -14,16 +14,26 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
+;_IrrGetNodeAbsolutePosition
+;_IrrSetNodeVisibility
+;_IrrSetNodeParent
+;_IrrGetNodeID
+;_IrrGetNodeBoundingBox
+; ===============================================================================================================================
+
+; #CURRENT# =====================================================================================================================
 ;_IrrGetNodeName
 ;_IrrSetNodeName
 ;_IrrGetMaterialCount
 ;_IrrGetMaterial
+;_IrrSetNodeMaterialTexture
+;_IrrSetNodeMaterialFlag
 ;_IrrSetNodeMaterialType
+;_IrrSetNodePosition
 ;_IrrSetNodeRotation
 ;_IrrSetNodeScale
 ;_IrrDebugDataVisible
 ;_IrrGetNodePosition
-;_IrrGetNodeAbsolutePosition
 ;_IrrGetNodeRotation
 ;_IrrGetJointNode
 ;_IrrSetJointMode
@@ -32,25 +42,15 @@
 ;_IrrGetNodeNextChild
 ;_IrrIsNodeLastChild
 ;_IrrAddNodeShadow
-;_IrrSetNodeVisibility
 ;_IrrRemoveNode
 ;_IrrRemoveAllNodes
-;_IrrSetNodeParent
-;_IrrGetNodeID
 ;_IrrSetNodeID
-;_IrrGetNodeBoundingBox
-; ===============================================================================================================================
-
-; #CURRENT# =====================================================================================================================
-;_IrrSetNodeMaterialTexture
-;_IrrSetNodeMaterialFlag
-;_IrrSetNodePosition
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; ===============================================================================================================================
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetNodeName
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetNodeName($h_Node)
@@ -77,7 +77,7 @@ Func _IrrGetNodeName($h_Node)
 EndFunc   ;==>_IrrGetNodeName
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeName
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetNodeName($h_Node, $s_Name)
@@ -104,7 +104,7 @@ Func _IrrSetNodeName($h_Node, $s_Name)
 EndFunc   ;==>_IrrSetNodeName
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetMaterialCount
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetMaterialCount($h_Node)
@@ -131,7 +131,7 @@ Func _IrrGetMaterialCount($h_Node)
 EndFunc   ;==>_IrrGetMaterialCount
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetMaterial
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetMaterial($h_Node, $i_Material)
@@ -173,7 +173,7 @@ EndFunc   ;==>_IrrGetMaterial
 ;                  Some nodes can have several textures applied to them to create special material effects.
 ; Related .......: _IrrSetNodeMaterialFlag, _IrrSetNodeMaterialType
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetNodeMaterialTexture($h_Node, $h_Texture, $i_Index)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeMaterialTexture", "UINT_PTR", $h_Node, "UINT_PTR", $h_Texture, "int", $i_Index)
@@ -212,7 +212,7 @@ EndFunc   ;==>_IrrSetNodeMaterialTexture
 ; Remarks .......: None.
 ; Related .......: _IrrSetNodeMaterialTexture, _IrrSetNodeMaterialType
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetNodeMaterialFlag($h_Node, $i_Type, $i_Flag)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeMaterialFlag", "UINT_PTR", $h_Node, "int", $i_Type, "uint", $i_Flag)
@@ -224,7 +224,7 @@ Func _IrrSetNodeMaterialFlag($h_Node, $i_Type, $i_Flag)
 EndFunc   ;==>_IrrSetNodeMaterialFlag
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeMaterialType
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetNodeMaterialType($h_Node, $i_Type)
@@ -266,7 +266,7 @@ EndFunc   ;==>_IrrSetNodeMaterialType
 ; Remarks .......: None
 ; Related .......: None
 ; Link ..........:
-; Example .......: None
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetNodePosition($h_Node, $f_X, $f_Y, $f_Z)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodePosition", "UINT_PTR", $h_Node, "float", $f_X, "float", $f_Y, "float", $f_Z)
@@ -279,7 +279,7 @@ EndFunc   ;==>_IrrSetNodePosition
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeRotation
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetNodeRotation($h_Node, $f_X, $f_Y, $f_Z)
@@ -306,7 +306,7 @@ Func _IrrSetNodeRotation($h_Node, $f_X, $f_Y, $f_Z)
 EndFunc   ;==>_IrrSetNodeRotation
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeScale
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetNodeScale($h_Node, $f_X, $f_Y, $f_Z)
@@ -334,7 +334,7 @@ EndFunc   ;==>_IrrSetNodeScale
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrDebugDataVisible
 ; Description ...: [todo]
 ; Syntax.........: _IrrDebugDataVisible($h_Node, $i_Visible)
@@ -361,7 +361,7 @@ Func _IrrDebugDataVisible($h_Node, $i_Visible)
 EndFunc   ;==>_IrrDebugDataVisible
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetNodePosition
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetNodePosition($h_Node, ByRef $a_Vector3df)
@@ -425,7 +425,7 @@ EndFunc   ;==>_IrrGetNodeAbsolutePosition
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetNodeRotation
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetNodeRotation($h_Node, ByRef $a_Vector3df)
@@ -456,7 +456,7 @@ Func _IrrGetNodeRotation($h_Node, ByRef $a_Vector3df)
 EndFunc   ;==>_IrrGetNodeRotation
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetJointNode
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetJointNode($h_Node, $s_Joint)
@@ -483,7 +483,7 @@ Func _IrrGetJointNode($h_Node, $s_Joint)
 EndFunc   ;==>_IrrGetJointNode
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetJointMode
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetJointMode($h_Node, $i_Mode)
@@ -510,7 +510,7 @@ Func _IrrSetJointMode($h_Node, $i_Mode)
 EndFunc   ;==>_IrrSetJointMode
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddChildToParent
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddChildToParent($h_ChildNode, $h_ParentNode)
@@ -538,7 +538,7 @@ EndFunc   ;==>_IrrAddChildToParent
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetNodeFirstChild
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetNodeFirstChild($h_Node, ByRef $h_Position)
@@ -568,7 +568,7 @@ EndFunc   ;==>_IrrGetNodeFirstChild
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetNodeNextChild
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetNodeNextChild($h_Node, ByRef $h_Position)
@@ -598,7 +598,7 @@ EndFunc   ;==>_IrrGetNodeNextChild
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrIsNodeLastChild
 ; Description ...: [todo]
 ; Syntax.........: _IrrIsNodeLastChild($h_Node, ByRef $h_Position)
@@ -628,7 +628,7 @@ EndFunc   ;==>_IrrIsNodeLastChild
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddNodeShadow
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddNodeShadow($h_Node, $h_mesh = 0)
@@ -682,22 +682,19 @@ Func _IrrSetNodeVisibility($h_Node, $i_Visible)
 EndFunc   ;==>_IrrSetNodeVisibility
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrRemoveNode
-; Description ...: [todo]
+; Description ...: Removes a node from the scene deleting it.
 ; Syntax.........: _IrrRemoveNode($h_Node)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Node - Handle of a scene node
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: None
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrRemoveNode($h_Node)
 	DllCall($_irrDll, "none:cdecl", "IrrRemoveNode", "ptr", $h_Node)
@@ -709,7 +706,7 @@ Func _IrrRemoveNode($h_Node)
 EndFunc   ;==>_IrrRemoveNode
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrRemoveAllNodes
 ; Description ...: [todo]
 ; Syntax.........: _IrrRemoveAllNodes()
@@ -789,7 +786,7 @@ EndFunc   ;==>_IrrGetNodeID
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeID
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetNodeID($h_Node, $i_ID)
@@ -851,11 +848,3 @@ Func _IrrGetNodeBoundingBox($h_Node, ByRef $a_VectorA3df, ByRef $a_VectorB3df)
 		Return True
 	EndIf
 EndFunc   ;==>_IrrGetNodeBoundingBox
-
-
-
-
-
-
-
-

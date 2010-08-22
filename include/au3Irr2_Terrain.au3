@@ -3,29 +3,20 @@
 #include "au3Irr2_constants.au3"
 
 ; #INDEX# =======================================================================================================================
-; Title .........: [todo]
-; AutoIt Version : [todo]
+; Title .........: Terrain
+; AutoIt Version : v3.3.6.1
 ; Language ......: English
-; Description ...: [todo]
-;                  [todo]
-;                  [todo]
-; Author(s) .....: [todo]
-; Dll(s) ........: [todo]
+; Description ...: Calls to create and alter the properties of terrain meshes,
+;                  special nodes that are used to create large expansive landscapes.
+; Author(s) .....: jRowe, linus.
+;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
-;_IrrAddTerrain
-;_IrrAddTerrainTile
-;_IrrAddSphericalTerrain
-;_IrrGetTerrainHeight
-;_IrrScaleTexture
-;_IrrGetTerrainTileHeight
-;_IrrScaleTileTexture
 ;_IrrAttachTile
 ;_IrrSetTileStructure
-;_IrrSetTileColor
-;_IrrScaleSphericalTexture
 ;_IrrSetSphericalTerrainTexture
 ;_IrrLoadSphericalTerrainVertexColor
 ;_IrrGetSphericalTerrainSurfacePosition
@@ -34,6 +25,15 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
+;_IrrAddTerrain
+;_IrrAddTerrainTile
+;_IrrAddSphericalTerrain
+;_IrrGetTerrainHeight
+;_IrrScaleTexture
+;_IrrGetTerrainTileHeight
+;_IrrScaleTileTexture
+;_IrrSetTileColor
+;_IrrScaleSphericalTexture
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -41,7 +41,7 @@
 
 ;Terrain functions
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddTerrain
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddTerrain($s_Path, $f_PosX = 0.0, $f_PosY = 0.0, $f_PosZ = 0.0, $f_RotX = 0.0, $f_RotY = 0.0, $f_RotZ = 0.0, $f_ScaleX = 1.0, $f_ScaleY = 1.0, $f_ScaleZ = 1.0, $i_VertexAlpha = 255, $i_VertexRed = 255, $i_VertexGreen = 255, $i_VertexBlue = 255, $i_Smoothing = 0, $i_MaxLOD = 5, $i_PatchSize = $ETPS_17)
@@ -68,7 +68,7 @@ Func _IrrAddTerrain($s_Path, $f_PosX = 0.0, $f_PosY = 0.0, $f_PosZ = 0.0, $f_Rot
 EndFunc   ;==>_IrrAddTerrain
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddTerrainTile
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddTerrainTile($h_Image, $i_TileSize = 256, $i_DataX = 0, $i_DataY = 0, $f_PosX = 0.0, $f_PosY = 0.0, $f_PosZ = 0.0, $f_RotX = 0.0, $f_RotY = 0.0, $f_RotZ = 0.0, $f_ScaleX = 1.0, $f_ScaleY = 1.0, $f_ScaleZ = 1.0, $i_Smoothing = 1, $i_MaxLOD = 5, $i_PatchSize = $ETPS_17)
@@ -99,7 +99,7 @@ EndFunc   ;==>_IrrAddTerrainTile
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddSphericalTerrain
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddSphericalTerrain($s_TopPath, $s_FrontPath, $s_BackPath, $s_LeftPath, $RightPath, $s_BottomPath, $f_PosX = 0.0, $f_PosY = 0.0, $f_PosZ = 0.0, $f_RotX = 0.0, $f_RotY = 0.0, $f_RotZ = 0.0, $f_ScaleX = 1.0, $f_ScaleY = 1.0, $f_ScaleZ = 1.0, $i_VertexAlpha = 255, $i_VertexRed = 255, $i_VertexGreen = 255, $i_VertexBlue = 255, $i_Smoothing = 0, $i_Spherical = 0, $i_MaxLOD = 5, $i_PatchSize = $ETPS_17)
@@ -131,7 +131,7 @@ Func _IrrAddSphericalTerrain($s_TopPath, $s_FrontPath, $s_BackPath, $s_LeftPath,
 EndFunc   ;==>_IrrAddSphericalTerrain
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetTerrainHeight
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetTerrainHeight($h_Terrain, $f_X, $f_Y)
@@ -158,7 +158,7 @@ Func _IrrGetTerrainHeight($h_Terrain, $f_X, $f_Y)
 EndFunc   ;==>_IrrGetTerrainHeight
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrScaleTexture
 ; Description ...: [todo]
 ; Syntax.........: _IrrScaleTexture($h_Terrain, $f_X, $f_Y)
@@ -185,7 +185,7 @@ Func _IrrScaleTexture($h_Terrain, $f_X, $f_Y)
 EndFunc   ;==>_IrrScaleTexture
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetTerrainTileHeight
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetTerrainTileHeight($h_Terrain, $f_X, $f_Y)
@@ -212,7 +212,7 @@ Func _IrrGetTerrainTileHeight($h_Terrain, $f_X, $f_Y)
 EndFunc   ;==>_IrrGetTerrainTileHeight
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrScaleTileTexture
 ; Description ...: [todo]
 ; Syntax.........: _IrrScaleTileTexture($h_Terrain, $f_X, $f_Y)
@@ -294,7 +294,7 @@ EndFunc   ;==>_IrrSetTileStructure
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetTileColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetTileColor($h_Terrain, $h_Image, $i_X=0, $i_Y=0)
@@ -321,7 +321,7 @@ Func _IrrSetTileColor($h_Terrain, $h_Image, $i_X=0, $i_Y=0)
 EndFunc   ;==>_IrrSetTileColor
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrScaleSphericalTexture
 ; Description ...: [todo]
 ; Syntax.........: _IrrScaleSphericalTexture($h_Terrain, $f_X, $f_Y)
@@ -481,10 +481,3 @@ Func _IrrGetSphericalTerrainLogicalSurfacePosition($h_Terrain, $i_Face, $f_Logic
 	DllCall($_irrDll, "none:cdecl", "IrrGetSphericalTerrainLogicalSurfacePosition", "ptr", $h_Terrain, "int", $i_Face, "float", $f_LogicalX, "float", $f_LogicalY, "float", $f_LogicalZ, "float*", DllStructGetPtr($X), "float*", DllStructGetPtr($Y), "float*", DllStructGetPtr($Z))
 	Local $result[3] = [DllStructGetData($X, 1), DllStructGetData($Y, 1), DllStructGetData($Z, 1)]
 EndFunc   ;==>_IrrGetSphericalTerrainLogicalSurfacePosition
-
-
-
-
-
-
-

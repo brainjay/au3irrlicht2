@@ -15,13 +15,7 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
-;_IrrSetViewPort
 ;_IrrBeginSceneAdvanced
-;_IrrDrawSceneToTexture
-;_IrrSetRenderTarget
-;_IrrTransparentZWrite
-;_IrrGetFPS
-;_IrrGetPrimitivesDrawn
 ;_IrrIsFullscreen
 ;_IrrIsWindowActive
 ;_IrrIsWindowFocused
@@ -31,8 +25,6 @@
 ;_IrrMinimizeWindow
 ;_IrrRestoreWindow
 ;_IrrSetResizableWindow
-;_IrrMakeARGB
-;_IrrQueryFeature
 ;_IrrDisableFeature
 ;_IrrGetTime
 ;_IrrSetTime
@@ -42,12 +34,20 @@
 ;_IrrStart
 ;_IrrStartAdvanced
 ;_IrrRunning
+;_IrrSetViewPort
 ;_IrrBeginScene
 ;_IrrDrawScene
+;_IrrDrawSceneToTexture
+;_IrrSetRenderTarget
 ;_IrrDrawGUI
 ;_IrrEndScene
 ;_IrrStop
+;_IrrTransparentZWrite
+;_IrrGetFPS
+;_IrrGetPrimitivesDrawn
 ;_IrrSetWindowCaption
+;_IrrMakeARGB
+;_IrrQueryFeature
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -221,7 +221,7 @@ Func _IrrRunning()
 EndFunc   ;==>_IrrRunning
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetViewPort
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetViewPort($i_TopX, $i_TopY, $i_BottomX, $i_BottomY)
@@ -329,7 +329,7 @@ Func _IrrDrawScene()
 EndFunc   ;==>_IrrDrawScene
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrDrawSceneToTexture
 ; Description ...: [todo]
 ; Syntax.........: _IrrDrawSceneToTexture($h_RenderTargetTexture)
@@ -358,7 +358,7 @@ EndFunc   ;==>_IrrDrawSceneToTexture
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetRenderTarget
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetRenderTarget($h_Texture, $i_SceneBGColor = 0, $i_ClearBackBuffer = 1, $i_ClearZBuffer = 1)
@@ -462,7 +462,7 @@ Func _IrrStop()
 EndFunc   ;==>_IrrStop
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrTransparentZWrite
 ; Description ...: [todo]
 ; Syntax.........: _IrrTransparentZWrite()
@@ -489,7 +489,7 @@ Func _IrrTransparentZWrite()
 EndFunc   ;==>_IrrTransparentZWrite
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetFPS
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetFPS()
@@ -516,7 +516,7 @@ Func _IrrGetFPS()
 EndFunc   ;==>_IrrGetFPS
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetPrimitivesDrawn
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetPrimitivesDrawn()
@@ -823,7 +823,7 @@ EndFunc   ;==>_IrrSetResizableWindow
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMakeARGB
 ; Description ...: [todo]
 ; Syntax.........: _IrrMakeARGB($i_Alpha, $i_Red, $i_Green, $i_Blue)
@@ -846,7 +846,7 @@ Func _IrrMakeARGB($i_Alpha, $i_Red, $i_Green, $i_Blue)
 EndFunc   ;==>_IrrMakeARGB
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrQueryFeature
 ; Description ...: [todo]
 ; Syntax.........: _IrrQueryFeature($i_Feature)
@@ -948,13 +948,3 @@ Func _IrrSetTime($i_Time)
 		return True
 	EndIf
 EndFunc   ;==>_IrrSetTime
-
-
-
-
-
-
-
-
-
-

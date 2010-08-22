@@ -1174,11 +1174,3 @@ Func xxx__CreateParticleEmitter($f_MinBoxX, $f_MinBoxY, $f_MinBoxZ, $f_MaxBoxX, 
 	DllStructSetData($EmitterStruct, 24, $i_MaxAngle)
 	Return $EmitterStruct
 EndFunc   ;==>___CreateParticleEmitter
-
-
-
-
-
-
-
-

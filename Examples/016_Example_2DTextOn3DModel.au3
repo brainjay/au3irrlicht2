@@ -90,8 +90,6 @@ WHILE _IrrRunning()
     ; using the 3D coordinate get the X and Y position of this coordinate ; it
     ; appears on the screen
     _IrrGetScreenCoordinatesFrom3DPosition( $x, $y, $vect )
-	ConsoleWrite('@@ Debug(' & @ScriptLineNumber & ') : $x = ' & $x & @crlf & '>Error code: ' & @error & @crlf) ;### Debug Console
-	ConsoleWrite('@@ Debug(' & @ScriptLineNumber & ') : $y = ' & $y & @crlf & '>Error code: ' & @error & @crlf) ;### Debug Console
 
     ; draw the name of the model over the head of the model
     _Irr2DFontDraw ( $BitmapFont, "ZUMLIN", $x-15, $y-8, $x+35, $y )
