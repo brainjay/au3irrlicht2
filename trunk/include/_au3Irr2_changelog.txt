@@ -27,6 +27,8 @@ Work in progress!
 + Added first version, as reference of all working + proven functions. Current status:
   Topics completed including example code along examples 1 to 6.
   Naked reference w/o detailed informations for other examples.
++ Changed: Moved original freeBasic Wrapper docs from \FB_documentation to 
+  \internal_tools\buildHelp\html_static. It's now included into help file.
 
 
 > Internal tools:

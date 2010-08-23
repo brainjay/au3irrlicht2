@@ -7,6 +7,7 @@
 
 ; Modificated for the au3Irrlicht2 UDF from linus
 ; 10-08-11
+; 10-08-23 - added original freeBasic Wrapper documentation into toc
 ;
 ; Script Function:
 ; Store this script in the Helpfile directory where the project file is stored.
@@ -174,6 +175,27 @@ Func Main()
    FileWriteLine($FO_TOC_HND, '<param name="Name" value="Credits">')
    FileWriteLine($FO_TOC_HND, '<param name="Local" value="html_static\credits.htm">')
    FileWriteLine($FO_TOC_HND, '</OBJECT>')
+
+   ; add the original freeBasic Wrapper documentation:
+   FileWriteLine($FO_TOC_HND, '<LI> <OBJECT type="text/sitemap">')
+   FileWriteLine($FO_TOC_HND, '<param name="Name" value="freeBasic Wrapper docs">')
+   FileWriteLine($FO_TOC_HND, '<param name="Local" value="html_static\FB_Documentation\The Irrlicht Wrapper Introduction.htm">')
+   FileWriteLine($FO_TOC_HND, '</OBJECT>')
+   FileWriteLine($FO_TOC_HND, '<UL>')
+   FileWriteLine($FO_TOC_HND, '<LI> <OBJECT type="text/sitemap">')
+   FileWriteLine($FO_TOC_HND, '<param name="Name" value="Reference">')
+   FileWriteLine($FO_TOC_HND, '<param name="Local" value="html_static\FB_Documentation\The Irrlicht Wrapper Reference.htm">')
+   FileWriteLine($FO_TOC_HND, '</OBJECT>')
+   FileWriteLine($FO_TOC_HND, '<LI> <OBJECT type="text/sitemap">')
+   FileWriteLine($FO_TOC_HND, '<param name="Name" value="Release notes">')
+   FileWriteLine($FO_TOC_HND, '<param name="Local" value="html_static\FB_Documentation\The Irrlicht Wrapper Release Notes.htm">')
+   FileWriteLine($FO_TOC_HND, '</OBJECT>')
+   FileWriteLine($FO_TOC_HND, '<LI> <OBJECT type="text/sitemap">')
+   FileWriteLine($FO_TOC_HND, '<param name="Name" value="Platform support">')
+   FileWriteLine($FO_TOC_HND, '<param name="Local" value="html_static\FB_Documentation\The Irrlicht Wrapper Platform Support.htm">')
+   FileWriteLine($FO_TOC_HND, '</OBJECT>')
+   FileWriteLine($FO_TOC_HND, '</UL>')
+
 
    ;
    ; end the TOC UL for UDF's
