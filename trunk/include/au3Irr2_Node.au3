@@ -9,7 +9,7 @@
 ; Description ...: Calls for manipulating, texturing and getting information from nodes in the scene.
 ; Author(s) .....: jRowe, linus.
 ;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
-; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
@@ -655,7 +655,7 @@ Func _IrrAddNodeShadow($h_Node, $h_mesh = 0)
 EndFunc   ;==>_IrrAddNodeShadow
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeVisibility
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetNodeVisibility($h_Node, $i_Visible)
@@ -673,7 +673,7 @@ EndFunc   ;==>_IrrAddNodeShadow
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrSetNodeVisibility($h_Node, $i_Visible)
-	DllCall($_irrDll, "none:cdecl", "IrrAddNodeShadow", "ptr", $h_Node, "int", $i_Visible)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeVisibility", "ptr", $h_Node, "int", $i_Visible)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else

@@ -110,7 +110,7 @@ WHILE _IrrRunning()
     _IrrGetNodePosition( $CameraNode, $aVector3df)
     $TerrainHeight = _IrrGetTerrainHeight( $TerrainNode, $aVector3df[0], $aVector3df[2] )+50
     if $aVector3df[1] < $TerrainHeight THEN
-        _IrrSetNodePosition( $CameraNode, $aVector3df[0], $TerrainHeight, $aVector3df[3] )
+        _IrrSetNodePosition( $CameraNode, $aVector3df[0], $TerrainHeight, $aVector3df[2] )
     ENDIF
 
     ; draw the scene

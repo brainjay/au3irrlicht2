@@ -10,7 +10,7 @@
 ;                  it also includes calls that get system metrics and some other miscellaneous tools.
 ; Author(s) .....: jRowe, linus.
 ;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
-; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
@@ -93,7 +93,7 @@
 ;                  - <b>.\..</b>  (allows au3Irr2 examples to be started from their \include subdir).
 ;                  Nevertheless, ensuring DLL's in a permanent dir reachable via path may be the better way, as the temporary update of environment can be time-consuming.
 ;+
-;                  <b>Other needed .dll's</b> (Irrlicht.dll + maybe msvcp71.dll) <b>are NOT checked</b> but simply expected to be at last in same dir as the IrrlichtWrapper.dll.
+;                  <b>Other needed .dll's</b> (Irrlicht.dll + maybe msvcp71.dll, msvcr71.dll) <b>are NOT checked</b> but simply expected to be at last in same dir as the IrrlichtWrapper.dll.
 ; Related .......: _IrrStartAdvanced, _IrrRunning, _IrrStop
 ; Link ..........:
 ; Example .......: Yes
@@ -167,7 +167,7 @@ EndFunc   ;==>_IrrStart
 ;                  - <b>.\..</b>  (allows au3Irr2 examples to be started from their \include subdir).
 ;                  Nevertheless, ensuring DLL's in a permanent dir reachable via path may be the better way, as the temporary update of environment can be time-consuming.
 ;+
-;                  <b>Other needed .dll's</b> (Irrlicht.dll + maybe msvcp71.dll) <b>are NOT checked</b> but simply expected to be at last in same dir as the IrrlichtWrapper.dll.
+;                  <b>Other needed .dll's</b> (Irrlicht.dll + maybe msvcp71.dll, msvcr71.dll) <b>are NOT checked</b> but simply expected to be at last in same dir as the IrrlichtWrapper.dll.
 ; Related .......: _IrrStart, _IrrRunning, _IrrStop
 ; Link ..........:
 ; Example .......: Yes
