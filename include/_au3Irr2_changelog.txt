@@ -18,27 +18,31 @@ Work in progress!
 
 > UDF:
 
-+ changed structure: Splitted UDF per category into \include. Main UDF (and the only one which is
++ Changed: Splitted UDF per category into \include. Main UDF (and the only one which is
   needed to be included) is still au3Irrlicht2.au3
-
++ Fixed: _IrrSetNodeVisibility
 
 > Help file:
 
-+ Added first version, as reference of all working + proven functions. Current status:
++ Added: First version as reference of all working + proven functions. Current status:
   Topics completed including example code along examples 1 to 6.
   Naked reference w/o detailed informations for other examples.
 + Changed: Moved original freeBasic Wrapper docs from \FB_documentation to 
   \internal_tools\buildHelp\html_static. It's now included into help file.
 
+> Examples:
+
++ Fixes: 049 (Loaded_Scene_Collision), 051 (Clouds)
 
 > Internal tools:
 
 + Added: helper scripts and files for building a help file
-         (see \internal tools\help_building_readme.txt) 
+  (see [\internal tools\help_building_readme.txt]) 
 
 
-> Media:
-+ Fixed 'fonthaettenschweiler.bmp' (bogQ)
+> Other:
++ Fixed: \media\fonthaettenschweiler.bmp ([bogQ])
++ Added: msvcr71.dll - possibly missing on some machines ([jl])
 
 === 2.02 (10-07-29) ============================================================
 First release in one package (UDF + all needed .dll's, examples, ExampleLauncher)

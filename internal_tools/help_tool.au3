@@ -12,6 +12,7 @@
  2010-08-11: Deletes now also *.bck in \include when cleaning
  2010-08-19: Added buildHistoryHTML for automatic update of au3irr2's history info
  2010-08-21: Added updateIntroductionHTML and some fixes on buildHistoryHTML.
+ 2010-08-24: Fixed list building in buildHistoryHTML
 
  Script Function:
 	Helper tool for documentation of the au3Irrlicht2 UDF.
@@ -32,7 +33,7 @@
 
 Opt("MustDeclareVars", True)
 
-const $SCRIPTTITLE = "Help tool V0.3 - 2010 by linus"
+const $SCRIPTTITLE = "Help tool V0.31 - 2010 by linus"
 global $sLastMsg = ""
 
 
@@ -399,7 +400,7 @@ func buildHistoryHTML($sPathSrc, $sPathOut)
 	FileWriteLine($hOut, '<p>This file was created automatically as a subset. See <b>\include\_au3Irr2_changelog.txt</b> for complete list of changes.</p>')
 
 ; parse the changelog .txt file:
-	local $sIn, $sInStripped, $sListPoint
+	local $sIn, $sInStripped, $sListPoint, $sContent = ''
 	local $bConsiderLastLine = False
 
 	while True
@@ -419,7 +420,7 @@ func buildHistoryHTML($sPathSrc, $sPathOut)
 		; check for Header2 (release info)
 		if StringLeft($sInStripped, 1) = '=' Then
 			$sInStripped = StringStripWS( StringReplace($sInStripped, '=', ""), 1 + 2 )
-			FileWriteLine($hOut, '<p>&nbsp;</p><h1>Release ' & $sInStripped & '</h1>')
+			$sContent &= '<p>&nbsp;</p><h1>Release ' & $sInStripped & '</h1>' & @LF
 			if $currentVersionText = "" Then $currentVersionText = $sInStripped
 
 		; check for list points
@@ -438,20 +439,23 @@ func buildHistoryHTML($sPathSrc, $sPathOut)
 				$sListPoint = '<ul><li>' & StringMid($sListPoint, 2) & '</li></ul>'
 				$sInStripped = StringReplace($sInStripped, '[', '<b>')
 				$sInStripped = StringReplace($sInStripped, ']', '</b>')
-				FileWriteLine($hOut, $sListPoint)
+				$sContent &= $sListPoint & @LF
 			EndIf
 
 		; check for header3 (e.g. release categories):
 		Elseif StringLeft($sIn, 1) = '>' then
-			FileWriteLine($hOut, '<h3>' & StringMid($sInStripped, 2) & '</h3>')
+			$sContent &= '<h3>' & StringMid($sInStripped, 2) & '</h3>' & @LF
 
 		; all what now may remain into an paragraph:
 		Else
-			FileWriteLine($hOut, '<p>' & $sInStripped & '</p>')
+			$sContent &= '<p>' & $sInStripped & '</p>' & @LF
 		EndIf
 
 	WEnd
 
+	; merge following list points before writing:
+	$sContent = StringReplace($sContent, '</ul>' & @LF & '<ul>', @LF)
+	FileWriteLine($hOut, $sContent)
 
 ; finish the .html file:
 	FileWriteLine($hOut, '</body></html>')

@@ -46,7 +46,8 @@ _IrrStart( $IRR_EDT_OPENGL, 800,600, 32, $IRR_WINDOWED, _
 _IrrSetWindowCaption( "Example 49: Collision in a Loaded Scene" )
 
 ; load an example scene created in irrEdit
-_IrrLoadScene( "../media/CollisionScene.irr" )
+_IrrChangeWorkingDirectory("../media")
+_IrrLoadScene( "CollisionScene.irr" )
 
 ; we add a first person perspective camera to the scene so you can look about
 ; and move it into the center of the map
