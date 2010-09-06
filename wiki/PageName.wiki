@@ -1,7 +1,8 @@
 #summary au3Irr2 Introduction
+#sidebar TableOfContents
 
 ----
-= Introduction =
+= Introduction = 
 
 au3Irr2 brings together the ease of <a class="ext" href="http://www.autoitscript.com/autoit3/index.shtml" target="_blank">AutoIt</a> with the power of the 3D engine *Irrlicht*. It covers a whole bunch of features to create serious 3D applications as well as nice games, useable both by beginners and more experienced to learn, prototye, and realise ideas without a big overhead.
 
