@@ -1,7 +1,8 @@
-#summary au3Irrlicht2 Changelog
+#summary au3Irrlicht2 ChangeLog
+#labels Featured
 
 
-= au3Irrlicht2 Changelog =
+= au3Irrlicht2 ChangeLog =
 
 ----
 
