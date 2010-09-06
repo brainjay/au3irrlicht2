@@ -1,30 +1,83 @@
+; userCallTips for au3Irr2 release 2.03 (2010-09-05)
+; copy or (replace) content of this file to your usercalltips of scite via Tools > UserCallTipEntries.
+; === Start of au3Irrlicht2 calltip definitions ======================================================
 
-
-; userCallTips for jRowe's modified au3Irrlicht2
-; V0.3 10-07-21 by linus
-
-; ENUMS + CONSTANTS ====================================================================================
-
-
-$EVT_KEY_IKEY
-$EVT_KEY_IDIRECTION
-$EVT_KEY_IFLAGS
-$EVT_MOUSE_IACTION
-$EVT_MOUSE_FDELTA
-$EVT_MOUSE_IX
-$EVT_MOUSE_IY
-$EVT_GUI_IID
-$EVT_GUI_IEVENT
-$EVT_GUI_IX
-$EVT_GUI_IY
-$IRR_EMIE_LMOUSE_PRESSED_DOWN
-$IRR_EMIE_RMOUSE_PRESSED_DOWN
-$IRR_EMIE_MMOUSE_PRESSED_DOWN
-$IRR_EMIE_LMOUSE_LEFT_UP
-$IRR_EMIE_RMOUSE_LEFT_UP
-$IRR_EMIE_MMOUSE_LEFT_UP
-$IRR_EMIE_MOUSE_MOVED
-$IRR_EMIE_MOUSE_WHEEL
+_IrrSetTextureCreationFlag($i_Flag,$i_Value) 
+_IrrGetTexture($s_ImageFile) Loads 2D texture from bitmap file into video memory that can then be used to texture a model or to draw onto the screen.
+_IrrGetImage($s_ImageFile) Loads 2D texture from bitmap file into main memory for CPU based operations.
+_IrrCreateTexture($s_TextureName,$i_XSize,$i_YSize,$i_ColorFormat) 
+_IrrCreateImage($i_XSize,$i_YSize,$i_ColorFormat) 
+_IrrRemoveTexture($h_Texture) Removes the texture from memory freeing up the space it occupied.
+_IrrRemoveImage($h_Image) Removes the image from memory freeing up the space it occupied.
+_IrrLockTexture($h_Texture) 
+_IrrLockOpenGLTexture($h_Texture) 
+_IrrUnlockTexture($h_Texture) 
+_IrrLockImage($h_Image) 
+_IrrUnlockImage($h_Image) 
+_IrrCreateRenderTargetTexture($i_XSize,$i_YSize) 
+_IrrMakeNormalMapTexture($h_Texture,$f_Amplitude) 
+_IrrColorKeyTexture($h_Texture,$i_Red,$i_Green,$i_Blue) Copies any parts of the texture that are the same as the specified color into the textures alpha channel.
+_IrrDraw2DImage($h_Image,$i_XPos,$i_YPos) Draws the texture to the display at the supplied coordinates.
+_IrrDraw2DImageElement($h_Texture,$i_XPos,$i_YPos,$i_SourceTopX,$i_SourceTopY,$i_SourceBottomX,$i_SourceBottomY,$i_UseAlpha) Draws given rectangular section from a texture to the display at the supplied coordinates
+_IrrGetFont($s_Font) Loads a bitmap containing a bitmap font.
+_Irr2DFontDraw($h_Font,$s_Text,$i_XPos,$i_YPos,$i_BottomX,$i_BottomY) Draws the text into the supplied rectangular area using the supplied font object.
+_IrrSaveScreenShot($s_Filename) 
+_IrrGetScreenShot($i_XPos,$i_YPos,$i_Width,$i_Height) 
+_IrrSetNodeAnimationRange($h_Node,$i_Start,$i_End) 
+_IrrPlayNodeMD2Animation($h_Node,$i_Animation) Selects the animation sequence of MD2 to be played.
+_IrrSetNodeAnimationSpeed($h_Node,$f_Speed) 
+_IrrGetNodeAnimationFrame($h_Node) 
+_IrrSetNodeAnimationFrame($h_Node,$f_Frame) 
+_IrrSetTransitionTime($h_Node,$f_Speed) 
+_IrrAnimateJoints($h_Node) 
+_IrrAddCollisionAnimator($h_IrrSelector,$h_Node,$f_RadiusX,$f_RadiusY,$f_RadiusZ,$f_GravityX,$f_GravityY,$f_GravityZ,$f_OffsetX,$f_OffsetY,$f_OffsetZ) 
+_IrrAddDeleteAnimator($h_Node,$i_Time) 
+_IrrAddFlyCircleAnimator($h_Node,$f_CenterX,$f_CenterY,$f_CenterZ,$f_Radius,$f_Speed) 
+_IrrAddFlyStraightAnimator($h_Node,$f_StartX,$f_StartY,$f_StartZ,$f_EndX,$f_EndY,$f_EndZ,$i_Time,$i_DoLoop) 
+_IrrAddRotationAnimator($h_Node,$f_RotX,$f_RotY,$f_RotZ) 
+_IrrAddSplineAnimator($h_Node,$i_ArraySize,$a_ArrayFloatsX,$a_ArrayFloatsY,$a_ArrayFloatsZ,$i_Start,$f_Speed,$f_Tightness) 
+_IrrAddFadeAnimator($h_Node,$i_DeleteAfterMiliseconds,$f_Scale=1.0) 
+_IrrRemoveAnimator($h_Node,$h_Animator) 
+_IrrAddFPSCamera($h_ParentNode=0,$f_RotateSpeed=100.0,$f_MoveSpeed=0.5,$i_ID=-1,$h_KeyMapArray=0,$i_KeyMapSize=0,$i_NoVerticalMovement=0,$f_JumpSpeed=0.0) Adds a 'first person shooter' style camera into the scene.
+_IrrAddCamera($f_CamX,$f_CamY,$f_CamZ,$f_TargetX,$f_TargetY,$f_TargetZ) Adds a camera into the scene.
+_IrrAddMayaCamera($h_Node,$f_Rotate,$f_Zoom,$f_Move) 
+_IrrSetCameraTarget($h_Camera,$f_CamX,$f_CamY,$f_CamZ) 
+_IrrGetCameraTarget($h_Camera,ByRef $a_Vector3df) 
+_IrrGetCameraUpDirection($h_Camera,ByRef $a_Vector3df) 
+_IrrSetCameraUpDirection($h_Camera,$f_CamX,$f_CamY,$f_CamZ) 
+_IrrGetCameraOrientation($h_Camera,ByRef $a_Vector1,ByRef $a_Vector2,ByRef $a_Vector3) 
+_IrrRevolveCamera($h_Camera,$f_Yaw,$f_Pitch,$f_Roll,$f_Drive,$f_Strafe,$f_Elevate) 
+_IrrSetCameraUpAtRightAngle($h_Camera) 
+_IrrSetCameraOrthagonal($h_Camera,$f_DistanceX,$f_DistanceY,$f_DistanceZ) 
+_IrrSetCameraClipDistance($h_Camera,$f_Distance,$f_NearDistance=1.0) 
+_IrrSetActiveCamera($h_Camera) 
+_IrrSetCameraFOV($h_Camera,$f_FOV) 
+_IrrSetCameraAspectRatio($h_Camera,$f_AspectRatio) 
+__CreatePtrKeyMapArray(ByRef $keyStruct,$i_kForward=$KEY_KEY_W,$i_kBackward=$KEY_KEY_S,$i_kLeft=$KEY_KEY_A,$i_kRight=$KEY_KEY_D,$i_kJump=$KEY_SPACE) Helper function: returns pointer to a keymap for _IrrAddFPSCamera.
+_IrrGetCollisionGroupFromMesh($h_Mesh,$h_Node,$i_Frame=0) 
+_IrrGetCollisionGroupFromComplexMesh($h_Mesh,$h_Node,$i_Frame=0) 
+_IrrGetCollisionGroupFromBox($h_Node) 
+_IrrGetCollisionGroupFromTerrain($h_Node,$i_Lod) 
+_IrrRemoveCollisionGroup($h_CollisionGroup,$h_Node) 
+_IrrCreateCombinedCollisionGroup() 
+_IrrAddCollisionGroupToCombination($h_CombinedCollisionGroup,$h_CollisionGroup) 
+_IrrRemoveAllCollisionGroupsFromCombination($h_CombinedCollisionGroup) 
+_IrrRemoveCollisionGroupFromCombination($h_CombinedCollisionGroup,$h_CollisionGroup) 
+_IrrGetCollisionPoint($a_StartVector,$a_EndVector,$h_CollisionGroup,byRef $a_CollisionVector) 
+_IrrGetRayFromScreenCoordinates($i_X,$i_Y,$h_Camera) 
+_IrrGetCollisionNodeFromCamera($h_Camera) 
+_IrrGetCollisionNodeFromRay(byRef $h_StartVector,byRef $h_EndVector) 
+_IrrGetCollisionNodeFromScreenCoordinates($i_X,$i_Y) 
+_IrrGetScreenCoordinatesFrom3DPosition(ByRef $i_ScreenX,ByRef $i_ScreenY,$a_3DPositionVector) 
+_IrrGet3DPositionFromScreenCoordinates($i_X,$i_Y,ByRef $a_Vector3df,$h_Camera,$f_NormalX=0.0,$f_NormalY=0.0,$f_NormalZ=1.0,$f_DistanceFromOrigin=0.0) 
+_IrrGet2DPositionFromScreenCoordinates($i_X,$i_Y,ByRef $f_X,ByRef $f_Y,$h_Camera) 
+_IrrGetChildCollisionNodeFromRay($h_Node,$i_Mask,$i_Recurse,$a_StartVector,$a_EndVector) 
+_IrrGetChildCollisionNodeFromPoint($h_Node,$i_Mask,$i_Recurse,$a_PointVector) 
+_IrrGetNodeAndCollisionPointFromRay($a_StartVector,$a_EndVector,ByRef $h_Node,ByRef $f_PosX,ByRef $f_PosY,ByRef $f_PosZ,ByRef $f_NormalX,ByRef $f_NormalY,ByRef $f_NormalZ,$i_ID=0,$h_RootNode=$IRR_NO_OBJECT) 
+_IrrGetDistanceBetweenNodes($h_NodeA,$h_NodeB) 
+_IrrAreNodesIntersecting($h_NodeA,$h_NodeB) 
+_IrrIsPointInsideNode($h_NodeA,$f_X,$f_Y,$f_Z) 
+_IrrGetCollisionResultPosition($h_Selector,ByRef $a_EllipsoidPosition,ByRef $a_EllipsoidRadius,ByRef $a_Velocity,ByRef $a_Gravity,$f_SlidingSpeed,ByRef $a_OutPosition,ByRef $a_OutHitPosition,ByRef $i_OutFalling) 
 $IRR_EDT_NULL
 $IRR_EDT_SOFTWARE
 $IRR_EDT_SOFTWARE2
@@ -70,7 +123,8 @@ $IRR_EMAT_PAIN_B
 $IRR_EMAT_PAIN_C
 $IRR_EMAT_JUMP
 $IRR_EMAT_FLIP
-$IRR_EMAT_SALUTE ,$IRR_EMAT_FALLBACK
+$IRR_EMAT_SALUTE
+$IRR_EMAT_FALLBACK
 $IRR_EMAT_WAVE
 $IRR_EMAT_POINT
 $IRR_EMAT_CROUCH_STAND
@@ -117,6 +171,72 @@ $IRR_EMT_ONE_TEXTURE_BLEND
 $IRR_EMT_FOUR_DETAIL_MAP
 $IRR_EMT_TRANSPARENT_ADD_ALPHA_CHANNEL_REF
 $IRR_EMT_TRANSPARENT_ADD_ALPHA_CHANNEL
+$EGET_ELEMENT_FOCUS_LOST
+$EGET_ELEMENT_FOCUSED
+$EGET_ELEMENT_HOVERED
+$EGET_ELEMENT_LEFT
+$EGET_ELEMENT_CLOSED
+$EGET_BUTTON_CLICKED
+$EGET_SCROLL_BAR_CHANGED
+$EGET_CHECKBOX_CHANGED
+$EGET_LISTBOX_CHANGED
+$EGET_LISTBOX_SELECTED_AGAIN
+$EGET_FILE_SELECTED
+$EGET_DIRECTORY_SELECTED
+$EGET_FILE_CHOOSE_DIALOG_CANCELLED
+$EGET_MESSAGEBOX_YES
+$EGET_MESSAGEBOX_NO
+$EGET_MESSAGEBOX_OK
+$EGET_MESSAGEBOX_CANCEL
+$EGET_EDITBOX_ENTER
+$EGET_EDITBOX_CHANGED
+$EGET_EDITBOX_MARKING_CHANGED
+$EGET_TAB_CHANGED
+$EGET_MENU_ITEM_SELECTED
+$EGET_COMBO_BOX_CHANGED
+$EGET_SPINBOX_CHANGED
+$EGET_TABLE_CHANGED
+$EGET_TABLE_HEADER_CHANGED
+$EGET_TABLE_SELECTED_AGAIN
+$EGET_TREEVIEW_NODE_DESELECT
+$EGET_TREEVIEW_NODE_SELECT
+$EGET_TREEVIEW_NODE_EXPAND
+$EGET_TREEVIEW_NODE_COLLAPS
+$EGET_COUNT
+$EGDC_3D_DARK_SHADOW
+$EGDC_3D_SHADOW
+$EGDC_3D_FACE
+$EGDC_3D_HIGH_LIGHT
+$EGDC_3D_LIGHT
+$EGDC_ACTIVE_BORDER
+$EGDC_ACTIVE_CAPTION
+$EGDC_APP_WORKSPACE
+$EGDC_BUTTON_TEXT
+$EGDC_GRAY_TEXT
+$EGDC_HIGH_LIGHT
+$EGDC_HIGH_LIGHT_TEXT
+$EGDC_INACTIVE_BORDER
+$EGDC_INACTIVE_CAPTION
+$EGDC_TOOLTIP
+$EGDC_TOOLTIP_BACKGROUND
+$EGDC_SCROLLBAR
+$EGDC_WINDOW
+$EGDC_WINDOW_SYMBOL
+$EGDC_ICON
+$EGDC_ICON_HIGH_LIGHT
+$EGDC_COUNT			
+$IRR_GUI_NO_BORDER
+$IRR_GUI_BORDER
+$IRR_GUI_NO_WRAP
+$IRR_GUI_WRAP
+$IRR_GUI_HORIZONTAL
+$IRR_GUI_VERTICAL
+$IRR_GUI_MODAL
+$IRR_GUI_NOT_MODAL
+$IRR_GUI_DRAW_BACKGROUND
+$IRR_GUI_EMPTY_BACKGROUND
+$IRR_GUI_PASSWORD
+$IRR_GUI_NOT_PASSWORD
 $IRR_NO_PARENT
 $IRR_NO_OBJECT
 $IRR_ONE_SHOT
@@ -146,7 +266,7 @@ $EBF_SRC_ALPHA_SATURATE
 $ECF_A1R5G5B5
 $ECF_R5G6B5
 $ECF_R8G8B8
-$ECF_A8R8G8B8
+$ECF_A8R8G8B8		
 $ETPS_9
 $ETPS_17
 $ETPS_33
@@ -186,8 +306,20 @@ $EVDF_GEOMETRY_SHADER
 $IRR_JOINT_MODE_NONE
 $IRR_JOINT_MODE_READ
 $IRR_JOINT_MODE_CONTROL
+$TOP_EDGE
+$BOTTOM_EDGE
+$LEFT_EDGE
+$RIGHT_EDGE
 $IRR_KEY_UP
 $IRR_KEY_DOWN
+$IRR_EMIE_LMOUSE_PRESSED_DOWN
+$IRR_EMIE_RMOUSE_PRESSED_DOWN
+$IRR_EMIE_MMOUSE_PRESSED_DOWN
+$IRR_EMIE_LMOUSE_LEFT_UP
+$IRR_EMIE_RMOUSE_LEFT_UP
+$IRR_EMIE_MMOUSE_LEFT_UP
+$IRR_EMIE_MOUSE_MOVED
+$IRR_EMIE_MOUSE_WHEEL
 $KEY_LBUTTON
 $KEY_RBUTTON
 $KEY_CANCEL
@@ -348,414 +480,278 @@ $IRR_INVERSE_WORLD
 $IRR_WORLD_VIEW_PROJECTION
 $IRR_CAMERA_POSITION
 $IRR_TRANSPOSED_WORLD
-$TOP_EDGE
-$BOTTOM_EDGE
-$LEFT_EDGE
-$RIGHT_EDGE
-$EGET_ELEMENT_FOCUS_LOST
-$EGET_ELEMENT_FOCUSED
-$EGET_ELEMENT_HOVERED
-$EGET_ELEMENT_LEFT
-$EGET_ELEMENT_CLOSED
-$EGET_BUTTON_CLICKED
-$EGET_SCROLL_BAR_CHANGED
-$EGET_CHECKBOX_CHANGED
-$EGET_LISTBOX_CHANGED
-$EGET_LISTBOX_SELECTED_AGAIN
-$EGET_FILE_SELECTED
-$EGET_DIRECTORY_SELECTED
-$EGET_FILE_CHOOSE_DIALOG_CANCELLED
-$EGET_MESSAGEBOX_YES
-$EGET_MESSAGEBOX_NO
-$EGET_MESSAGEBOX_OK
-$EGET_MESSAGEBOX_CANCEL
-$EGET_EDITBOX_ENTER
-$EGET_EDITBOX_CHANGED
-$EGET_EDITBOX_MARKING_CHANGED
-$EGET_TAB_CHANGED
-$EGET_MENU_ITEM_SELECTED
-$EGET_COMBO_BOX_CHANGED
-$EGET_SPINBOX_CHANGED
-$EGET_TABLE_CHANGED
-$EGET_TABLE_HEADER_CHANGED
-$EGET_TABLE_SELECTED_AGAIN
-$EGET_TREEVIEW_NODE_DESELECT
-$EGET_TREEVIEW_NODE_SELECT
-$EGET_TREEVIEW_NODE_EXPAND
-$EGET_TREEVIEW_NODE_COLLAPS
-$EGET_COUNT
-$EGDC_3D_DARK_SHADOW
-$EGDC_3D_SHADOW
-$EGDC_3D_FACE
-$EGDC_3D_HIGH_LIGHT
-$EGDC_3D_LIGHT
-$EGDC_ACTIVE_BORDER
-$EGDC_ACTIVE_CAPTION
-$EGDC_APP_WORKSPACE
-$EGDC_BUTTON_TEXT
-$EGDC_GRAY_TEXT
-$EGDC_HIGH_LIGHT
-$EGDC_HIGH_LIGHT_TEXT
-$EGDC_INACTIVE_BORDER
-$EGDC_INACTIVE_CAPTION
-$EGDC_TOOLTIP
-$EGDC_TOOLTIP_BACKGROUND
-$EGDC_SCROLLBAR
-$EGDC_WINDOW
-$EGDC_WINDOW_SYMBOL
-$EGDC_ICON
-$EGDC_ICON_HIGH_LIGHT
-$EGDC_COUNT
-$IRR_GUI_NO_BORDER
-$IRR_GUI_BORDER
-$IRR_GUI_NO_WRAP
-$IRR_GUI_WRAP
-$IRR_GUI_HORIZONTAL
-$IRR_GUI_VERTICAL
-$IRR_GUI_MODAL
-$IRR_GUI_NOT_MODAL
-$IRR_GUI_DRAW_BACKGROUND
-$IRR_GUI_EMPTY_BACKGROUND
-$IRR_GUI_PASSWORD
-$IRR_GUI_NOT_PASSWORD
+$EDS_OFF
+$EDS_BBOX
+$EDS_NORMALS
+$EDS_SKELETON
+$EDS_MESH_WIRE_OVERLAY
+$EDS_HALF_TRANSPARENCY
+$EDS_BBOX_BUFFERS
+$EDS_FULL
+_IrrAddZipFile($s_Zipfile,$i_IgnoreCase,$i_IgnorePaths) Adds a zip archive to the filing system allowing to load files out of the zip file.
+_IrrChangeWorkingDirectory($s_WorkingDir) 
+_IrrGetWorkingDirectory() 
+$EVT_GUI_IID
+$EVT_GUI_IEVENT
+$EVT_GUI_IX
+$EVT_GUI_IY				
+__getGuiEvt($p_GUIEvent,$i_Element=$EVT_GUI_IID) Helper function: returns value of $i_Element inside a GuiEvent-structure.
+_IrrGUIClear() 
+_IrrGUIEvents($i_EventsForGUI) 
+_IrrGUIEventAvailable() 
+_IrrReadGUIEvent() 
+_IrrGUIRemove($h_Widget) 
+_IrrGUIGetText($h_Widget) 
+_IrrGUISetText($h_Widget,$s_Text) 
+_IrrGUISetFont($h_Font) 
+_IrrGUISetColor($i_Element,$i_Red,$i_Green,$i_Blue,$i_Alpha) 
+_IrrAddWindow($s_Title,$i_TopX,$i_TopY,$i_BottomX,$i_BottomY,$i_Modal,$h_Parent=0) 
+_IrrAddStaticText($s_Text,$i_TopX,$i_TopY,$i_BottomX,$i_BottomY,$i_Border,$i_WordWrap,$h_Parent=0) Creates a static text object on the Graphical User Interface.
+_IrrAddButton($i_TopX,$i_TopY,$i_BottomX,$i_BottomY,$i_ID,$s_Text="",$s_TextTip="",$h_Parent=0) 
+_IrrAddScrollBar($i_Horizontal,$i_TopX,$i_TopY,$i_BottomX,$i_BottomY,$i_ID,$i_CurrentValue,$i_MaxValue,$h_Parent=0) 
+_IrrAddListBox($i_TopX,$i_TopY,$i_BottomX,$i_BottomY,$i_ID,$i_Background,$h_Parent=0) 
+_IrrAddListBoxItem($h_ListBox,$s_Text) 
+_IrrInsertListBoxItem($h_ListBox,$s_Text,$i_Index) 
+_IrrRemoveListBoxItem($h_ListBox,$i_Index) 
+_IrrSelectListBoxItem($h_ListBox,$i_Index) 
+_IrrAddEditBox($s_Text,$i_TopX,$i_TopY,$i_BottomX,$i_BottomY,$i_ID,$i_Border,$i_Password=$IRR_GUI_NOT_PASSWORD,$h_Parent=0) 
+_IrrAddCheckBox($s_Text,$i_TopX,$i_TopY,$i_BottomX,$i_BottomY,$i_ID,$i_Checked,$h_Parent=0) 
+_IrrCheckCheckBox($h_CheckBox,$i_Checked) 
+_IrrAddImage($h_Texture,$i_X,$i_Y,$i_UseAlpha,$i_ID,$h_Parent=0) 
+_IrrAddFileOpen($s_Title,$i_ID,$i_Modal,$h_Parent=0) 
+_IrrGetLastSelectedFile() 
+$EVT_KEY_IKEY
+$EVT_KEY_IDIRECTION
+$EVT_KEY_IFLAGS			
+__getKeyEvt($p_KeyEvent,$i_Element=$EVT_KEY_IKEY) helper function: returns value of $i_Element inside a keyEvent-structure.
+$EVT_MOUSE_IACTION
+$EVT_MOUSE_FDELTA
+$EVT_MOUSE_IX
+$EVT_MOUSE_IY				
+__getMouseEvt($p_MouseEvent,$i_Element=$EVT_MOUSE_IACTION) helper function: returns value of $i_Element inside a MouseEvent-structure.
+_IrrKeyEventAvailable() 
+_IrrReadKeyEvent() 
+_IrrMouseEventAvailable() 
+_IrrReadMouseEvent() 
+_IrrSetMousePosition(ByRef $f_XPos,ByRef $f_YPos) 
+_IrrHideMouse() Hides the mouse pointer
+_IrrShowMouse() Shows the mouse pointer
+_IrrDisplayMouse($i_HideShow) Hide or show the mouse pointer while it is within the Irrlicht display.
+_IrrAddLight($h_parentNode,$f_X,$f_Y,$f_Z,$f_Red,$f_Green,$f_Blue,$f_Size) 
+_IrrSetAmbientLight($f_Red,$f_Green,$f_Blue) 
+_IrrSetLightAmbientColor($h_Light,$f_Red,$f_Green,$f_Blue) 
+_IrrSetLightAttenuation($h_Light,$f_Red,$f_Green,$f_Blue) 
+_IrrSetLightCastShadows($h_Light,$i_Shadows) 
+_IrrSetLightDiffuseColor($h_Light,$f_Red,$f_Green,$f_Blue) 
+_IrrSetLightFalloff($h_Light,$f_Falloff) 
+_IrrSetLightInnerCone($h_Light,$f_InnerCone) 
+_IrrSetLightOuterCone($h_Light,$f_OuterCone) 
+_IrrSetLightRadius($h_Light,$f_Radius) 
+_IrrSetLightSpecularColor($h_Light,$f_Red,$f_Green,$f_Blue) 
+_IrrSetLightType($h_Light,$i_Type) 
+_IrrSetNodeAmbientColor($h_Node,$i_Color) 
+_IrrSetNodeDiffuseColor($h_Node,$i_Color) 
+_IrrSetNodeSpecularColor($h_Node,$i_Color) 
+_IrrSetNodeEmissiveColor($h_Node,$i_Color) 
+_IrrSetNodeColorByVertex($h_Node,$i_ColorMaterial) 
+_IrrMaterialVertexColorAffects($h_Material,$i_AffectedProperty) 
+_IrrSetMaterialBlend($h_Material,$i_SrcBlend,$i_DstBlend) 
+_IrrMaterialSetShininess($h_Material,$f_Shininess) 
+_IrrMaterialSetSpecularColor($h_Material,$i_Alpha,$i_Red,$i_Green,$i_Blue) 
+_IrrMaterialSetDiffuseColor($h_Material,$i_Alpha,$i_Red,$i_Green,$i_Blue) 
+_IrrMaterialSetAmbientColor($h_Material,$i_Alpha,$i_Red,$i_Green,$i_Blue) 
+_IrrMaterialSetEmissiveColor($h_Material,$i_Alpha,$i_Red,$i_Green,$i_Blue) 
+_IrrMaterialSetMaterialTypeParam($h_Material,$f_Param) 
+_IrrSetMaterialLineThickness($h_Material,$f_Thickness) 
+_IrrAddHighLevelShaderMaterial($h_VertexProgram,$s_StartFunction,$i_ProgType,$s_pixelProg,$s_PixelStartFunction,$i_PixelProgTpe,$i_MaterialType) 
+_IrrAddHighLevelShaderMaterialFromFiles($s_VertexProgram,$s_StartFunction,$i_ProgType,$s_pixelProg,$s_PixelStartFunction,$i_PixelProgTpe,$i_MaterialType) 
+_IrrAddShaderMaterial($h_VertexProgram,$h_PixelProgram,$i_MaterialType) 
+_IrrAddShaderMaterialFromFiles($s_VertexProgram,$s_PixelProgram,$i_MaterialType) 
+_IrrCreateNamedVertexShaderConstant($s_VertexProgram,$s_PixelProgram,$i_MaterialType) 
+_IrrCreateNamedPixelShaderConstant($h_Shader,$s_Name,$i_Preset,$i_Data,$i_Count) 
+_IrrCreateAddressedVertexShaderConstant($h_Shader,$i_Address,$i_Preset,$i_Data,$i_Count) 
+_IrrCreateAddressedPixelShaderConstant($h_Shader,$i_Address,$i_Preset,$i_Data,$i_Count) 
+_IrrXEffectsStart($i_Vsm=$IRR_OFF,$i_SoftShadows=$IRR_OFF,$iBitdepth32=$IRR_OFF) 
+_IrrXEffectsAddShadowToNode($h_Node,$i_FilterType=$EFT_NONE,$i_shadowType=$ESM_BOTH) 
+_IrrXEffectsAddShadowLight($i_ShadowDimen,$f_PosX,$f_PosY,$f_PosZ,$f_TargetX,$f_TargetY,$f_TargetZ,$f_R,$f_G,$f_B,$f_Alpha,$f_LightNearDist,$f_LightFarDist,$f_AngleDegrees ) 
+_IrrXEffectsSetAmbientColor($i_R,$i_G,$i_B,$i_Alpha) 
+_IrrXEffectsSetClearColor($i_R,$i_G,$i_B,$i_Alpha) 
+_IrrXEffectsSetShadowLightPosition($i_Index,$f_PosX,$f_PosY,$f_PosZ) 
+_IrrXEffectsEnableDepthPass($i_Enable) 
+_IrrXEffectsAddPostProcessingFromFile($s_Name,$i_Enable=0) 
+_IrrXEffectsAddNodeToDepthPass($h_Node) 
+_IrrXEffectsSetPostProcessingUserTexture($h_Texture) 
+_IrrGetNodeName($h_Node) 
+_IrrSetNodeName($h_Node,$s_Name) 
+_IrrGetMaterialCount($h_Node) 
+_IrrGetMaterial($h_Node,$i_Material) 
+_IrrSetNodeMaterialTexture($h_Node,$h_Texture,$i_Index) Applys a texture to a node in the scene.
+_IrrSetNodeMaterialFlag($h_Node,$i_Type,$i_Flag) Sets material properies of a node that will effect its appearance on the screen.
+_IrrSetNodeMaterialType($h_Node,$i_Type) 
+_IrrSetNodePosition($h_Node,$f_X,$f_Y,$f_Z) Moves the node to the new position.
+_IrrSetNodeRotation($h_Node,$f_X,$f_Y,$f_Z) 
+_IrrSetNodeScale($h_Node,$f_X,$f_Y,$f_Z) 
+_IrrDebugDataVisible($h_Node,$i_Visible) 
+_IrrGetNodePosition($h_Node,ByRef $a_Vector3df) 
+_IrrGetNodeAbsolutePosition($h_Node,ByRef $a_Vector3df) 
+_IrrGetNodeRotation($h_Node,ByRef $a_Vector3df) 
+_IrrGetJointNode($h_Node,$s_Joint) 
+_IrrSetJointMode($h_Node,$i_Mode) 
+_IrrAddChildToParent($h_ChildNode,$h_ParentNode) 
+_IrrGetNodeFirstChild($h_Node,ByRef $h_Position) 
+_IrrGetNodeNextChild($h_Node,ByRef $h_Position) 
+_IrrIsNodeLastChild($h_Node,ByRef $h_Position) 
+_IrrAddNodeShadow($h_Node,$h_mesh=0) 
+_IrrSetNodeVisibility($h_Node,$i_Visible) 
+_IrrRemoveNode($h_Node) Removes a node from the scene deleting it.
+_IrrRemoveAllNodes() 
+_IrrSetNodeParent($h_Node,$h_Parent) 
+_IrrGetNodeID($h_Node) 
+_IrrSetNodeID($h_Node,$i_ID) 
+_IrrGetNodeBoundingBox($h_Node,ByRef $a_VectorA3df,ByRef $a_VectorB3df) 
+_IrrAddParticleEmitter($h_ParticleSystem,$h_SettingsStruct) 
+_IrrSetMinParticleSize($h_Emitter,$f_X,$f_Y) 
+_IrrSetMaxParticleSize($h_Emitter,$f_X,$f_Y) 
+_IrrAddAnimatedMeshSceneNodeEmitter($h_ParticleSystem,$h_Node,$i_UseNormals,$f_NormalModifier,$i_AllVertices,$h_SettingsStruct) 
+_IrrAddRotationAffector($h_ParticleSystem,$f_SpeedX,$f_SpeedY,$f_SpeedZ,$f_PivotX,$f_pivotY,$f_pivotZ) 
+_IrrAddFadeOutParticleAffector($h_ParticleSystem,$i_FadeFactor,$i_Red,$i_Green,$i_Blue) 
+_IrrAddGravityParticleAffector($h_ParticleSystem,$f_X,$f_Y,$f_Z) 
+_IrrAddParticleAttractionAffector($h_ParticleSystem,$f_X,$f_Y,$f_Z,$f_Speed=1,$i_Attract=1,$i_AffectX=1,$i_AffectY=1,$i_AffectZ=1) 
+_IrrCreateRotationAffector($h_ParticleSystem,$f_SpeedX,$f_SpeedY,$f_SpeedZ,$f_RotX,$f_RotY,$f_RotZ) 
+_IrrAddStopParticleAffector($h_ParticleSystem,$i_Time,$h_Emitter) 
+_IrrAddParticlePushAffector($h_ParticleSystem,$f_X,$f_Y,$f_Z,$f_SpeedX,$f_SpeedY,$f_SpeedZ,$f_Far,$f_Near,$f_Column,$i_Distant) 
+_IrrAddColorMorphAffector($h_ParticleSystem,$i_NumberOfParticles,$a_ParticleColors,$a_ParticleTimes,$i_Smooth) 
+_IrrAddSplineAffector($h_ParticleSystem,$a_ParticleSpline,$f_Speed,$f_Tightness,$f_Attraction,$i_DeleteAtEnd) 
+_IrrRemoveAffectors($h_ParticleSystem) 
+_IrrSetParticleEmitterDirection($h_ParticleEmitter,$f_X,$f_Y,$f_Z) 
+_IrrSetParticleEmitterMinParticlesPerSecond($h_ParticleEmitter,$i_Min) 
+_IrrSetParticleEmitterMaxParticlesPerSecond($h_ParticleEmitter,$i_Max) 
+_IrrSetParticleEmitterMinStartColor($h_ParticleEmitter,$i_Red,$i_Green,$i_Blue) 
+_IrrSetParticleEmitterMaxStartColor($h_ParticleEmitter,$i_Red,$i_Green,$i_Blue) 
+_IrrSetParticleAffectorEnable($h_ParticleAffector,$i_Enabled) 
+_IrrSetFadeOutParticleAffectorTime($h_ParticleAffector,$f_Time) 
+_IrrSetFadeOutParticleAffectorTargetColor($h_ParticleAffector,$i_Red,$i_Green,$i_Blue) 
+_IrrSetGravityParticleAffectorDirection($h_ParticleAffector,$f_X,$f_Y,$f_Z) 
+_IrrSetGravityParticleAffectorTimeForceLost($h_ParticleAffector,$f_TimeForceLost) 
+_IrrSetParticleAttractionAffectorAffectX($h_ParticleAffector,$i_Affect) 
+_IrrSetParticleAttractionAffectorAffectY($h_ParticleAffector,$i_Affect) 
+_IrrSetParticleAttractionAffectorAffectZ($h_ParticleAffector,$i_Affect) 
+_IrrSetParticleAttractionAffectorAttract($h_ParticleAffector,$i_Attract) 
+_IrrSetParticleAttractionAffectorPoint($h_ParticleAffector,$f_X,$f_Y,$f_Z) 
+_IrrSetRotationAffectorPivotPoint($h_ParticleAffector,$f_X,$f_Y,$f_Z) 
+_IrrSetFurthestDistanceOfEffect($h_ParticleAffector,$f_Distance) 
+_IrrSetNearestDistanceOfEffect($h_ParticleAffector,$f_Distance) 
+_IrrSetColumnDistanceOfEffect($h_ParticleAffector,$f_Distance) 
+_IrrSetCenterOfEffect($h_ParticleAffector,$f_X,$f_Y,$f_Z) 
+_IrrSetStrengthOfEffect($h_ParticleAffector,$f_X,$f_Y,$f_Z) 
+__CreateIrrModel() 
+__CreateParticleEmitter($f_MinBoxX,$f_MinBoxY,$f_MinBoxZ,$f_MaxBoxX,$f_MaxBoxY,$f_MaxBoxZ,$f_DirectionX,$f_DirectionY,$f_DirectionZ,$i_MinParticlesPerSecond,$i_MaxParticlesPerSecond,$i_MinStartRed,$i_MinStartGreen,$i_MinStartBlue,$i_MaxStartRed,$i_MaxStartGreen,$i_MaxStartBlue,$i_MinLifetime,$i_MaxLifetime,$f_MinStartSizeX,$f_MinStartSizeY,$f_MaxStartSizeX,$f_MaxStartSizeY,$i_MaxAngle) 
+xxx__CreateParticleEmitter($f_MinBoxX,$f_MinBoxY,$f_MinBoxZ,$f_MaxBoxX,$f_MaxBoxY,$f_MaxBoxZ,$f_DirectionX,$f_DirectionY,$f_DirectionZ,$i_MinParticlesPerSecond,$i_MaxParticlesPerSecond,$i_MinStartRed,$i_MinStartGreen,$i_MinStartBlue,$i_MaxStartRed,$i_MaxStartGreen,$i_MaxStartBlue,$i_MinLifetime,$i_MaxLifetime,$f_MinStartSizeX,$f_MinStartSizeY,$f_MaxStartSizeX,$f_MaxStartSizeY,$i_MaxAngle) 
+_IrrGetRootSceneNode() 
+_IrrGetMesh($s_MeshFile) Loads the specified mesh ready to be added to the scene.
+_IrrCreateMesh($s_MeshName,$a_Vertices,$a_Indices) 
+_IrrAddHillPlaneMesh($s_Name,$f_TileSizeX,$f_TileSizeY,$i_TileCountX,$i_TileCountY,$h_Material=0,$f_HillHeight=0,$f_CountHillsX=0,$f_CountHillsY=0,$f_TextureRepeatCountX=1,$f_TextureRepeatCountY=1) 
+_IrrWriteMesh($h_Mesh,$i_FileFormat,$s_Filename) 
+_IrrRemoveMesh($h_Mesh) Removes a mesh from the scene cache, freeing up resources.
+_IrrClearUnusedMeshes() 
+_IrrSetMeshHardwareAccelerated($h_mesh,$i_frame=0) 
+_IrrGetMeshFrameCount($h_Mesh) 
+_IrrGetMeshBufferCount($h_Mesh,$i_FrameNumber) 
+_IrrGetMeshIndexCount($h_Mesh,$i_FrameNumber,$i_MeshBuffer) 
+_IrrGetMeshVertexCount($h_Mesh,$i_FrameNumber,$i_MeshBuffer) 
+_IrrAddMeshToScene($h_Mesh) Adds a mesh to the scene as a new 3D 'node'.
+_IrrAddMeshToSceneAsOcttree($h_Mesh) Adds a mesh to the scene as a new 3D node, optimised with an Octtree.
+_IrrAddStaticMeshForNormalMappingToScene($h_Mesh) 
+_IrrLoadScene($s_Filename) 
+_IrrSaveScene($s_Filename) 
+_IrrGetSceneNodeFromId($i_ID) 
+_IrrGetSceneNodeFromName($s_Name) 
+_IrrAddBillBoardToScene($f_XSize,$f_YSize,$f_XPos=0.0,$f_YPos=0.0,$f_ZPos=0.0) Adds a billboard to the scene of the specified size and at the specified position.
+_IrrAddBillboardTextSceneNode($h_Font,$s_Text,$f_XSize,$f_YSize,$f_XPos=0,$f_YPos=0,$f_ZPos=0,$h_Parent=0,$i_TopRGBA=0xFFFFFFFF,$i_BottomRGBA=0xFFFFFFFF) 
+_IrrAddParticleSystemToScene($i_AddEmitter,$h_Parent=0,$i_Id=-1,$f_PosX=0,$f_PosY=0,$f_PosZ=0,$f_RotX=0,$f_RotY=0,$f_RotZ=0,$f_ScaleX=1,$f_ScaleY=1,$f_ScaleZ=1) 
+_IrrAddSkyBoxToScene($h_UpTexture,$h_DownTexture,$h_LeftTexture,$h_RightTexture,$h_FrontTexture,$h_BackTexture) 
+_IrrAddSkyDomeToScene($h_Texture,$i_HorizontalRes,$i_VerticalRes,$d_TexturePercent,$d_SpherePercent,$d_SphereRadius=1000.0) 
+_IrrAddEmptySceneNode() 
+_IrrAddTestSceneNode() 
+_IrrAddCubeSceneNode($f_Size) 
+_IrrAddSphereSceneNode($f_Size,$i_PolyCount) 
+_IrrAddWaterSurfaceSceneNode($h_Mesh,$f_WaveHeight=2.0,$f_WaveSpeed=300.0,$f_WaveLength=10.0,$h_Parent=0,$i_ID=-1,$f_PosX=0,$f_PosY=0,$f_PosZ=0,$f_RotX=0,$f_RotY=0,$f_RotZ=0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0) 
+_IrrAddZoneManager($f_NearDistance=0,$f_FarDistance=12000) 
+_IrrAddClouds($h_Texture,$i_Lod,$i_Depth,$i_Density) 
+_IrrAddLensFlare($h_Texture) 
+_IrrAddGrass($h_Terrain,$i_X,$i_Y,$i_PatchSize,$f_FadeDistance,$i_Crossed,$f_GrassScale,$i_MaxDensity,$i_DataPosX,$i_DataPosY,$h_HeightMap,$h_TextureMap,$h_GrassMap,$h_GrassTexture) 
+_IrrSetShadowColor($i_Alpha,$i_Red,$i_Green,$i_Blue) 
+_IrrSetFog($i_Red,$i_Green,$i_Blue,$i_FogType,$f_FogStart,$f_FogEnd,$f_Density) 
+_IrrDraw3DLine($f_XStart,$f_YStart,$f_ZStart,$f_XEnd,$f_YEnd,$f_ZEnd,$i_Red,$i_Green,$i_Blue) 
+_IrrSetSkyDomeColor($h_Dome,$i_HorizontalRed,$i_HorizontalGreen,$i_HorizontalBlue,$i_ZenithRed,$i_ZenithGreen,$i_ZenithBlue) 
+_IrrSetSkyDomeColorBand($h_Dome,$i_HorizontalRed,$i_HorizontalGreen,$i_HorizontalBlue,$i_BandVerticalPosition,$f_BandFade,$i_Additive) 
+_IrrSetSkyDomeColorPoint($h_Dome,$i_Red,$i_Green,$i_Blue,$f_PosX,$f_PosY,$f_PosZ,$f_Radius,$f_PointFade,$i_Additive) 
+_IrrSetZoneManagerProperties($h_ZoneManager,$f_NearDistance,$f_FarDistance,$i_AccumulateBoxes) 
+_IrrSetZoneManagerBoundingBox($h_ZoneManager,$f_X,$f_Y,$f_Z,$f_BoxWidth,$f_BoxHeight,$f_BoxDepth) 
+_IrrSetZoneManagerAttachTerrain($h_ZoneNode,$h_Terrain,$s_StructureMapFile,$s_ColorMapFile,$s_DetailMapFile,$i_ImageX,$i_ImageY,$i_SliceSize) 
+_IrrSetGrassDensity($h_Grass,$f_Density,$f_Distance) 
+_IrrSetGrassWind($h_Grass,$f_Strength,$f_Resolution) 
+_IrrGetGrassDrawCount($h_Grass) 
+_IrrSetFlareScale($h_Flare,$f_Source,$f_Optics) 
+_IrrCreateBatchingMesh() 
+_IrrAddToBatchingMesh($h_meshBatch,$h_mesh,$f_posX=0.0,$f_posY=0.0,$f_posZ=0.0,$f_rotX=0.0,$f_rotY=0.0,$f_rotZ=0.0,$f_scaleX=1.0,$f_scaleY=1.0,$f_scaleZ=1.0) 
+_IrrFinalizeBatchingMesh($h_meshBatch) 
+_IrrSetMeshMaterialTexture($h_mesh,$h_texture,$i_index,$i_buffer=0) 
+_IrrScaleMesh($h_mesh,$f_scale,$i_frame=0,$i_meshBuffer=0,$h_sourceMesh=0) 
+_IrrAddBeamSceneNode() 
+_IrrSetBeamSize($h_BeamNode,$f_Size) 
+_IrrSetBeamPosition($h_BeamNode,$f_SX,$f_SY,$f_SZ,$f_EX,$f_EY,$f_EZ) 
+_IrrAddBoltSceneNode() 
+_IrrSetBoltProperties($h_BoltNode,$f_SX,$f_SY,$f_SZ,$f_EX,$f_EY,$f_EZ,$i_UpdateTime=50,$i_Height=10,$f_Thickness=5.0,$i_Parts=10,$i_Bolts=6,$i_Steadyend=$IRR_OFF,$i_Color=0x0000FFFF) 
+_IrrSetBillBoardSize($h_Node,$f_Width,$f_Height) 
+_IrrSetBillBoardColor($h_Node,$i_TopColor,$i_BottomColor) 
+__CreateVertex($f_X,$f_Y,$f_Z,$f_NormalX,$f_NormalY,$f_NormalZ,$i_ARGB,$f_TextureX,$f_TextureY) 
+__CreateVector($f_X,$f_Y,$f_Z) 
+_IrrStart($i_DeviceType=3,$i_ScreenWidth=800,$i_ScreenHeight=600,$i_BitsPerPixel=1,$i_FullScreen=0,$i_Shadows=0,$i_InputCapture=0,$i_VSync=0) Opens the IrrlichtWrapper.dll, starts Irrlicht interface and opens a window for rendering.
+_IrrStartAdvanced($i_DeviceType=3,$i_ScreenWidth=800,$i_ScreenHeight=600,$i_BitsPerPixel=1,$i_FullScreen=0,$i_Shadows=0,$i_InputCapture=0,$i_VSync=0,$i_TypeOfDevice=0,$i_DoublebufferEnabled=0,$i_AntialiasEnabled=0,$i_HighPrecisionFpu=0) Opens the IrrlichtWrapper.dll and starts Irrlicht engine with advanced method.
+_IrrRunning() Used to determine if the Irrlicht engine is still running.
+_IrrSetViewPort($i_TopX,$i_TopY,$i_BottomX,$i_BottomY) 
+_IrrBeginScene($i_Red,$i_Green,$i_Blue) Starts to draw a frame, erasing the canvas with the specified color.
+_IrrBeginSceneAdvanced($i_SceneBGColor,$i_ClearBackBuffer=1,$i_ClearZBuffer=1) 
+_IrrDrawScene() This renders the 3D scene to the canvas, drawing all 3D elements: nodes, particles, billboards, etc .
+_IrrDrawSceneToTexture($h_RenderTargetTexture) 
+_IrrSetRenderTarget($h_Texture,$i_SceneBGColor=0,$i_ClearBackBuffer=1,$i_ClearZBuffer=1) 
+_IrrDrawGUI() This renders the 2D graphical user interface that has been created to the scene.
+_IrrEndScene() This renders the 3D scene to the canvas, drawing all 3D elements: nodes, particles, billboards, etc .
+_IrrStop() Stops the Irrlicht Engine freeing all of the resources, closing the display window and IrrlichtWrapper.dll.
+_IrrTransparentZWrite() 
+_IrrGetFPS() 
+_IrrGetPrimitivesDrawn() 
+_IrrSetWindowCaption($s_Caption) Set the caption in the Irrlicht window title bar.
+_IrrIsFullscreen() 
+_IrrIsWindowActive() 
+_IrrIsWindowFocused() 
+_IrrIsWindowMinimized() 
+_IrrGetScreenSize(ByRef $i_Width,ByRef $i_Height) 
+_IrrMaximizeWindow() 
+_IrrMinimizeWindow() 
+_IrrRestoreWindow() 
+_IrrSetResizableWindow($i_Resizable) 
+_IrrMakeARGB($i_Alpha,$i_Red,$i_Green,$i_Blue) 
+_IrrQueryFeature($i_Feature) 
+_IrrDisableFeature($i_Feature,$i_Flag) 
+_IrrGetTime() 
+_IrrSetTime($i_Time) 
+_IrrAddTerrain($s_Path,$f_PosX=0.0,$f_PosY=0.0,$f_PosZ=0.0,$f_RotX=0.0,$f_RotY=0.0,$f_RotZ=0.0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0,$i_VertexAlpha=255,$i_VertexRed=255,$i_VertexGreen=255,$i_VertexBlue=255,$i_Smoothing=0,$i_MaxLOD=5,$i_PatchSize=$ETPS_17) 
+_IrrAddTerrainTile($h_Image,$i_TileSize=256,$i_DataX=0,$i_DataY=0,$f_PosX=0.0,$f_PosY=0.0,$f_PosZ=0.0,$f_RotX=0.0,$f_RotY=0.0,$f_RotZ=0.0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0,$i_Smoothing=1,$i_MaxLOD=5,$i_PatchSize=$ETPS_17) 
+_IrrAddSphericalTerrain($s_TopPath,$s_FrontPath,$s_BackPath,$s_LeftPath,$RightPath,$s_BottomPath,$f_PosX=0.0,$f_PosY=0.0,$f_PosZ=0.0,$f_RotX=0.0,$f_RotY=0.0,$f_RotZ=0.0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0,$i_VertexAlpha=255,$i_VertexRed=255,$i_VertexGreen=255,$i_VertexBlue=255,$i_Smoothing=0,$i_Spherical=0,$i_MaxLOD=5,$i_PatchSize=$ETPS_17) 
+_IrrGetTerrainHeight($h_Terrain,$f_X,$f_Y) 
+_IrrScaleTexture($h_Terrain,$f_X,$f_Y) 
+_IrrGetTerrainTileHeight($h_Terrain,$f_X,$f_Y) 
+_IrrScaleTileTexture($h_Terrain,$f_X,$f_Y) 
+_IrrAttachTile($h_Terrain,$h_Neighbor,$i_Edge) 
+_IrrSetTileStructure($h_Terrain,$h_Image,$i_X,$i_Y) 
+_IrrSetTileColor($h_Terrain,$h_Image,$i_X=0,$i_Y=0) 
+_IrrScaleSphericalTexture($h_Terrain,$f_X,$f_Y) 
+_IrrSetSphericalTerrainTexture($h_Terrain,$s_Top,$s_Front,$s_Back,$s_Left,$s_Right,$s_Bottom,$i_MaterialIndex) 
+_IrrLoadSphericalTerrainVertexColor($h_Terrain,$s_Top,$s_Front,$s_Back,$s_Left,$s_Right,$s_Bottom) 
+_IrrGetSphericalTerrainSurfacePosition($h_Terrain,$i_Face,$f_LogicalX,$f_LogicalY,$f_LogicalZ) 
+_IrrGetSphericalTerrainSurfacePositionAndAngle($h_Terrain,$i_Face,$f_LogicalX,$f_LogicalY,$f_LogicalZ) 
+_IrrGetSphericalTerrainLogicalSurfacePosition($h_Terrain,$i_Face,$f_LogicalX,$f_LogicalY,$f_LogicalZ) 
 
-; FUNCTIONS ====================================================================================
-_IrrStart(iDeviceType=3,iScreenWidth=800,iScreenHeight=600,iBitsPerPixel=1,iFullScreen=0,iShadows=0,iInputCapture=0,iVSync=0)
-_IrrStartAdvanced(iDeviceType=3,iScreenWidth=800,iScreenHeight=600,iBitsPerPixel=1,iFullScreen=0,iShadows=0,iInputCapture=0,iVSync=0,iTypeOfDevice=0,iDoublebufferEnabled=0,iAntialiasEnabled=0,iHighPrecisionFpu=0))
-_IrrRunning()
-_IrrSetViewPort(iTopX,iTopY,iBottomX,iBottomY)
-_IrrBeginScene(iRed,iGreen,iBlue)
-_IrrBeginSceneAdvanced(iSceneBGColor,iClearBackBuffer=1,iClearZBuffer=1)
-_IrrDrawScene()
-_IrrDrawSceneToTexture(hRenderTargetTexture)
-_IrrDrawGUI()
-_IrrEndScene()
-_IrrStop()
-_IrrTransparentZWrite()
-_IrrGetFPS()
-_IrrGetPrimitivesDrawn()
-_IrrSetWindowCaption(sCaption)
-_IrrMakeARGB(iAlpha,iRed,iBlue,iGreen)
-_IrrQueryFeature(iFeature)
-_IrrDisableFeature(iFeature,iFlag)
-_IrrGetTime()
-_IrrSetTime(iTime)
-_IrrKeyEventAvailable()
-_IrrReadKeyEvent()
-_IrrMouseEventAvailable()
-_IrrReadMouseEvent()
-_IrrSetMousePosition(ByRef fXPos,ByRef fYPos)
-_IrrHideMouse()
-_IrrShowMouse()
-_IrrDisplayMouse(iHideShow)
-_IrrAddZipFile(sZipfile,iIgnoreCase,iIgnorePaths)
-_IrrChangeWorkingDirectory(sWorkingDir)
-_IrrGetWorkingDirectory()
-_IrrSetTextureCreationFlag(iFlag,iValue)
-_IrrGetTexture(sTextureFile)
-_IrrGetImage(sImageFile)
-_IrrCreateTexture(sTextureName,iXSize,iYSize,iColorFormat)
-_IrrCreateImage(iXSize,iYSize,iColorFormat)
-_IrrRemoveTexture(hTexture)
-_IrrRemoveImage(hImage)
-_IrrLockTexture(hTexture)
-_IrrLockOpenGLTexture(hTexture)
-_IrrUnlockTexture(hTexture)
-_IrrLockImage(hImage)
-_IrrUnlockImage(hImage)
-_IrrCreateRenderTargetTexture(iXSize,iYSize)
-_IrrMakeNormalMapTexture(hTexture,fAmplitude)
-_IrrColorKeyTexture(hTexture,iRed,iGreen,iBlue)
-_IrrDraw2DImage(hImage,iXPos,iYPos)
-_IrrDraw2DImageElement(hTexture,iXPos,iYPos,iSourceTopX,iSourceTopY,iSourceBottomX,iSourceBottomY,iUseAlpha)
-_IrrGetFont(sFont)
-_Irr2DFontDraw(hFont,sText,iXPos,iYPos,iBottomX,iBottomY)
-_IrrSaveScreenShot(sFilename)
-_IrrGetScreenShot(iXPos,iYPos,iWidth,iHeight)
-_IrrMaterialVertexColorAffects(hMaterial,iAffectedProperty)
-_IrrSetMaterialBlend(hMaterial,iSrcBlend,iDstBlend)
-_IrrMaterialSetShininess(hMaterial,fShininess)
-_IrrMaterialSetSpecularColor(hMaterial,iAlpha,iRed,iGreen,iBlue)
-_IrrMaterialSetDiffuseColor(hMaterial,iAlpha,iRed,iGreen,iBlue)
-_IrrMaterialSetAmbientColor(hMaterial,iAlpha,iRed,iGreen,iBlue)
-_IrrMaterialSetEmissiveColor(hMaterial,iAlpha,iRed,iGreen,iBlue)
-_IrrMaterialSetMaterialTypeParam(hMaterial,fParam)
-_IrrSetMaterialLineThickness(hMaterial,fThickness)
-_IrrAddHighLevelShaderMaterial(hVertexProgram,sStartFunction,iProgType,spixelProg,sPixelStartFunction,iPixelProgTpe,iMaterialType);IrrAddHighLevelShaderMaterial
-_IrrAddHighLevelShaderMaterialFromFiles(sVertexProgram,sStartFunction,iProgType,spixelProg,sPixelStartFunction,iPixelProgTpe,iMaterialType);IrrAddHighLevelShaderMaterial
-_IrrAddShaderMaterial(hVertexProgram,hPixelProgram,iMaterialType)
-_IrrAddShaderMaterialFromFiles(sVertexProgram,sPixelProgram,iMaterialType)
-_IrrCreateNamedVertexShaderConstant(sVertexProgram,sPixelProgram,iMaterialType)
-_IrrCreateNamedPixelShaderConstant(hShader,sName,iPreset,iData,iCount)
-_IrrCreateAddressedVertexShaderConstant(hShader,iAddress,iPreset,iData,iCount)
-_IrrCreateAddressedPixelShaderConstant(hShader,iAddress,iPreset,iData,iCount)
-_IrrGetRootSceneNode()
-_IrrGetMesh(sMeshFile)
-_IrrCreateMesh(sMeshName,a_Vertices,a_Indices)
-_IrrAddHillPlaneMesh(sName,fTileSizeX,fTileSizeY,iTileCntX,iTileCntY,hMat=0,fHillHeight=0,fCntHillsX=0,fCntHillsY=0,fTexRepeatCntX=1,fTexRepeatCntY=1)
-_IrrWriteMesh(hMesh,iFileFormat,sFilename)
-_IrrRemoveMesh(hMesh)
-_IrrClearUnusedMeshes()
-_IrrSetMeshHardwareAccelerated(hMesh,iFrameNumber=0)
-_IrrGetMeshFrameCount(hMesh)
-_IrrGetMeshBufferCount(hMesh,iFrameNumber)
-_IrrGetMeshIndexCount(hMesh,iFrameNumber,iMeshBuffer)
-_IrrGetMeshVertexCount(hMesh,iFrameNumber,iMeshBuffer)
-_IrrAddMeshToScene(hMesh)
-_IrrAddMeshToSceneAsOcttree(hMesh)
-_IrrAddStaticMeshForNormalMappingToScene(hMesh)
-_IrrLoadScene(sFilename)
-_IrrSaveScene(sFilename)
-_IrrGetSceneNodeFromId(iID)
-_IrrGetSceneNodeFromName(sName)
-_IrrAddBillBoardToScene(fXSize,fYSize,fXPos=0.0,fYPos=0.0,fZPos=0.0)
-_IrrAddBillboardTextSceneNode(hFont,sText,fXSize,fYSize,fXPos=0,fYPos=0,fZPos=0,hParent=0,iTopRGBA=0xFFFFFFFF,iBottomRGBA=0xFFFFFFFF)
-_IrrAddParticleSystemToScene(iAddEmitter,hParent=0,iId=-1,fPosX=0,fPosY=0,fPosZ=0,fRotX=0,fRotY=0,fRotZ=0,fScaleX=1,fScaleY=1,fScaleZ=1)
-_IrrAddSkyBoxToScene(hUpTexture,hDownTexture,hLeftTexture,hRightTexture,hFrontTexture,hBackTexture)
-_IrrAddSkyDomeToScene(hTexture,iHorizontalRes,iVerticalRes,dTexturePercent,dSpherePercent,dSphereRadius)
-_IrrAddEmptySceneNode()
-_IrrAddTestSceneNode()
-_IrrAddCubeSceneNode(fSize)
-_IrrAddSphereSceneNode(fSize,iPolyCount)
-_IrrAddWaterSurfaceSceneNode(hMesh,fWaveHeight,fWaveSpeed,fWaveLength,hParent,iID,fPosX,fPosY,fPosZ,fRotX,fRotY,fRotZ,fScaleX,fScaleY,fScaleZ)
-_IrrAddZoneManager(fNearDistance=0,fFarDistance=12000)
-_IrrAddClouds(hTexture,iLod,iDepth,iDensity)
-_IrrAddLensFlare(hTexture)
-_IrrAddGrass(hTerrain,iX,iY,iPatchSize,fFadeDistance,iCrossed,fGrassScale,iMaxDensity,iDataPosX,iDataPosY,hHeightMap,hTextureMap,hGrassMap,hGrassTexture)
-_IrrSetShadowColor(iAlpha,iRed,iGreen,iBlue)
-_IrrSetFog(iRed,iGreen,iBlue,iFogType,fFogStart,fFogEnd,fDensity)
-_IrrDraw3DLine(fXStart,fYStart,fZStart,fXEnd,fYEnd,fZEnd,iRed,iGreen,iBlue)
-_IrrSetSkyDomeColor(hDome,iHorizontalRed,iHorizontalGreen,iHorizontalBlue,iZenithRed,iZenithGreen,iZenithBlue)
-_IrrSetSkyDomeColorBand(hDome,iHorizontalRed,iHorizontalGreen,iHorizontalBlue,iBandVerticalPosition,fBandFade,iAdditive)
-_IrrSetSkyDomeColorPoint(hDome,iRed,iGreen,iBlue,fPosX,fPosY,fPosZ, fRadius,fPointFade,iAdditive)
-_IrrSetZoneManagerProperties(hZoneManager,fNearDistance,fFarDistance,iAccumulateBoxes)
-_IrrSetZoneManagerBoundingBox(hZoneManager,fX,fY,fZ,fBoxWidth,fBoxHeight,fBoxDepth)
-_IrrSetZoneManagerAttachTerrain(hZoneNode,hTerrain,sStructureMapFile,sColorMapFile,sDetailMapFile,iImageX,iImageY,iSliceSize)
-_IrrSetGrassDensity(hGrass,fDensity,fDistance)
-_IrrSetGrassWind(hGrass,fStrength,fResolution)
-_IrrGetGrassDrawCount(hGrass)
-_IrrSetFlareScale(hFlare,fSource,fOptics)
-_IrrGetNodeName(hNode)
-_IrrSetNodeName(hNode,sName)
-_IrrGetMaterialCount(hNode)
-_IrrGetMaterial(hNode,iMaterial)
-_IrrSetNodeMaterialTexture(hNode,hTexture,iIndex)
-_IrrSetNodeMaterialFlag(hNode,iType,iFlag)
-_IrrSetNodeMaterialType(hNode,iType)
-_IrrSetNodePosition(hNode,fX,fY,fZ)
-_IrrSetNodeRotation(hNode,fX,fY,fZ)
-_IrrSetNodeScale(hNode,fX,fY,fZ)
-_IrrDebugDataVisible(hNode,iVisible)
-_IrrGetNodePosition(hNode, ByRef aVector3df)
-_IrrGetNodeAbsolutePosition(hNode, ByRef aVector3df)
-_IrrGetNodeAbsolutePosition(hNode, ByRef aVector3df)
-_IrrGetNodeRotation(h_Node, ByRef a_Vector3df)
-_IrrGetJointNode(hNode,sJoint)
-_IrrSetJointMode(hNode,iMode)
-_IrrAddChildToParent(hParentNode,hChildNode)
-_IrrGetNodeFirstChild(hNode,ByRef hPosition)
-_IrrGetNodeNextChild(hNode,ByRef hPosition)
-_IrrIsNodeLastChild(hNode,ByRef hPosition)
-_IrrAddNodeShadow(hNode,hParent=0)
-_IrrSetNodeVisibility(hNode,iVisible)
-_IrrRemoveNode(hNode)
-_IrrRemoveAllNodes()
-_IrrSetNodeParent(hNode,hParent)
-_IrrGetNodeID(hNode)
-_IrrSetNodeID(hNode,iID)
-_IrrGetNodeBoundingBox(h_Node, ByRef a_VectorA3df, ByRef a_VectorB3df)
-_IrrSetNodeAnimationRange(hNode,iStart,iEnd)
-_IrrPlayNodeMD2Animation(hNode,iAnimation)
-_IrrSetNodeAnimationSpeed(hNode,fSpeed)
-_IrrGetNodeAnimationFrame(hNode)
-_IrrSetNodeAnimationFrame(hNode,fFrame)
-_IrrSetTransitionTime(hNode,fSpeed)
-_IrrAnimateJoints(hNode)
-IrrSetJointMode(hNode,iMode)
-_IrrAddCollisionAnimator(hIrrSelector,hNode,fRadiusX,fRadiusY,fRadiusZ,fGravityX,fGravityY,fGravityZ,fOffsetX,fOffsetY,fOffsetZ)
-_IrrAddDeleteAnimator(hNode,iTime)
-_IrrAddFlyCircleAnimator(hNode,fCenterX,fCenterY,fCenterZ,fRadius,fSpeed)
-_IrrAddFlyStraightAnimator(hNode,fStartX,fStartY,fStartZ,fEndX,fEndY,fEndZ,iTime,iDoLoop)
-_IrrAddRotationAnimator(hNode,fRotX,fRotY,fRotZ)
-_IrrAddSplineAnimator(hNode,iArraySize,aArrayFloatsX,aArrayFloatsY,aArrayFloatsZ,iStart,fSpeed,fTightness)
-_IrrRemoveAnimator(hNode,hAnimator)
-_IrrGetCollisionGroupFromMesh(hMesh,hNode,iFrame=0)
-_IrrGetCollisionGroupFromComplexMesh(hMesh,hNode,iFrame=0)
-_IrrGetCollisionGroupFromBox(hNode)
-_IrrGetCollisionGroupFromTerrain(hNode,iLod)
-_IrrRemoveCollisionGroup(hCollisionGroup,hNode)
-_IrrCreateCombinedCollisionGroup()
-_IrrAddCollisionGroupToCombination(hCombinedCollisionGroup,hCollisionGroup)
-_IrrRemoveAllCollisionGroupsFromCombination(hCombinedCollisionGroup)
-_IrrRemoveCollisionGroupFromCombination(hCombinedCollisionGroup,hCollisionGroup)
-_IrrGetCollisionPoint(aStartVector,aEndVector,hCollisionGroup,byRef aCollisionVector)
-_IrrGetRayFromScreenCoordinates(iX,iY,hCamera)
-_IrrGetCollisionNodeFromCamera(hCamera)
-_IrrGetCollisionNodeFromRay(byRef hStartVector, byRef hEndVector)
-_IrrGetCollisionNodeFromScreenCoordinates(iX,iY)
-_IrrGetScreenCoordinatesFrom3DPosition(a_3DPositionVector)
-_IrrGet3DPositionFromScreenCoordinates(iX,iY,ByRef aVector3df,hCamera,fNormalX=0.0,fNormalY=0.0,fNormalZ=1.0,fDistanceFromOrigin=0.0)
-_IrrGet2DPositionFromScreenCoordinates(iX,iY, ByRef fX, ByRef fY, hCamera)
-_IrrGetChildCollisionNodeFromRay(hNode,iMask,iRecurse,aStartVector,aEndVector)
-_IrrGetChildCollisionNodeFromPoint(hNode,iMask,iRecurse,aPointVector)
-_IrrGetNodeAndCollisionPointFromRay(aStartVector,aEndVector,ByRef hNode,ByRef fPosX,ByRef fPosY,ByRef fPosZ,ByRef fNormalX,ByRef fNormalY,ByRef fNormalZ,iID=0,hRootNode=$IRR_NO_OBJECT)
-_IrrGetDistanceBetweenNodes(hNodeA,hNodeB)
-_IrrAreNodesIntersecting(hNodeA,hNodeB)
-_IrrIsPointInsideNode(hNodeA,fX,fY,fZ)
-_IrrGetCollisionResultPosition(hSelector, ByRef aEllipsoidPosition, ByRef aEllipsoidRadius, ByRef aVelocity, ByRef aGravity, fSlidingSpeed, ByRef aOutPosition, ByRef aOutHitPosition, ByRef iOutFalling)
-_IrrAddFPSCamera(hParentNode=0,fRotateSpeed=100.0,fMoveSpeed=0.5,iID=-1,hKeyMapArray=0,iKeyMapSize=0,iNoVerticalMovement=0,fJumpSpeed=0.0)
-_IrrAddCamera(fCamX,fCamY,fCamZ,fTargetX,fTargetY,fTargetZ)
-_IrrAddMayaCamera(hNode,fRotate,fZoom,fMove)
-_IrrSetCameraTarget(hCamera,fCamX,fCamY,fCamZ)
-_IrrGetCameraTarget(hCamera,ByRefaVector3df)
-_IrrGetCameraUpDirection(hCamera,ByRefaVector3df)
-_IrrSetCameraUpDirection(hCamera,fCamX,fCamY,fCamZ)
-_IrrGetCameraOrientation(hCamera,byRef a_vX,byRef a_vY,byRef a_vZ)
-_IrrRevolveCamera(hCamera,fYaw,fPitch,fRoll,fDrive,fStrafe,fElevate)
-_IrrSetCameraUpAtRightAngle(hCamera)
-_IrrSetCameraOrthagonal(hCamera,fDistanceX,fDistanceY,fDistanceZ)
-_IrrSetCameraClipDistance(hCamera,fDistance)
-_IrrSetActiveCamera(hCamera)
-_IrrSetCameraFOV(hCamera,fFOV)
-_IrrSetCameraAspectRatio(hCamera,fAspectRatio)
-_IrrAddLight(h_parentNode,fX,fY,fZ,fRed,fGreen,fBlue,fSize)
-_IrrSetAmbientLight(fRed,fGreen,fBlue)
-_IrrSetLightAmbientColor(hLight,fRed,fGreen,fBlue)
-_IrrSetLightAttenuation(hLight,fRed,fGreen,fBlue)
-_IrrSetLightCastShadows(hLight,iShadows)
-_IrrSetLightDiffuseColor(hLight,fRed,fGreen,fBlue)
-_IrrSetLightFalloff(hLight,fFalloff)
-_IrrSetLightInnerCone(hLight,fInnerCone)
-_IrrSetLightOuterCone(hLight,fOuterCone)
-_IrrSetLightRadius(hLight,fRadius)
-_IrrSetLightSpecularColor(hLight,fRed,fGreen,fBlue)
-_IrrSetLightType(hLight,iType)
-_IrrAddTerrain(sPath,fPosX=0.0,fPosY=0.0,fPosZ=0.0,fRotX=0.0,fRotY=0.0,fRotZ=0.0,fScaleX=1.0,fScaleY=1.0,fScaleZ=1.0,iVertexAlpha=255,iVertexRed=255,iVertexGreen=255,iVertexBlue=255,iSmoothing=0,iMaxLOD=5,iPatchSize=$ETPS_17)
-_IrrAddTerrainTile(hImage,iTileSize=256,iDataX=0,iDataY=0,fPosX=0.0,fPosY=0.0,fPosZ=0.0,fRotX=0.0,fRotY=0.0,fRotZ=0.0,fScaleX=1.0,fScaleY=1.0,fScaleZ=1.0,iSmoothing=1,iMaxLOD=5,iPatchSize=$ETPS_17)
-_IrrAddSphericalTerrain(sTopPath,sFrontPath,sBackPath,sLeftPath,RightPath,sBottomPath,fPosX=0.0,fPosY=0.0,fPosZ=0.0,fRotX=0.0,fRotY=0.0,fRotZ=0.0,fScaleX=1.0,fScaleY=1.0,fScaleZ=1.0,iVertexAlpha=255,iVertexRed=255,iVertexGreen=255,iVertexBlue=255,iSmoothing=0,iSpherical=0,iMaxLOD=5,iPatchSize=$ETPS_17)
-_IrrGetTerrainHeight(hTerrain,fX,fY)
-_IrrScaleTexture(hTerrain,fX,fY)
-_IrrGetTerrainTileHeight(hTerrain,fX,fY)
-_IrrScaleTileTexture(hTerrain,fX,fY)
-_IrrAttachTile(hTerrain,hNeighbor,iEdge)
-_IrrSetTileStructure(hTerrain,hImage,iX,iY)
-_IrrSetTileColor(hTerrain,hImage,iX=0,iY=0)
-_IrrScaleSphericalTexture(hTerrain,fX,fY)
-_IrrSetSphericalTerrainTexture(hTerrain,sTop,sFront,sBack,sLeft,sRight,sBottom,iMaterialIndex)
-_IrrLoadSphericalTerrainVertexColor(hTerrain,sTop,sFront,sBack,sLeft,sRight,sBottom)
-_IrrGetSphericalTerrainSurfacePosition(hTerrain,iFace,fLogicalX,fLogicalY,fLogicalZ)
-_IrrGetSphericalTerrainSurfacePositionAndAngle(hTerrain,iFace,fLogicalX,fLogicalY,fLogicalZ)
-_IrrGetSphericalTerrainLogicalSurfacePosition(hTerrain,iFace,fLogicalX,fLogicalY,fLogicalZ)
-_IrrSetMinParticleSize(hEmitter,fX,fY)
-_IrrSetMaxParticleSize(hEmitter,fX,fY)
-_IrrAddParticleEmitter(hParticleSystem,hSettingsStruct)
-_IrrAddRotationAffector(hParticleSystem,fSpeedX,fSpeedY,fSpeedZ,fPivotX,fPivotY,fPivotZ)
-_IrrAddAnimatedMeshSceneNodeEmitter(hParticleSystem,hNode,iUseNormals,fNormalModifier,iAllVertices,hSettingsStruct)
-_IrrAddFadeOutParticleAffector(hParticleSystem,iFadeFactor,iRed,iGreen,iBlue)
-_IrrAddGravityParticleAffector(hParticleSystem,fX,fY,fZ)
-_IrrAddParticleAttractionAffector(hParticleSystem,fX,fY,fZ,fSpeed=1,iAttract=1,iAffectX=1,iAffectY=1,iAffectZ=1)
-_IrrCreateRotationAffector(hParticleSystem,fSpeedX,fSpeedY,fSpeedZ,fRotX,fRotY,fRotZ)
-_IrrAddStopParticleAffector(hParticleSystem,iTime,hEmitter)
-_IrrAddParticlePushAffector(hParticleSystem,fX,fY,fZ,fSpeedX,fSpeedY,fSpeedZ,fFar,fNear,fColumn,iDistant)
-_IrrAddColorMorphAffector(hParticleSystem,iNumberOfParticles,a_ParticleColors,a_ParticleTimes,iSmooth)
-_IrrAddSplineAffector(hParticleSystem,a_ParticleSpline,fSpeed,fTightness,fAttraction,iDeleteAtEnd)
-_IrrRemoveAffectors(hParticleSystem)
-_IrrSetParticleEmitterDirection(hParticleEmitter,fX,fY,fZ)
-_IrrSetParticleEmitterMinParticlesPerSecond(hParticleEmitter,iMin)
-_IrrSetParticleEmitterMaxParticlesPerSecond(hParticleEmitter,iMax)
-_IrrSetParticleEmitterMinStartColor(hParticleEmitter,iRed,iGreen,iBlue)
-_IrrSetParticleEmitterMaxStartColor(hParticleEmitter,iRed,iGreen,iBlue)
-_IrrSetParticleAffectorEnable(hParticleAffector,iEnabled)
-_IrrSetFadeOutParticleAffectorTime(hParticleAffector,fTime)
-_IrrSetFadeOutParticleAffectorTargetColor(hParticleAffector,iRed,iGreen,iBlue)
-_IrrSetGravityParticleAffectorDirection(hParticleAffector,fX,fY,fZ)
-_IrrSetGravityParticleAffectorTimeForceLost(hParticleAffector,fTimeForceLost)
-_IrrSetParticleAttractionAffectorAffectX(hParticleAffector,iAffect)
-_IrrSetParticleAttractionAffectorAffectY(hParticleAffector,iAffect)
-_IrrSetParticleAttractionAffectorAffectZ(hParticleAffector,iAffect)
-_IrrSetParticleAttractionAffectorAttract(hParticleAffector,iAttract)
-_IrrSetParticleAttractionAffectorPoint(hParticleAffector,fX,fY,fZ)
-_IrrSetRotationAffectorPivotPoint(hParticleAffector,fX,fY,fZ)
-_IrrSetFurthestDistanceOfEffect(hParticleAffector,fDistance)
-_IrrSetNearestDistanceOfEffect(hParticleAffector,fDistance)
-_IrrSetColumnDistanceOfEffect(hParticleAffector,fDistance)
-_IrrSetCenterOfEffect(hParticleAffector,fX,fY,fZ)
-_IrrSetStrengthOfEffect(hParticleAffector,fX,fY,fZ)
-_IrrGUIEvents(iEventsForGUI)
-_IrrGUIEventAvailable()
-_IrrReadGUIEvent()
-_IrrGUIClear()
-_IrrGUIRemove(hWidget)
-_IrrGUISetFont(h_Font)
-_IrrGUISetColor(iElement,iRed,iGreen,iBlue,iAlpha)
-_IrrGUIGetText(hWidget)
-_IrrGUISetText(hWidget,sText)
-_IrrAddWindow(sTitle,iTopX,iTopY,iBottomX,iBottomY,iModal,hParent=0)
-_IrrAddStaticText(sText,iTopX,iTopY,iBottomX,iBottomY,iBorder,iWordWrap,hParent=0)
-_IrrAddButton(iTopX,iTopY,iBottomX,iBottomY,iID,sText="",sTextTip="",hParent=0)
-_IrrAddScrollBar(iHorizontal,iTopX,iTopY,iBottomX,iBottomY,iID,iCurrentValue,iMaxValue,hParent=0)
-_IrrAddListBox(iTopX,iTopY,iBottomX,iBottomY,iID,iBackground,hParent=0)
-_IrrAddListBoxItem(hListBox,sText)
-_IrrInsertListBoxItem(hListBox,sText,iIndex)
-_IrrRemoveListBoxItem(hListBox,iIndex)
-_IrrSelectListBoxItem(hListBox,iIndex)
-_IrrAddEditBox(sText,iTopX,iTopY,iBottomX,iBottomY,iID,iBorder,iPassword=$IRR_GUI_NOT_PASSWORD,hParent=0)
-_IrrAddCheckBox(sText,iTopX,iTopY,iBottomX,iBottomY,iID,iChecked,hParent=0)
-_IrrCheckCheckBox(hCheckBox,iChecked)
-_IrrAddImage(hTexture,iX,iY,iUseAlpha,iID,hParent=0)
-_IrrAddFileOpen(sTitle,iID,iModal,hParent=0)
-_IrrGetLastSelectedFile()
-_IrrCreateBatchingMatch()
-_IrrAddToBatchingMesh(hMeshBatch,hMesh,fPosX=0.0,fPosY=0.0,fPosZ=0.0,fRotX=0.0,fRotY=0.0,fRotZ=0.0,fScaleX=1.0,fScaleY=1.0,fScaleZ=1.0)
-_IrrFinalizeBatchingMesh(h_Mesh)
-_IrrSetMeshMaterialTexture(h_mesh,h_texture,i_index,i_buffer=0)
-_IrrScaleMesh(h_mesh,fScale,iFrame=0,iMeshBuffer=0,hSourceMesh=0)
-_IrrAddFadeAnimator(hNode,iDeleteAfterMiliseconds,fScale=1.0)
-_IrrAddBeamSceneNode()
-_IrrSetBeamSize(hBeamNode,fSize)
-_IrrSetBeamPosition(hBeamNode,fSX,fSY,fSZ,fEX,fEY,fEZ)
-_IrrAddBoltSceneNode()
-_IrrSetBoltProperties(hBoltNode,fSX,fSY,fSZ,fEX,fEY,fEZ,iUpdateTime=50,iHeight=10,fThickness=5.0,iParts=10,iBolts=6,iSteadyend=$IRR_OFF,iColor=0x0000FFFF)
-_IrrSetBillBoardSize(hNode,fWidth,fHeight)
-_IrrSetBillBoardColor(hNode,iTopColor,iBottomColor)
-_IrrGetScreenCoordinatesFrom3DPosition(ByRef iScreenX,ByRef i_ScreenY,a_3DPositionVector)
-_IrrSetNodeColorByVertex(hNode,iColorMaterial)
-_IrrSetNodeEmissiveColor(hNode,iColor)
-_IrrSetNodeSpecularColor(hNode,iColor)
-_IrrSetNodeDiffuseColor(hNode,iColor)
-_IrrSetNodeAmbientColor(hNode,iColor)
-_IrrIsFullscreen()
-_IrrIsWindowActive()
-_IrrIsWindowFocused()
-_IrrIsWindowMinimized()
-_IrrGetScreenSize(ByRef iWidth, ByRef iHeight)
-_IrrMaximizeWindow()
-_IrrMinimizeWindow()
-_IrrRestoreWindow()
-_IrrSetResizableWindow(iResizable)
-_IrrSetRenderTarget(hTexture,iSceneBGColor=0,iClearBackBuffer=1,iClearZBuffer=1)
-
-; xEffects Extensions:
-_IrrXEffectsStart(iVsm=IRR_OFF,iSoftShadows=IRR_OFF,iBitdepth32=IRR_OFF)
-_IrrXEffectsSetAmbientColor(iR,iG,iB,iAlpha)
-_IrrXEffectsSetClearColor(iR,iG,iB,iAlpha)
-_IrrXEffectsSetShadowLightPosition(iIndex,fPosX,fPosY,fPosZ)
-_IrrXEffectsAddShadowLight(iShadowDimen,fPosX,fPosY,fPosZ,fTargetX,fTargetY,fTargetZ,fR,fG,fB,fAlpha,fLightNearDist,fLightFarDist,fAngleDegrees)
-_IrrXEffectsAddShadowToNode(h_Node,iFilterType=EFT_NONE,ishadowType=ESM_BOTH)
-_IrrXEffectsEnableDepthPass(iEnable)
-_IrrXEffectsAddNodeToDepthPass(hNode)
-_IrrXEffectsAddPostProcessingFromFile(sName,iEnable=0)
-_IrrXEffectsSetPostProcessingUserTexture(hTexture)
-; / xEffects Extensions
-
-__getKeyEvt(pKeyEvent,iElement=$EVT_KEY_IKEY)
-__getMouseEvt(pMouseEvent,iElement=$EVT_MOUSE_IACTION)
-__getGuiEvt(pGUIEvent,iElement=$EVT_GUI_IID)
-__CreatePtrKeyMapArray(ByRef keyStruct,i_kForward=$KEY_KEY_W,i_kBackward=$KEY_KEY_S,i_kLeft=$KEY_KEY_A,i_kRight=$KEY_KEY_D,i_kJump=$KEY_SPACE)
-__CreateParticleEmitter(fMinBoxX,fMinBoxY,fMinBoxZ,fMaxBoxX,fMaxBoxY,fMaxBoxZ,fDirectionX,fDirectionY,fDirectionZ,iMinParticlesPerSecond,iMaxParticlesPerSecond,iMinStartRed,iMinStartGreen,iMinStartBlue,iMaxStartRed,iMaxStartGreen,iMaxStartBlue,iMinLifetime,iMaxLifetime,fMinStartSizeX,fMinStartSizeY,fMaxStartSizeX,fMaxStartSizeY,iMaxAngle)
-__CreateVertex(fX,fY,fZ,fNormalX,fNormalY,fNormalZ,iARGB,fTextureX,fTextureY)
-__CreateVector(fX,fY,fZ)
-
-; end of userCallTips for jRowe's au3Irrlicht2 ====================================================================================
-
-
+; === End of au3Irrlicht2 calltip definitions ========================================================

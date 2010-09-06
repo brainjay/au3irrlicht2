@@ -9,13 +9,12 @@
 ; Description ...: Calls for manipulating, texturing and getting information from nodes in the scene.
 ; Author(s) .....: jRowe, linus.
 ;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
-; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
 ;_IrrGetNodeAbsolutePosition
-;_IrrSetNodeVisibility
 ;_IrrSetNodeParent
 ;_IrrGetNodeID
 ;_IrrGetNodeBoundingBox
@@ -42,6 +41,7 @@
 ;_IrrGetNodeNextChild
 ;_IrrIsNodeLastChild
 ;_IrrAddNodeShadow
+;_IrrSetNodeVisibility
 ;_IrrRemoveNode
 ;_IrrRemoveAllNodes
 ;_IrrSetNodeID

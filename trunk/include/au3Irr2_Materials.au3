@@ -3,14 +3,18 @@
 #include "au3Irr2_constants.au3"
 
 ; #INDEX# =======================================================================================================================
-; Title .........: [todo]
-; AutoIt Version : [todo]
+; Title .........: System
+; AutoIt Version : v3.3.6.1
 ; Language ......: English
-; Description ...: [todo]
-;                  [todo]
-;                  [todo]
-; Author(s) .....: [todo]
-; Dll(s) ........: [todo]
+; Description ...: Calls for creating and manipulating materials that can be applied to a node to color and texture the object.
+;                  Basic Materials set common properties like the shininess and reflective color of the objects. Advanced
+;                  Materials use GPU programs to create sophisticated texturing effects that can greatly add to the realism of
+;                  the scene but are only supported by modern graphics cards with Pixel and Vertex shader support. Currently
+;                  Irrlicht supports Vertex Shaders, Pixel Shaders, ARB Vertex programs, ARB Fragment programs,
+;                  HLSL (DirectX 9) and GLSL (OpenGL).
+; Author(s) .....: jRowe, linus.
+;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================

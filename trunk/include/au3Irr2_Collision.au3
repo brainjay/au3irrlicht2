@@ -9,7 +9,7 @@
 ; Description ...: Calls for creating collision groups and for calculating collisions in the scene.
 ; Author(s) .....: jRowe, linus.
 ;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
-; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
@@ -19,7 +19,6 @@
 ;_IrrRemoveAllCollisionGroupsFromCombination
 ;_IrrRemoveCollisionGroupFromCombination
 ;_IrrGetRayFromScreenCoordinates
-;_IrrGet2DPositionFromScreenCoordinates
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
@@ -34,6 +33,7 @@
 ;_IrrGetCollisionNodeFromScreenCoordinates
 ;_IrrGetScreenCoordinatesFrom3DPosition
 ;_IrrGet3DPositionFromScreenCoordinates
+;_IrrGet2DPositionFromScreenCoordinates
 ;_IrrGetChildCollisionNodeFromRay
 ;_IrrGetChildCollisionNodeFromPoint
 ;_IrrGetNodeAndCollisionPointFromRay
@@ -531,7 +531,7 @@ EndFunc   ;==>_IrrGet3DPositionFromScreenCoordinates
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGet2DPositionFromScreenCoordinates
 ; Description ...: [todo]
 ; Syntax.........: _IrrGet2DPositionFromScreenCoordinates($i_X, $i_Y, ByRef $f_X, ByRef $f_Y, $h_Camera)

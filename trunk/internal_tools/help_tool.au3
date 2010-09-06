@@ -13,27 +13,26 @@
  2010-08-19: Added buildHistoryHTML for automatic update of au3irr2's history info
  2010-08-21: Added updateIntroductionHTML and some fixes on buildHistoryHTML.
  2010-08-24: Fixed list building in buildHistoryHTML
+ 2010-09-04: Added automatic building of the au3.user.calltips.api
+ 2010-09-05: Added some preparation for a merged help file (original au3 help + au3Irr2 help)
 
  Script Function:
 	Helper tool for documentation of the au3Irrlicht2 UDF.
-	Cleans buildHelp dir before/after help file creation.
-	Builds history.html from \include _au3Irr2_changelog.txt
-	Updates \internal_tools\buildHelp\html_static\au3irr2.htm with first release header from the
-	changelog.txt.
-	Scans given UDF or complete dir and (re-) creates needed blocks according to
-	UDF conventions.
+	- cleans buildHelp dir before/after help file creation
+	- builds history.html from \include _au3Irr2_changelog.txt
+	- updates \internal_tools\buildHelp\html_static\au3irr2.htm with first release header from the changelog.txt
+	- scans given UDF or complete dir and (re-) creates needed blocks according to UDF conventions
+	- builds new au3.user.calltips.api
+	- copies original au3 help files to \buildHelp so everything is there for merged help file creation
 	Not too much error handling when updating the UDF's - so final files should be compared
 	with originals (as backuped in \include)!
 
- TODO:
- - automatic creation of the usercalltips file.
- - remove all the empty lines from updated UDF's
 #ce ----------------------------------------------------------------------------
 
-
+#include <Array.au3>
 Opt("MustDeclareVars", True)
 
-const $SCRIPTTITLE = "Help tool V0.31 - 2010 by linus"
+const $SCRIPTTITLE = "Help tool V0.4 - 2010 by linus"
 global $sLastMsg = ""
 
 
@@ -109,26 +108,33 @@ func main()
 	$sLastMsg = ""
 	local $ret
 	local $pathDir, $sUDF, $hFile
-	local $sCurrent, $sCategories, $sIncludes
+	local $sCurrent, $sCategories, $sIncludes, $sCalltips
 	local $pathBuild = @ScriptDir & "\buildHelp\"
+	local $pathAu3 = RegRead("HKLM\SOFTWARE\AutoIt v3\AutoIt", "InstallDir") & "\"
 
-; clean the build directory
+; clean the build directories
 	$ret = MsgBox(4 + 32, $SCRIPTTITLE, "Clean buildHelp dir?")
 	if $ret = 6 then ; YES, clean it
-		FileDelete($pathBuild & "*.hhc")
+		FileDelete($pathBuild & "au3Irr2 TOC.hhc")
+		FileDelete($pathBuild & "au3Irr2 Index.hhk")
 		FileDelete($pathBuild & "*.toc")
-		FileDelete($pathBuild & "*.hhk")
 		FileDelete($pathBuild & "*.tmp")
 		FileDelete($pathBuild & "..\..\include\*.bck")
 		FileDelete($pathBuild & "*.log")
 		FileDelete($pathBuild & "includes.txt")
 		DirRemove($pathBuild & "txt2htm\", 1)
 		DirRemove($pathBuild & "html\", 1)
+		FileDelete($pathBuild & "AutoIt3.chm")
+		FileDelete($pathBuild & "UDFs3.chm")
+		FileDelete($pathBuild & "*.chw")
+		FileDelete($pathBuild & "_errorlog*")
 	EndIf
 
 
 ; update one or several UDF's for help file creation
-	$ret = MsgBox(3 + 32, $SCRIPTTITLE, "Update all .au3 in a dir (NO for single file, CANCEL to skip this)?")
+	$ret = MsgBox(3 + 32, $SCRIPTTITLE, "UDF update for all .au3 in a dir ( (Re-) Builds also some .html files," & @LF & _
+				 "calltips file, and internal categories.toc + includes.txt)?" & @LF & @LF & _
+				 "NO to only update a single .au3 w/o other files, CANCEL to skip this.")
 
 	If $ret = 7 then ; NO: update single file
 		$sUDF = FileOpenDialog($SCRIPTTITLE, @ScriptDir & "\..\include", "(*.au3)", 1 + 2)
@@ -139,27 +145,52 @@ func main()
 			if not updateUDF($sUDF, $sCurrent) then return False
 		EndIf
 
-	ElseIf $ret = 6 then ; YES: update all .au3 in a dir
 
-; Create/update additional files needed for help file:
-	DirCreate($pathBuild & "html")
-	local $sRelInfo = buildHistoryHTML(@ScriptDir & "\..\include\_au3Irr2_changelog.txt", $pathBuild & "html\history.htm")
-	if $sRelInfo = "" then return false ; error in buildHistoryHTML or missing release info
-	if NOT updateIntroductionHTML($pathBuild & "html_static\au3irr2.htm", $sRelInfo) then Return False
 
-		$pathDir = FileSelectFolder("Include dir", "", 0, @ScriptDir)
+	ElseIf $ret = 6 then ; YES: update all .au3 in a dir and build other files for help
+
+		Do
+			$pathDir = FileSelectFolder("Include dir (all .au3 inside will be modified!)", "", 0, @ScriptDir)
+		Until $pathDir <> @ScriptDir ; protect scriptdir before too fast clickin' ...
 		$hFile = FileFindFirstFile($pathDir & "\*.au3")
 		if $hFile = -1 then
-			$sLastMsg = "No .au3 in dir!"
+			$sLastMsg = "main: No .au3 in dir!"
 			Return False
 		EndIf
 
-		while True
+	; Create/update/copy additional files needed for help file:
+		if NOT FileCopy($pathAu3 & "AutoIt3.chm", $pathBuild, 1) _
+			OR NOT FileCopy($pathAu3 & "UDFs3.chm", $pathBuild, 1) Then
+			$sLastMsg = "main: Cannot copy AutoIt3.chm and/or UDFs3.chm from Au3 dir to " & $pathBuild
+			Return False
+		EndIf
+
+		DirCreate($pathBuild & "html")
+		; copy introduction page for merged help together with needed files. Has to be in \htm to be shown properly later
+		if NOT FileCopy($pathBuild & "html_static\introduction.htm", $pathBuild & "html", 1) _
+		   OR NOT FileCopy($pathBuild & "html_static\css", $pathBuild & "html\css\", 1 + 8) _
+		   OR NOT FileCopy($pathBuild & "html_static\images", $pathBuild & "html\images\", 1 + 8) Then
+			$sLastMsg = "main: Cannot copy \html_static\introduction.htm and/or \css + \images to \html!"
+			Return False
+		EndIf
+
+		local $sRelInfo = buildHistoryHTML(@ScriptDir & "\..\include\_au3Irr2_changelog.txt", $pathBuild & "html\history.htm")
+		if $sRelInfo = "" then return false ; error in buildHistoryHTML or missing release info
+		if NOT updateIntroductionHTML($pathBuild & "html_static\au3irr2.htm", $sRelInfo) then Return False
+
+		FileDelete($pathBuild & "au3.user.calltips.api")
+		while True ; loop the UDF's:
 			$sUDF = FileFindNextFile($hFile)
 			if @error then ExitLoop
+			; update current UDF:
 			if not updateUDF($pathDir & "\" & $sUDF, $sCurrent) then
 				FileClose($hFile)
 				return False
+			EndIf
+			; build calltips for current UDF:
+			if NOT buildCalltips($pathDir & "\" & $sUDF, $sCalltips) Then
+				FileClose($hFile)
+				Return False
 			EndIf
 			; prepare includes.txt and categories.toc
 			$sIncludes &= $sUDF & @LF
@@ -169,23 +200,40 @@ func main()
 		WEnd
 		FileClose($hFile)
 
+		; complete the calltips file ...
+		$sCalltips = "; userCallTips for au3Irr2 release " & $sRelInfo & @LF & _
+                     "; copy or (replace) content of this file to your usercalltips of scite via Tools > UserCallTipEntries." & @LF & _
+                     "; === Start of au3Irrlicht2 calltip definitions ======================================================" & @LF & _
+					 @LF & $sCalltips & @LF & _
+					"; === End of au3Irrlicht2 calltip definitions ========================================================"
+
+		; ... and write the calltips file:
+		$hFile = FileOpen($pathBuild & "au3.user.calltips.api", 1) ; appending
+		if $hFile = -1 then
+			$sLastMsg = "main: Cannot write calltips file!"
+			Return False
+		EndIf
+		FileWriteLine($hFile, $sCalltips)
+		FileClose($hFile)
+
 		; write includes.txt and categories.toc
 		$hFile = FileOpen($pathBuild & "txt2htm\txtLibFunctions\Categories.toc", 2 + 8)
 		if @error then
-			$sLastMsg = "Cannot write Categories.toc!"
+			$sLastMsg = "main: Cannot write Categories.toc!"
 			Return False
 		EndIf
 		FileWrite($hFile, $sCategories)
 		FileClose($hFile)
 		$hFile = FileOpen($pathBuild & "includes.txt", 2 + 8)
 		if @error then
-			$sLastMsg = "Cannot write includes.txt!"
+			$sLastMsg = "main: Cannot write includes.txt!"
 			Return False
 		EndIf
 		FileWrite($hFile, $sIncludes)
 		FileClose($hFile)
 
 	EndIf
+
 
 
 	Return True
@@ -197,17 +245,16 @@ func updateUDF($pathInFile, ByRef $sCategories)
 
 	$sLastMsg = ""
 	local $pathOutFile
-	Local $h_outFile
+	Local $hOutFile
 	Local $sHeader, $sIndex, $sNoDoc, $sCurrent, $sInternal, $sBody
 
 
-	;$pathInFile = FileOpenDialog($SCRIPTTITLE, @ScriptDir, "(*.au3)", 1 + 2)
 	$pathOutFile = StringReplace($pathInFile, ".au3", "_bck.au3")
 
 	$pathOutFile = $pathInFile
 	$pathInFile = StringReplace($pathInFile, ".au3", ".bck")
 	if not FileCopy($pathOutFile, $pathInFile, 1) then ; create backup and use it as inFile
-		$sLastMsg = "Cannot copy " & $pathOutFile & " to " & $pathInFile
+		$sLastMsg = "updateUDF: Cannot copy " & $pathOutFile & " to " & $pathInFile
 		Return False
 	EndIf
 
@@ -220,13 +267,13 @@ func updateUDF($pathInFile, ByRef $sCategories)
 	$sInternal = $template_INTERNAL & $sInternal & $TEMPLATE_SEPLINE
 
 
-	$h_outFile = FileOpen($pathOutFile, 2) ; (over) write
-	if $h_outFile = -1 then
-		$sLastMsg = "Cannot open " & $pathOutFile
+	$hOutFile = FileOpen($pathOutFile, 2) ; (over) write
+	if $hOutFile = -1 then
+		$sLastMsg = "updateUDF: Cannot open " & $pathOutFile
 		Return False
 	Else
-		FileWrite($h_outFile, $sHeader & @LF & $sIndex & @LF & $sNoDoc & @LF & $sCurrent & @LF & $sInternal & @LF & $sBody & @LF )
-		FileClose($h_outFile)
+		FileWrite($hOutFile, $sHeader & @LF & $sIndex & @LF & $sNoDoc & @LF & $sCurrent & @LF & $sInternal & @LF & $sBody)
+		FileClose($hOutFile)
 	EndIf
 
 	Return True
@@ -247,7 +294,7 @@ func parseUDF($pathFile, ByRef $sHeader, byRef $sIndex, ByRef $sNoDoc, ByRef $sC
 
 	Local $h_File = FileOpen($pathFile, 0) ; reading
 	if $h_File = -1 then
-		$sLastMsg = "Cannot open " & $pathFile
+		$sLastMsg = "parseUDF: Cannot open " & $pathFile
 		Return False
 	EndIf
 
@@ -380,13 +427,13 @@ func buildHistoryHTML($sPathSrc, $sPathOut)
 
 	local $hIn = FileOpen($sPathSrc)
 	if $hIn = -1 Then
-		$sLastMsg = "Cannot open " & $sPathSrc & " for building history .html!"
+		$sLastMsg = "buildHistoryHTML: Cannot open " & $sPathSrc & " for building history .html!"
 		Return False
 	EndIf
 
 	local $hOut = FileOpen($sPathOut, 2)
 	if $hOut = -1 Then
-		$sLastMsg = "Cannot open " & $sPathOut & " for building history .html!"
+		$sLastMsg = "buildHistoryHTML: Cannot open " & $sPathOut & " for building history .html!"
 		Return False
 	EndIf
 
@@ -437,8 +484,6 @@ func buildHistoryHTML($sPathSrc, $sPathOut)
 			; if list point relevant for .html then write it:
 			if StringLeft($sListPoint, 1) = '+' Then
 				$sListPoint = '<ul><li>' & StringMid($sListPoint, 2) & '</li></ul>'
-				$sInStripped = StringReplace($sInStripped, '[', '<b>')
-				$sInStripped = StringReplace($sInStripped, ']', '</b>')
 				$sContent &= $sListPoint & @LF
 			EndIf
 
@@ -453,16 +498,19 @@ func buildHistoryHTML($sPathSrc, $sPathOut)
 
 	WEnd
 
-	; merge following list points before writing:
+	; merge following list points and set bold tags before writing:
 	$sContent = StringReplace($sContent, '</ul>' & @LF & '<ul>', @LF)
+	$sContent = StringReplace($sContent, '[', '<b>')
+	$sContent = StringReplace($sContent, ']', '</b>')
+
 	FileWriteLine($hOut, $sContent)
 
 ; finish the .html file:
 	FileWriteLine($hOut, '</body></html>')
 	FileClose($hOut)
-	if $currentVersionText = "" then $sLastMsg = "No release info found in changelog.txt!"
+	if $currentVersionText = "" then $sLastMsg = "buildHistoryHTML: No release info found in changelog.txt!"
 	Return $currentVersionText
-EndFunc   ;==>parseFile
+EndFunc   ;==>buildHistoryHTML
 
 
 ; ====================================================================================================================
@@ -473,19 +521,19 @@ Func updateIntroductionHTML($sPathIntroPage, $sRelInfo)
 	$sLastMsg = ""
 	local $sContent = FileRead($sPathIntroPage)
 	if @error then
-		$sLastMsg = "Cannot read " & $sPathIntroPage
+		$sLastMsg = "updateIntroductionHTML: Cannot read " & $sPathIntroPage
 		Return False
 	EndIf
 
 	$sContent = StringRegExpReplace($sContent, '(<p align="center"><strong>).*?(</strong></p>)', '\1 ' & $sRelInfo & ' \2', 1)
 	if NOT @Extended = 2 then
-		$sLastMsg = "Cannot replace release info in " & $sRelInfo
+		$sLastMsg = "updateIntroductionHTML: Cannot replace release info in " & $sRelInfo
 		Return False
 	EndIf
 
 	local $hOut = FileOpen($sPathIntroPage, 2)
 	if $hOut = -1 then
-		$sLastMsg = "Cannot overwrite old " & $sRelInfo
+		$sLastMsg = "updateIntroductionHTML: Cannot overwrite old " & $sRelInfo
 		Return False
 	EndIf
 
@@ -495,3 +543,54 @@ Func updateIntroductionHTML($sPathIntroPage, $sRelInfo)
 	Return True
 EndFunc   ;==>updateIntroductionHTML
 
+
+; ====================================================================================================================
+func buildCalltips($pathInFile, ByRef $sCalltips)
+
+	$sLastMsg = ""
+	local $hInFile
+	local $sLine, $sLastDesc, $i
+
+
+	$hInFile = FileOpen($pathInFile, 0) ; read
+	if $hInFile = -1 then
+		$sLastMsg = "buildCalltips: Cannot open " & $pathInFile
+		Return False
+	EndIf
+
+	while True
+		$sLine = FileReadLine($hInFile)
+		If @error = -1 Then ExitLoop ; EOF
+		$sLine = StringStripWS($sLine, 1 + 2 + 4 )
+
+		; extract function descriptions:
+		if StringInStr($sLine, "; Description ...:") Then ; it's before syntax line, so store it:
+			$sLastDesc = StringStripWS( StringReplace($sLine, "; Description ...:", ""), 1 + 2 )
+			if $sLastDesc = "[todo]" then $sLastDesc = ""
+		; extract function syntax:
+		ElseIf StringInStr($sLine, "; Syntax.........:") Then
+			$sLine = StringStripWS( StringReplace($sLine, "; Syntax.........:", ""), 1 + 2 )
+			$sLine = StringReplace($sLine, ", ", ",") ; make tooltips little bit shorter
+			$sLine = StringReplace($sLine, " = ", "=")
+			$sCalltips &= $sLine & " " & $sLastDesc & @LF
+		; extract names of global constants:
+		ElseIf StringLeft(StringLower($sLine), 12) = "global const" Then
+			$sLine = StringRegExpReplace($sLine, '(?i)global const (.*?)([ ;=]|\Z).*', '\1') ; cut-out the constant name:
+			$sCalltips &= $sLine & @LF
+
+		; extract names of global enums:
+		ElseIf StringLeft(StringLower($sLine), 11) = "global enum" Then
+			$sLine = StringRegExpReplace($sLine, '(?i)global enum (.*?)([;]|\Z).*', '\1') ; get it w/o keywords and comment
+			while StringRight( StringStripWS($sLine, 2), 1) = '_' ; enum over several lines
+				$sLine &= FileReadLine($hInFile)
+				$sLine = StringRegExpReplace($sLine, '(.*?)([;]|\Z).*', '\1') ; remove possible comment
+			WEnd
+			$sLine = StringRegExp($sLine, '\$[^, ]*', 3) ; build array of the enumerated constants
+			for $i = 0 to (UBound($sLine) - 1)
+				$sCalltips &= $sLine[$i] & @LF
+			next ; $i
+		EndIf
+	WEnd
+
+	Return True
+EndFunc   ;==>buildCalltips

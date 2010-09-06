@@ -21,10 +21,6 @@
 ;_IrrIsWindowFocused
 ;_IrrIsWindowMinimized
 ;_IrrGetScreenSize
-;_IrrMaximizeWindow
-;_IrrMinimizeWindow
-;_IrrRestoreWindow
-;_IrrSetResizableWindow
 ;_IrrDisableFeature
 ;_IrrGetTime
 ;_IrrSetTime
@@ -46,6 +42,10 @@
 ;_IrrGetFPS
 ;_IrrGetPrimitivesDrawn
 ;_IrrSetWindowCaption
+;_IrrMaximizeWindow
+;_IrrMinimizeWindow
+;_IrrRestoreWindow
+;_IrrSetResizableWindow
 ;_IrrMakeARGB
 ;_IrrQueryFeature
 ; ===============================================================================================================================
@@ -102,7 +102,7 @@ Func _IrrStart($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $
 
 	$_irrDll = DllOpen("IrrlichtWrapper.dll")
 	if $_irrDll = -1 Then ; .dll cannot be opened - try to get it by extending %path%:
-		EnvSet("PATH", @ScriptDir & "\bin;" & @ScriptDir & "\..\;" & EnvGet("PATH"))
+		EnvSet("PATH", @ScriptDir & "\bin;" & @ScriptDir & "\..\bin;" & EnvGet("PATH"))
 		EnvUpdate()
 
 		$_irrDll = DllOpen("IrrlichtWrapper.dll")
@@ -176,7 +176,7 @@ Func _IrrStartAdvanced($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight 
 
 	$_irrDll = DllOpen("IrrlichtWrapper.dll")
 	if $_irrDll = -1 Then ; .dll cannot be opened - try to get it by extending %path%:
-		EnvSet("PATH", @ScriptDir & "\bin;" & @ScriptDir & "\..\;" & EnvGet("PATH"))
+		EnvSet("PATH", @ScriptDir & "\bin;" & @ScriptDir & "\..\bin;" & EnvGet("PATH"))
 		EnvUpdate()
 
 		$_irrDll = DllOpen("IrrlichtWrapper.dll")
@@ -710,7 +710,7 @@ Func _IrrGetScreenSize(ByRef $i_Width, ByRef $i_Height)
 EndFunc   ;==>_IrrGetScreenSize
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMaximizeWindow
 ; Description ...: [todo]
 ; Syntax.........: _IrrMaximizeWindow()
@@ -738,7 +738,7 @@ Func _IrrMaximizeWindow()
 EndFunc   ;==>_IrrMaximizeWindow
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMinimizeWindow
 ; Description ...: [todo]
 ; Syntax.........: _IrrMinimizeWindow()
@@ -766,7 +766,7 @@ Func _IrrMinimizeWindow()
 EndFunc   ;==>_IrrMinimizeWindow
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrRestoreWindow
 ; Description ...: [todo]
 ; Syntax.........: _IrrRestoreWindow()
@@ -794,7 +794,7 @@ Func _IrrRestoreWindow()
 EndFunc   ;==>_IrrRestoreWindow
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetResizableWindow
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetResizableWindow($i_Resizable)
