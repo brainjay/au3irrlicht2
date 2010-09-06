@@ -1,5 +1,6 @@
 #summary au3Irr2 Introduction
 #labels Featured
+#sidebar TableOfContents
 
 ----
 = Introduction =
