@@ -60,3 +60,6 @@ First release in one package (UDF + all needed .dll's, examples, ExampleLauncher
 == 2.0 (2010-05-03) ==
 
 First release of jRowe
+
+
+----
