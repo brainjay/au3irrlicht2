@@ -9,7 +9,7 @@
 ; Description ...: Calls to create and effect lighting in the scene.
 ; Author(s) .....: jRowe, linus.
 ;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
-; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
@@ -162,7 +162,7 @@ EndFunc   ;==>_IrrSetLightAttenuation
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrSetLightCastShadows($h_Light, $i_Shadows)
-	DllCall($_irrDll, "none:cdecl", "IrrSetLightAttenuation", "ptr", $h_Light, "int", $i_Shadows)
+	DllCall($_irrDll, "none:cdecl", "IrrSetLightCastShadows", "ptr", $h_Light, "int", $i_Shadows)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
@@ -297,7 +297,7 @@ EndFunc   ;==>_IrrSetLightOuterCone
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrSetLightRadius($h_Light, $f_Radius)
-	DllCall($_irrDll, "none:cdecl", "IrrSetLightOuterCone", "ptr", $h_Light, "float", $f_Radius)
+	DllCall($_irrDll, "none:cdecl", "IrrSetLightRadius", "ptr", $h_Light, "float", $f_Radius)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else

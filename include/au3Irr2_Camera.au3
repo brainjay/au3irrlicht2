@@ -10,7 +10,7 @@
 ;                  defining a view point and a target point which is used to render the scene.
 ; Author(s) .....: jRowe, linus.
 ;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
-; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
@@ -19,8 +19,6 @@
 ;_IrrSetCameraUpDirection
 ;_IrrRevolveCamera
 ;_IrrSetCameraUpAtRightAngle
-;_IrrSetCameraOrthagonal
-;_IrrSetCameraFOV
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
@@ -30,8 +28,10 @@
 ;_IrrSetCameraTarget
 ;_IrrGetCameraTarget
 ;_IrrGetCameraOrientation
+;_IrrSetCameraOrthagonal
 ;_IrrSetCameraClipDistance
 ;_IrrSetActiveCamera
+;_IrrSetCameraFOV
 ;_IrrSetCameraAspectRatio
 ;__CreatePtrKeyMapArray
 ; ===============================================================================================================================
@@ -305,7 +305,7 @@ EndFunc   ;==>_IrrGetCameraOrientation
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrRevolveCamera($h_Camera, $f_Yaw, $f_Pitch, $f_Roll, $f_Drive, $f_Strafe, $f_Elevate)
-	DllCall($_irrDll, "none:cdecl", "IrrSetCameraUpDirection", "UINT_PTR", $h_Camera, "float", $f_Yaw, "float", $f_Pitch, "float", $f_Roll, "float", $f_Drive, "float", $f_Strafe, "float", $f_Elevate)
+	DllCall($_irrDll, "none:cdecl", "IrrRevolveCamera", "UINT_PTR", $h_Camera, "float", $f_Yaw, "float", $f_Pitch, "float", $f_Roll, "float", $f_Drive, "float", $f_Strafe, "float", $f_Elevate)
 	If @error Then
 		Return SetError(1, 0, False)
 	Else
@@ -341,7 +341,7 @@ Func _IrrSetCameraUpAtRightAngle($h_Camera)
 EndFunc   ;==>_IrrSetCameraUpAtRightAngle
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetCameraOrthagonal
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetCameraOrthagonal($h_Camera, $f_DistanceX, $f_DistanceY, $f_DistanceZ)
@@ -422,7 +422,7 @@ Func _IrrSetActiveCamera($h_Camera)
 EndFunc   ;==>_IrrSetActiveCamera
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetCameraFOV
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetCameraFOV($h_Camera, $f_FOV)

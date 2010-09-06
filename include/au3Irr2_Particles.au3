@@ -3,14 +3,13 @@
 #include "au3Irr2_constants.au3"
 
 ; #INDEX# =======================================================================================================================
-; Title .........: [todo]
-; AutoIt Version : [todo]
+; Title .........: System
+; AutoIt Version : v3.3.6.1
 ; Language ......: English
-; Description ...: [todo]
-;                  [todo]
-;                  [todo]
-; Author(s) .....: [todo]
-; Dll(s) ........: [todo]
+; Description ...: Calls to control the appearance and follow of particles in particle systems.
+; Author(s) .....: jRowe, linus.
+;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================

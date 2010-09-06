@@ -48,6 +48,7 @@ Main()
 _OutputBuildWrite("Generate Management HTM files for UDFs" & @CRLF)
 RunWait('"' & @AUTOITEXE & '"' & ' All_Gen_MgtPages.au3 /UDFs')
 
+MsgBox(0, "AllGen_au3irr_UDFs3", "Done.")
 
 Func Main()
    ;
@@ -74,7 +75,7 @@ Func Main()
    FileWriteLine($FO_TOC_HND, '</OBJECT>')
    FileWriteLine($FO_TOC_HND, '<UL>')
    FileWriteLine($FO_TOC_HND, '<LI> <OBJECT type="text/sitemap">')
-   FileWriteLine($FO_TOC_HND, '<param name="Name" value="au3Irrlicht2 Introduction">')
+   FileWriteLine($FO_TOC_HND, '<param name="Name" value="au3Irr2 Introduction">')
    FileWriteLine($FO_TOC_HND, '<param name="Local" value="html_static\au3irr2.htm">')
    FileWriteLine($FO_TOC_HND, '</OBJECT>')
    FileWriteLine($FO_TOC_HND, '<LI> <OBJECT type="text/sitemap">')

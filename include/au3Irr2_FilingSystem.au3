@@ -11,17 +11,17 @@
 ;                  decompressing them.
 ; Author(s) .....: jRowe, linus.
 ;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
-; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
-;_IrrChangeWorkingDirectory
-;_IrrGetWorkingDirectory
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
 ;_IrrAddZipFile
+;_IrrChangeWorkingDirectory
+;_IrrGetWorkingDirectory
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -58,7 +58,7 @@ Func _IrrAddZipFile($s_Zipfile, $i_IgnoreCase, $i_IgnorePaths)
 EndFunc   ;==>_IrrAddZipFile
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrChangeWorkingDirectory
 ; Description ...: [todo]
 ; Syntax.........: _IrrChangeWorkingDirectory($s_WorkingDir)
@@ -85,7 +85,7 @@ Func _IrrChangeWorkingDirectory($s_WorkingDir)
 EndFunc   ;==>_IrrChangeWorkingDirectory
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetWorkingDirectory
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetWorkingDirectory()

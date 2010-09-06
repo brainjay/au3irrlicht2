@@ -553,11 +553,11 @@ Func makeExample(ByRef $i)
 	If $i = -1 Then
 		Local $example = includeExample($i)
 		If $example <> "" Then
-			$example = $example & @CRLF & _
-					'<script type="text/javascript">' & @CRLF & _
-					'if (document.URL.match(/^mk:@MSITStore:/i))' & @CRLF & _
-					'document.write(''<br><OBJECT id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11" width=58 height=57><PARAM name="Command" value="ShortCut"><PARAM name="Button" value="Text:Open this Script"><PARAM name="Item1" value=",Examples\\HelpFile\\' & StringReplace($Filename, ".txt", ".au3") & ',"></OBJECT>'');' & @CRLF & _
-					'</script>'
+;~ 			$example = $example & @CRLF & _
+;~ 					'<script type="text/javascript">' & @CRLF & _
+;~ 					'if (document.URL.match(/^mk:@MSITStore:/i))' & @CRLF & _
+;~ 					'document.write(''<br><OBJECT id=hhctrl type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11" width=58 height=57><PARAM name="Command" value="ShortCut"><PARAM name="Button" value="Text:Open this Script"><PARAM name="Item1" value=",Examples\\HelpFile\\' & StringReplace($Filename, ".txt", ".au3") & ',"></OBJECT>'');' & @CRLF & _
+;~ 					'</script>'
 			$example = $example & @CRLF
 		EndIf
 		Return $example
