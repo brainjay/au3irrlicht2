@@ -1,8 +1,8 @@
 #summary au3Irrlicht2 ChangeLog
 #labels Featured
+#sidebar TableOfContents
 
-
-= au3Irrlicht2 ChangeLog =
+= au3Irrlicht2 !ChangeLog =
 
 ----
 
@@ -14,9 +14,9 @@
 
   * Changed: Splitted UDF per category into \include. Main UDF (and the only one which is needed to be included) is still au3Irrlicht2.au3
 
-  * Changed: All used dll files are moved to \bin to clean up the root dir. _IrrStart is modified to find them anyway.
+  * Changed: All used dll files are moved to \bin to clean up the root dir. `_IrrStart` is modified to find them anyway.
 
-  * Fixed: _IrrSetNodeVisibility
+  * Fixed: `_IrrSetNodeVisibility`
 
 ==== Examples: ====
 
@@ -24,7 +24,7 @@
 
   * Changed: 029 (Skydome)
 
-  * Fixed: 049 (Loaded_Scene_Collision), 051 (Clouds)
+  * Fixed: 049 (!Loaded_Scene_Collision), 051 (Clouds)
 
 ==== Help file: ====
 
@@ -51,7 +51,7 @@
 
 == 2.02 (2010-07-29) ==
 
-First release in one package (UDF + all needed .dll's, examples, ExampleLauncher)
+First release in one package (UDF + all needed .dll's, examples, !ExampleLauncher)
 
 
 ----
