@@ -1,4 +1,5 @@
 #summary Software License
+#sidebar TableOfContents
 
 ----
 = Software License =
