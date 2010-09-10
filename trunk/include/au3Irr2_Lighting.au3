@@ -38,20 +38,22 @@
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddLight
-; Description ...: [todo]
+; Description ...: Adds a light node into scene to naturally illuminate your scene.
 ; Syntax.........: _IrrAddLight($h_parentNode, $f_X, $f_Y, $f_Z, $f_Red, $f_Green, $f_Blue, $f_Size)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_parentNode - Handle of the node to attach the light to.
+;                  |$IRR_NO_PARENT attaches to the root node of the scene.
+;                  $f_X, $f_Y, $f_Z - Coordinates of the light in the scene
+;                  $f_Red, $f_Green, $f_Blue - Intensity of the light.
+;                  |<b>Red/green/blue are fractional values from 0 to 1!</b>
+;                  $f_Size - Radius of effect of the light
+; Return values .: Success - Handle of light node in the scene
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: When using shadows you probably only want one or two lights - they can be time consuming.
+; Related .......: _IrrAddNodeShadow, _IrrSetAmbientLight
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddLight($h_parentNode, $f_X, $f_Y, $f_Z, $f_Red, $f_Green, $f_Blue, $f_Size)
 	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddLight", "UINT_PTR", $h_parentNode, "float", $f_X, "float", $f_Y, "float", $f_Z, "float", $f_Red, "float", $f_Green, "float", $f_Blue, "float", $f_Size)
@@ -65,20 +67,18 @@ EndFunc   ;==>_IrrAddLight
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetAmbientLight
-; Description ...: [todo]
+; Description ...: Sets the ambient lighting level across entire scene.
 ; Syntax.........: _IrrSetAmbientLight($f_Red, $f_Green, $f_Blue)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $i_Red, $i_Green, $i_Blue - Colour values for ambient lighting from 0 to 255.
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: Ambient light illuminates all surfaces in the scene uniformly. This is usually a low value to increase the overall lighting level.
+;                  It should never be greater than the brightness of the darkest area of your scene, it can however reduce the number of lights you need in the scene.
+; Related .......: _IrrAddLight, _IrrSetLightAmbientColor
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetAmbientLight($f_Red, $f_Green, $f_Blue)
 	DllCall($_irrDll, "none:cdecl", "IrrSetAmbientLight", "float", $f_Red, "float", $f_Green, "float", $f_Blue)

@@ -12,6 +12,17 @@
 ; '[' and ']' can be used to set text to bold in .html
   
 
+=== 2.04 (xxxx-xx-xx) ==========================================================
+[Work in progress!]
+
+> Help file:
+
++ Added: Complete documentation including example code for some more functions.
+- Topics completed including example code along examples 1-6, 8
+  Naked reference w/o detailed informations for other examples.
+
+
+
 === 2.03 (2010-09-05) ==========================================================
 
 > UDF:

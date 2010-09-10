@@ -1054,20 +1054,20 @@ EndFunc   ;==>_IrrAddGrass
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetShadowColor
-; Description ...: [todo]
+; Description ...: Sets the colour of shadows cast by objects in the scene.
 ; Syntax.........: _IrrSetShadowColor($i_Alpha, $i_Red, $i_Green, $i_Blue)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $i_Alpha - Alpha blend for the shadow.
+;                  |Value of 128 would mean a half washed out shadow which gives the appearence of ambient light in the room illuminating the shadowed surface.
+;                  $i_Red, $i_Green, $i_Blue - Colour values for shadow colour from 0 to 255.
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: The shadow colour is a global property for the whole scene (however you can change it when moving into different areas of your scene).
+;                  If you are observing a bright scene you might use a light grey shadow instead of a heavy black shadow to add to realism.
+; Related .......: _IrrAddNodeShadow, _IrrAddLight
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetShadowColor($i_Alpha, $i_Red, $i_Green, $i_Blue)
 	DllCall($_irrDll, "none:cdecl", "IrrSetShadowColor", "int", $i_Alpha, "int", $i_Red, "int", $i_Green, "int", $i_Blue)
