@@ -630,20 +630,21 @@ EndFunc   ;==>_IrrIsNodeLastChild
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddNodeShadow
-; Description ...: [todo]
+; Description ...: Adds shadows to a node that are cast across other nodes in the scene.
 ; Syntax.........: _IrrAddNodeShadow($h_Node, $h_mesh = 0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Node - Handle of a node in the scene
+;                  $h_mesh - [optional] Handle of mesh casting the shadow (0 uses mesh of h_Node, see remarks)
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: _IrrAddShadows will only work when shadowing has been activated with _IrrStart or _IrrStartAdvanced.
+;                  You should analyse the performance of your scene carefully when using this function as it can have a significant effect on your frame rate.
+;                  You can supply a different mesh to the one used to display the node, this shadow mesh could be a much lower resoloution than that used for your model thereby improving performance.
+;                  <br><b>_IrrAddNodeShadow does NOT work with buildin nodes types _IrrAddTestSceneNode, _IrrAddCubeSceneNode, and _IrrAddSphereSceneNode. If you need a cube or a sphere casting shadows, create a node from a loaded cube or sphere mesh as workaround.</b>
+; Related .......: _IrrStart, _IrrStartAdvanced, _IrrSetShadowColor, _IrrAddLight, _IrrSetAmbientLight
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddNodeShadow($h_Node, $h_mesh = 0)
 	DllCall($_irrDll, "none:cdecl", "IrrAddNodeShadow", "ptr", $h_Node, "ptr", $h_mesh)

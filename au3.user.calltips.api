@@ -1,4 +1,4 @@
-; userCallTips for au3Irr2 release 2.03 (2010-09-05)
+; userCallTips for au3Irr2 release 2.04 (xxxx-xx-xx)
 ; copy or (replace) content of this file to your usercalltips of scite via Tools > UserCallTipEntries.
 ; === Start of au3Irrlicht2 calltip definitions ======================================================
 
@@ -601,7 +601,7 @@ _IrrAddChildToParent($h_ChildNode,$h_ParentNode)
 _IrrGetNodeFirstChild($h_Node,ByRef $h_Position) 
 _IrrGetNodeNextChild($h_Node,ByRef $h_Position) 
 _IrrIsNodeLastChild($h_Node,ByRef $h_Position) 
-_IrrAddNodeShadow($h_Node,$h_mesh=0) 
+_IrrAddNodeShadow($h_Node,$h_mesh=0) Adds shadows to a node that are cast across other nodes in the scene.
 _IrrSetNodeVisibility($h_Node,$i_Visible) 
 _IrrRemoveNode($h_Node) Removes a node from the scene deleting it.
 _IrrRemoveAllNodes() 
