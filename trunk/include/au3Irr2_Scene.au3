@@ -9,13 +9,15 @@
 ; Description ...: Calls for managing the scene, loading and creating mesh objects and then adding them to the scene
 ;                  as nodes to be rendered on the screen.
 ; Author(s) .....: jRowe, linus.
-;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
+;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (IrrlichtWrapper.dll),
+;                  and Nikolaus Gebhardt and Irrlicht team (Irrlicht.dll).
 ; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
 ;_IrrCreateMesh
+;_IrrAddSphereSceneMesh
 ;_IrrWriteMesh
 ;_IrrGetMeshFrameCount
 ;_IrrGetMeshBufferCount
@@ -196,6 +198,35 @@ Func _IrrCreateMesh($s_MeshName, $a_Vertices, $a_Indices)
 		Return $result[0]
 	EndIf
 EndFunc   ;==>_IrrCreateMesh
+
+
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrAddSphereSceneMesh
+; Description ...: [todo]
+; Syntax.........: _IrrAddSphereSceneMesh($s_MeshName, $f_Radius, $i_PolyCount)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrAddSphereSceneMesh($s_MeshName, $f_Radius, $i_PolyCount)
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddSphereSceneMesh", "str", $s_MeshName, "float", $f_Radius, "int", $i_PolyCount)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return $result[0]
+	EndIf
+EndFunc   ;==>IrrAddSphereSceneMesh
 
 
 
@@ -478,7 +509,7 @@ EndFunc   ;==>_IrrGetMeshVertexCount
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddMeshToScene
-; Description ...: Adds a mesh to the scene as a new 3D 'node'.
+; Description ...: Adds a mesh to the scene as a new 3D node.
 ; Syntax.........: _IrrAddMeshToScene($h_Mesh)
 ; Parameters ....: $h_Mesh - Handle of a mesh object
 ; Return values .: Success - Handle of the new node in the scene
@@ -753,20 +784,22 @@ EndFunc   ;==>_IrrAddParticleSystemToScene
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddSkyBoxToScene
-; Description ...: [todo]
+; Description ...: Adds a skybox node to the scene.
 ; Syntax.........: _IrrAddSkyBoxToScene($h_UpTexture, $h_DownTexture, $h_LeftTexture, $h_RightTexture, $h_FrontTexture, $h_BackTexture)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_UpTexture - Handle of the top side texture
+;                  $h_DownTexture - Handle of the bottom side texture
+;                  $h_LeftTexture - Handle of the left side texture
+;                  $h_RightTexture - Handle of the right side texture
+;                  $h_FrontTexture - Handle of the front side texture
+;                  $h_BackTexture - Handle of the back side texture
+; Return values .: success - Handle of the skybox node
+;                  failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: A skybox is a huge hollow cube that encapsulates the entire scene and has a different texture applied to each of its six surfaces to represent a distant sky or matte scene.
+; Related .......: _IrrAddSkyDomeToScene
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddSkyBoxToScene($h_UpTexture, $h_DownTexture, $h_LeftTexture, $h_RightTexture, $h_FrontTexture, $h_BackTexture)
 	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddSkyBoxToScene", "ptr", $h_UpTexture, "ptr", $h_DownTexture, "ptr", $h_LeftTexture, "ptr", $h_RightTexture, "ptr", $h_FrontTexture, "ptr", $h_BackTexture)
@@ -792,7 +825,7 @@ EndFunc   ;==>_IrrAddSkyBoxToScene
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Related .......: _IrrAddSkyBoxToScene, _IrrSetSkyDomeColor, _IrrSetSkyDomeColorBand, _IrrSetSkyDomeColorPoint
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
@@ -835,20 +868,17 @@ EndFunc   ;==>_IrrAddEmptySceneNode
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddTestSceneNode
-; Description ...: [todo]
+; Description ...: Adds a simple cube node to the scene
 ; Syntax.........: _IrrAddTestSceneNode()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: None
+; Return values .: success - Handle of the cube scene node
+;                  failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: The test scene node is a cube with fixed dimensions mainly for test purposes.
+; Related .......: _IrrAddCubeSceneNode, _IrrAddSphereSceneNode
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddTestSceneNode()
 	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddTestSceneNode")
@@ -862,20 +892,17 @@ EndFunc   ;==>_IrrAddTestSceneNode
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddCubeSceneNode
-; Description ...: [todo]
+; Description ...: Adds a cube object to the scene with the specified dimensions.
 ; Syntax.........: _IrrAddCubeSceneNode($f_Size)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $f_Size - Edge length of the cube.
+; Return values .: success - Handle of the cube scene node
+;                  failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrAddTestSceneNode, _IrrAddSphereSceneNode
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddCubeSceneNode($f_Size)
 	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddCubeSceneNode", "float", $f_Size)
@@ -889,22 +916,21 @@ EndFunc   ;==>_IrrAddCubeSceneNode
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddSphereSceneNode
-; Description ...: [todo]
-; Syntax.........: _IrrAddSphereSceneNode($f_Size, $i_PolyCount)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Description ...: Adds a simple sphere object to the scene
+; Syntax.........: _IrrAddSphereSceneNode($f_Size, $i_PolyCount = 16)
+; Parameters ....: $f_Size - Radius of the sphere
+;                  $i_PolyCount - [optional] Level of detail for the sphere.
+;                  |Too high values could produce a very high density mesh and affect your frame rate adversely.
+; Return values .: success - Handle of the sphere scene node
+;                  failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrAddTestSceneNode, _IrrAddCubeSceneNode
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrAddSphereSceneNode($f_Size, $i_PolyCount)
+Func _IrrAddSphereSceneNode($f_Size, $i_PolyCount = 16)
 	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddSphereSceneNode", "float", $f_Size, "int", $i_PolyCount)
 	if @error Then
 		Return Seterror(1,0,False)
@@ -1081,22 +1107,27 @@ EndFunc   ;==>_IrrSetShadowColor
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetFog
-; Description ...: [todo]
-; Syntax.........: _IrrSetFog($i_Red, $i_Green, $i_Blue, $i_FogType, $f_FogStart, $f_FogEnd, $f_Density)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Description ...: Set the properties of fog in the scene
+; Syntax.........: _IrrSetFog($i_Red, $i_Green, $i_Blue, $i_FogType, $f_FogStart, $f_FogEnd, $f_Density = 0.025)
+; Parameters ....: $i_Red, $i_Green, $i_Blue - Define colour of the fog (0-255).
+;                  |Should be set to the same colour as the scene sky so the scene fogs out nicely into nothing.
+;                  $i_FogType - Defines how the fog is calculated:
+;                  |$IRR_LINEAR_FOG - computed as [end - distance / end - start], density value is not used.
+;                  |$IRR_EXPONENTIAL_FOG - computed as [1 / (2.718^(distance * densitiy))], both start and end values are not used.
+;                  $f_FogStart, $f_FogEnd - Distances at which the fog starts and at which it reaches its maximum density.
+;                  |Values are ignored for exponential fog.
+;                  $f_Density - [optional] Determines how quickly the exponential change takes place, with value from 0 to 1.
+;                  |Example: A value of 0.025 equals 20% visibility at 50 units distance. Value is ignored for linear fog.
+; Return values .: success - True
+;                  failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: None.
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrSetFog($i_Red, $i_Green, $i_Blue, $i_FogType, $f_FogStart, $f_FogEnd, $f_Density)
+Func _IrrSetFog($i_Red, $i_Green, $i_Blue, $i_FogType, $f_FogStart, $f_FogEnd, $f_Density = 0.001)
 	$result = DllCall($_irrDll, "none:cdecl", "IrrSetFog", "int", $i_Red, "int", $i_Green, "int", $i_Blue, "int", $i_FogType, "float", $f_FogStart, "float", $f_FogEnd, "float", $f_Density)
 	if @error Then
 		Return Seterror(1,0,False)

@@ -15,11 +15,33 @@
 === 2.04 (xxxx-xx-xx) ==========================================================
 [Work in progress!]
 
+
+> UDFs:
+
++ Fixed _IrrSetFog (linear and exponential fog were interchanged)
+
+
+
+> Examples:
+
++ Added: 062 (6D0F_Camera)
++ Fixed: 010 (TerrainAndFog) / 029/054 (Skydomes)
+- 010: Corrected parameters and wrong documentation of _IrrSetFog. 029/054: renamed 
+  skydome.jpg to 'skydome2.jpg' and restored original texture needed for example 054.
+
+
+
 > Help file:
 
-+ Added: Complete documentation including example code for some more functions.
-- Topics completed including example code along examples 1-6, 8
-  Naked reference w/o detailed informations for other examples.
++ Added: Completed documentation including example code for some more functions.
++ Current status: Topics completed along examples 1-6, 8-11.
+  Naked reference w/o detailed informations for all functions inside other examples.
+- Changed: Reworked several help file descriptions and examples.
+
+
+
+> Internal tools:
++ Fixed help_tool.au3 - added functions in UDFs w/o info block were not updated correctly
 
 
 

@@ -4,17 +4,18 @@
  Author:         linus
 
  History:
- 2010-07-31: Init
- 2010-08-01: Fixed header blocks so GuiTemplateBuilder.exe accepts them
+ 2010-09-16: Fixed parseUDF - added functions in UDFs w/o info block were not updated correctly
+ 2010-09-05: Added some preparation for a merged help file (original au3 help + au3Irr2 help)
+ 2010-09-04: Added automatic building of the au3.user.calltips.api
+ 2010-08-24: Fixed list building in buildHistoryHTML
+ 2010-08-21: Added updateIntroductionHTML and some fixes on buildHistoryHTML.
+ 2010-08-19: Added buildHistoryHTML for automatic update of au3irr2's history info
+ 2010-08-11: Deletes now also *.bck in \include when cleaning
+ 2010-08-08: Fixed handling of #INTERNAL_USE_ONLY# and #NO_DOC_FUNCTION# blocks
  2010-08-08: Added handling of several .au3 (for \include), cleanup of files + dirs,
              building of Categories.toc + includes.txt
- 2010-08-08: Fixed handling of #INTERNAL_USE_ONLY# and #NO_DOC_FUNCTION# blocks
- 2010-08-11: Deletes now also *.bck in \include when cleaning
- 2010-08-19: Added buildHistoryHTML for automatic update of au3irr2's history info
- 2010-08-21: Added updateIntroductionHTML and some fixes on buildHistoryHTML.
- 2010-08-24: Fixed list building in buildHistoryHTML
- 2010-09-04: Added automatic building of the au3.user.calltips.api
- 2010-09-05: Added some preparation for a merged help file (original au3 help + au3Irr2 help)
+ 2010-08-01: Fixed header blocks so GuiTemplateBuilder.exe accepts them
+ 2010-07-31: Init
 
  Script Function:
 	Helper tool for documentation of the au3Irrlicht2 UDF.
@@ -32,7 +33,7 @@
 #include <Array.au3>
 Opt("MustDeclareVars", True)
 
-const $SCRIPTTITLE = "Help tool V0.4 - 2010 by linus"
+const $SCRIPTTITLE = "Help tool V0.4a - 2010 by linus"
 global $sLastMsg = ""
 
 
@@ -381,7 +382,7 @@ func parseUDF($pathFile, ByRef $sHeader, byRef $sIndex, ByRef $sNoDoc, ByRef $sC
 				$parseFlag = "" ; let this and following lines pass until next tag
 
 			; handle func
-			Case $TAG_DEF_FUNC
+		Case $TAG_DEF_FUNC
 				$parseFlag = "" ; let this and following lines pass until next tag
 				if NOT $boolFuncHeader then ; oops - seems it has no documentation header yet:
 					$sTmp = StringRegExpReplace($sLine, ".*? (.*?)\(.*", "\1")
@@ -390,6 +391,9 @@ func parseUDF($pathFile, ByRef $sHeader, byRef $sIndex, ByRef $sNoDoc, ByRef $sC
 					$sTmp = StringReplace($sTmp, "[functionSyntax]", StringRegExpReplace($sLine, ".*? (.*?\)).*", "\1") )
 					$sBody &= $sTmp
 				EndIf
+
+		Case $TAG_DEF_ENDFUNC
+			$boolFuncHeader = False
 
 		EndSwitch ; $parseFlag
 
@@ -425,7 +429,7 @@ func buildHistoryHTML($sPathSrc, $sPathOut)
 	$sLastMsg = ""
 	local $currentVersionText = ""
 
-	local $hIn = FileOpen($sPathSrc)
+	local $hIn = FileOpen($sPathSrc, 0)
 	if $hIn = -1 Then
 		$sLastMsg = "buildHistoryHTML: Cannot open " & $sPathSrc & " for building history .html!"
 		Return False

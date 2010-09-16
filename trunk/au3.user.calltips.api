@@ -31,13 +31,13 @@ _IrrSetNodeAnimationFrame($h_Node,$f_Frame)
 _IrrSetTransitionTime($h_Node,$f_Speed) 
 _IrrAnimateJoints($h_Node) 
 _IrrAddCollisionAnimator($h_IrrSelector,$h_Node,$f_RadiusX,$f_RadiusY,$f_RadiusZ,$f_GravityX,$f_GravityY,$f_GravityZ,$f_OffsetX,$f_OffsetY,$f_OffsetZ) 
-_IrrAddDeleteAnimator($h_Node,$i_Time) 
-_IrrAddFlyCircleAnimator($h_Node,$f_CenterX,$f_CenterY,$f_CenterZ,$f_Radius,$f_Speed) 
-_IrrAddFlyStraightAnimator($h_Node,$f_StartX,$f_StartY,$f_StartZ,$f_EndX,$f_EndY,$f_EndZ,$i_Time,$i_DoLoop) 
-_IrrAddRotationAnimator($h_Node,$f_RotX,$f_RotY,$f_RotZ) 
-_IrrAddSplineAnimator($h_Node,$i_ArraySize,$a_ArrayFloatsX,$a_ArrayFloatsY,$a_ArrayFloatsZ,$i_Start,$f_Speed,$f_Tightness) 
+_IrrAddDeleteAnimator($h_Node,$i_Time) Animator deleting its parent node after specified time (ms).
+_IrrAddFlyCircleAnimator($h_Node,$f_CenterX,$f_CenterY,$f_CenterZ,$f_Radius,$f_Speed) Animator moving its parent node in a circular path.
+_IrrAddFlyStraightAnimator($h_Node,$f_StartX,$f_StartY,$f_StartZ,$f_EndX,$f_EndY,$f_EndZ,$i_Time,$i_DoLoop) Animator moving its parent node in a straight line from a start to an end point.
+_IrrAddRotationAnimator($h_Node,$f_RotX,$f_RotY,$f_RotZ) Animator spinning its parent node around each axis.
+_IrrAddSplineAnimator($h_Node,$i_ArraySize,$a_ArrayFloatsX,$a_ArrayFloatsY,$a_ArrayFloatsZ,$i_Start,$f_Speed,$f_Tightness) Animator moving its parent node along a spline curve.
 _IrrAddFadeAnimator($h_Node,$i_DeleteAfterMiliseconds,$f_Scale=1.0) 
-_IrrRemoveAnimator($h_Node,$h_Animator) 
+_IrrRemoveAnimator($h_Node,$h_Animator) Removes an applied animator from a node.
 _IrrAddFPSCamera($h_ParentNode=0,$f_RotateSpeed=100.0,$f_MoveSpeed=0.5,$i_ID=-1,$h_KeyMapArray=0,$i_KeyMapSize=0,$i_NoVerticalMovement=0,$f_JumpSpeed=0.0) Adds a 'first person shooter' style camera into the scene.
 _IrrAddCamera($f_CamX,$f_CamY,$f_CamZ,$f_TargetX,$f_TargetY,$f_TargetZ) Adds a camera into the scene.
 _IrrAddMayaCamera($h_Node,$f_Rotate,$f_Zoom,$f_Move) 
@@ -49,7 +49,7 @@ _IrrGetCameraOrientation($h_Camera,ByRef $a_Vector1,ByRef $a_Vector2,ByRef $a_Ve
 _IrrRevolveCamera($h_Camera,$f_Yaw,$f_Pitch,$f_Roll,$f_Drive,$f_Strafe,$f_Elevate) 
 _IrrSetCameraUpAtRightAngle($h_Camera) 
 _IrrSetCameraOrthagonal($h_Camera,$f_DistanceX,$f_DistanceY,$f_DistanceZ) 
-_IrrSetCameraClipDistance($h_Camera,$f_Distance,$f_NearDistance=1.0) 
+_IrrSetCameraClipDistance($h_Camera,$f_Distance,$f_NearDistance=1.0) Defines far and near distances for camera clipping
 _IrrSetActiveCamera($h_Camera) 
 _IrrSetCameraFOV($h_Camera,$f_FOV) 
 _IrrSetCameraAspectRatio($h_Camera,$f_AspectRatio) 
@@ -241,8 +241,8 @@ $IRR_NO_PARENT
 $IRR_NO_OBJECT
 $IRR_ONE_SHOT
 $IRR_LOOP
-$IRR_LINEAR_FOG
 $IRR_EXPONENTIAL_FOG
+$IRR_LINEAR_FOG
 $ELT_POINT
 $ELT_SPOT
 $ELT_DIRECTIONAL
@@ -537,8 +537,8 @@ _IrrSetMousePosition(ByRef $f_XPos,ByRef $f_YPos)
 _IrrHideMouse() Hides the mouse pointer
 _IrrShowMouse() Shows the mouse pointer
 _IrrDisplayMouse($i_HideShow) Hide or show the mouse pointer while it is within the Irrlicht display.
-_IrrAddLight($h_parentNode,$f_X,$f_Y,$f_Z,$f_Red,$f_Green,$f_Blue,$f_Size) 
-_IrrSetAmbientLight($f_Red,$f_Green,$f_Blue) 
+_IrrAddLight($h_parentNode,$f_X,$f_Y,$f_Z,$f_Red,$f_Green,$f_Blue,$f_Size) Adds a light node into scene to naturally illuminate your scene.
+_IrrSetAmbientLight($f_Red,$f_Green,$f_Blue) Sets the ambient lighting level across entire scene.
 _IrrSetLightAmbientColor($h_Light,$f_Red,$f_Green,$f_Blue) 
 _IrrSetLightAttenuation($h_Light,$f_Red,$f_Green,$f_Blue) 
 _IrrSetLightCastShadows($h_Light,$i_Shadows) 
@@ -587,10 +587,10 @@ _IrrGetMaterialCount($h_Node)
 _IrrGetMaterial($h_Node,$i_Material) 
 _IrrSetNodeMaterialTexture($h_Node,$h_Texture,$i_Index) Applys a texture to a node in the scene.
 _IrrSetNodeMaterialFlag($h_Node,$i_Type,$i_Flag) Sets material properies of a node that will effect its appearance on the screen.
-_IrrSetNodeMaterialType($h_Node,$i_Type) 
-_IrrSetNodePosition($h_Node,$f_X,$f_Y,$f_Z) Moves the node to the new position.
-_IrrSetNodeRotation($h_Node,$f_X,$f_Y,$f_Z) 
-_IrrSetNodeScale($h_Node,$f_X,$f_Y,$f_Z) 
+_IrrSetNodeMaterialType($h_Node,$i_Type) Set the way that materials are applied to a scene node
+_IrrSetNodePosition($h_Node,$f_X,$f_Y,$f_Z) Moves the node to the specified position
+_IrrSetNodeRotation($h_Node,$f_X,$f_Y,$f_Z) Rotate a node to the specified orientation through its X, Y and Z axis
+_IrrSetNodeScale($h_Node,$f_X,$f_Y,$f_Z) Sets the scale of the scene node
 _IrrDebugDataVisible($h_Node,$i_Visible) 
 _IrrGetNodePosition($h_Node,ByRef $a_Vector3df) 
 _IrrGetNodeAbsolutePosition($h_Node,ByRef $a_Vector3df) 
@@ -650,6 +650,7 @@ xxx__CreateParticleEmitter($f_MinBoxX,$f_MinBoxY,$f_MinBoxZ,$f_MaxBoxX,$f_MaxBox
 _IrrGetRootSceneNode() 
 _IrrGetMesh($s_MeshFile) Loads the specified mesh ready to be added to the scene.
 _IrrCreateMesh($s_MeshName,$a_Vertices,$a_Indices) 
+_IrrAddSphereSceneMesh($s_MeshName,$f_Radius,$i_PolyCount) 
 _IrrAddHillPlaneMesh($s_Name,$f_TileSizeX,$f_TileSizeY,$i_TileCountX,$i_TileCountY,$h_Material=0,$f_HillHeight=0,$f_CountHillsX=0,$f_CountHillsY=0,$f_TextureRepeatCountX=1,$f_TextureRepeatCountY=1) 
 _IrrWriteMesh($h_Mesh,$i_FileFormat,$s_Filename) 
 _IrrRemoveMesh($h_Mesh) Removes a mesh from the scene cache, freeing up resources.
@@ -659,7 +660,7 @@ _IrrGetMeshFrameCount($h_Mesh)
 _IrrGetMeshBufferCount($h_Mesh,$i_FrameNumber) 
 _IrrGetMeshIndexCount($h_Mesh,$i_FrameNumber,$i_MeshBuffer) 
 _IrrGetMeshVertexCount($h_Mesh,$i_FrameNumber,$i_MeshBuffer) 
-_IrrAddMeshToScene($h_Mesh) Adds a mesh to the scene as a new 3D 'node'.
+_IrrAddMeshToScene($h_Mesh) Adds a mesh to the scene as a new 3D node.
 _IrrAddMeshToSceneAsOcttree($h_Mesh) Adds a mesh to the scene as a new 3D node, optimised with an Octtree.
 _IrrAddStaticMeshForNormalMappingToScene($h_Mesh) 
 _IrrLoadScene($s_Filename) 
@@ -669,19 +670,19 @@ _IrrGetSceneNodeFromName($s_Name)
 _IrrAddBillBoardToScene($f_XSize,$f_YSize,$f_XPos=0.0,$f_YPos=0.0,$f_ZPos=0.0) Adds a billboard to the scene of the specified size and at the specified position.
 _IrrAddBillboardTextSceneNode($h_Font,$s_Text,$f_XSize,$f_YSize,$f_XPos=0,$f_YPos=0,$f_ZPos=0,$h_Parent=0,$i_TopRGBA=0xFFFFFFFF,$i_BottomRGBA=0xFFFFFFFF) 
 _IrrAddParticleSystemToScene($i_AddEmitter,$h_Parent=0,$i_Id=-1,$f_PosX=0,$f_PosY=0,$f_PosZ=0,$f_RotX=0,$f_RotY=0,$f_RotZ=0,$f_ScaleX=1,$f_ScaleY=1,$f_ScaleZ=1) 
-_IrrAddSkyBoxToScene($h_UpTexture,$h_DownTexture,$h_LeftTexture,$h_RightTexture,$h_FrontTexture,$h_BackTexture) 
+_IrrAddSkyBoxToScene($h_UpTexture,$h_DownTexture,$h_LeftTexture,$h_RightTexture,$h_FrontTexture,$h_BackTexture) Adds a skybox node to the scene.
 _IrrAddSkyDomeToScene($h_Texture,$i_HorizontalRes,$i_VerticalRes,$d_TexturePercent,$d_SpherePercent,$d_SphereRadius=1000.0) 
 _IrrAddEmptySceneNode() 
-_IrrAddTestSceneNode() 
-_IrrAddCubeSceneNode($f_Size) 
-_IrrAddSphereSceneNode($f_Size,$i_PolyCount) 
+_IrrAddTestSceneNode() Adds a simple cube node to the scene
+_IrrAddCubeSceneNode($f_Size) Adds a cube object to the scene with the specified dimensions.
+_IrrAddSphereSceneNode($f_Size,$i_PolyCount=16) Adds a simple sphere object to the scene
 _IrrAddWaterSurfaceSceneNode($h_Mesh,$f_WaveHeight=2.0,$f_WaveSpeed=300.0,$f_WaveLength=10.0,$h_Parent=0,$i_ID=-1,$f_PosX=0,$f_PosY=0,$f_PosZ=0,$f_RotX=0,$f_RotY=0,$f_RotZ=0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0) 
 _IrrAddZoneManager($f_NearDistance=0,$f_FarDistance=12000) 
 _IrrAddClouds($h_Texture,$i_Lod,$i_Depth,$i_Density) 
 _IrrAddLensFlare($h_Texture) 
 _IrrAddGrass($h_Terrain,$i_X,$i_Y,$i_PatchSize,$f_FadeDistance,$i_Crossed,$f_GrassScale,$i_MaxDensity,$i_DataPosX,$i_DataPosY,$h_HeightMap,$h_TextureMap,$h_GrassMap,$h_GrassTexture) 
-_IrrSetShadowColor($i_Alpha,$i_Red,$i_Green,$i_Blue) 
-_IrrSetFog($i_Red,$i_Green,$i_Blue,$i_FogType,$f_FogStart,$f_FogEnd,$f_Density) 
+_IrrSetShadowColor($i_Alpha,$i_Red,$i_Green,$i_Blue) Sets the colour of shadows cast by objects in the scene.
+_IrrSetFog($i_Red,$i_Green,$i_Blue,$i_FogType,$f_FogStart,$f_FogEnd,$f_Density=0.025) Set the properties of fog in the scene
 _IrrDraw3DLine($f_XStart,$f_YStart,$f_ZStart,$f_XEnd,$f_YEnd,$f_ZEnd,$i_Red,$i_Green,$i_Blue) 
 _IrrSetSkyDomeColor($h_Dome,$i_HorizontalRed,$i_HorizontalGreen,$i_HorizontalBlue,$i_ZenithRed,$i_ZenithGreen,$i_ZenithBlue) 
 _IrrSetSkyDomeColorBand($h_Dome,$i_HorizontalRed,$i_HorizontalGreen,$i_HorizontalBlue,$i_BandVerticalPosition,$f_BandFade,$i_Additive) 
@@ -707,7 +708,7 @@ _IrrSetBillBoardSize($h_Node,$f_Width,$f_Height)
 _IrrSetBillBoardColor($h_Node,$i_TopColor,$i_BottomColor) 
 __CreateVertex($f_X,$f_Y,$f_Z,$f_NormalX,$f_NormalY,$f_NormalZ,$i_ARGB,$f_TextureX,$f_TextureY) 
 __CreateVector($f_X,$f_Y,$f_Z) 
-_IrrStart($i_DeviceType=3,$i_ScreenWidth=800,$i_ScreenHeight=600,$i_BitsPerPixel=1,$i_FullScreen=0,$i_Shadows=0,$i_InputCapture=0,$i_VSync=0) Opens the IrrlichtWrapper.dll, starts Irrlicht interface and opens a window for rendering.
+_IrrStart($i_DeviceType=$IRR_EDT_DIRECT3D9,$i_ScreenWidth=800,$i_ScreenHeight=600,$i_BitsPerPixel=1,$i_FullScreen=0,$i_Shadows=0,$i_InputCapture=0,$i_VSync=0) Opens the IrrlichtWrapper.dll, starts Irrlicht interface and opens a window for rendering.
 _IrrStartAdvanced($i_DeviceType=3,$i_ScreenWidth=800,$i_ScreenHeight=600,$i_BitsPerPixel=1,$i_FullScreen=0,$i_Shadows=0,$i_InputCapture=0,$i_VSync=0,$i_TypeOfDevice=0,$i_DoublebufferEnabled=0,$i_AntialiasEnabled=0,$i_HighPrecisionFpu=0) Opens the IrrlichtWrapper.dll and starts Irrlicht engine with advanced method.
 _IrrRunning() Used to determine if the Irrlicht engine is still running.
 _IrrSetViewPort($i_TopX,$i_TopY,$i_BottomX,$i_BottomY) 
@@ -737,11 +738,11 @@ _IrrQueryFeature($i_Feature)
 _IrrDisableFeature($i_Feature,$i_Flag) 
 _IrrGetTime() 
 _IrrSetTime($i_Time) 
-_IrrAddTerrain($s_Path,$f_PosX=0.0,$f_PosY=0.0,$f_PosZ=0.0,$f_RotX=0.0,$f_RotY=0.0,$f_RotZ=0.0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0,$i_VertexAlpha=255,$i_VertexRed=255,$i_VertexGreen=255,$i_VertexBlue=255,$i_Smoothing=0,$i_MaxLOD=5,$i_PatchSize=$ETPS_17) 
+_IrrAddTerrain($s_Path,$f_PosX=0.0,$f_PosY=0.0,$f_PosZ=0.0,$f_RotX=0.0,$f_RotY=0.0,$f_RotZ=0.0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0,$i_VertexAlpha=255,$i_VertexRed=255,$i_VertexGreen=255,$i_VertexBlue=255,$i_Smoothing=0,$i_MaxLOD=5,$i_PatchSize=$ETPS_17) Creates a terrain object from a gray scale bitmap.
 _IrrAddTerrainTile($h_Image,$i_TileSize=256,$i_DataX=0,$i_DataY=0,$f_PosX=0.0,$f_PosY=0.0,$f_PosZ=0.0,$f_RotX=0.0,$f_RotY=0.0,$f_RotZ=0.0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0,$i_Smoothing=1,$i_MaxLOD=5,$i_PatchSize=$ETPS_17) 
 _IrrAddSphericalTerrain($s_TopPath,$s_FrontPath,$s_BackPath,$s_LeftPath,$RightPath,$s_BottomPath,$f_PosX=0.0,$f_PosY=0.0,$f_PosZ=0.0,$f_RotX=0.0,$f_RotY=0.0,$f_RotZ=0.0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0,$i_VertexAlpha=255,$i_VertexRed=255,$i_VertexGreen=255,$i_VertexBlue=255,$i_Smoothing=0,$i_Spherical=0,$i_MaxLOD=5,$i_PatchSize=$ETPS_17) 
 _IrrGetTerrainHeight($h_Terrain,$f_X,$f_Y) 
-_IrrScaleTexture($h_Terrain,$f_X,$f_Y) 
+_IrrScaleTexture($h_Terrain,$f_X,$f_Y) Specifies the scaling of a terrain object detail texture
 _IrrGetTerrainTileHeight($h_Terrain,$f_X,$f_Y) 
 _IrrScaleTileTexture($h_Terrain,$f_X,$f_Y) 
 _IrrAttachTile($h_Terrain,$h_Neighbor,$i_Edge) 
