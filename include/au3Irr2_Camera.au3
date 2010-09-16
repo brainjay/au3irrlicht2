@@ -9,7 +9,8 @@
 ; Description ...: Calls for creating and controlling cameras in the scene. The camera objects are used for
 ;                  defining a view point and a target point which is used to render the scene.
 ; Author(s) .....: jRowe, linus.
-;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
+;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (IrrlichtWrapper.dll),
+;                  and Nikolaus Gebhardt and Irrlicht team (Irrlicht.dll).
 ; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
@@ -17,8 +18,6 @@
 ; Not working/documented/implemented at this time
 ;_IrrGetCameraUpDirection
 ;_IrrSetCameraUpDirection
-;_IrrRevolveCamera
-;_IrrSetCameraUpAtRightAngle
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
@@ -28,6 +27,8 @@
 ;_IrrSetCameraTarget
 ;_IrrGetCameraTarget
 ;_IrrGetCameraOrientation
+;_IrrRevolveCamera
+;_IrrSetCameraUpAtRightAngle
 ;_IrrSetCameraOrthagonal
 ;_IrrSetCameraClipDistance
 ;_IrrSetActiveCamera
@@ -287,7 +288,7 @@ EndFunc   ;==>_IrrGetCameraOrientation
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrRevolveCamera
 ; Description ...: [todo]
 ; Syntax.........: _IrrRevolveCamera($h_Camera, $f_Yaw, $f_Pitch, $f_Roll, $f_Drive, $f_Strafe, $f_Elevate)
@@ -314,7 +315,7 @@ Func _IrrRevolveCamera($h_Camera, $f_Yaw, $f_Pitch, $f_Roll, $f_Drive, $f_Strafe
 EndFunc   ;==>_IrrRevolveCamera
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetCameraUpAtRightAngle
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetCameraUpAtRightAngle($h_Camera)
@@ -370,20 +371,21 @@ EndFunc   ;==>_IrrSetCameraOrthagonal
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetCameraClipDistance
-; Description ...: [todo]
+; Description ...: Defines far and near distances for camera clipping
 ; Syntax.........: _IrrSetCameraClipDistance($h_Camera, $f_Distance, $f_NearDistance = 1.0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Camera - Handle of a camera node
+;                  $f_Distance - Defines the far distance for clipping
+;                  $f_NearDistance - [optional] Defines the near distance for clipping (towards the camera)
+; Return values .: success - True
+;                  failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: The clipping distances of a camera are the distances beyond and before which no triangles are rendered.
+;                  This speeds the scene up by not showing geometry that is beyond or before the defined distances and increases rendering performance without requiring you to manage adding and deleting the objects from the view.
+;                  To make the far distance clipping less abrupt you can use it in combination with _IrrSetFog.
+; Related .......: _IrrAddCamera, _IrrAddFPSCamera, _IrrSetFog
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetCameraClipDistance($h_Camera, $f_Distance, $f_NearDistance = 1.0)
 	DllCall($_irrDll, "none:cdecl", "IrrSetCameraClipDistance", "ptr", $h_Camera, "float", $f_Distance, "float", $f_NearDistance)

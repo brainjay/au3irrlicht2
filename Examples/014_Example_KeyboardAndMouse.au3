@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted for JRowe's au3Irrlicht2 UDF project by Linus
+; Converted/modified for the au3Irr2 project by linus
 ; ----------------------------------------------------------------------------
 ; Example 14 : Keyboard and Mouse
 ; This example captures keyboard and mouse events it uses the keyboard events

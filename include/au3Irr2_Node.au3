@@ -8,7 +8,8 @@
 ; Language ......: English
 ; Description ...: Calls for manipulating, texturing and getting information from nodes in the scene.
 ; Author(s) .....: jRowe, linus.
-;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
+;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (IrrlichtWrapper.dll),
+;                  and Nikolaus Gebhardt and Irrlicht team (Irrlicht.dll).
 ; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
@@ -226,20 +227,43 @@ EndFunc   ;==>_IrrSetNodeMaterialFlag
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeMaterialType
-; Description ...: [todo]
+; Description ...: Set the way that materials are applied to a scene node
 ; Syntax.........: _IrrSetNodeMaterialType($h_Node, $i_Type)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Node - Handle of a scene node
+;                  $i_Type - Material property to apply to the scene node (see table in remarks)
+; Return values .: success - True
+;                  failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: <b>Valid material properties:</b>
+;                  @@StandardTable@@
+;                  $IRR_EMT_SOLID	Standard solid rendering uses one texture
+;                  $IRR_EMT_SOLID_2_LAYER	2 blended textures using vertex alpha value
+;                  $IRR_EMT_LIGHTMAP	2 textures: 0=color 1=lighting level and ignores vertex lighting
+;                  $IRR_EMT_LIGHTMAP_ADD	... as above but adds levels instead of modulating between them
+;                  $IRR_EMT_LIGHTMAP_M2	... as above but color levels are multiplied by 2 for brightening
+;                  $IRR_EMT_LIGHTMAP_M4	... as above but color leels are multiplied by 4 for brightening
+;                  $IRR_EMT_LIGHTMAP_LIGHTING	2 textures: 0=color 1=lighting level but supports dynamic lighting
+;                  $IRR_EMT_LIGHTMAP_LIGHTING_M2	... as above but color levels are multiplied by 2 for brightening
+;                  $IRR_EMT_LIGHTMAP_LIGHTING_M4	... as above but color levels are multiplied by 4 for brightening
+;                  $IRR_EMT_DETAIL_MAP	2 blended textures: the first is a color map the second at a different scale adds and subtracts from the color to add detail
+;                  $IRR_EMT_SPHERE_MAP	makes the material appear reflective
+;                  $IRR_EMT_REFLECTION_2_LAYER	a reflective material blended with a color texture
+;                  $IRR_EMT_TRANSPARENT_ADD_COLOR	a transparency effect that simply adds a color texture to the background. the darker the color the more transparent it is.
+;                  $IRR_EMT_TRANSPARENT_ALPHA_CHANNEL	a transparency effect that uses the color textures alpha as a transparency level
+;                  $IRR_EMT_TRANSPARENT_ALPHA_CHANNEL_REF	a transparency effect that uses the color textures alpha, the pixel is only drawn if the alpha is > 127. this is a fast effect that does not blur edges and is ideal for leaves & grass etc.
+;                  $IRR_EMT_TRANSPARENT_VERTEX_ALPHA	a transparency effect that uses the vertex alpha value
+;                  $IRR_EMT_TRANSPARENT_REFLECTION_2_LAYER	a transparent & reflecting effect. the first texture is a reflection map, the second a color map. transparency is from vertex alpha
+;                  $IRR_EMT_NORMAL_MAP_SOLID	A solid normal map renderer. First texture is color, second is normal map. Only use nodes added with IrrAddStaticMeshForNormalMappingToScene. Only supports nearest two lights. Requires vertex and pixel shaders 1.1
+;                  $IRR_EMT_NORMAL_MAP_TRANSPARENT_ADD_COLOR	... as above only with a transparency effect that simply adds the color to the background. the darker the color the more transparent it is.
+;                  $IRR_EMT_NORMAL_MAP_TRANSPARENT_VERTEX_ALPHA	... as above only with a transparency effect that uses the vertex alpha value
+;                  $IRR_EMT_PARALLAX_MAP_SOLID	similar to the solid normal map but more realistic providing virtual displacement of the surface. Uses the alpha channel of the normal map for height field displacement. Requires vertex shader 1.1 and pixel shader 1.4.
+;                  $IRR_EMT_PARALLAX_MAP_TRANSPARENT_ADD_COLOR	... as above only with a transparency effect that simply adds the color to the background. the darker the color the more transparent it is.
+;                  $IRR_EMT_PARALLAX_MAP_TRANSPARENT_VERTEX_ALPHA	... as above only with a transparency effect that uses the vertex alpha value
+;                  @@End@@
 ; Related .......: _IrrSetNodeMaterialTexture, _IrrSetNodeMaterialFlag
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetNodeMaterialType($h_Node, $i_Type)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeMaterialType", "UINT_PTR", $h_Node, "int", $i_Type)
@@ -253,18 +277,16 @@ EndFunc   ;==>_IrrSetNodeMaterialType
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodePosition
-; Description ...: Moves the node to the new position.
+; Description ...: Moves the node to the specified position
 ; Syntax.........: _IrrSetNodePosition($h_Node, $f_X, $f_Y, $f_Z)
 ; Parameters ....: $h_Node - Handle of a scene node
-;                  $f_X - X value of new position
-;                  $f_Y - Y value of new position
-;                  $f_Z - Z value of new position
+;                  $f_X, $f_Y, $f_Z - X, Y, Z values of new position
 ; Return values .: Success - True
 ;                  Failure - False
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: None
-; Related .......: None
+; Related .......: _IrrSetNodeRotation, _IrrSetNodeScale
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -281,20 +303,18 @@ EndFunc   ;==>_IrrSetNodePosition
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeRotation
-; Description ...: [todo]
+; Description ...: Rotate a node to the specified orientation through its X, Y and Z axis
 ; Syntax.........: _IrrSetNodeRotation($h_Node, $f_X, $f_Y, $f_Z)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Node - Handle of a scene node
+;                  $f_X, $f_Y, $f_Z - Values of rotation along X, Y, Z axes in degrees (0-360)
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrSetNodePosition, _IrrSetNodeScale
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetNodeRotation($h_Node, $f_X, $f_Y, $f_Z)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeRotation", "ptr", $h_Node, "float", $f_X, "float", $f_Y, "float", $f_Z)
@@ -308,20 +328,18 @@ EndFunc   ;==>_IrrSetNodeRotation
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeScale
-; Description ...: [todo]
+; Description ...: Sets the scale of the scene node
 ; Syntax.........: _IrrSetNodeScale($h_Node, $f_X, $f_Y, $f_Z)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Node - Handle of a scene node
+;                  $f_X, $f_Y, $f_Z - Scaling factors for X, Y, Z axes.
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrSetNodePosition, _IrrSetNodePosition
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetNodeScale($h_Node, $f_X, $f_Y, $f_Z)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeScale", "UINT_PTR", $h_Node, "float", $f_X, "float", $f_Y, "float", $f_Z)

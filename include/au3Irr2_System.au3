@@ -9,7 +9,8 @@
 ; Description ...: These calls deal with starting, running and stopping the Irrlicht engine,
 ;                  it also includes calls that get system metrics and some other miscellaneous tools.
 ; Author(s) .....: jRowe, linus.
-;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
+;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (IrrlichtWrapper.dll),
+;                  and Nikolaus Gebhardt and Irrlicht team (Irrlicht.dll).
 ; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
@@ -56,7 +57,7 @@
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrStart
 ; Description ...: Opens the IrrlichtWrapper.dll, starts Irrlicht interface and opens a window for rendering.
-; Syntax.........: _IrrStart($i_DeviceType=3, $i_ScreenWidth=800, $i_ScreenHeight=600, $i_BitsPerPixel=1, $i_FullScreen=0, $i_Shadows=0, $i_InputCapture=0, $i_VSync=0)
+; Syntax.........: _IrrStart($i_DeviceType=$IRR_EDT_DIRECT3D9, $i_ScreenWidth=800, $i_ScreenHeight=600, $i_BitsPerPixel=1, $i_FullScreen=0, $i_Shadows=0, $i_InputCapture=0, $i_VSync=0)
 ; Parameters ....: $i_DeviceType - [optional] specifies the renderer to use when drawing to the display this may be one of the following types:
 ;                  |$IRR_EDT_NULL - A NULL device with no display
 ;                  |$IRR_EDT_SOFTWARE - Irrlichts default software renderer
@@ -98,7 +99,7 @@
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrStart($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel = 1, $i_FullScreen = 0, $i_Shadows = 0, $i_InputCapture = 0, $i_VSync = 0)
+Func _IrrStart($i_DeviceType = $IRR_EDT_DIRECT3D9, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel = 1, $i_FullScreen = 0, $i_Shadows = 0, $i_InputCapture = 0, $i_VSync = 0)
 
 	$_irrDll = DllOpen("IrrlichtWrapper.dll")
 	if $_irrDll = -1 Then ; .dll cannot be opened - try to get it by extending %path%:

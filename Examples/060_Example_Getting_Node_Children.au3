@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted for JRowe's au3Irrlicht2 UDF project by Linus
+; Converted/modified for the au3Irr2 project by linus
 ; ----------------------------------------------------------------------------
 ; Example 60: Getting Node Children
 ; This example demonstrates acquiring the child nodes connected to a parent

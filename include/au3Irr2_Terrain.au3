@@ -9,7 +9,8 @@
 ; Description ...: Calls to create and alter the properties of terrain meshes,
 ;                  special nodes that are used to create large expansive landscapes.
 ; Author(s) .....: jRowe, linus.
-;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
+;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (IrrlichtWrapper.dll),
+;                  and Nikolaus Gebhardt and Irrlicht team (Irrlicht.dll).
 ; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
@@ -43,20 +44,33 @@
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddTerrain
-; Description ...: [todo]
+; Description ...: Creates a terrain object from a gray scale bitmap.
 ; Syntax.........: _IrrAddTerrain($s_Path, $f_PosX = 0.0, $f_PosY = 0.0, $f_PosZ = 0.0, $f_RotX = 0.0, $f_RotY = 0.0, $f_RotZ = 0.0, $f_ScaleX = 1.0, $f_ScaleY = 1.0, $f_ScaleZ = 1.0, $i_VertexAlpha = 255, $i_VertexRed = 255, $i_VertexGreen = 255, $i_VertexBlue = 255, $i_Smoothing = 0, $i_MaxLOD = 5, $i_PatchSize = $ETPS_17)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $s_Path - Filename of a gray scale image used to define the contours of the surface
+;                  $f_PosX, $f_PosY, $f_PosZ - [optional] Define position of the terrain
+;                  $f_RotX, $f_RotY, $f_RotZ - [optional] Define rotation of the terrain
+;                  $f_ScaleX, $f_ScaleY, $f_ScaleZ - [optional] Define scaling of the terrain
+;                  $i_VertexAlpha - [optional] Alpha value for the vertex colour from 0 to 255.
+;                  $i_VertexRed, $i_VertexGreen, $i_VertexBlue - [optional] Define the vertex colour of all points in the terrain (values from 0 to 255)
+;                  $i_Smoothing - [optional] True or false defines whether the contours of the surface of the terrain are smoothed over.
+;                  $i_MaxLOD, $i_PatchSize - [optional] Control the properties of the level of detail calculations applied to the terrain.
+;                  |It is recommended that these are left at default values.
+;                  |<br><u>Valid values for $i_PatchSize:</u>
+;                  |$ETPS_9 (patch size of 9, at most, use 4 levels of detail with this patch size)
+;                  |$ETPS_17 (patch size of 17, at most, use 5 levels of detail with this patch size)
+;                  |$ETPS_33 (patch size of 33, at most, use 6 levels of detail with this patch size)
+;                  |$ETPS_65 (patch size of 65, at most, use 7 levels of detail with this patch size)
+;                  |$ETPS_129 (patch size of 129, at most, use 8 levels of detail with this patch size)
+; Return values .: success - Handle of the terrain object
+;                  failure - false
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: The terrain is created from a gray scale bitmap where bright pixels are high points on the terrain and black pixels are low points.
+;                  You will inevitablly have to rescale the terrain during the call or after it is created.
+;                  The Terrain object is a special dynamic mesh whose resoloution is reduced in the distance to reduce the number of triangles it consumes.
+; Related .......: _IrrScaleTexture
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddTerrain($s_Path, $f_PosX = 0.0, $f_PosY = 0.0, $f_PosZ = 0.0, $f_RotX = 0.0, $f_RotY = 0.0, $f_RotZ = 0.0, $f_ScaleX = 1.0, $f_ScaleY = 1.0, $f_ScaleZ = 1.0, $i_VertexAlpha = 255, $i_VertexRed = 255, $i_VertexGreen = 255, $i_VertexBlue = 255, $i_Smoothing = 0, $i_MaxLOD = 5, $i_PatchSize = $ETPS_17)
 	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddTerrain", "str", $s_Path, "float", $f_PosX, "float", $f_PosY, "float", $f_PosZ, "float", $f_RotX, "float", $f_RotY, "float", $f_RotZ, "float", $f_ScaleX, "float", $f_ScaleY, "float", $f_ScaleZ, "int", $i_VertexAlpha, "int", $i_VertexRed, "int", $i_VertexGreen, "int", $i_VertexBlue, "int", $i_Smoothing, "int", $i_MaxLOD, "int", $i_PatchSize)
@@ -160,20 +174,20 @@ EndFunc   ;==>_IrrGetTerrainHeight
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrScaleTexture
-; Description ...: [todo]
+; Description ...: Specifies the scaling of a terrain object detail texture
 ; Syntax.........: _IrrScaleTexture($h_Terrain, $f_X, $f_Y)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Terrain - Handle of a terrain object
+;                  $f_X, $f_Y - Scaling values for detail texture along x and y axis
+; Return values .: success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: As a terrain object is a particularly huge mesh when textures are applied to it they look extremely pixelated.
+;                  To get over this effect a terrain object can have two materials applied to it, one to give general surface color and a second that is copied across the surface like tiles to give a rough detailed texture.
+;                  This call specifies the scaling of this detail texture.
+; Related .......: _IrrAddTerrain
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrScaleTexture($h_Terrain, $f_X, $f_Y)
 	DllCall($_irrDll, "none:cdecl", "IrrScaleTexture", "ptr", $h_Terrain, "float", $f_X, "float", $f_Y)

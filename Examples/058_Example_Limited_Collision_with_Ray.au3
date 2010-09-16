@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted for JRowe's au3Irrlicht2 UDF project by Linus
+; Converted/modified for the au3Irr2 project by linus
 ; ----------------------------------------------------------------------------
 ; Example 58 : Limiting Collision with a Ray
 ; This example highlights a node selected by collision with a ray, the subset

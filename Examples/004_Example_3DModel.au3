@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted for JRowe's au3Irrlicht2 UDF project by linus
+; Converted/modified for the au3Irr2 project by linus
 ; ----------------------------------------------------------------------------
 ; Example 04 : 3D Models - Meshes and Nodes
 ; This example loads an MD2 model and adds it ; a node to the scene

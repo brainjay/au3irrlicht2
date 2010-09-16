@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted for JRowe's au3Irrlicht2 UDF project by Linus
+; Converted/modified for the au3Irr2 project by linus
 ; ----------------------------------------------------------------------------
 ; Example 72: Camera Control with the WASD keys
 ; This example demonstrates moving a camera around by using the more

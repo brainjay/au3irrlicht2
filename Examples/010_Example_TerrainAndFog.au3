@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted for JRowe's au3Irrlicht2 UDF project by Linus
+; Converted/modified for the au3Irr2 project by linus
 ; ----------------------------------------------------------------------------
 ; Example 10 : Terrain and Fog
 ; This example creates a terrain from a bitmap heightfield and displays it in
@@ -90,13 +90,11 @@ _IrrSetNodeMaterialFlag( $TerrainNode, $IRR_EMF_FOG_ENABLE, $IRR_ON )
 ; now we need to add the fog to the scene. the first three parameters are the
 ; fog color, we set this to the same color ; our sky so the scene fogs out
 ; nicely into nothing, the next parameter specifies whether you want the fog
-; to increase in a linear mannar or exponentially - exponential fog usually
-; looks more atmospheric while linear looks more like a dense sea fog, the next
-; two parameters specify the distance at which the fog starts and the distance
-; at which the fog reaches its maximum density and finally the fog density -
-; this is only used with exponential fog and determines how quickly the
-; exponential change takes place
-_IrrSetFog ( 240,255,255, $IRR_EXPONENTIAL_FOG, 0.0,4000.0, 0.5 )
+; to increase in a linear manner or exponentially. Next two parameters are only used
+; when linear fog is set, they specify the distance at which the fog starts and the distance
+; at which the fog reaches its maximum density. Last parameter is only used when
+; exponential fog is set and determines how quickly the exponential change takes place
+_IrrSetFog ( 100,100,100, $IRR_EXPONENTIAL_FOG, 0.0,0.0, 0.001)
 
 
 ; we add a first person perspective camera to the scene so you can look about

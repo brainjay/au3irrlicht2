@@ -2,14 +2,14 @@
 
 
 ; #INDEX# =======================================================================================================================
-; Title .........: [todo]
-; AutoIt Version : [todo]
+; Title .........: Constants
+; AutoIt Version : v3.3.6.1
 ; Language ......: English
-; Description ...: [todo]
-;                  [todo]
-;                  [todo]
-; Author(s) .....: [todo]
-; Dll(s) ........: [todo]
+; Description ...: Global enumerations and constants for the au3Irr2 UDF.
+; Author(s) .....: jRowe, linus.
+;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (IrrlichtWrapper.dll),
+;                  and Nikolaus Gebhardt and Irrlicht team (Irrlicht.dll).
+; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
@@ -153,7 +153,7 @@ global const $IRR_GUI_NOT_PASSWORD = 0
 global const $IRR_NO_PARENT = 0
 global const $IRR_NO_OBJECT = 0
 global enum $IRR_ONE_SHOT, $IRR_LOOP
-global enum $IRR_LINEAR_FOG, $IRR_EXPONENTIAL_FOG
+global enum $IRR_EXPONENTIAL_FOG, $IRR_LINEAR_FOG
 global Enum $ELT_POINT, $ELT_SPOT, $ELT_DIRECTIONAL ; enum E_LIGHT_TYPE: Light types
 
 global Enum _ ; IRR_COLOR_MATERIAL

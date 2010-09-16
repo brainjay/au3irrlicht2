@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted and modified for JRowe's au3Irrlicht2 UDF project by Linus
+; Converted/modified for the au3Irr2 project by linus
 ; ----------------------------------------------------------------------------
 ; Example 29 : Skydome
 ; This example adds a skydome around the whole scene that makes a backdrop
@@ -34,7 +34,7 @@ _IrrSetWindowCaption( "Example 29: Skydome" )
 ; texture is applied to the entire surface of the sphere. Portions of the sphere
 ; can be rendered to optimise the performance of the scene
 local $SkyDome = _IrrAddSkyDomeToScene( _
-        _IrrGetTexture("../media/skydome.jpg"), _
+        _IrrGetTexture("../media/skydome2.jpg"), _
         16, 8, 1.0, 1.2)
 _IrrAddRotationAnimator($SkyDome, 0, 0.003, 0)
 
