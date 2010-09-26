@@ -250,19 +250,25 @@ EndFunc   ;==>_IrrAnimateJoints
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddCollisionAnimator
-; Description ...: [todo]
+; Description ...: Animator applying collision detection and gravity to its parent node.
 ; Syntax.........: _IrrAddCollisionAnimator($h_IrrSelector, $h_Node, $f_RadiusX, $f_RadiusY, $f_RadiusZ, $f_GravityX, $f_GravityY, $f_GravityZ, $f_OffsetX, $f_OffsetY, $f_OffsetZ)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
+; Parameters ....: $h_IrrSelector - Handle of a selecor object as created with _IrrGetCollision[...]
+;                  |The selector represents a selection of triangles in the scene, this is usually all of the triangles in a map for instance.
+;                  $h_Node - Handle of a scene node to be collided against the selector.
+;                  $f_RadiusX, $f_RadiusY, $f_RadiusZ - Define an ellipsoid that defines the area of collision this eliptical shape allows the collision detection to slide the object up steps and even ladders.
+;                  |If you make it too big you might be too large to get through a doorway but if you make it too small you may not be able to climb steps. You should play with these values and find the best ones for your scene.
+;                  $f_GravityX, $f_GravityY, $f_GravityZ - Specify the force that is applied to the node for each axis.
+;                  |For example 0.0,-9.8,0.0 defines a typical downward force. Other values could be used to simulate e.g. wind effects.
+;                  $f_OffsetX, $f_OffsetY, $f_OffsetZ - Offset the node by a specific distance from the center of the collision.
+;                  |As the center of the object and the size of your collision ellipsoid vary you can use this to adjust the position of the node and to bring it into contact with the ground.
 ; Return values .: success - Handle of the created animator.
 ;                  failure - False
 ; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: _IrrRemoveAnimator
+; Remarks .......: The collision detection will stop the object penetrating through a surface in the objects it is colliding against and will also press it against the surface using gravity.
+; Related .......: _IrrRemoveAnimator, _IrrGetCollisionGroupFromMesh, _IrrGetCollisionGroupFromComplexMesh, _IrrGetCollisionGroupFromBox, _IrrGetCollisionGroupFromTerrain, _IrrCreateCombinedCollisionGroup
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddCollisionAnimator($h_IrrSelector, $h_Node, $f_RadiusX, $f_RadiusY, $f_RadiusZ, $f_GravityX, $f_GravityY, $f_GravityZ, $f_OffsetX, $f_OffsetY, $f_OffsetZ)
 	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddCollisionAnimator", "ptr", $h_IrrSelector, "ptr", $h_Node, "float", $f_RadiusX, "float", $f_RadiusY, "float", $f_RadiusZ, "float", $f_GravityX, "float", $f_GravityY, "float", $f_GravityZ, "float", $f_OffsetX, "float", $f_OffsetY, "float", $f_OffsetZ)

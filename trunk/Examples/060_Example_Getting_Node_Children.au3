@@ -43,14 +43,14 @@ const $SCRIPTTITLE = "Example 60: Getting Node Children"
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
 _IrrSetWindowCaption( $SCRIPTTITLE )
 
 ; load the test cube texture
-$MeshTexture = _IrrGetTexture( "../media/texture.jpg" )
+$MeshTexture = _IrrGetTexture( "../media/au3irr2_logo.jpg" )
 
 ; create a series of zones
 for $x = -3 to 3
@@ -104,7 +104,7 @@ wend
 local $flag = True
 WHILE _IrrRunning()
     ; begin the scene, erasing the canvas
-    _IrrBeginScene( 0, 0, 0 )
+    _IrrBeginScene( 0, 0, 75 )
 
     ; draw the scene
     _IrrDrawScene()

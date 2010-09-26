@@ -174,6 +174,11 @@ global Enum _ ; IRR_COLOR_FORMAT: ' A color format specifies how color informati
     $ECF_R8G8B8, _		 ; 24 bit color, no alpha channel, but 8 bit for red, green and blue.
     $ECF_A8R8G8B8		 ; Default 32 bit color format. 8 bits are used for every component: red, green, blue and alpha.
 
+global Enum _ ; IRR_MESH_FILE_FORMAT: Enumeration flags defining the file format supported loading and saving
+    $EMWT_IRR_MESH = 0, _ 	; Irrlicht Native mesh writer, for static .irrmesh files.
+    $EMWT_COLLADA, _		; COLLADA mesh writer for .dae and .xml files.
+    $EMWT_STL				; STL mesh writer for .stl files.
+
 global Enum _ ; IRR_TERRAIN_PATCH_SIZE
 			$ETPS_9 = 9, _	; patch size of 9, at most, use 4 levels of detail with this patch size.
 			$ETPS_17 = 17, _; patch size of 17, at most, use 5 levels of detail with this patch size.
@@ -386,3 +391,24 @@ global Enum _ ; IRR_SHADER_CONSTANTS ' Pre-programmed shader constants
 global Enum _ ; IRR_DEBUG
 	$EDS_OFF = 0, $EDS_BBOX = 1, $EDS_NORMALS = 2, $EDS_SKELETON = 4, $EDS_MESH_WIRE_OVERLAY = 8, _
 	$EDS_HALF_TRANSPARENCY = 16, $EDS_BBOX_BUFFERS = 32, $EDS_FULL = 0xffffffff
+
+
+; struct definition and constants for __VertexArrayCreate, __VertexArrayGet, __VertexArraySet, _IrrCreateMesh
+Global Const $tagIRR_VERTEX = "float x; " & _ ;         The x position of the vertex
+							"float y; " & _ ;         The y position of the vertex
+							"float z; " & _ ;         The z position of the vertex
+							"float normal_x; " & _ ;  The x normal of the vertex
+							"float normal_y; " & _ ;  The y normal of the vertex
+							"float normal_z; " & _ ;  The z normal of the vertex
+							"uint vcolor; " & _ ;     The 32bit ARGB color of the vertex
+							"float texture_x; " & _ ; the x co-ordinate of the vertex on the texture (0 to 1)
+							"float texture_y; " ;     the y co-ordinate of the vertex on the texture (0 to 1)
+global const $VERTEX_X = "x"
+global const $VERTEX_Y = "y"
+global const $VERTEX_Z = "z"
+global const $VERTEX_NORMALX = "normal_x"
+global const $VERTEX_NORMALY = "normal_y"
+global const $VERTEX_NORMALZ = "normal_z"
+global const $VERTEX_VCOLOR = "vcolor"
+global const $VERTEX_TEXTUREX = "texture_x"
+global const $VERTEX_TEXTUREY = "texture_y"

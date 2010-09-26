@@ -124,7 +124,7 @@ for $x = 0 to 3
 next ;$x
 
 ; now we need to add the fog to the scene
-_IrrSetFog ( 64,100,128, $IRR_EXPONENTIAL_FOG, 0.0,4000.0, 0.5 )
+_IrrSetFog ( 64,100,128, $IRR_LINEAR_FOG, 0.0,5000.0)
 
 
 ; we add a first person perspective camera to the scene so you can look about

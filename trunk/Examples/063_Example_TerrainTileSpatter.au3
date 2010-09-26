@@ -80,7 +80,7 @@ _IrrSetNodeMaterialFlag( $TerrainNode, $IRR_EMF_LIGHTING, $IRR_OFF )
 _IrrSetNodeMaterialType ( $TerrainNode, $IRR_EMT_FOUR_DETAIL_MAP )
 
 ; now we need to add the fog to the scene.
-_IrrSetFog ( 240,255,255, $IRR_EXPONENTIAL_FOG, 0.0,4000.0, 0.5 )
+_IrrSetFog ( 240,255,255, $IRR_EXPONENTIAL_FOG, 0.0,0.0, 0.0005 )
 
 ; we add a first person perspective camera to the scene so you can look about
 ; and move it into the center of the map

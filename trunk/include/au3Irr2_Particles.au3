@@ -15,14 +15,9 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
-;_IrrAddParticleEmitter
 ;_IrrSetMinParticleSize
 ;_IrrSetMaxParticleSize
 ;_IrrAddAnimatedMeshSceneNodeEmitter
-;_IrrAddRotationAffector
-;_IrrAddFadeOutParticleAffector
-;_IrrAddGravityParticleAffector
-;_IrrAddParticleAttractionAffector
 ;_IrrCreateRotationAffector
 ;_IrrAddStopParticleAffector
 ;_IrrAddParticlePushAffector
@@ -50,25 +45,24 @@
 ;_IrrSetColumnDistanceOfEffect
 ;_IrrSetCenterOfEffect
 ;_IrrSetStrengthOfEffect
-;__CreateIrrModel
-;__CreateParticleEmitter
-;xxx__CreateParticleEmitter
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
+;__CreateParticleEmitter
+;_IrrAddParticleEmitter
+;_IrrAddRotationAffector
+;_IrrAddFadeOutParticleAffector
+;_IrrAddGravityParticleAffector
+;_IrrAddParticleAttractionAffector
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; ===============================================================================================================================
 
-;Particle functions
-
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrAddParticleEmitter
+; #FUNCTION# =============================================================================================================
+; Name...........: __CreateParticleSettings
 ; Description ...: [todo]
-; Syntax.........: _IrrAddParticleEmitter($h_ParticleSystem, $h_SettingsStruct)
+; Syntax.........: __CreateParticleSettings($minBoxX, $minBoxY, $minBoxZ, $maxBoxX, $maxBoxY, $maxBoxZ, $directionX, $directionY, $directionZ, $minParticlesSecond, $maxParticlesSecond, $minStartColorR, $minStartColorG, $minStartColorB, $maxStartColorR, $maxStartColorG, $maxStartColorB, $minLifetime, $maxLifetime, $minStartSizeX, $minStartSizeY, $maxStartSizeX, $maxStartSizeY, $maxAngleDegrees)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -82,23 +76,50 @@
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrAddParticleEmitter($h_ParticleSystem, $h_SettingsStruct)
-; create an emitter that can be added to a particle system
+Func __CreateParticleSettings($minBoxX, $minBoxY, $minBoxZ, $maxBoxX, $maxBoxY, $maxBoxZ, $directionX, $directionY, $directionZ, $minParticlesSecond, $maxParticlesSecond, $minStartColorR, $minStartColorG, $minStartColorB, $maxStartColorR, $maxStartColorG, $maxStartColorB, $minLifetime, $maxLifetime, $minStartSizeX, $minStartSizeY, $maxStartSizeX, $maxStartSizeY, $maxAngleDegrees)
+	local $arr[24] =  [ $minBoxX, $minBoxY, $minBoxZ, $maxBoxX, $maxBoxY, $maxBoxZ, _
+						$directionX, $directionY, $directionZ, $minParticlesSecond, $maxParticlesSecond, _
+						$minStartColorR, $minStartColorG, $minStartColorB, $maxStartColorR, $maxStartColorG, $maxStartColorB, _
+						$minLifetime, $maxLifetime, $minStartSizeX, $minStartSizeY, $maxStartSizeX, $maxStartSizeY, $maxAngleDegrees ]
+	return $arr
+EndFunc   ;==>__CreateParticleEmitter
 
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddParticleEmitter", "UINT_PTR", $h_ParticleSystem, "UINT_PTR", $h_SettingsStruct)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+
+; #FUNCTION# =============================================================================================================
+; Name...........: _IrrAddParticleEmitter
+; Description ...: [todo]
+; Syntax.........: _IrrAddParticleEmitter($h_ParticleSystem, $a_Settings)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrAddParticleEmitter($h_ParticleSystem, $a_Settings)
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddParticleEmitter", "UINT_PTR", $h_ParticleSystem, _
+						"float", $a_Settings[0], "float", $a_Settings[1], "float", $a_Settings[2], _
+						"float", $a_Settings[3], "float", $a_Settings[4], "float", $a_Settings[5], _
+						"float", $a_Settings[6], "float", $a_Settings[7], "float", $a_Settings[8], _
+						"UINT", $a_Settings[9], "UINT", $a_Settings[10], _
+						"int", $a_Settings[11], "int", $a_Settings[12], "int", $a_Settings[13], _
+						"int", $a_Settings[14], "int", $a_Settings[15], "int", $a_Settings[16], _
+						"UINT", $a_Settings[17], "UINT", $a_Settings[18], "float", $a_Settings[19], _
+						"float", $a_Settings[20], "float", $a_Settings[21], "float", $a_Settings[22], "int", $a_Settings[23])
+	Return $result[0]
 EndFunc   ;==>_IrrAddParticleEmitter
 
 
-
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetMinParticleSize
-; Description ...: [todo]
-; Syntax.........: _IrrSetMinParticleSize($h_Emitter, $f_X, $f_Y)
+; Name...........: _IrrSetParticleMinSize
+; Description ...: NOT WORKING DLL FUNCTION - ALSO CRASHING IN FREEBASIC EXAMPLES
+; Syntax.........: _IrrSetParticleMinSize($h_Emitter, $f_X, $f_Y)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -112,20 +133,20 @@ EndFunc   ;==>_IrrAddParticleEmitter
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrSetMinParticleSize($h_Emitter, $f_X, $f_Y)
-	DllCall($_irrDll, "none:cdecl", "IrrSetMinParticleSize", "ptr", $h_Emitter, "float", $f_X, "float", $f_Y)
+Func _IrrSetParticleMinSize($h_Emitter, $f_X, $f_Y)
+	DllCall($_irrDll, "none:cdecl", "IrrSetParticleMinSize", "UINT_PTR", $h_Emitter, "float", $f_X, "float", $f_Y)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrSetMinParticleSize
+EndFunc   ;==>_IrrSetParticleMinSize
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrSetMaxParticleSize
-; Description ...: [todo]
-; Syntax.........: _IrrSetMaxParticleSize($h_Emitter, $f_X, $f_Y)
+; Name...........: _IrrSetParticleMaxSize
+; Description ...: NOT WORKING DLL FUNCTION - ALSO CRASHING IN FREEBASIC EXAMPLES
+; Syntax.........: _IrrSetParticleMaxSize($h_Emitter, $f_X, $f_Y)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -139,21 +160,20 @@ EndFunc   ;==>_IrrSetMinParticleSize
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrSetMaxParticleSize($h_Emitter, $f_X, $f_Y)
-	DllCall($_irrDll, "none:cdecl", "IrrSetMaxParticleSize", "ptr", $h_Emitter, "float", $f_X, "float", $f_Y)
+Func _IrrSetParticleMaxSize($h_Emitter, $f_X, $f_Y)
+	DllCall($_irrDll, "none:cdecl", "IrrSetParticleMaxSize", "UINT_PTR", $h_Emitter, "float", $f_X, "float", $f_Y)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
 		return True
 	EndIf
-EndFunc   ;==>_IrrSetMaxParticleSize
+EndFunc   ;==>_IrrSetParticleMaxSize
 
 
-
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddAnimatedMeshSceneNodeEmitter
 ; Description ...: [todo]
-; Syntax.........: _IrrAddAnimatedMeshSceneNodeEmitter($h_ParticleSystem, $h_Node, $i_UseNormals, $f_NormalModifier, $i_AllVertices, $h_SettingsStruct)
+; Syntax.........: _IrrAddAnimatedMeshSceneNodeEmitter($h_ParticleSystem, $h_Node, $b_UseNormals, $f_NormalModifier, $b_FromAllVertices, $a_Settings)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -167,8 +187,17 @@ EndFunc   ;==>_IrrSetMaxParticleSize
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrAddAnimatedMeshSceneNodeEmitter($h_ParticleSystem, $h_Node, $i_UseNormals, $f_NormalModifier, $i_AllVertices, $h_SettingsStruct)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddAnimatedMeshSceneNodeEmitter", "ptr", $h_ParticleSystem, "ptr", $h_Node, "int", $i_UseNormals, "float", $f_NormalModifier, "int", $i_AllVertices, "ptr", $h_SettingsStruct)
+Func _IrrAddAnimatedMeshSceneNodeEmitter($h_ParticleSystem, $h_Node, $b_UseNormals, $f_NormalModifier, $b_FromAllVertices, $a_Settings)
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddAnimatedMeshSceneNodeEmitter", "UINT_PTR", $h_ParticleSystem, _
+					"UINT_PTR", $h_Node, "UINT", $b_UseNormals, "float", $f_NormalModifier, "int", $b_FromAllVertices, _
+					"float", $a_Settings[0], "float", $a_Settings[1], "float", $a_Settings[2], _
+					"float", $a_Settings[3], "float", $a_Settings[4], "float", $a_Settings[5], _
+					"float", $a_Settings[6], "float", $a_Settings[7], "float", $a_Settings[8], _
+					"UINT", $a_Settings[9], "UINT", $a_Settings[10], _
+					"int", $a_Settings[11], "int", $a_Settings[12], "int", $a_Settings[13], _
+					"int", $a_Settings[14], "int", $a_Settings[15], "int", $a_Settings[16], _
+					"UINT", $a_Settings[17], "UINT", $a_Settings[18], "float", $a_Settings[19], _
+					"float", $a_Settings[20], "float", $a_Settings[21], "float", $a_Settings[22], "int", $a_Settings[23])
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
@@ -177,8 +206,7 @@ Func _IrrAddAnimatedMeshSceneNodeEmitter($h_ParticleSystem, $h_Node, $i_UseNorma
 EndFunc   ;==>_IrrAddAnimatedMeshSceneNodeEmitter
 
 
-
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddRotationAffector
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddRotationAffector($h_ParticleSystem, $f_SpeedX, $f_SpeedY, $f_SpeedZ, $f_PivotX, $f_pivotY, $f_pivotZ)
@@ -209,7 +237,7 @@ EndFunc   ;==>_IrrAddRotationAffector
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddFadeOutParticleAffector
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddFadeOutParticleAffector($h_ParticleSystem, $i_FadeFactor, $i_Red, $i_Green, $i_Blue)
@@ -236,10 +264,10 @@ Func _IrrAddFadeOutParticleAffector($h_ParticleSystem, $i_FadeFactor, $i_Red, $i
 EndFunc   ;==>_IrrAddFadeOutParticleAffector
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddGravityParticleAffector
 ; Description ...: [todo]
-; Syntax.........: _IrrAddGravityParticleAffector($h_ParticleSystem, $f_X, $f_Y, $f_Z)
+; Syntax.........: _IrrAddGravityParticleAffector($h_ParticleSystem, $f_X, $f_Y, $f_Z, $i_TimeForceLost = 1000)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -253,8 +281,9 @@ EndFunc   ;==>_IrrAddFadeOutParticleAffector
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrAddGravityParticleAffector($h_ParticleSystem, $f_X, $f_Y, $f_Z)
-	$result = DllCall($_irrDll, "ptr:cdecl", "_IrrAddGravityParticleAffector", "ptr", $h_ParticleSystem, "float", $f_X, "float", $f_Y, "float", $f_Z)
+Func _IrrAddGravityParticleAffector($h_ParticleSystem, $f_X, $f_Y, $f_Z, $i_TimeForceLost = 1000)
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddGravityParticleAffector", "UINT_PTR", $h_ParticleSystem, _
+						"float", $f_X, "float", $f_Y, "float", $f_Z, "UINT", $i_TimeForceLost)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
@@ -263,7 +292,7 @@ Func _IrrAddGravityParticleAffector($h_ParticleSystem, $f_X, $f_Y, $f_Z)
 EndFunc   ;==>_IrrAddGravityParticleAffector
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddParticleAttractionAffector
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddParticleAttractionAffector($h_ParticleSystem, $f_X, $f_Y, $f_Z, $f_Speed = 1, $i_Attract = 1, $i_AffectX = 1, $i_AffectY = 1, $i_AffectZ = 1)
@@ -374,7 +403,7 @@ EndFunc   ;==>_IrrAddParticlePushAffector
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddColorMorphAffector
 ; Description ...: [todo]
-; Syntax.........: _IrrAddColorMorphAffector($h_ParticleSystem, $i_NumberOfParticles, $a_ParticleColors, $a_ParticleTimes, $i_Smooth)
+; Syntax.........: _IrrAddColorMorphAffector($h_ParticleSystem, $a_ParticleColors, $a_ParticleTimes, $b_Smooth)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -388,24 +417,26 @@ EndFunc   ;==>_IrrAddParticlePushAffector
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrAddColorMorphAffector($h_ParticleSystem, $i_NumberOfParticles, $a_ParticleColors, $a_ParticleTimes, $i_Smooth)
-	$timeSize = UBound($a_ParticleTimes)
-	$colorSize = UBound($a_ParticleColors)
-	$ParticlesStruct = DllStructCreate("float[" & $colorSize & "];float[" & $colorSize & "];float[" & $colorSize & "]")
+Func _IrrAddColorMorphAffector($h_ParticleSystem, $a_ParticleColors, $a_ParticleTimes, $b_Smooth)
+	local $iColors = UBound($a_ParticleColors)
+	local $bTimes = IsArray($a_ParticleTimes)
+	local $ColorsStruct = DllStructCreate("UINT[" & $iColors & "]")
+	local $TimesStruct = 0
 
-	For $i = 1 To $colorSize
-		DllStructSetData($ParticlesStruct, 1, $a_ParticleColors[$i - 1][0])
-		DllStructSetData($ParticlesStruct, 2, $a_ParticleColors[$i - 1][1])
-		DllStructSetData($ParticlesStruct, 3, $a_ParticleColors[$i - 1][2])
+	local $i
+	For $i = 1 To $iColors
+		DllStructSetData($ColorsStruct, 1, $a_ParticleColors[$i - 1], $i)
 	Next
 
-	$TimeStruct = DllStructCreate("float[" & $colorSize & "];float[" & $colorSize & "];float[" & $colorSize & "]")
+	if $bTimes then
+		$TimesStruct = DllStructCreate("UINT[" & $iColors & "]")
+		For $i = 1 To $iColors
+			DllStructSetData($TimesStruct, 1, $a_ParticleTimes[$i - 1], $i)
+		Next
+	EndIf
 
-	For $i = 1 To $timeSize
-		DllStructSetData($TimeStruct, 1, $a_ParticleTimes[$i - 1])
-	Next
-
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddColorMorphAffector", "ptr", $h_ParticleSystem, "int", $i_NumberOfParticles, "ptr", DllStructGetPtr($ParticlesStruct), "ptr", DllStructGetPtr($TimeStruct), "int", $i_Smooth)
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddColorMorphAffector", "UINT_PTR", $h_ParticleSystem, _
+	"UINT", $iColors, "UINT_PTR", DllStructGetPtr($ColorsStruct), "UINT_PTR", DllStructGetPtr($TimesStruct), "UINT", $b_Smooth)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
@@ -1037,140 +1068,3 @@ Func _IrrSetStrengthOfEffect($h_ParticleAffector, $f_X, $f_Y, $f_Z)
 		return True
 	EndIf
 EndFunc   ;==>_IrrSetStrengthOfEffect
-
-
-; xxxx obsolete?!
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: __CreateIrrModel
-; Description ...: [todo]
-; Syntax.........: __CreateIrrModel()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func __CreateIrrModel()
-	Local $irrModel = DllStructCreate("UINT_PTR node;UINT_PTR camera;UINT_PTR terrain;UINT_PTR particles")
-	DllStructSetData($irrModel, "node", 0)
-	DllStructSetData($irrModel, "camera", 0)
-	DllStructSetData($irrModel, "terrain", 0)
-	DllStructSetData($irrModel, "particles", 0)
-	return $irrModel
-EndFunc ;==> __CreateIrrModel
-
-
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: __CreateParticleEmitter
-; Description ...: [todo]
-; Syntax.........: __CreateParticleEmitter($f_MinBoxX, $f_MinBoxY, $f_MinBoxZ, $f_MaxBoxX, $f_MaxBoxY, $f_MaxBoxZ, $f_DirectionX, $f_DirectionY, $f_DirectionZ, $i_MinParticlesPerSecond, $i_MaxParticlesPerSecond, $i_MinStartRed, $i_MinStartGreen, $i_MinStartBlue, $i_MaxStartRed, $i_MaxStartGreen, $i_MaxStartBlue, $i_MinLifetime, $i_MaxLifetime, $f_MinStartSizeX, $f_MinStartSizeY, $f_MaxStartSizeX, $f_MaxStartSizeY, $i_MaxAngle)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func __CreateParticleEmitter($f_MinBoxX, $f_MinBoxY, $f_MinBoxZ, $f_MaxBoxX, $f_MaxBoxY, $f_MaxBoxZ, $f_DirectionX, $f_DirectionY, $f_DirectionZ, $i_MinParticlesPerSecond, $i_MaxParticlesPerSecond, $i_MinStartRed, $i_MinStartGreen, $i_MinStartBlue, $i_MaxStartRed, $i_MaxStartGreen, $i_MaxStartBlue, $i_MinLifetime, $i_MaxLifetime, $f_MinStartSizeX, $f_MinStartSizeY, $f_MaxStartSizeX, $f_MaxStartSizeY, $i_MaxAngle)
-
-local $struct = "float min_box_x;float min_box_y;float min_box_z;float max_box_x;float max_box_y;float max_box_z;" & _
-							"float direction_x;float direction_y;float direction_z;uint min_paritlcles_per_second;uint max_paritlcles_per_second;" & _
-							"int min_start_color_red;int min_start_color_green;int min_start_color_blue;" & _
-							"int max_start_color_red;int max_start_color_green;int max_start_color_blue;" & _
-							"uint min_lifetime;uint max_lifetime;" & _
-							"float min_start_sizeX;float min_start_sizeY;float max_start_sizeX;float max_start_sizeY;int max_angle_degrees"
-local $EmitterStruct = DllStructCreate($struct)
-	DllStructSetData($EmitterStruct, "min_box_x", $f_MinBoxX)
-	DllStructSetData($EmitterStruct, "min_box_y", $f_MinBoxY)
-	DllStructSetData($EmitterStruct, "min_box_z", $f_MinBoxZ)
-	DllStructSetData($EmitterStruct, "max_box_x", $f_MaxBoxX)
-	DllStructSetData($EmitterStruct, "max_box_y", $f_MaxBoxY)
-	DllStructSetData($EmitterStruct, "max_box_z", $f_MaxBoxZ)
-	DllStructSetData($EmitterStruct, "direction_x", $f_DirectionX)
-	DllStructSetData($EmitterStruct, "direction_y", $f_DirectionY)
-	DllStructSetData($EmitterStruct, "direction_z", $f_DirectionZ)
-	DllStructSetData($EmitterStruct, "min_paritlcles_per_second", $i_MinParticlesPerSecond)
-	DllStructSetData($EmitterStruct, "max_paritlcles_per_second", $i_MaxParticlesPerSecond)
-	DllStructSetData($EmitterStruct, "min_start_color_red", $i_MinStartRed)
-	DllStructSetData($EmitterStruct, "min_start_color_green", $i_MinStartGreen)
-	DllStructSetData($EmitterStruct, "min_start_color_blue", $i_MinStartBlue)
-	DllStructSetData($EmitterStruct, "max_start_color_red", $i_MaxStartRed)
-	DllStructSetData($EmitterStruct, "max_start_color_green", $i_MaxStartGreen)
-	DllStructSetData($EmitterStruct, "max_start_color_blue", $i_MaxStartBlue)
-	DllStructSetData($EmitterStruct, "min_lifetime", $i_MinLifetime)
-	DllStructSetData($EmitterStruct, "max_lifetime", $i_MaxLifetime)
-	DllStructSetData($EmitterStruct, "max_angle_degrees", $i_MaxAngle)
-	DllStructSetData($EmitterStruct, "min_start_sizeX", $f_MinStartSizeX)
-	DllStructSetData($EmitterStruct, "min_start_sizeY", $f_MinStartSizeY)
-	DllStructSetData($EmitterStruct, "max_start_sizeX", $f_MaxStartSizeX)
-	DllStructSetData($EmitterStruct, "max_start_sizeY", $f_MaxStartSizeY)
-
-	Return $EmitterStruct
-EndFunc   ;==>___CreateParticleEmitter
-
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: xxx__CreateParticleEmitter
-; Description ...: [todo]
-; Syntax.........: xxx__CreateParticleEmitter($f_MinBoxX, $f_MinBoxY, $f_MinBoxZ, $f_MaxBoxX, $f_MaxBoxY, $f_MaxBoxZ, $f_DirectionX, $f_DirectionY, $f_DirectionZ, $i_MinParticlesPerSecond, $i_MaxParticlesPerSecond, $i_MinStartRed, $i_MinStartGreen, $i_MinStartBlue, $i_MaxStartRed, $i_MaxStartGreen, $i_MaxStartBlue, $i_MinLifetime, $i_MaxLifetime, $f_MinStartSizeX, $f_MinStartSizeY, $f_MaxStartSizeX, $f_MaxStartSizeY, $i_MaxAngle)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func xxx__CreateParticleEmitter($f_MinBoxX, $f_MinBoxY, $f_MinBoxZ, $f_MaxBoxX, $f_MaxBoxY, $f_MaxBoxZ, $f_DirectionX, $f_DirectionY, $f_DirectionZ, $i_MinParticlesPerSecond, $i_MaxParticlesPerSecond, $i_MinStartRed, $i_MinStartGreen, $i_MinStartBlue, $i_MaxStartRed, $i_MaxStartGreen, $i_MaxStartBlue, $i_MinLifetime, $i_MaxLifetime, $f_MinStartSizeX, $f_MinStartSizeY, $f_MaxStartSizeX, $f_MaxStartSizeY, $i_MaxAngle)
-	local $EmitterStruct = DllStructCreate("float min_box_x;float min_box_y;float min_box_z;float max_box_x;float max_box_y;float max_box_z;float direction_x;float direction_y;float direction_z;" & _
-											"UINT min_paritlcles_per_second;UINT max_paritlcles_per_second;int min_start_color_red;int min_start_color_green;int min_start_color_blue;" & _
-											"int max_start_color_red;int max_start_color_green;int max_start_color_blue;UINT min_lifetime;UINT max_lifetime;float min_start_sizeX;float min_start_sizeY;" & _
-											"float max_start_sizeX;float max_start_sizeY;int max_angle_degrees")
-	DllStructSetData($EmitterStruct, 1, $f_MinBoxX)
-	DllStructSetData($EmitterStruct, 2, $f_MinBoxY)
-	DllStructSetData($EmitterStruct, 3, $f_MinBoxZ)
-	DllStructSetData($EmitterStruct, 4, $f_MaxBoxX)
-	DllStructSetData($EmitterStruct, 5, $f_MaxBoxY)
-	DllStructSetData($EmitterStruct, 6, $f_MaxBoxZ)
-	DllStructSetData($EmitterStruct, 7, $f_DirectionX)
-	DllStructSetData($EmitterStruct, 8, $f_DirectionY)
-	DllStructSetData($EmitterStruct, 9, $f_DirectionZ)
-	DllStructSetData($EmitterStruct, 10, $i_MinParticlesPerSecond)
-	DllStructSetData($EmitterStruct, 11, $i_MaxParticlesPerSecond)
-	DllStructSetData($EmitterStruct, 12, $i_MinStartRed)
-	DllStructSetData($EmitterStruct, 13, $i_MinStartGreen)
-	DllStructSetData($EmitterStruct, 14, $i_MinStartBlue)
-	DllStructSetData($EmitterStruct, 15, $i_MaxStartRed)
-	DllStructSetData($EmitterStruct, 16, $i_MaxStartGreen)
-	DllStructSetData($EmitterStruct, 17, $i_MaxStartBlue)
-	DllStructSetData($EmitterStruct, 18, $i_MinLifetime)
-	DllStructSetData($EmitterStruct, 19, $i_MaxLifetime)
-	DllStructSetData($EmitterStruct, 20, $f_MinStartSizeX)
-	DllStructSetData($EmitterStruct, 21, $f_MinStartSizeY)
-	DllStructSetData($EmitterStruct, 22, $f_MaxStartSizeX)
-	DllStructSetData($EmitterStruct, 23, $f_MaxStartSizeY)
-	DllStructSetData($EmitterStruct, 24, $i_MaxAngle)
-	Return $EmitterStruct
-EndFunc   ;==>___CreateParticleEmitter

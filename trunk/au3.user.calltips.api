@@ -30,7 +30,7 @@ _IrrGetNodeAnimationFrame($h_Node)
 _IrrSetNodeAnimationFrame($h_Node,$f_Frame) 
 _IrrSetTransitionTime($h_Node,$f_Speed) 
 _IrrAnimateJoints($h_Node) 
-_IrrAddCollisionAnimator($h_IrrSelector,$h_Node,$f_RadiusX,$f_RadiusY,$f_RadiusZ,$f_GravityX,$f_GravityY,$f_GravityZ,$f_OffsetX,$f_OffsetY,$f_OffsetZ) 
+_IrrAddCollisionAnimator($h_IrrSelector,$h_Node,$f_RadiusX,$f_RadiusY,$f_RadiusZ,$f_GravityX,$f_GravityY,$f_GravityZ,$f_OffsetX,$f_OffsetY,$f_OffsetZ) Animator applying collision detection and gravity to its parent node.
 _IrrAddDeleteAnimator($h_Node,$i_Time) Animator deleting its parent node after specified time (ms).
 _IrrAddFlyCircleAnimator($h_Node,$f_CenterX,$f_CenterY,$f_CenterZ,$f_Radius,$f_Speed) Animator moving its parent node in a circular path.
 _IrrAddFlyStraightAnimator($h_Node,$f_StartX,$f_StartY,$f_StartZ,$f_EndX,$f_EndY,$f_EndZ,$i_Time,$i_DoLoop) Animator moving its parent node in a straight line from a start to an end point.
@@ -38,7 +38,7 @@ _IrrAddRotationAnimator($h_Node,$f_RotX,$f_RotY,$f_RotZ) Animator spinning its p
 _IrrAddSplineAnimator($h_Node,$i_ArraySize,$a_ArrayFloatsX,$a_ArrayFloatsY,$a_ArrayFloatsZ,$i_Start,$f_Speed,$f_Tightness) Animator moving its parent node along a spline curve.
 _IrrAddFadeAnimator($h_Node,$i_DeleteAfterMiliseconds,$f_Scale=1.0) 
 _IrrRemoveAnimator($h_Node,$h_Animator) Removes an applied animator from a node.
-_IrrAddFPSCamera($h_ParentNode=0,$f_RotateSpeed=100.0,$f_MoveSpeed=0.5,$i_ID=-1,$h_KeyMapArray=0,$i_KeyMapSize=0,$i_NoVerticalMovement=0,$f_JumpSpeed=0.0) Adds a 'first person shooter' style camera into the scene.
+_IrrAddFPSCamera($h_ParentNode=0,$f_RotateSpeed=100.0,$f_MoveSpeed=0.5,$i_ID=-1,$h_KeyMapArray=0,$i_KeyMapSize=0,$i_NoVerticalMovement=0,$f_JumpSpeed=0.0) Adds a 'first person shooter' style camera with mouse and keyboard control into the scene.
 _IrrAddCamera($f_CamX,$f_CamY,$f_CamZ,$f_TargetX,$f_TargetY,$f_TargetZ) Adds a camera into the scene.
 _IrrAddMayaCamera($h_Node,$f_Rotate,$f_Zoom,$f_Move) 
 _IrrSetCameraTarget($h_Camera,$f_CamX,$f_CamY,$f_CamZ) 
@@ -55,7 +55,7 @@ _IrrSetCameraFOV($h_Camera,$f_FOV)
 _IrrSetCameraAspectRatio($h_Camera,$f_AspectRatio) 
 __CreatePtrKeyMapArray(ByRef $keyStruct,$i_kForward=$KEY_KEY_W,$i_kBackward=$KEY_KEY_S,$i_kLeft=$KEY_KEY_A,$i_kRight=$KEY_KEY_D,$i_kJump=$KEY_SPACE) Helper function: returns pointer to a keymap for _IrrAddFPSCamera.
 _IrrGetCollisionGroupFromMesh($h_Mesh,$h_Node,$i_Frame=0) 
-_IrrGetCollisionGroupFromComplexMesh($h_Mesh,$h_Node,$i_Frame=0) 
+_IrrGetCollisionGroupFromComplexMesh($h_Mesh,$h_Node,$i_Frame=0) Creates an optimized triangle selection group from a large complex mesh like a map.
 _IrrGetCollisionGroupFromBox($h_Node) 
 _IrrGetCollisionGroupFromTerrain($h_Node,$i_Lod) 
 _IrrRemoveCollisionGroup($h_CollisionGroup,$h_Node) 
@@ -267,6 +267,9 @@ $ECF_A1R5G5B5
 $ECF_R5G6B5
 $ECF_R8G8B8
 $ECF_A8R8G8B8		
+$EMWT_IRR_MESH
+$EMWT_COLLADA
+$EMWT_STL				
 $ETPS_9
 $ETPS_17
 $ETPS_33
@@ -488,6 +491,16 @@ $EDS_MESH_WIRE_OVERLAY
 $EDS_HALF_TRANSPARENCY
 $EDS_BBOX_BUFFERS
 $EDS_FULL
+$tagIRR_VERTEX
+$VERTEX_X
+$VERTEX_Y
+$VERTEX_Z
+$VERTEX_NORMALX
+$VERTEX_NORMALY
+$VERTEX_NORMALZ
+$VERTEX_VCOLOR
+$VERTEX_TEXTUREX
+$VERTEX_TEXTUREY
 _IrrAddZipFile($s_Zipfile,$i_IgnoreCase,$i_IgnorePaths) Adds a zip archive to the filing system allowing to load files out of the zip file.
 _IrrChangeWorkingDirectory($s_WorkingDir) 
 _IrrGetWorkingDirectory() 
@@ -583,6 +596,7 @@ _IrrXEffectsAddNodeToDepthPass($h_Node)
 _IrrXEffectsSetPostProcessingUserTexture($h_Texture) 
 _IrrGetNodeName($h_Node) 
 _IrrSetNodeName($h_Node,$s_Name) 
+_IrrGetNodeMesh ($h_Node) 
 _IrrGetMaterialCount($h_Node) 
 _IrrGetMaterial($h_Node,$i_Material) 
 _IrrSetNodeMaterialTexture($h_Node,$h_Texture,$i_Index) Applys a texture to a node in the scene.
@@ -592,9 +606,9 @@ _IrrSetNodePosition($h_Node,$f_X,$f_Y,$f_Z) Moves the node to the specified posi
 _IrrSetNodeRotation($h_Node,$f_X,$f_Y,$f_Z) Rotate a node to the specified orientation through its X, Y and Z axis
 _IrrSetNodeScale($h_Node,$f_X,$f_Y,$f_Z) Sets the scale of the scene node
 _IrrDebugDataVisible($h_Node,$i_Visible) 
-_IrrGetNodePosition($h_Node,ByRef $a_Vector3df) 
+_IrrGetNodePosition($h_Node,ByRef $a_Vector3df) Gets position of a scene node into passed variable.
 _IrrGetNodeAbsolutePosition($h_Node,ByRef $a_Vector3df) 
-_IrrGetNodeRotation($h_Node,ByRef $a_Vector3df) 
+_IrrGetNodeRotation($h_Node,ByRef $a_Vector3df) Gets rotation of a scene node into passed variable.
 _IrrGetJointNode($h_Node,$s_Joint) 
 _IrrSetJointMode($h_Node,$i_Mode) 
 _IrrAddChildToParent($h_ChildNode,$h_ParentNode) 
@@ -609,7 +623,9 @@ _IrrSetNodeParent($h_Node,$h_Parent)
 _IrrGetNodeID($h_Node) 
 _IrrSetNodeID($h_Node,$i_ID) 
 _IrrGetNodeBoundingBox($h_Node,ByRef $a_VectorA3df,ByRef $a_VectorB3df) 
-_IrrAddParticleEmitter($h_ParticleSystem,$h_SettingsStruct) 
+_IrrSetNodeRotationPositionChange($h_Camera,$f_Yaw,$f_Pitch,$f_Roll,$f_Drive=0.0,$f_Strafe=0.0,$f_Elevate=0.0,$h_ForwardVect=0,$h_UpVector=0,$i_NumOffsetVectors=0,$h_OffsetVect=0) 
+__CreateParticleEmitter($minBoxX,$minBoxY,$minBoxZ,$maxBoxX,$maxBoxY,$maxBoxZ,$directionX,$directionY,$directionZ,$minParticlesSecond,$maxParticlesSecond,$minStartColorR,$minStartColorG,$minStartColorB,$maxStartColorR,$maxStartColorG,$maxStartColorB,$minLifetime,$maxLifetime,$minStartSizeX,$minStartSizeY,$maxStartSizeX,$maxStartSizeY,$maxAngleDegrees) 
+_IrrAddParticleEmitter($h_ParticleSystem,$a_Settings) 
 _IrrSetMinParticleSize($h_Emitter,$f_X,$f_Y) 
 _IrrSetMaxParticleSize($h_Emitter,$f_X,$f_Y) 
 _IrrAddAnimatedMeshSceneNodeEmitter($h_ParticleSystem,$h_Node,$i_UseNormals,$f_NormalModifier,$i_AllVertices,$h_SettingsStruct) 
@@ -644,12 +660,12 @@ _IrrSetNearestDistanceOfEffect($h_ParticleAffector,$f_Distance)
 _IrrSetColumnDistanceOfEffect($h_ParticleAffector,$f_Distance) 
 _IrrSetCenterOfEffect($h_ParticleAffector,$f_X,$f_Y,$f_Z) 
 _IrrSetStrengthOfEffect($h_ParticleAffector,$f_X,$f_Y,$f_Z) 
-__CreateIrrModel() 
-__CreateParticleEmitter($f_MinBoxX,$f_MinBoxY,$f_MinBoxZ,$f_MaxBoxX,$f_MaxBoxY,$f_MaxBoxZ,$f_DirectionX,$f_DirectionY,$f_DirectionZ,$i_MinParticlesPerSecond,$i_MaxParticlesPerSecond,$i_MinStartRed,$i_MinStartGreen,$i_MinStartBlue,$i_MaxStartRed,$i_MaxStartGreen,$i_MaxStartBlue,$i_MinLifetime,$i_MaxLifetime,$f_MinStartSizeX,$f_MinStartSizeY,$f_MaxStartSizeX,$f_MaxStartSizeY,$i_MaxAngle) 
-xxx__CreateParticleEmitter($f_MinBoxX,$f_MinBoxY,$f_MinBoxZ,$f_MaxBoxX,$f_MaxBoxY,$f_MaxBoxZ,$f_DirectionX,$f_DirectionY,$f_DirectionZ,$i_MinParticlesPerSecond,$i_MaxParticlesPerSecond,$i_MinStartRed,$i_MinStartGreen,$i_MinStartBlue,$i_MaxStartRed,$i_MaxStartGreen,$i_MaxStartBlue,$i_MinLifetime,$i_MaxLifetime,$f_MinStartSizeX,$f_MinStartSizeY,$f_MaxStartSizeX,$f_MaxStartSizeY,$i_MaxAngle) 
 _IrrGetRootSceneNode() 
 _IrrGetMesh($s_MeshFile) Loads the specified mesh ready to be added to the scene.
-_IrrCreateMesh($s_MeshName,$a_Vertices,$a_Indices) 
+__VertexArrayCreate($iCount) 
+__VertexArraySet(ByRef $tVertexArray,$iVertex,$vMember) 
+__VertexArraySet(ByRef $tVertexArray,$iVertex,$vMember,$vData) 
+_IrrCreateMesh($s_MeshName,$tVertexArray,$a_Indices) 
 _IrrAddSphereSceneMesh($s_MeshName,$f_Radius,$i_PolyCount) 
 _IrrAddHillPlaneMesh($s_Name,$f_TileSizeX,$f_TileSizeY,$i_TileCountX,$i_TileCountY,$h_Material=0,$f_HillHeight=0,$f_CountHillsX=0,$f_CountHillsY=0,$f_TextureRepeatCountX=1,$f_TextureRepeatCountY=1) 
 _IrrWriteMesh($h_Mesh,$i_FileFormat,$s_Filename) 
@@ -658,8 +674,15 @@ _IrrClearUnusedMeshes()
 _IrrSetMeshHardwareAccelerated($h_mesh,$i_frame=0) 
 _IrrGetMeshFrameCount($h_Mesh) 
 _IrrGetMeshBufferCount($h_Mesh,$i_FrameNumber) 
-_IrrGetMeshIndexCount($h_Mesh,$i_FrameNumber,$i_MeshBuffer) 
-_IrrGetMeshVertexCount($h_Mesh,$i_FrameNumber,$i_MeshBuffer) 
+_IrrGetMeshIndexCount($h_Mesh,$i_Frame,$i_MeshBuffer=0) 
+_IrrGetMeshIndices($h_Mesh,$i_FrameNumber,ByRef $h_IndicesArrayStruct,$i_MeshBuffer) 
+_IrrSetMeshIndices($h_Mesh,$i_FrameNumber,ByRef $h_IndicesArrayStruct,$i_MeshBuffer) 
+_IrrGetMeshVertexCount($h_Mesh,$i_Frame,$i_MeshBuffer=0) 
+_IrrGetMeshVertices($h_Mesh,$i_FrameNumber,ByRef $h_IndicesArrayStruct,$i_MeshBuffer=0) 
+_IrrSetMeshVertices($h_Mesh,$i_FrameNumber,ByRef $h_IndicesArrayStruct,$i_MeshBuffer=0) 
+_IrrSetMeshVertexColors($h_Mesh,$i_FrameNumber,$h_VertexColourArrayStruct,$h_VertexGroupStartIndices,$h_VertexGroupEndIndices,$i_NumberOfGroups,$i_MeshBuffer) 
+_IrrSetMeshVertexCoords($h_Mesh,$i_FrameNumber,$h_VertexCoordArrayStruct,$h_VertexGroupStartIndices,$h_VertexGroupEndIndices,$i_NumberOfGroups,$i_MeshBuffer) 
+_IrrSetMeshVertexSingleColor($h_Mesh,$i_FrameNumber,$h_VertexColourStruct,$h_VertexGroupStartIndices,$h_VertexGroupEndIndices,$i_NumberOfGroups,$i_MeshBuffer) 
 _IrrAddMeshToScene($h_Mesh) Adds a mesh to the scene as a new 3D node.
 _IrrAddMeshToSceneAsOcttree($h_Mesh) Adds a mesh to the scene as a new 3D node, optimised with an Octtree.
 _IrrAddStaticMeshForNormalMappingToScene($h_Mesh) 
@@ -706,8 +729,6 @@ _IrrAddBoltSceneNode()
 _IrrSetBoltProperties($h_BoltNode,$f_SX,$f_SY,$f_SZ,$f_EX,$f_EY,$f_EZ,$i_UpdateTime=50,$i_Height=10,$f_Thickness=5.0,$i_Parts=10,$i_Bolts=6,$i_Steadyend=$IRR_OFF,$i_Color=0x0000FFFF) 
 _IrrSetBillBoardSize($h_Node,$f_Width,$f_Height) 
 _IrrSetBillBoardColor($h_Node,$i_TopColor,$i_BottomColor) 
-__CreateVertex($f_X,$f_Y,$f_Z,$f_NormalX,$f_NormalY,$f_NormalZ,$i_ARGB,$f_TextureX,$f_TextureY) 
-__CreateVector($f_X,$f_Y,$f_Z) 
 _IrrStart($i_DeviceType=$IRR_EDT_DIRECT3D9,$i_ScreenWidth=800,$i_ScreenHeight=600,$i_BitsPerPixel=1,$i_FullScreen=0,$i_Shadows=0,$i_InputCapture=0,$i_VSync=0) Opens the IrrlichtWrapper.dll, starts Irrlicht interface and opens a window for rendering.
 _IrrStartAdvanced($i_DeviceType=3,$i_ScreenWidth=800,$i_ScreenHeight=600,$i_BitsPerPixel=1,$i_FullScreen=0,$i_Shadows=0,$i_InputCapture=0,$i_VSync=0,$i_TypeOfDevice=0,$i_DoublebufferEnabled=0,$i_AntialiasEnabled=0,$i_HighPrecisionFpu=0) Opens the IrrlichtWrapper.dll and starts Irrlicht engine with advanced method.
 _IrrRunning() Used to determine if the Irrlicht engine is still running.

@@ -39,7 +39,7 @@ DIM $SkyDome ; irr_node
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
@@ -60,7 +60,7 @@ _IrrSetNodeMaterialType ( $TerrainNode, $IRR_EMT_DETAIL_MAP )
 _IrrSetNodeMaterialFlag( $TerrainNode, $IRR_EMF_FOG_ENABLE, $IRR_ON )
 
 ; add some fog into the scene
-_IrrSetFog ( 96,96,128, $IRR_EXPONENTIAL_FOG, 0.0,4000.0, 0.5 )
+_IrrSetFog ( 96,96,128, $IRR_LINEAR_FOG, 0.0,4000.0 )
 
 
 ; the skydome is a simple hollow sphere that surrounds the whole scene. a single

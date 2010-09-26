@@ -45,7 +45,7 @@ _IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
 _IrrSetWindowCaption( "Example 56: Zone Management Bounding Boxes" )
 
 ; load the texture resource for the billboard
-$BillboardTexture = _IrrGetTexture( "../media/freebasiclogo_big.jpg" )
+$BillboardTexture = _IrrGetTexture( "../media/au3irr2_logo.jpg" )
 
 ; add the billboard to the scene, the first two parameters are the size of the
 ; billboard in this instance they match the pixel size of the bitmap to give
