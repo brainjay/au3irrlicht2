@@ -18,13 +18,15 @@
 
 > UDFs:
 
++ Some more working functions (mainly around added examples)
 + Fixed _IrrSetFog (linear and exponential fog were interchanged)
 
 
 
 > Examples:
 
-+ Added: 062 (6D0F_Camera)
++ Added: 015 (CustomMesh), 022 (Indices+Vertices), 024 (Mesh to file), 062 (6D0F_Camera)
++ Added: 007/025/027/066/067/068/074/075 (ParticleSystem)
 + Fixed: 010 (TerrainAndFog) / 029/054 (Skydomes)
 - 010: Corrected parameters and wrong documentation of _IrrSetFog. 029/054: renamed 
   skydome.jpg to 'skydome2.jpg' and restored original texture needed for example 054.
@@ -34,14 +36,14 @@
 > Help file:
 
 + Added: Completed documentation including example code for some more functions.
-+ Current status: Topics completed along examples 1-6, 8-11.
+  Current status: Topics completed along examples 1-6, 8-13.
   Naked reference w/o detailed informations for all functions inside other examples.
 - Changed: Reworked several help file descriptions and examples.
 
 
 
 > Internal tools:
-+ Fixed help_tool.au3 - added functions in UDFs w/o info block were not updated correctly
++ Fixed help_tool.au3 - added functions in UDFs w/o info block were not updated correctly.
 
 
 

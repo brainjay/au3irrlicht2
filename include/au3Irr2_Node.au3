@@ -19,11 +19,13 @@
 ;_IrrSetNodeParent
 ;_IrrGetNodeID
 ;_IrrGetNodeBoundingBox
+;_IrrSetNodeRotationPositionChange
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
 ;_IrrGetNodeName
 ;_IrrSetNodeName
+;_IrrGetNodeMesh
 ;_IrrGetMaterialCount
 ;_IrrGetMaterial
 ;_IrrSetNodeMaterialTexture
@@ -103,6 +105,36 @@ Func _IrrSetNodeName($h_Node, $s_Name)
 		return True
 	EndIf
 EndFunc   ;==>_IrrSetNodeName
+
+
+
+; #FUNCTION# =============================================================================================================
+; Name...........: _IrrGetNodeMesh
+; Description ...: [todo]
+; Syntax.........: _IrrGetNodeMesh ($h_Node)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrGetNodeMesh ($h_Node)
+; Get the mesh assiciated with a given node
+    $result = DllCall($_irrDll, "ptr:cdecl", "IrrGetNodeMesh", "ptr", $h_Node)
+    if @error Then
+        Return Seterror(1,0,False)
+    Else
+        Return $result[0]
+    EndIf
+EndFunc   ;==>__IrrGetNodeMesh
+
 
 
 ; #FUNCTION# =============================================================================================================
@@ -286,7 +318,7 @@ EndFunc   ;==>_IrrSetNodeMaterialType
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: None
-; Related .......: _IrrSetNodeRotation, _IrrSetNodeScale
+; Related .......: _IrrSetNodeRotation, _IrrSetNodeScale, _IrrGetNodePosition
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -312,7 +344,7 @@ EndFunc   ;==>_IrrSetNodePosition
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: None
-; Related .......: _IrrSetNodePosition, _IrrSetNodeScale
+; Related .......: _IrrSetNodePosition, _IrrSetNodeScale, _IrrGetNodeRotation
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -337,7 +369,7 @@ EndFunc   ;==>_IrrSetNodeRotation
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: None
-; Related .......: _IrrSetNodePosition, _IrrSetNodePosition
+; Related .......: _IrrSetNodePosition, _IrrSetNodeRotation
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -381,20 +413,19 @@ EndFunc   ;==>_IrrDebugDataVisible
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetNodePosition
-; Description ...: [todo]
+; Description ...: Gets position of a scene node into passed variable.
 ; Syntax.........: _IrrGetNodePosition($h_Node, ByRef $a_Vector3df)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Node - Handle of a scene node
+;                  $a_Vector3df - Any variable to populate with the node position, must not explicitly be an array.
+;                  |The passed variable will be re-dimed to an array with the X, Y, Z coordindates stored in its three elements.
+; Return values .: success - Array with three elements for X, Y, Z.
+;                  failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrGetNodeRotation, _IrrSetNodePosition
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetNodePosition($h_Node, ByRef $a_Vector3df)
 	Dim $a_Vector3df[3]
@@ -442,23 +473,21 @@ Func _IrrGetNodeAbsolutePosition($h_Node, ByRef $a_Vector3df)
 EndFunc   ;==>_IrrGetNodeAbsolutePosition
 
 
-
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetNodeRotation
-; Description ...: [todo]
+; Description ...: Gets rotation of a scene node into passed variable.
 ; Syntax.........: _IrrGetNodeRotation($h_Node, ByRef $a_Vector3df)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Node - Handle of a scene node
+;                  $a_Vector3df - Any variable to populate with the node rotation, must not explicitly be an array.
+;                  |The passed variable will be re-dimed to an array with the X, Y, Z rotation values stored in its three elements.
+; Return values .: success - Array with three elements for X, Y, Z.
+;                  failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrGetNodePosition, _IrrSetNodeRotation
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetNodeRotation($h_Node, ByRef $a_Vector3df)
 	Dim $a_Vector3df[3]
@@ -867,3 +896,34 @@ Func _IrrGetNodeBoundingBox($h_Node, ByRef $a_VectorA3df, ByRef $a_VectorB3df)
 		Return True
 	EndIf
 EndFunc   ;==>_IrrGetNodeBoundingBox
+
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetNodeRotationPositionChange
+; Description ...: [todo]
+; Syntax.........: _IrrSetNodeRotationPositionChange($h_Camera, $f_Yaw, $f_Pitch, $f_Roll, $f_Drive = 0.0, $f_Strafe = 0.0, $f_Elevate = 0.0, $h_ForwardVect = 0, $h_UpVector = 0, $i_NumOffsetVectors = 0, $h_OffsetVect = 0)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetNodeRotationPositionChange($h_Camera, $f_Yaw, $f_Pitch, $f_Roll, $f_Drive = 0.0, $f_Strafe = 0.0, $f_Elevate = 0.0, $h_ForwardVect = 0, $h_UpVector = 0, $i_NumOffsetVectors = 0, $h_OffsetVect = 0)
+	$result = DllCall($_irrDll, "none:cdecl", "IrrSetNodeRotationPositionChange", "ptr", $h_Camera, _
+		"float", $f_Yaw, "float", $f_Pitch, "float", $f_Roll, "float", $f_Drive, "float", $f_Strafe, "float", $f_Elevate, _
+		"float*", $h_ForwardVect, "float*", $h_UpVector, "uint", $i_NumOffsetVectors, "float*", $h_OffsetVect ) ; $h_OffsetVect[0][0])
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		$h_UpVector = $result[8]
+		Return True
+	EndIf
+EndFunc   ;==>_IrrSetNodeRotationPositionChange

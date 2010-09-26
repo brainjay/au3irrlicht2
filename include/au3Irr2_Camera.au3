@@ -42,28 +42,33 @@
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddFPSCamera
-; Description ...: Adds a 'first person shooter' style camera into the scene.
+; Description ...: Adds a 'first person shooter' style camera with mouse and keyboard control into the scene.
 ; Syntax.........: _IrrAddFPSCamera($h_ParentNode = 0, $f_RotateSpeed = 100.0, $f_MoveSpeed = 0.5, $i_ID = -1, $h_KeyMapArray = 0, $i_KeyMapSize = 0, $i_NoVerticalMovement = 0, $f_JumpSpeed = 0.0)
-; Parameters ....: $h_ParentNode - [optional] Parent node, default is the complete scene
-;                  $f_RotateSpeed - [optional] Rotate speed of camera
-;                  $f_MoveSpeed - [optional] Move speed of camera
-;                  $i_ID - [optional] Camera ID
-;                  $h_KeyMapArray - [optional] Adress of a key map for camera moving keys. Default uses cursor keys.
-;                  $i_KeyMapSize - [optional] Number of entries in the key map array.
-;                  $i_NoVerticalMovement - [optional] Switches vertical movement with True or False.
-;                  $f_JumpSpeed - [optional] Jump speed for camera.
-; Return values .: Success - Handle of the camera object
+; Parameters ....: $h_ParentNode - [optional] Parent scene node of the camera. Can be null.
+;                  $f_RotateSpeed - [optional] Speed in degress with which the camera is rotated. This can be done only with the mouse.
+;                  $f_MoveSpeed - [optional] Speed in units per millisecond with which the camera is moved. Movement is done with the cursor keys.
+;                  $i_ID - [optional] 	id of the camera. This id can be used to identify the camera.
+;                  $h_KeyMapArray - [optional] Adress of a key map as created with __CreatePtrKeyMapArray, specifying what keys should be used to move the camera. If this is null, the default keymap is used.
+;                  |You can define actions more then one time in the array, to bind multiple keys to the same action.
+;                  $i_KeyMapSize - [optional] Amount of items in the keymap array.
+;                  $b_NoVerticalMovement - [optional] Setting this to true makes the camera only move within a horizontal plane, and disables vertical movement as known from most ego shooters.
+;                  |Default is 'false', with which it is possible to fly around in space, if no gravity is there.
+;                  $f_JumpSpeed - [optional] Speed with which the camera is moved when jumping.
+; Return values..: Success - Handle of the camera object
 ;                  Failure - False
 ; Author ........:
 ; Modified.......:
-; Remarks .......: The FPS style camera will be used to define the view point and target point and other attributes of the view into the 3D scene.
-;                  If you haven't captured mouse and keyboard events this camera can be controlled with the cursor keys and the mouse. If however you capture events when starting irrlicht this will become a normal camera that can only be moved by code
+; Remarks .......: Adds a camera scene node with an animator which provides mouse and keyboard control appropriate for first person shooters (FPS).
+;                  If however you capture events when starting irrlicht this will become a normal camera that can only be moved by code.
+;                  This FPS camera is intended to provide a demonstration of a camera that behaves like a typical First Person Shooter.
+;                  It is useful for simple demos and prototyping but is not intended to provide a full solution for a production quality game.
+;                  It binds the camera scene node rotation to the look-at target.
 ; Related .......: __CreatePtrKeyMapArray, _IrrAddCamera, _IrrAddMayaCamera
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrAddFPSCamera($h_ParentNode = 0, $f_RotateSpeed = 100.0, $f_MoveSpeed = 0.5, $i_ID = -1, $h_KeyMapArray = 0, $i_KeyMapSize = 0, $i_NoVerticalMovement = 0, $f_JumpSpeed = 0.0)
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddFPSCamera", "UINT_PTR", $h_ParentNode, "float", $f_RotateSpeed, "float", $f_MoveSpeed, "int", $i_ID, "ptr", $h_KeyMapArray, "int", $i_KeyMapSize, "int", $i_NoVerticalMovement, "float", $f_JumpSpeed)
+Func _IrrAddFPSCamera($h_ParentNode = 0, $f_RotateSpeed = 100.0, $f_MoveSpeed = 0.5, $i_ID = -1, $h_KeyMapArray = 0, $i_KeyMapSize = 0, $b_NoVerticalMovement = False, $f_JumpSpeed = 0.0)
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddFPSCamera", "UINT_PTR", $h_ParentNode, "float", $f_RotateSpeed, "float", $f_MoveSpeed, "int", $i_ID, "ptr", $h_KeyMapArray, "int", $i_KeyMapSize, "byte", $b_NoVerticalMovement, "float", $f_JumpSpeed)
 	If @error Then
 		Return SetError(1, 0, False)
 	Else

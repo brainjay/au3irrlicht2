@@ -82,7 +82,7 @@ _IrrSetNodeMaterialType ( $TerrainNode, $IRR_EMT_DETAIL_MAP )
 _IrrSetNodeMaterialFlag( $TerrainNode, $IRR_EMF_FOG_ENABLE, $IRR_ON )
 
 ; add a fog to the scene to gently fade the clouds out in the distance
-_IrrSetFog ( 128,128,255, $IRR_EXPONENTIAL_FOG, 0.0,4000.0, 0.5 )
+_IrrSetFog ( 128,128,255, $IRR_EXPONENTIAL_FOG, 0.0,0.0, 0.0002)
 
 ; we add a first person perspective camera to the scene so you can look about
 ; and move it into the center of the map

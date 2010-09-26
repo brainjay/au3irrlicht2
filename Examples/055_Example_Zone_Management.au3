@@ -47,7 +47,7 @@ _IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
 _IrrSetWindowCaption( "Example 55: Zone Management" )
 
 ; load the texture resource for the billboard
-$BillboardTexture = _IrrGetTexture( "../media/freebasiclogo_big.jpg" )
+$BillboardTexture = _IrrGetTexture( "../media/au3irr2_logo.jpg" )
 
 ; here we create 900 zones
 for $x = -15 to 15
@@ -99,7 +99,7 @@ _IrrHideMouse()
 ; while the irrlicht environment is still running
 WHILE _IrrRunning()
     ; begin the scene, erasing the canvas
-    _IrrBeginScene( 255, 255, 255 )
+    _IrrBeginScene( 0, 0, 75 )
 
     ; draw the scene
     _IrrDrawScene()

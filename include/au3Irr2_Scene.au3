@@ -16,26 +16,33 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
+;__VertexArrayCreate
+;__VertexArrayGet
+;__VertexArraySet
 ;_IrrCreateMesh
 ;_IrrAddSphereSceneMesh
-;_IrrWriteMesh
 ;_IrrGetMeshFrameCount
 ;_IrrGetMeshBufferCount
 ;_IrrGetMeshIndexCount
+;_IrrGetMeshIndices
+;_IrrSetMeshIndices
 ;_IrrGetMeshVertexCount
-;_IrrAddParticleSystemToScene
+;_IrrGetMeshVertices
+;_IrrSetMeshVertices
+;_IrrSetMeshVertexColors
+;_IrrSetMeshVertexCoords
+;_IrrSetMeshVertexSingleColor
 ;_IrrAddEmptySceneNode
 ;_IrrSetZoneManagerAttachTerrain
 ;_IrrGetGrassDrawCount
 ;_IrrSetFlareScale
-;__CreateVertex
-;__CreateVector
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
 ;_IrrGetRootSceneNode
 ;_IrrGetMesh
 ;_IrrAddHillPlaneMesh
+;_IrrWriteMesh
 ;_IrrRemoveMesh
 ;_IrrClearUnusedMeshes
 ;_IrrSetMeshHardwareAccelerated
@@ -48,6 +55,7 @@
 ;_IrrGetSceneNodeFromName
 ;_IrrAddBillBoardToScene
 ;_IrrAddBillboardTextSceneNode
+;_IrrAddParticleSystemToScene
 ;_IrrAddSkyBoxToScene
 ;_IrrAddSkyDomeToScene
 ;_IrrAddTestSceneNode
@@ -153,9 +161,9 @@ EndFunc   ;==>_IrrGetMesh
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrCreateMesh
+; Name...........: __VertexArrayCreate
 ; Description ...: [todo]
-; Syntax.........: _IrrCreateMesh($s_MeshName, $a_Vertices, $a_Indices)
+; Syntax.........: __VertexArrayCreate($iCount)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -169,29 +177,87 @@ EndFunc   ;==>_IrrGetMesh
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrCreateMesh($s_MeshName, $a_Vertices, $a_Indices)
-	;;;;;;;;;;;;;;This will be wrong. Figure out how to fix the Indices array
-	$vSize = UBound($a_Vertices)
-	$iSize = UBound($a_Indices)
-	$VerticesStruct = DllStructCreate("float[" & $vSize & "];float[" & $vSize & "];float[" & $vSize & "]")
-	$IndicesStruct = DllStructCreate("float[" & $iSize & "];float[" & $iSize & "];float[" & $iSize & "]")
-	For $i = 1 To $vSize
-		DllStructSetData($VerticesStruct, 1, $a_Vertices[$i - 1][0])
-		DllStructSetData($VerticesStruct, 2, $a_Vertices[$i - 1][1])
-		DllStructSetData($VerticesStruct, 3, $a_Vertices[$i - 1][2])
-	Next
-	$arrayOfVerticesStruct = DllStructCreate("ptr[" & $vSize & "])")
+Func __VertexArrayCreate($iCount)
+    Local $iSize = DllStructGetSize(DllStructCreate($tagIRR_VERTEX))
+    Return DllStructCreate("byte[" & $iSize * $iCount & "]")
+EndFunc ;==>__VertexArrayCreate
 
-	For $i = 1 To $vSize
-		$VerticesListEntry = DllStructCreate("float;float;float")
-		DllStructSetData($VerticesListEntry, 1, $a_Vertices[$i - 1][0])
-		DllStructSetData($VerticesListEntry, 2, $a_Vertices[$i - 1][1])
-		DllStructSetData($VerticesListEntry, 3, $a_Vertices[$i - 1][2])
-		$VerticesListEntryPtr = DllStructGetPtr($VerticesListEntry)
-		DllStructSetData($arrayOfVerticesStruct, $i, $VerticesListEntryPtr)
-	Next
 
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrCreateMesh", "str", $s_MeshName, "int", $vSize, "ptr", DllStructGetPtr($VerticesStruct), "int", $iSize, "ptr", DllStructGetPtr($IndicesStruct))
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: __VertexArrayGet
+; Description ...: [todo]
+; Syntax.........: __VertexArraySet(ByRef $tVertexArray, $iVertex, $vMember)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func __VertexArrayGet(ByRef $tVertexArray, $iVertex, $vMember)
+    Local $iSize = DllStructGetSize(DllStructCreate($tagIRR_VERTEX))
+	Return DllStructGetData(DllStructCreate($tagIRR_VERTEX, DllStructGetPtr($tVertexArray) + $iSize*$iVertex), $vMember)
+EndFunc ;==>__VertexArrayGet
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: __VertexArraySet
+; Description ...: [todo]
+; Syntax.........: __VertexArraySet(ByRef $tVertexArray, $iVertex, $vMember, $vData)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func __VertexArraySet(ByRef $tVertexArray, $iVertex, $vMember, $vData)
+    Local $iSize = DllStructGetSize(DllStructCreate($tagIRR_VERTEX))
+    DllStructSetData(DllStructCreate($tagIRR_VERTEX, DllStructGetPtr($tVertexArray) + $iSize*$iVertex), $vMember, $vData)
+
+EndFunc ;==>__VertexArraySet
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrCreateMesh
+; Description ...: [todo]
+; Syntax.........: _IrrCreateMesh($s_MeshName, $tVertexArray, $a_Indices)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrCreateMesh($s_MeshName, $tVertexArray, $a_Indices)
+	local $i
+	local $iVerts = DllStructGetSize($tVertexArray) / DllStructGetSize(DllStructCreate($tagIRR_VERTEX))
+	local $iIndices = UBound($a_Indices)
+	local $tIndices = DllStructCreate("ushort[" & $iIndices & "]")
+
+	for $i = 1 to $iIndices
+		DllStructSetData($tIndices, 1, $a_Indices[$i - 1], $i)
+	next ; $i
+
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrCreateMesh", "str", "TestMesh", "int", $iVerts, "ptr", DllStructGetPtr($tVertexArray), "int", $iIndices, "ptr", DllStructGetPtr($tIndices))
+
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
@@ -258,7 +324,7 @@ EndFunc   ;==>_IrrAddHillPlaneMesh
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrWriteMesh
 ; Description ...: [todo]
 ; Syntax.........: _IrrWriteMesh($h_Mesh, $i_FileFormat, $s_Filename)
@@ -420,7 +486,7 @@ EndFunc   ;==>_IrrGetMeshBufferCount
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetMeshIndexCount
 ; Description ...: [todo]
-; Syntax.........: _IrrGetMeshIndexCount($h_Mesh, $i_FrameNumber, $i_MeshBuffer)
+; Syntax.........: _IrrGetMeshIndexCount($h_Mesh, $i_Frame, $i_MeshBuffer = 0)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -434,8 +500,8 @@ EndFunc   ;==>_IrrGetMeshBufferCount
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrGetMeshIndexCount($h_Mesh, $i_FrameNumber, $i_MeshBuffer)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGetMeshIndexCount", "ptr", $h_Mesh, "int", $i_FrameNumber, "int", $i_MeshBuffer)
+Func _IrrGetMeshIndexCount($h_Mesh, $i_Frame, $i_MeshBuffer = 0)
+	$result = DllCall($_irrDll, "int:cdecl", "IrrGetMeshIndexCount", "ptr", $h_Mesh, "int", $i_Frame, "int", $i_MeshBuffer)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
@@ -443,21 +509,12 @@ Func _IrrGetMeshIndexCount($h_Mesh, $i_FrameNumber, $i_MeshBuffer)
 	EndIf
 EndFunc   ;==>_IrrGetMeshIndexCount
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;This Function to be added later.
-;Func _IrrGetMeshIndices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $i_MeshBuffer)
-;	DllCall($_irrDll, "none:cdecl", "IrrGetMeshIndices", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", $h_IndicesArrayStruct, "int", $i_MeshBuffer)
-;EndFunc   ;==>_IrrGetMeshIndices
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;This Function to be added later.
-;Func _IrrSetMeshIndices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $i_MeshBuffer)
-;	DllCall($_irrDll, "none:cdecl", "IrrSetMeshIndices", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", $h_IndicesArrayStruct, "int", $i_MeshBuffer)
-;EndFunc   ;==>_IrrSetMeshIndices
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: _IrrGetMeshVertexCount
+; Name...........: _IrrGetMeshIndices
 ; Description ...: [todo]
-; Syntax.........: _IrrGetMeshVertexCount($h_Mesh, $i_FrameNumber, $i_MeshBuffer)
+; Syntax.........: _IrrGetMeshIndices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $i_MeshBuffer)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -471,8 +528,52 @@ EndFunc   ;==>_IrrGetMeshIndexCount
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrGetMeshVertexCount($h_Mesh, $i_FrameNumber, $i_MeshBuffer)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGetMeshVertexCount", "ptr", $h_Mesh, "int", $i_FrameNumber, "int", $i_MeshBuffer)
+Func _IrrGetMeshIndices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $i_MeshBuffer)
+	DllCall($_irrDll, "none:cdecl", "IrrGetMeshIndices", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", $h_IndicesArrayStruct, "int", $i_MeshBuffer)
+EndFunc   ;==>_IrrGetMeshIndices
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetMeshIndices
+; Description ...: [todo]
+; Syntax.........: _IrrSetMeshIndices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $i_MeshBuffer)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetMeshIndices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $i_MeshBuffer)
+	DllCall($_irrDll, "none:cdecl", "IrrSetMeshIndices", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", $h_IndicesArrayStruct, "int", $i_MeshBuffer)
+EndFunc   ;==>_IrrSetMeshIndices
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrGetMeshVertexCount
+; Description ...: [todo]
+; Syntax.........: _IrrGetMeshVertexCount($h_Mesh, $i_Frame, $i_MeshBuffer = 0)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrGetMeshVertexCount($h_Mesh, $i_Frame, $i_MeshBuffer = 0)
+	$result = DllCall($_irrDll, "int:cdecl", "IrrGetMeshVertexCount", "ptr", $h_Mesh, "int", $i_Frame, "int", $i_MeshBuffer)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
@@ -480,30 +581,124 @@ Func _IrrGetMeshVertexCount($h_Mesh, $i_FrameNumber, $i_MeshBuffer)
 	EndIf
 EndFunc   ;==>_IrrGetMeshVertexCount
 
-;Func _IrrGetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $i_MeshBuffer)
-;RETURN TO THIS;
-;	DllCall($_irrDll, "none:cdecl", "IrrGetMeshVertices", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", $h_IndicesArrayStruct, "int", $i_MeshBuffer)
-;EndFunc   ;==>_IrrGetMeshVertices
 
-;Func _IrrSetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $i_MeshBuffer)
-;RETURN TO THIS;
-;	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertices", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", $h_IndicesArrayStruct, "int", $i_MeshBuffer)
-;EndFunc   ;==>_IrrSetMeshVertices
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrGetMeshVertices
+; Description ...: [todo]
+; Syntax.........: _IrrGetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $i_MeshBuffer = 0)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrGetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $i_MeshBuffer = 0)
+	DllCall($_irrDll, "none:cdecl", "IrrGetMeshVertices", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", DllStructGetPtr($h_IndicesArrayStruct), "int", $i_MeshBuffer)
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		Return True
+	EndIf
+EndFunc   ;==>_IrrGetMeshVertices
 
-;Func _IrrSetMeshVertexColors($h_Mesh, $i_FrameNumber, $h_VertexColourArrayStruct, $h_VertexGroupStartIndices, $h_VertexGroupEndIndices, $i_NumberOfGroups, $i_MeshBuffer)
-;RETURN TO THIS;
-;	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertexColors", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", $h_VertexColourArrayStruct, "ptr", $h_VertexGroupStartIndices, "ptr", $h_VertexGroupEndIndices, "int", $i_NumberOfGroups, "int", $i_MeshBuffer)
-;EndFunc   ;==>_IrrSetMeshVertexColors
 
-;Func _IrrSetMeshVertexCoords($h_Mesh, $i_FrameNumber, $h_VertexCoordArrayStruct, $h_VertexGroupStartIndices, $h_VertexGroupEndIndices, $i_NumberOfGroups, $i_MeshBuffer)
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetMeshVertices
+; Description ...: [todo]
+; Syntax.........: _IrrSetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $i_MeshBuffer = 0)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $i_MeshBuffer = 0)
 ;RETURN TO THIS;
-;DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertexCoords", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", $h_VertexCoordArrayStruct, "ptr", $h_VertexGroupStartIndices, "ptr", $h_VertexGroupEndIndices, "int", $i_NumberOfGroups, "int", $i_MeshBuffer)
-;EndFunc   ;==>_IrrSetMeshVertexCoords
+	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertices", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", DllStructGetPtr($h_IndicesArrayStruct), "int", $i_MeshBuffer)
+EndFunc   ;==>_IrrSetMeshVertices
 
-;Func _IrrSetMeshVertexSingleColor($h_Mesh, $i_FrameNumber, $h_VertexColourStruct, $h_VertexGroupStartIndices, $h_VertexGroupEndIndices, $i_NumberOfGroups, $i_MeshBuffer)
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetMeshVertexColors
+; Description ...: [todo]
+; Syntax.........: _IrrSetMeshVertexColors($h_Mesh, $i_FrameNumber, $h_VertexColourArrayStruct, $h_VertexGroupStartIndices, $h_VertexGroupEndIndices, $i_NumberOfGroups, $i_MeshBuffer)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetMeshVertexColors($h_Mesh, $i_FrameNumber, $h_VertexColourArrayStruct, $h_VertexGroupStartIndices, $h_VertexGroupEndIndices, $i_NumberOfGroups, $i_MeshBuffer)
 ;RETURN TO THIS;
-;	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertexSingleColor", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", $h_VertexColourStruct, "ptr", $h_VertexGroupStartIndices, "ptr", $h_VertexGroupEndIndices, "int", $i_NumberOfGroups, "int", $i_MeshBuffer)
-;EndFunc   ;==>_IrrSetMeshVertexSingleColor
+	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertexColors", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", $h_VertexColourArrayStruct, "ptr", $h_VertexGroupStartIndices, "ptr", $h_VertexGroupEndIndices, "int", $i_NumberOfGroups, "int", $i_MeshBuffer)
+EndFunc   ;==>_IrrSetMeshVertexColors
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetMeshVertexCoords
+; Description ...: [todo]
+; Syntax.........: _IrrSetMeshVertexCoords($h_Mesh, $i_FrameNumber, $h_VertexCoordArrayStruct, $h_VertexGroupStartIndices, $h_VertexGroupEndIndices, $i_NumberOfGroups, $i_MeshBuffer)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetMeshVertexCoords($h_Mesh, $i_FrameNumber, $h_VertexCoordArrayStruct, $h_VertexGroupStartIndices, $h_VertexGroupEndIndices, $i_NumberOfGroups, $i_MeshBuffer)
+;RETURN TO THIS;
+	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertexCoords", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", $h_VertexCoordArrayStruct, "ptr", $h_VertexGroupStartIndices, "ptr", $h_VertexGroupEndIndices, "int", $i_NumberOfGroups, "int", $i_MeshBuffer)
+EndFunc   ;==>_IrrSetMeshVertexCoords
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetMeshVertexSingleColor
+; Description ...: [todo]
+; Syntax.........: _IrrSetMeshVertexSingleColor($h_Mesh, $i_FrameNumber, $h_VertexColourStruct, $h_VertexGroupStartIndices, $h_VertexGroupEndIndices, $i_NumberOfGroups, $i_MeshBuffer)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetMeshVertexSingleColor($h_Mesh, $i_FrameNumber, $h_VertexColourStruct, $h_VertexGroupStartIndices, $h_VertexGroupEndIndices, $i_NumberOfGroups, $i_MeshBuffer)
+;RETURN TO THIS;
+	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertexSingleColor", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", $h_VertexColourStruct, "ptr", $h_VertexGroupStartIndices, "ptr", $h_VertexGroupEndIndices, "int", $i_NumberOfGroups, "int", $i_MeshBuffer)
+EndFunc   ;==>_IrrSetMeshVertexSingleColor
 
 
 
@@ -752,7 +947,7 @@ EndFunc   ;==>_IrrAddBillboardTextSceneNode
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddParticleSystemToScene
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddParticleSystemToScene($i_AddEmitter, $h_Parent = 0, $i_Id = -1, $f_PosX = 0, $f_PosY = 0, $f_PosZ = 0, $f_RotX = 0, $f_RotY = 0, $f_RotZ = 0, $f_ScaleX = 1, $f_ScaleY = 1, $f_ScaleZ = 1)
@@ -1774,60 +1969,3 @@ Func _IrrSetBillBoardColor($h_Node, $i_TopColor, $i_BottomColor)
 	EndIf
 EndFunc   ;==>_IrrSetBillBoardColor
 
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: __CreateVertex
-; Description ...: [todo]
-; Syntax.........: __CreateVertex($f_X, $f_Y, $f_Z, $f_NormalX, $f_NormalY, $f_NormalZ, $i_ARGB, $f_TextureX, $f_TextureY)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func __CreateVertex($f_X, $f_Y, $f_Z, $f_NormalX, $f_NormalY, $f_NormalZ, $i_ARGB, $f_TextureX, $f_TextureY)
-	Local $VertexStruct = DllStructCreate("float;float;float;float;float;float;int;float;float")
-	DllStructSetData($VertexStruct, 1, $f_X)
-	DllStructSetData($VertexStruct, 2, $f_Y)
-	DllStructSetData($VertexStruct, 3, $f_Z)
-	DllStructSetData($VertexStruct, 4, $f_NormalX)
-	DllStructSetData($VertexStruct, 5, $f_NormalY)
-	DllStructSetData($VertexStruct, 6, $f_NormalZ)
-	DllStructSetData($VertexStruct, 7, $i_ARGB)
-	DllStructSetData($VertexStruct, 8, $f_TextureX)
-	DllStructSetData($VertexStruct, 9, $f_TextureY)
-	Return $VertexStruct
-EndFunc   ;==>___CreateVertex
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: __CreateVector
-; Description ...: [todo]
-; Syntax.........: __CreateVector($f_X, $f_Y, $f_Z)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func __CreateVector($f_X, $f_Y, $f_Z)
-	Local $VectorStruct = DllStructCreate("float;float;float")
-	DllStructSetData($VectorStruct, 1, $f_X)
-	DllStructSetData($VectorStruct, 2, $f_Y)
-	DllStructSetData($VectorStruct, 3, $f_Z)
-	Return $VectorStruct
-EndFunc   ;==>___CreateVector
