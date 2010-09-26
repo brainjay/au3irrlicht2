@@ -23,8 +23,13 @@
 ;_IrrIsWindowMinimized
 ;_IrrGetScreenSize
 ;_IrrDisableFeature
-;_IrrGetTime
 ;_IrrSetTime
+;__CreateVertStruct
+;__GetVertStruct
+;__SetVertStruct
+;__CreateVectStruct
+;__GetVectStruct
+;__SetVectStruct
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
@@ -49,6 +54,7 @@
 ;_IrrSetResizableWindow
 ;_IrrMakeARGB
 ;_IrrQueryFeature
+;_IrrGetTime
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -901,7 +907,7 @@ Func _IrrDisableFeature($i_Feature, $i_Flag)
 EndFunc   ;==>_IrrDisableFeature
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetTime
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetTime()
@@ -949,3 +955,150 @@ Func _IrrSetTime($i_Time)
 		return True
 	EndIf
 EndFunc   ;==>_IrrSetTime
+
+
+
+; #FUNCTION# =============================================================================================================
+; Name...........: __CreateVertStruct
+; Description ...: [todo]
+; Syntax.........: __CreateVertStruct($iCount)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func __CreateVertStruct($iCount)
+    Local $iSize = DllStructGetSize(DllStructCreate($tagIRR_VERTEX))
+    Return DllStructCreate("byte[" & $iSize * $iCount & "]")
+EndFunc ;==>__CreateVertStruct
+
+
+
+; #FUNCTION# =============================================================================================================
+; Name...........: __GetVertStruct
+; Description ...: [todo]
+; Syntax.........: __GetVertStruct(ByRef $tVertex, $iVertex, $vMember)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func __GetVertStruct(ByRef $tVertex, $iVertex, $vMember)
+    Local $iSize = DllStructGetSize(DllStructCreate($tagIRR_VERTEX))
+	Return DllStructGetData(DllStructCreate($tagIRR_VERTEX, DllStructGetPtr($tVertex) + $iSize*$iVertex), $vMember)
+EndFunc ;==>__GetVertStruct
+
+
+; #FUNCTION# =============================================================================================================
+; Name...........: __SetVertStruct
+; Description ...: [todo]
+; Syntax.........: __SetVertStruct(ByRef $tVertex, $iVertex, $vMember, $vData)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func __SetVertStruct(ByRef $tVertex, $iVertex, $vMember, $vData)
+    Local $iSize = DllStructGetSize(DllStructCreate($tagIRR_VERTEX))
+    DllStructSetData(DllStructCreate($tagIRR_VERTEX, DllStructGetPtr($tVertex) + $iSize*$iVertex), $vMember, $vData)
+
+EndFunc ;==>__SetVertStruct
+
+
+
+; #FUNCTION# =============================================================================================================
+; Name...........: __CreateVectStruct
+; Description ...: [todo]
+; Syntax.........: __CreateVectStruct($iCount)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func __CreateVectStruct($iCount)
+    Local $iSize = DllStructGetSize(DllStructCreate($tagIRR_VECTOR))
+    Return DllStructCreate("byte[" & $iSize * $iCount & "]")
+EndFunc ;==>__CreateVectStruct
+
+
+
+; #FUNCTION# =============================================================================================================
+; Name...........: __GetVectStruct
+; Description ...: [todo]
+; Syntax.........: __GetVectStruct(ByRef $tVector, $iVector, $vMember)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func __GetVectStruct(ByRef $tVector, $iVector, $vMember)
+    Local $iSize = DllStructGetSize(DllStructCreate($tagIRR_VECTOR))
+	Return DllStructGetData(DllStructCreate($tagIRR_VECTOR, DllStructGetPtr($tVector) + $iSize*$iVector), $vMember)
+EndFunc ;==>__GetVectStruct
+
+
+; #FUNCTION# =============================================================================================================
+; Name...........: __SetVectStruct
+; Description ...: [todo]
+; Syntax.........: __SetVectStruct(ByRef $tVector, $iVector, $fX, $fY, $fZ)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func __SetVectStruct(ByRef $tVector, $iVector, $fX, $fY, $fZ)
+    Local $iSize = DllStructGetSize(DllStructCreate($tagIRR_VECTOR))
+    DllStructSetData(DllStructCreate($tagIRR_VECTOR, DllStructGetPtr($tVector) + $iSize*$iVector), $VECT_X, $fX)
+	DllStructSetData(DllStructCreate($tagIRR_VECTOR, DllStructGetPtr($tVector) + $iSize*$iVector), $VECT_Y, $fY)
+	DllStructSetData(DllStructCreate($tagIRR_VECTOR, DllStructGetPtr($tVector) + $iSize*$iVector), $VECT_Z, $fZ)
+EndFunc ;==>__SetVectStruct
+
+

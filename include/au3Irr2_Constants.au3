@@ -393,7 +393,7 @@ global Enum _ ; IRR_DEBUG
 	$EDS_HALF_TRANSPARENCY = 16, $EDS_BBOX_BUFFERS = 32, $EDS_FULL = 0xffffffff
 
 
-; struct definition and constants for __VertexArrayCreate, __VertexArrayGet, __VertexArraySet, _IrrCreateMesh
+; struct definition and constants for __CreateVertStruct, __GetVertStruct, __SetVertStruct, _IrrCreateMesh
 Global Const $tagIRR_VERTEX = "float x; " & _ ;         The x position of the vertex
 							"float y; " & _ ;         The y position of the vertex
 							"float z; " & _ ;         The z position of the vertex
@@ -403,12 +403,20 @@ Global Const $tagIRR_VERTEX = "float x; " & _ ;         The x position of the ve
 							"uint vcolor; " & _ ;     The 32bit ARGB color of the vertex
 							"float texture_x; " & _ ; the x co-ordinate of the vertex on the texture (0 to 1)
 							"float texture_y; " ;     the y co-ordinate of the vertex on the texture (0 to 1)
-global const $VERTEX_X = "x"
-global const $VERTEX_Y = "y"
-global const $VERTEX_Z = "z"
-global const $VERTEX_NORMALX = "normal_x"
-global const $VERTEX_NORMALY = "normal_y"
-global const $VERTEX_NORMALZ = "normal_z"
-global const $VERTEX_VCOLOR = "vcolor"
-global const $VERTEX_TEXTUREX = "texture_x"
-global const $VERTEX_TEXTUREY = "texture_y"
+global const $VERT_X = "x"
+global const $VERT_Y = "y"
+global const $VERT_Z = "z"
+global const $VERT_NORMALX = "normal_x"
+global const $VERT_NORMALY = "normal_y"
+global const $VERT_NORMALZ = "normal_z"
+global const $VERT_VCOLOR = "vcolor"
+global const $VERT_TEXTUREX = "texture_x"
+global const $VERT_TEXTUREY = "texture_y"
+
+; struct definition and constants for __CreateVectStruct, __GetVectStruct, __SetVectStruct
+Global Const $tagIRR_VECTOR = "float x; " & _ ;         The x position of the vector
+							"float y; " & _ ;         The y position of the vector
+							"float z; "	;	          The z position of the vector
+global const $VECT_X = "x"
+global const $VECT_Y = "y"
+global const $VECT_Z = "z"

@@ -26,7 +26,7 @@
 > Examples:
 
 + Added: 015 (CustomMesh), 022 (Indices+Vertices), 024 (Mesh to file), 062 (6D0F_Camera)
-+ Added: 007/025/027/066/067/068/074/075 (ParticleSystem)
++ Added: 007/025/027/066/067/068/069/074/075 (ParticleSystem)
 + Fixed: 010 (TerrainAndFog) / 029/054 (Skydomes)
 - 010: Corrected parameters and wrong documentation of _IrrSetFog. 029/054: renamed 
   skydome.jpg to 'skydome2.jpg' and restored original texture needed for example 054.

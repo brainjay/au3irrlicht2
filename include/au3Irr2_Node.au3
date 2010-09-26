@@ -20,6 +20,7 @@
 ;_IrrGetNodeID
 ;_IrrGetNodeBoundingBox
 ;_IrrSetNodeRotationPositionChange
+;xxx_IrrSetNodeRotationPositionChange
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
@@ -899,10 +900,11 @@ EndFunc   ;==>_IrrGetNodeBoundingBox
 
 
 
+
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeRotationPositionChange
 ; Description ...: [todo]
-; Syntax.........: _IrrSetNodeRotationPositionChange($h_Camera, $f_Yaw, $f_Pitch, $f_Roll, $f_Drive = 0.0, $f_Strafe = 0.0, $f_Elevate = 0.0, $h_ForwardVect = 0, $h_UpVector = 0, $i_NumOffsetVectors = 0, $h_OffsetVect = 0)
+; Syntax.........: Func _IrrSetNodeRotationPositionChange($h_Camera, $f_Yaw, $f_Pitch, $f_Roll, $f_Drive, $f_Strafe, $f_Elevate, _
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -916,14 +918,85 @@ EndFunc   ;==>_IrrGetNodeBoundingBox
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrSetNodeRotationPositionChange($h_Camera, $f_Yaw, $f_Pitch, $f_Roll, $f_Drive = 0.0, $f_Strafe = 0.0, $f_Elevate = 0.0, $h_ForwardVect = 0, $h_UpVector = 0, $i_NumOffsetVectors = 0, $h_OffsetVect = 0)
+Func _IrrSetNodeRotationPositionChange($h_Camera, $f_Yaw, $f_Pitch, $f_Roll, $f_Drive, $f_Strafe, $f_Elevate, _
+	ByRef $tForwardVect, ByRef $tUpVector, ByRef $tOffsetVect)
+
+	if not IsDllStruct($tForwardVect) then Return SetError(2, 0, False)
+	if not IsDllStruct($tUpVector) then Return SetError(3, 0, False)
+	if not IsDllStruct($tOffsetVect) then Return SetError(4, 0, False)
+	local $iOffsetVect = DllStructGetSize($tOffsetVect) / DllStructGetSize(DllStructCreate($tagIRR_VECTOR))
+
 	$result = DllCall($_irrDll, "none:cdecl", "IrrSetNodeRotationPositionChange", "ptr", $h_Camera, _
 		"float", $f_Yaw, "float", $f_Pitch, "float", $f_Roll, "float", $f_Drive, "float", $f_Strafe, "float", $f_Elevate, _
-		"float*", $h_ForwardVect, "float*", $h_UpVector, "uint", $i_NumOffsetVectors, "float*", $h_OffsetVect ) ; $h_OffsetVect[0][0])
+		"ptr", DllStructGetPtr($tForwardVect), "ptr", DllStructGetPtr($tUpVector), _
+		"uint", $iOffsetVect, "ptr", DllStructGetPtr($tOffsetVect) )
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
-		$h_UpVector = $result[8]
+;~ 		$aForwardVect[0] = DllStructGetData($tForwardV, 1, 1)
+;~ 		$aForwardVect[1] = DllStructGetData($tForwardV, 1, 2)
+;~ 		$aForwardVect[2] = DllStructGetData($tForwardV, 1, 3)
+;~ 		$aUpVector[0] = DllStructGetData($tUpV, 1, 1)
+;~ 		$aUpVector[1] = DllStructGetData($tUpV, 1, 2)
+;~ 		$aUpVector[2] = DllStructGetData($tUpV, 1, 3)
+$tForwardVect = DllStructGetPtr($result[8]) ;DllStructCreate($tagIRR_VECTOR, $result[8])
+$tUpVector = DllStructGetPtr($result[9]); DllStructCreate($tagIRR_VECTOR, $result[9])
+$tOffsetVect = DllStructGetPtr($result[11]);DllStructCreate("float;float;float;float;float;float", $result[11])
 		Return True
 	EndIf
 EndFunc   ;==>_IrrSetNodeRotationPositionChange
+
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: xxx_IrrSetNodeRotationPositionChange
+; Description ...: [todo]
+; Syntax.........: Func xxx_IrrSetNodeRotationPositionChange($h_Camera, $f_Yaw, $f_Pitch, $f_Roll, $f_Drive, $f_Strafe, $f_Elevate, _
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func xxx_IrrSetNodeRotationPositionChange($h_Camera, $f_Yaw, $f_Pitch, $f_Roll, $f_Drive, $f_Strafe, $f_Elevate, _
+	ByRef $aForwardVect, ByRef $aUpVector, ByRef $aOffsetVect)
+
+	$i_NumOffsetVectors = UBound($aOffsetVect)
+
+	local $tForwardV = DllStructCreate("float[3]")
+	local $tUpV = DllStructCreate("float[3]")
+
+	DllStructSetData($tForwardV, 1, $aForwardVect[0], 1)
+	DllStructSetData($tForwardV, 1, $aForwardVect[1], 2)
+	DllStructSetData($tForwardV, 1, $aForwardVect[2], 3)
+	DllStructSetData($tUpV, 1, $aUpVector[0], 1)
+	DllStructSetData($tUpV, 1, $aUpVector[1], 2)
+	DllStructSetData($tUpV, 1, $aUpVector[2], 3)
+
+	local $i
+
+
+	$result = DllCall($_irrDll, "none:cdecl", "IrrSetNodeRotationPositionChange", "ptr", $h_Camera, _
+		"float", $f_Yaw, "float", $f_Pitch, "float", $f_Roll, "float", $f_Drive, "float", $f_Strafe, "float", $f_Elevate, _
+		"ptr", DllStructGetPtr($tForwardV), "ptr", DllStructGetPtr($tUpV), _
+		"uint", $i_NumOffsetVectors, "float*", $aOffsetVect ) ; $h_OffsetVect[0][0])
+	if @error Then
+		Return Seterror(1,0,False)
+	Else
+		$aForwardVect[0] = DllStructGetData($tForwardV, 1, 1)
+		$aForwardVect[1] = DllStructGetData($tForwardV, 1, 2)
+		$aForwardVect[2] = DllStructGetData($tForwardV, 1, 3)
+		$aUpVector[0] = DllStructGetData($tUpV, 1, 1)
+		$aUpVector[1] = DllStructGetData($tUpV, 1, 2)
+		$aUpVector[2] = DllStructGetData($tUpV, 1, 3)
+
+		Return True
+	EndIf
+EndFunc   ;==>xxx_IrrSetNodeRotationPositionChange

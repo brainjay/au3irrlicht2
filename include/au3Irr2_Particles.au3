@@ -15,24 +15,12 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
-;_IrrSetMinParticleSize
-;_IrrSetMaxParticleSize
-;_IrrAddAnimatedMeshSceneNodeEmitter
+;_IrrSetParticleMinSize
+;_IrrSetParticleMaxSize
 ;_IrrCreateRotationAffector
-;_IrrAddStopParticleAffector
-;_IrrAddParticlePushAffector
-;_IrrAddColorMorphAffector
-;_IrrAddSplineAffector
-;_IrrRemoveAffectors
 ;_IrrSetParticleEmitterDirection
-;_IrrSetParticleEmitterMinParticlesPerSecond
-;_IrrSetParticleEmitterMaxParticlesPerSecond
-;_IrrSetParticleEmitterMinStartColor
-;_IrrSetParticleEmitterMaxStartColor
 ;_IrrSetParticleAffectorEnable
-;_IrrSetFadeOutParticleAffectorTime
 ;_IrrSetFadeOutParticleAffectorTargetColor
-;_IrrSetGravityParticleAffectorDirection
 ;_IrrSetGravityParticleAffectorTimeForceLost
 ;_IrrSetParticleAttractionAffectorAffectX
 ;_IrrSetParticleAttractionAffectorAffectY
@@ -43,17 +31,29 @@
 ;_IrrSetFurthestDistanceOfEffect
 ;_IrrSetNearestDistanceOfEffect
 ;_IrrSetColumnDistanceOfEffect
-;_IrrSetCenterOfEffect
 ;_IrrSetStrengthOfEffect
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
-;__CreateParticleEmitter
+;__CreateParticleSettings
 ;_IrrAddParticleEmitter
+;_IrrAddAnimatedMeshSceneNodeEmitter
 ;_IrrAddRotationAffector
 ;_IrrAddFadeOutParticleAffector
 ;_IrrAddGravityParticleAffector
 ;_IrrAddParticleAttractionAffector
+;_IrrAddStopParticleAffector
+;_IrrAddParticlePushAffector
+;_IrrAddColorMorphAffector
+;_IrrAddSplineAffector
+;_IrrRemoveAffectors
+;_IrrSetParticleEmitterMinParticlesPerSecond
+;_IrrSetParticleEmitterMaxParticlesPerSecond
+;_IrrSetParticleEmitterMinStartColor
+;_IrrSetParticleEmitterMaxStartColor
+;_IrrSetFadeOutParticleAffectorTime
+;_IrrSetGravityParticleAffectorDirection
+;_IrrSetCenterOfEffect
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -346,7 +346,7 @@ Func _IrrCreateRotationAffector($h_ParticleSystem, $f_SpeedX, $f_SpeedY, $f_Spee
 EndFunc   ;==>_IrrCreateRotationAffector
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddStopParticleAffector
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddStopParticleAffector($h_ParticleSystem, $i_Time, $h_Emitter)
@@ -373,7 +373,7 @@ Func _IrrAddStopParticleAffector($h_ParticleSystem, $i_Time, $h_Emitter)
 EndFunc   ;==>_IrrAddStopParticleAffector
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddParticlePushAffector
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddParticlePushAffector($h_ParticleSystem, $f_X, $f_Y, $f_Z, $f_SpeedX, $f_SpeedY, $f_SpeedZ, $f_Far, $f_Near, $f_Column, $i_Distant)
@@ -400,7 +400,7 @@ Func _IrrAddParticlePushAffector($h_ParticleSystem, $f_X, $f_Y, $f_Z, $f_SpeedX,
 EndFunc   ;==>_IrrAddParticlePushAffector
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddColorMorphAffector
 ; Description ...: [todo]
 ; Syntax.........: _IrrAddColorMorphAffector($h_ParticleSystem, $a_ParticleColors, $a_ParticleTimes, $b_Smooth)
@@ -445,10 +445,10 @@ Func _IrrAddColorMorphAffector($h_ParticleSystem, $a_ParticleColors, $a_Particle
 EndFunc   ;==>_IrrAddColorMorphAffector
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddSplineAffector
 ; Description ...: [todo]
-; Syntax.........: _IrrAddSplineAffector($h_ParticleSystem, $a_ParticleSpline, $f_Speed, $f_Tightness, $f_Attraction, $i_DeleteAtEnd)
+; Syntax.........: _IrrAddSplineAffector($h_ParticleSystem, $tVertexArray, $f_Speed, $f_Tightness, $f_Attraction, $b_DeleteAtEnd)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -462,17 +462,14 @@ EndFunc   ;==>_IrrAddColorMorphAffector
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrAddSplineAffector($h_ParticleSystem, $a_ParticleSpline, $f_Speed, $f_Tightness, $f_Attraction, $i_DeleteAtEnd)
-	$splineSize = UBound($a_ParticleSpline)
-	Local $SplineStruct = DllStructCreate("float[" & $splineSize & "];float[" & $splineSize & "];float[" & $splineSize & "]")
+Func _IrrAddSplineAffector($h_ParticleSystem, $tVertexArray, $f_Speed, $f_Tightness, $f_Attraction, $b_DeleteAtEnd)
+	if not IsDllStruct($tVertexArray) then Return SetError(2, 0, False)
 
-	For $i = 1 To $splineSize
-		DllStructSetData($SplineStruct, 1, $a_ParticleSpline[$i - 1][0])
-		DllStructSetData($SplineStruct, 2, $a_ParticleSpline[$i - 1][1])
-		DllStructSetData($SplineStruct, 3, $a_ParticleSpline[$i - 1][2])
-	Next
+	local $iSplineVerts = DllStructGetSize($tVertexArray) / DllStructGetSize(DllStructCreate($tagIRR_VERTEX))
 
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddSplineAffector", "ptr", $h_ParticleSystem, "ptr", DllStructGetPtr($SplineStruct), "float", $f_Speed, "float", $f_Tightness, "float", $f_Attraction, "int", $i_DeleteAtEnd)
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddSplineAffector", "UINT_PTR", $h_ParticleSystem, _
+				"UINT", $iSplineVerts, "ptr", DllStructGetPtr($tVertexArray), "float", $f_Speed, _
+				"float", $f_Tightness, "float", $f_Attraction, "UINT", $b_DeleteAtEnd)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
@@ -481,7 +478,7 @@ Func _IrrAddSplineAffector($h_ParticleSystem, $a_ParticleSpline, $f_Speed, $f_Ti
 EndFunc   ;==>_IrrAddSplineAffector
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrRemoveAffectors
 ; Description ...: [todo]
 ; Syntax.........: _IrrRemoveAffectors($h_ParticleSystem)
@@ -535,7 +532,7 @@ Func _IrrSetParticleEmitterDirection($h_ParticleEmitter, $f_X, $f_Y, $f_Z)
 EndFunc   ;==>_IrrSetParticleEmitterDirection
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetParticleEmitterMinParticlesPerSecond
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetParticleEmitterMinParticlesPerSecond($h_ParticleEmitter, $i_Min)
@@ -562,7 +559,7 @@ Func _IrrSetParticleEmitterMinParticlesPerSecond($h_ParticleEmitter, $i_Min)
 EndFunc   ;==>_IrrSetParticleEmitterMinParticlesPerSecond
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetParticleEmitterMaxParticlesPerSecond
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetParticleEmitterMaxParticlesPerSecond($h_ParticleEmitter, $i_Max)
@@ -589,7 +586,7 @@ Func _IrrSetParticleEmitterMaxParticlesPerSecond($h_ParticleEmitter, $i_Max)
 EndFunc   ;==>_IrrSetParticleEmitterMaxParticlesPerSecond
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetParticleEmitterMinStartColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetParticleEmitterMinStartColor($h_ParticleEmitter, $i_Red, $i_Green, $i_Blue)
@@ -616,7 +613,7 @@ Func _IrrSetParticleEmitterMinStartColor($h_ParticleEmitter, $i_Red, $i_Green, $
 EndFunc   ;==>_IrrSetParticleEmitterMinStartColor
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetParticleEmitterMaxStartColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetParticleEmitterMaxStartColor($h_ParticleEmitter, $i_Red, $i_Green, $i_Blue)
@@ -670,7 +667,7 @@ Func _IrrSetParticleAffectorEnable($h_ParticleAffector, $i_Enabled)
 EndFunc   ;==>_IrrSetParticleAffectorEnable
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetFadeOutParticleAffectorTime
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetFadeOutParticleAffectorTime($h_ParticleAffector, $f_Time)
@@ -724,7 +721,7 @@ Func _IrrSetFadeOutParticleAffectorTargetColor($h_ParticleAffector, $i_Red, $i_G
 EndFunc   ;==>_IrrSetFadeOutParticleAffectorTargetColor
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetGravityParticleAffectorDirection
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetGravityParticleAffectorDirection($h_ParticleAffector, $f_X, $f_Y, $f_Z)
@@ -1016,7 +1013,7 @@ Func _IrrSetColumnDistanceOfEffect($h_ParticleAffector, $f_Distance)
 EndFunc   ;==>_IrrSetColumnDistanceOfEffect
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetCenterOfEffect
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetCenterOfEffect($h_ParticleAffector, $f_X, $f_Y, $f_Z)
