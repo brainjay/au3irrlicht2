@@ -53,25 +53,25 @@ $vertex_count = _IrrGetMeshVertexCount( $DirectXMesh, 0 )
 MsgBox(0, $SCRIPTTITLE, "Index count: " & $index_count & @LF & "Vertex count: " & $vertex_count)
 
 ; dimention an array large enough to contain the list of vertices
-local $tVertexArray = __VertexArrayCreate($vertex_count) ; ( 0 to $vertex_count ) ; $IRR_VERT
+local $tVertex = __CreateVertStruct($vertex_count) ; ( 0 to $vertex_count ) ; $IRR_VERT
 
 ; copy the vertex information into the array
-_IrrGetMeshVertices( $DirectXMesh, 0, $tVertexArray) ; $vertices(0))
+_IrrGetMeshVertices( $DirectXMesh, 0, $tVertex) ; $vertices(0))
 
 
 ; itterate through all of the vertices
 for $i = 0 to $vertex_count - 1
     ; display the vertex location in 3D space
-;todo    print "Vertex ";str(i);" is at ";str($tVertexArray(i).x);", ";str($tVertexArray(i).y);", ";str($tVertexArray(i).z)
+;todo    print "Vertex ";str(i);" is at ";str($tVertex(i).x);", ";str($tVertex(i).y);", ";str($tVertex(i).z)
 
     ; shrink the vertex X location by half its size
-	__VertexArraySet($tVertexArray, $i, $VERTEX_X, __VertexArrayGet($tVertexArray, $i, $VERTEX_X) * 0.5 )
+	__SetVertStruct($tVertex, $i, $VERT_X, __GetVertStruct($tVertex, $i, $VERT_X) * 0.5 )
     ; change the color of the vertex to a random value
-	__VertexArraySet($tVertexArray, $i, $VERTEX_VCOLOR, _IrrMakeARGB(0, Random(0,255), Random(0,255), Random(0,255) ) )
+	__SetVertStruct($tVertex, $i, $VERT_VCOLOR, _IrrMakeARGB(0, Random(0,255), Random(0,255), Random(0,255) ) )
 next ; $i
 
 ; copy the altered vertex infomation back to the mesh
-_IrrSetMeshVertices( $DirectXMesh, 0, $tVertexArray )
+_IrrSetMeshVertices( $DirectXMesh, 0, $tVertex )
 
 ; add the mesh to the scene
 $SceneNode = _IrrAddMeshToScene( $DirectXMesh )

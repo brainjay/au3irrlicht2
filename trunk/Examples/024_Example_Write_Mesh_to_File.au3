@@ -43,48 +43,48 @@ _IrrSetWindowCaption( $SCRIPTTITLE )
 ; a mesh is created from an array of types called vertices that define a point
 ; in space. and an array of indices to these vertices that are grouped into
 ; threes to create triangles that form the mesh
-local $tVertexArray = __VertexArrayCreate(5) ; $IRR_VERT
+local $tVertex = __CreateVertStruct(5) ; $IRR_VERT
 
 ; set up five vertices to define the points of a pyramid. the vertices have
 ; many properties that need to be set up to properly define the structure
-__VertexArraySet($tVertexArray, 0, $VERTEX_X, -20)
-__VertexArraySet($tVertexArray, 0, $VERTEX_Y, 0)
-__VertexArraySet($tVertexArray, 0, $VERTEX_Z, -20)
-__VertexArraySet($tVertexArray, 1, $VERTEX_X, -20)
-__VertexArraySet($tVertexArray, 1, $VERTEX_Y, 0)
-__VertexArraySet($tVertexArray, 1, $VERTEX_Z, 20)
-__VertexArraySet($tVertexArray, 2, $VERTEX_X, 20)
-__VertexArraySet($tVertexArray, 2, $VERTEX_Y, 0)
-__VertexArraySet($tVertexArray, 2, $VERTEX_Z, 20)
-__VertexArraySet($tVertexArray, 3, $VERTEX_X, 20)
-__VertexArraySet($tVertexArray, 3, $VERTEX_Y, 0)
-__VertexArraySet($tVertexArray, 3, $VERTEX_Z, -20)
-__VertexArraySet($tVertexArray, 4, $VERTEX_X, 0)
-__VertexArraySet($tVertexArray, 4, $VERTEX_Y, 35)
-__VertexArraySet($tVertexArray, 4, $VERTEX_Z, 0)
+__SetVertStruct($tVertex, 0, $VERT_X, -20)
+__SetVertStruct($tVertex, 0, $VERT_Y, 0)
+__SetVertStruct($tVertex, 0, $VERT_Z, -20)
+__SetVertStruct($tVertex, 1, $VERT_X, -20)
+__SetVertStruct($tVertex, 1, $VERT_Y, 0)
+__SetVertStruct($tVertex, 1, $VERT_Z, 20)
+__SetVertStruct($tVertex, 2, $VERT_X, 20)
+__SetVertStruct($tVertex, 2, $VERT_Y, 0)
+__SetVertStruct($tVertex, 2, $VERT_Z, 20)
+__SetVertStruct($tVertex, 3, $VERT_X, 20)
+__SetVertStruct($tVertex, 3, $VERT_Y, 0)
+__SetVertStruct($tVertex, 3, $VERT_Z, -20)
+__SetVertStruct($tVertex, 4, $VERT_X, 0)
+__SetVertStruct($tVertex, 4, $VERT_Y, 35)
+__SetVertStruct($tVertex, 4, $VERT_Z, 0)
 
 ; the co-ordinates across a texture run from 0 to 1 so we place each of the
 ; vertices on this texture plane to appear ; if the pyramid was painted from
 ; its bottom up
-__VertexArraySet($tVertexArray, 0, $VERTEX_TEXTUREX, 0)
-__VertexArraySet($tVertexArray, 0, $VERTEX_TEXTUREY, 0)
-__VertexArraySet($tVertexArray, 1, $VERTEX_TEXTUREX, 0)
-__VertexArraySet($tVertexArray, 1, $VERTEX_TEXTUREY, 1)
-__VertexArraySet($tVertexArray, 2, $VERTEX_TEXTUREX, 1)
-__VertexArraySet($tVertexArray, 2, $VERTEX_TEXTUREY, 1)
-__VertexArraySet($tVertexArray, 3, $VERTEX_TEXTUREX, 1)
-__VertexArraySet($tVertexArray, 3, $VERTEX_TEXTUREY, 0)
-__VertexArraySet($tVertexArray, 4, $VERTEX_TEXTUREX, 0.5)
-__VertexArraySet($tVertexArray, 4, $VERTEX_TEXTUREY, 0.5)
+__SetVertStruct($tVertex, 0, $VERT_TEXTUREX, 0)
+__SetVertStruct($tVertex, 0, $VERT_TEXTUREY, 0)
+__SetVertStruct($tVertex, 1, $VERT_TEXTUREX, 0)
+__SetVertStruct($tVertex, 1, $VERT_TEXTUREY, 1)
+__SetVertStruct($tVertex, 2, $VERT_TEXTUREX, 1)
+__SetVertStruct($tVertex, 2, $VERT_TEXTUREY, 1)
+__SetVertStruct($tVertex, 3, $VERT_TEXTUREX, 1)
+__SetVertStruct($tVertex, 3, $VERT_TEXTUREY, 0)
+__SetVertStruct($tVertex, 4, $VERT_TEXTUREX, 0.5)
+__SetVertStruct($tVertex, 4, $VERT_TEXTUREY, 0.5)
 
 ; each of the vertices can be assigned a colour to tint the texture, in this
 ; case we use white
 
-__VertexArraySet($tVertexArray, 0, $VERTEX_VCOLOR, _IrrMakeARGB(0, 255, 255, 255))
-__VertexArraySet($tVertexArray, 1, $VERTEX_VCOLOR, _IrrMakeARGB(0, 255, 255, 255))
-__VertexArraySet($tVertexArray, 2, $VERTEX_VCOLOR, _IrrMakeARGB(0, 255, 255, 255))
-__VertexArraySet($tVertexArray, 3, $VERTEX_VCOLOR, _IrrMakeARGB(0, 255, 255, 255))
-__VertexArraySet($tVertexArray, 4, $VERTEX_VCOLOR, _IrrMakeARGB(0, 255, 255, 255))
+__SetVertStruct($tVertex, 0, $VERT_VCOLOR, _IrrMakeARGB(0, 255, 255, 255))
+__SetVertStruct($tVertex, 1, $VERT_VCOLOR, _IrrMakeARGB(0, 255, 255, 255))
+__SetVertStruct($tVertex, 2, $VERT_VCOLOR, _IrrMakeARGB(0, 255, 255, 255))
+__SetVertStruct($tVertex, 3, $VERT_VCOLOR, _IrrMakeARGB(0, 255, 255, 255))
+__SetVertStruct($tVertex, 4, $VERT_VCOLOR, _IrrMakeARGB(0, 255, 255, 255))
 
 ; -----------------------------------------------------------------------------
 ; create the faces, this is an array of indices referencing the vectors they
@@ -92,7 +92,7 @@ __VertexArraySet($tVertexArray, 4, $VERTEX_VCOLOR, _IrrMakeARGB(0, 255, 255, 255
 local $aIndices[18] = [0,1,4,  1,2,4,  2,3,4,  3,0,4,  2,1,0,  0,3,2]
 
 ; create the mesh from the array of vertices and indices
-$hMesh = _IrrCreateMesh("testMesh", $tVertexArray, $aIndices)
+$hMesh = _IrrCreateMesh("testMesh", $tVertex, $aIndices)
 
 ; load texture resource for texturing the nodes
 $MeshTexture = _IrrGetTexture( "../media/au3irr2_logo.jpg" )

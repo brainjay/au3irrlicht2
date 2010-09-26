@@ -16,19 +16,11 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
-;__VertexArrayCreate
-;__VertexArrayGet
-;__VertexArraySet
-;_IrrCreateMesh
 ;_IrrAddSphereSceneMesh
 ;_IrrGetMeshFrameCount
 ;_IrrGetMeshBufferCount
-;_IrrGetMeshIndexCount
 ;_IrrGetMeshIndices
 ;_IrrSetMeshIndices
-;_IrrGetMeshVertexCount
-;_IrrGetMeshVertices
-;_IrrSetMeshVertices
 ;_IrrSetMeshVertexColors
 ;_IrrSetMeshVertexCoords
 ;_IrrSetMeshVertexSingleColor
@@ -41,11 +33,16 @@
 ; #CURRENT# =====================================================================================================================
 ;_IrrGetRootSceneNode
 ;_IrrGetMesh
+;_IrrCreateMesh
 ;_IrrAddHillPlaneMesh
 ;_IrrWriteMesh
 ;_IrrRemoveMesh
 ;_IrrClearUnusedMeshes
 ;_IrrSetMeshHardwareAccelerated
+;_IrrGetMeshIndexCount
+;_IrrGetMeshVertexCount
+;_IrrGetMeshVertices
+;_IrrSetMeshVertices
 ;_IrrAddMeshToScene
 ;_IrrAddMeshToSceneAsOcttree
 ;_IrrAddStaticMeshForNormalMappingToScene
@@ -160,76 +157,8 @@ Func _IrrGetMesh($s_MeshFile)
 EndFunc   ;==>_IrrGetMesh
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: __VertexArrayCreate
-; Description ...: [todo]
-; Syntax.........: __VertexArrayCreate($iCount)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func __VertexArrayCreate($iCount)
-    Local $iSize = DllStructGetSize(DllStructCreate($tagIRR_VERTEX))
-    Return DllStructCreate("byte[" & $iSize * $iCount & "]")
-EndFunc ;==>__VertexArrayCreate
 
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: __VertexArrayGet
-; Description ...: [todo]
-; Syntax.........: __VertexArraySet(ByRef $tVertexArray, $iVertex, $vMember)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func __VertexArrayGet(ByRef $tVertexArray, $iVertex, $vMember)
-    Local $iSize = DllStructGetSize(DllStructCreate($tagIRR_VERTEX))
-	Return DllStructGetData(DllStructCreate($tagIRR_VERTEX, DllStructGetPtr($tVertexArray) + $iSize*$iVertex), $vMember)
-EndFunc ;==>__VertexArrayGet
-
-; #NO_DOC_FUNCTION# =============================================================================================================
-; Name...........: __VertexArraySet
-; Description ...: [todo]
-; Syntax.........: __VertexArraySet(ByRef $tVertexArray, $iVertex, $vMember, $vData)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func __VertexArraySet(ByRef $tVertexArray, $iVertex, $vMember, $vData)
-    Local $iSize = DllStructGetSize(DllStructCreate($tagIRR_VERTEX))
-    DllStructSetData(DllStructCreate($tagIRR_VERTEX, DllStructGetPtr($tVertexArray) + $iSize*$iVertex), $vMember, $vData)
-
-EndFunc ;==>__VertexArraySet
-
-
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrCreateMesh
 ; Description ...: [todo]
 ; Syntax.........: _IrrCreateMesh($s_MeshName, $tVertexArray, $a_Indices)
@@ -247,6 +176,9 @@ EndFunc ;==>__VertexArraySet
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrCreateMesh($s_MeshName, $tVertexArray, $a_Indices)
+	if not IsDllStruct($tVertexArray) then Return SetError(2, 0, False)
+	if not IsArray($a_Indices) then Return SetError(3, 0, False)
+
 	local $i
 	local $iVerts = DllStructGetSize($tVertexArray) / DllStructGetSize(DllStructCreate($tagIRR_VERTEX))
 	local $iIndices = UBound($a_Indices)
@@ -483,7 +415,7 @@ Func _IrrGetMeshBufferCount($h_Mesh, $i_FrameNumber)
 EndFunc   ;==>_IrrGetMeshBufferCount
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetMeshIndexCount
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetMeshIndexCount($h_Mesh, $i_Frame, $i_MeshBuffer = 0)
@@ -555,7 +487,7 @@ Func _IrrSetMeshIndices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $i
 EndFunc   ;==>_IrrSetMeshIndices
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetMeshVertexCount
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetMeshVertexCount($h_Mesh, $i_Frame, $i_MeshBuffer = 0)
@@ -582,7 +514,7 @@ Func _IrrGetMeshVertexCount($h_Mesh, $i_Frame, $i_MeshBuffer = 0)
 EndFunc   ;==>_IrrGetMeshVertexCount
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetMeshVertices
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $i_MeshBuffer = 0)
@@ -609,7 +541,7 @@ Func _IrrGetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $
 EndFunc   ;==>_IrrGetMeshVertices
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetMeshVertices
 ; Description ...: [todo]
 ; Syntax.........: _IrrSetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $i_MeshBuffer = 0)
