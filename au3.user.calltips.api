@@ -19,10 +19,13 @@ _IrrMakeNormalMapTexture($h_Texture,$f_Amplitude)
 _IrrColorKeyTexture($h_Texture,$i_Red,$i_Green,$i_Blue) Copies any parts of the texture that are the same as the specified color into the textures alpha channel.
 _IrrDraw2DImage($h_Image,$i_XPos,$i_YPos) Draws the texture to the display at the supplied coordinates.
 _IrrDraw2DImageElement($h_Texture,$i_XPos,$i_YPos,$i_SourceTopX,$i_SourceTopY,$i_SourceBottomX,$i_SourceBottomY,$i_UseAlpha) Draws given rectangular section from a texture to the display at the supplied coordinates
+_IrrDraw2DImageElementStretch($h_Texture,$i_DestTopX,$i_DestTopY,$i_DestBottomX,$i_DestBottomY,$i_SourceTopX,$i_SourceTopY,$i_SourceBottomX,$i_SourceBottomY,$i_UseAlpha) Draws specified rectangle from Source texture sizing it to fit the specified Desination rectangle.
 _IrrGetFont($s_Font) Loads a bitmap containing a bitmap font.
 _Irr2DFontDraw($h_Font,$s_Text,$i_XPos,$i_YPos,$i_BottomX,$i_BottomY) Draws the text into the supplied rectangular area using the supplied font object.
 _IrrSaveScreenShot($s_Filename) 
 _IrrGetScreenShot($i_XPos,$i_YPos,$i_Width,$i_Height) 
+_IrrGetTextureInformation($h_Texture) Get information on a texture. The width, height, pitch and color format is returned in an array.
+_IrrGetImageInformation($h_Image) Get information on an image. The width, height, pitch and color format is returned in an array.
 _IrrSetNodeAnimationRange($h_Node,$i_Start,$i_End) 
 _IrrPlayNodeMD2Animation($h_Node,$i_Animation) Selects the animation sequence of MD2 to be played.
 _IrrSetNodeAnimationSpeed($h_Node,$f_Speed) 
@@ -492,15 +495,19 @@ $EDS_HALF_TRANSPARENCY
 $EDS_BBOX_BUFFERS
 $EDS_FULL
 $tagIRR_VERTEX
-$VERTEX_X
-$VERTEX_Y
-$VERTEX_Z
-$VERTEX_NORMALX
-$VERTEX_NORMALY
-$VERTEX_NORMALZ
-$VERTEX_VCOLOR
-$VERTEX_TEXTUREX
-$VERTEX_TEXTUREY
+$VERT_X
+$VERT_Y
+$VERT_Z
+$VERT_NORMALX
+$VERT_NORMALY
+$VERT_NORMALZ
+$VERT_VCOLOR
+$VERT_TEXTUREX
+$VERT_TEXTUREY
+$tagIRR_VECTOR
+$VECT_X
+$VECT_Y
+$VECT_Z
 _IrrAddZipFile($s_Zipfile,$i_IgnoreCase,$i_IgnorePaths) Adds a zip archive to the filing system allowing to load files out of the zip file.
 _IrrChangeWorkingDirectory($s_WorkingDir) 
 _IrrGetWorkingDirectory() 
@@ -547,6 +554,7 @@ _IrrReadKeyEvent()
 _IrrMouseEventAvailable() 
 _IrrReadMouseEvent() 
 _IrrSetMousePosition(ByRef $f_XPos,ByRef $f_YPos) 
+_IrrGetAbsoluteMousePosition() Get the absolute mouse X and Y position
 _IrrHideMouse() Hides the mouse pointer
 _IrrShowMouse() Shows the mouse pointer
 _IrrDisplayMouse($i_HideShow) Hide or show the mouse pointer while it is within the Irrlicht display.
@@ -623,21 +631,22 @@ _IrrSetNodeParent($h_Node,$h_Parent)
 _IrrGetNodeID($h_Node) 
 _IrrSetNodeID($h_Node,$i_ID) 
 _IrrGetNodeBoundingBox($h_Node,ByRef $a_VectorA3df,ByRef $a_VectorB3df) 
-_IrrSetNodeRotationPositionChange($h_Camera,$f_Yaw,$f_Pitch,$f_Roll,$f_Drive=0.0,$f_Strafe=0.0,$f_Elevate=0.0,$h_ForwardVect=0,$h_UpVector=0,$i_NumOffsetVectors=0,$h_OffsetVect=0) 
-__CreateParticleEmitter($minBoxX,$minBoxY,$minBoxZ,$maxBoxX,$maxBoxY,$maxBoxZ,$directionX,$directionY,$directionZ,$minParticlesSecond,$maxParticlesSecond,$minStartColorR,$minStartColorG,$minStartColorB,$maxStartColorR,$maxStartColorG,$maxStartColorB,$minLifetime,$maxLifetime,$minStartSizeX,$minStartSizeY,$maxStartSizeX,$maxStartSizeY,$maxAngleDegrees) 
+Func _IrrSetNodeRotationPositionChange($h_Camera,$f_Yaw,$f_Pitch,$f_Roll,$f_Drive,$f_Strafe,$f_Elevate,_ 
+Func xxx_IrrSetNodeRotationPositionChange($h_Camera,$f_Yaw,$f_Pitch,$f_Roll,$f_Drive,$f_Strafe,$f_Elevate,_ 
+__CreateParticleSettings($minBoxX,$minBoxY,$minBoxZ,$maxBoxX,$maxBoxY,$maxBoxZ,$directionX,$directionY,$directionZ,$minParticlesSecond,$maxParticlesSecond,$minStartColorR,$minStartColorG,$minStartColorB,$maxStartColorR,$maxStartColorG,$maxStartColorB,$minLifetime,$maxLifetime,$minStartSizeX,$minStartSizeY,$maxStartSizeX,$maxStartSizeY,$maxAngleDegrees) 
 _IrrAddParticleEmitter($h_ParticleSystem,$a_Settings) 
-_IrrSetMinParticleSize($h_Emitter,$f_X,$f_Y) 
-_IrrSetMaxParticleSize($h_Emitter,$f_X,$f_Y) 
-_IrrAddAnimatedMeshSceneNodeEmitter($h_ParticleSystem,$h_Node,$i_UseNormals,$f_NormalModifier,$i_AllVertices,$h_SettingsStruct) 
+_IrrSetParticleMinSize($h_Emitter,$f_X,$f_Y) NOT WORKING DLL FUNCTION - ALSO CRASHING IN FREEBASIC EXAMPLES
+_IrrSetParticleMaxSize($h_Emitter,$f_X,$f_Y) NOT WORKING DLL FUNCTION - ALSO CRASHING IN FREEBASIC EXAMPLES
+_IrrAddAnimatedMeshSceneNodeEmitter($h_ParticleSystem,$h_Node,$b_UseNormals,$f_NormalModifier,$b_FromAllVertices,$a_Settings) 
 _IrrAddRotationAffector($h_ParticleSystem,$f_SpeedX,$f_SpeedY,$f_SpeedZ,$f_PivotX,$f_pivotY,$f_pivotZ) 
 _IrrAddFadeOutParticleAffector($h_ParticleSystem,$i_FadeFactor,$i_Red,$i_Green,$i_Blue) 
-_IrrAddGravityParticleAffector($h_ParticleSystem,$f_X,$f_Y,$f_Z) 
+_IrrAddGravityParticleAffector($h_ParticleSystem,$f_X,$f_Y,$f_Z,$i_TimeForceLost=1000) 
 _IrrAddParticleAttractionAffector($h_ParticleSystem,$f_X,$f_Y,$f_Z,$f_Speed=1,$i_Attract=1,$i_AffectX=1,$i_AffectY=1,$i_AffectZ=1) 
 _IrrCreateRotationAffector($h_ParticleSystem,$f_SpeedX,$f_SpeedY,$f_SpeedZ,$f_RotX,$f_RotY,$f_RotZ) 
 _IrrAddStopParticleAffector($h_ParticleSystem,$i_Time,$h_Emitter) 
 _IrrAddParticlePushAffector($h_ParticleSystem,$f_X,$f_Y,$f_Z,$f_SpeedX,$f_SpeedY,$f_SpeedZ,$f_Far,$f_Near,$f_Column,$i_Distant) 
-_IrrAddColorMorphAffector($h_ParticleSystem,$i_NumberOfParticles,$a_ParticleColors,$a_ParticleTimes,$i_Smooth) 
-_IrrAddSplineAffector($h_ParticleSystem,$a_ParticleSpline,$f_Speed,$f_Tightness,$f_Attraction,$i_DeleteAtEnd) 
+_IrrAddColorMorphAffector($h_ParticleSystem,$a_ParticleColors,$a_ParticleTimes,$b_Smooth) 
+_IrrAddSplineAffector($h_ParticleSystem,$tVertexArray,$f_Speed,$f_Tightness,$f_Attraction,$b_DeleteAtEnd) 
 _IrrRemoveAffectors($h_ParticleSystem) 
 _IrrSetParticleEmitterDirection($h_ParticleEmitter,$f_X,$f_Y,$f_Z) 
 _IrrSetParticleEmitterMinParticlesPerSecond($h_ParticleEmitter,$i_Min) 
@@ -662,9 +671,6 @@ _IrrSetCenterOfEffect($h_ParticleAffector,$f_X,$f_Y,$f_Z)
 _IrrSetStrengthOfEffect($h_ParticleAffector,$f_X,$f_Y,$f_Z) 
 _IrrGetRootSceneNode() 
 _IrrGetMesh($s_MeshFile) Loads the specified mesh ready to be added to the scene.
-__VertexArrayCreate($iCount) 
-__VertexArraySet(ByRef $tVertexArray,$iVertex,$vMember) 
-__VertexArraySet(ByRef $tVertexArray,$iVertex,$vMember,$vData) 
 _IrrCreateMesh($s_MeshName,$tVertexArray,$a_Indices) 
 _IrrAddSphereSceneMesh($s_MeshName,$f_Radius,$i_PolyCount) 
 _IrrAddHillPlaneMesh($s_Name,$f_TileSizeX,$f_TileSizeY,$i_TileCountX,$i_TileCountY,$h_Material=0,$f_HillHeight=0,$f_CountHillsX=0,$f_CountHillsY=0,$f_TextureRepeatCountX=1,$f_TextureRepeatCountY=1) 
@@ -759,6 +765,12 @@ _IrrQueryFeature($i_Feature)
 _IrrDisableFeature($i_Feature,$i_Flag) 
 _IrrGetTime() 
 _IrrSetTime($i_Time) 
+__CreateVertStruct($iCount) 
+__GetVertStruct(ByRef $tVertex,$iVertex,$vMember) 
+__SetVertStruct(ByRef $tVertex,$iVertex,$vMember,$vData) 
+__CreateVectStruct($iCount) 
+__GetVectStruct(ByRef $tVector,$iVector,$vMember) 
+__SetVectStruct(ByRef $tVector,$iVector,$fX,$fY,$fZ) 
 _IrrAddTerrain($s_Path,$f_PosX=0.0,$f_PosY=0.0,$f_PosZ=0.0,$f_RotX=0.0,$f_RotY=0.0,$f_RotZ=0.0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0,$i_VertexAlpha=255,$i_VertexRed=255,$i_VertexGreen=255,$i_VertexBlue=255,$i_Smoothing=0,$i_MaxLOD=5,$i_PatchSize=$ETPS_17) Creates a terrain object from a gray scale bitmap.
 _IrrAddTerrainTile($h_Image,$i_TileSize=256,$i_DataX=0,$i_DataY=0,$f_PosX=0.0,$f_PosY=0.0,$f_PosZ=0.0,$f_RotX=0.0,$f_RotY=0.0,$f_RotZ=0.0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0,$i_Smoothing=1,$i_MaxLOD=5,$i_PatchSize=$ETPS_17) 
 _IrrAddSphericalTerrain($s_TopPath,$s_FrontPath,$s_BackPath,$s_LeftPath,$RightPath,$s_BottomPath,$f_PosX=0.0,$f_PosY=0.0,$f_PosZ=0.0,$f_RotX=0.0,$f_RotY=0.0,$f_RotZ=0.0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0,$i_VertexAlpha=255,$i_VertexRed=255,$i_VertexGreen=255,$i_VertexBlue=255,$i_Smoothing=0,$i_Spherical=0,$i_MaxLOD=5,$i_PatchSize=$ETPS_17) 

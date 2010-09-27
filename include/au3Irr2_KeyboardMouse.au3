@@ -25,6 +25,7 @@
 ;_IrrMouseEventAvailable
 ;_IrrReadMouseEvent
 ;_IrrSetMousePosition
+;_IrrGetAbsoluteMousePosition
 ;_IrrHideMouse
 ;_IrrShowMouse
 ;_IrrDisplayMouse
@@ -288,6 +289,31 @@ Func _IrrSetMousePosition(ByRef $f_XPos, ByRef $f_YPos)
 		Return true
 	EndIf
 EndFunc   ;==>_IrrSetMousePosition
+
+; #FUNCTION# =============================================================================================================
+; Name...........: _IrrGetAbsoluteMousePosition
+; Description ...: Get the absolute mouse X and Y position
+; Syntax.........: _IrrGetAbsoluteMousePosition()
+; Parameters ....: None.
+; Return values .: success - 1D Array containing absolute mouse position.
+;                  |$Array[0] = X position of the mouse
+;                  |$Array[1] = Y position of the mouse
+;                  failure - Empty 1D Array and Set @error 1
+; Author ........: smashly
+; Modified.......:
+; Remarks .......:
+; Related .......:
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _IrrGetAbsoluteMousePosition()
+    Local $aResult, $aReturn[2]
+    $aResult = DllCall($_irrDll, "none:cdecl", "IrrGetAbsoluteMousePosition", "int*", 0, "int*", 0)
+    If @error Or Not IsArray($aResult) Then Return SetError(1, 0, $aReturn)
+    $aReturn[0] = $aResult[1]
+    $aReturn[1] = $aResult[2]
+    Return SetError(0, 0, $aReturn)
+EndFunc   ;==>_IrrGetAbsoluteMousePosition
 
 
 ; #FUNCTION# =============================================================================================================
