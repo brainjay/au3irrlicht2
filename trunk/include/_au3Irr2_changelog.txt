@@ -36,9 +36,10 @@
 > Help file:
 
 + Added: Completed documentation including example code for some more functions.
-  Current status: Topics completed along examples 1-6, 8-13.
+  Current status: Topics completed along examples 1-6, 8-13 + some more.
   Naked reference w/o detailed informations for all functions inside other examples.
 - Changed: Reworked several help file descriptions and examples.
++ Added: 'Copy to clipboard' for included examples (using VBS code from GEOSoft)
 
 
 
@@ -87,5 +88,5 @@ First release in one package (UDF + all needed .dll's, examples, ExampleLauncher
 
 
 
-=== 2.0 (2010-05-03) ===========================================================
+=== 2.00 (2010-05-03) ===========================================================
 First release of jRowe

@@ -24,12 +24,6 @@
 ;_IrrGetScreenSize
 ;_IrrDisableFeature
 ;_IrrSetTime
-;__CreateVertStruct
-;__GetVertStruct
-;__SetVertStruct
-;__CreateVectStruct
-;__GetVectStruct
-;__SetVectStruct
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
@@ -55,6 +49,12 @@
 ;_IrrMakeARGB
 ;_IrrQueryFeature
 ;_IrrGetTime
+;__CreateVertStruct
+;__GetVertStruct
+;__SetVertStruct
+;__CreateVectStruct
+;__GetVectStruct
+;__SetVectStruct
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================

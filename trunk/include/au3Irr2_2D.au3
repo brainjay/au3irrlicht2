@@ -36,10 +36,13 @@
 ;_IrrColorKeyTexture
 ;_IrrDraw2DImage
 ;_IrrDraw2DImageElement
+;_IrrDraw2DImageElementStretch
 ;_IrrGetFont
 ;_Irr2DFontDraw
 ;_IrrSaveScreenShot
 ;_IrrGetScreenShot
+;_IrrGetTextureInformation
+;_IrrGetImageInformation
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -502,7 +505,7 @@ EndFunc   ;==>_IrrDraw2DImage
 ; Modified.......:
 ; Remarks .......: Draws the texture to the display at the supplied co-ordinates, the image is copied from the specified rectangle in the source texture, this enables you to put many images onto a single texture.
 ;                  This function also supports the alpha channel when drawing the image to the display and can draw the image transparently.
-; Related .......: _IrrGetTexture, _IrrColorKeyTexture, _IrrDraw2DImage
+; Related .......: _IrrGetTexture, _IrrColorKeyTexture, _IrrDraw2DImage, _IrrDraw2DImageElementStretch
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -515,6 +518,37 @@ Func _IrrDraw2DImageElement($h_Texture, $i_XPos, $i_YPos, $i_SourceTopX, $i_Sour
 	EndIf
 EndFunc   ;==>_IrrDraw2DImageElement
 
+; #FUNCTION# =============================================================================================================
+; Name...........: _IrrDraw2DImageElementStretch
+; Description ...: Draws specified rectangle from Source texture sizing it to fit the specified Desination rectangle.
+; Syntax.........: _IrrDraw2DImageElementStretch($h_Texture, $i_DestTopX, $i_DestTopY, $i_DestBottomX, $i_DestBottomY, $i_SourceTopX, $i_SourceTopY, $i_SourceBottomX, $i_SourceBottomY, $i_UseAlpha)
+; Parameters ....: $h_Texture - Handle to an irrlicht image object
+;                  $i_DestTopX - Top X Destination where the drawing will start.
+;                  $i_DestTopY - Top Y Destination where the drawing will start.
+;                  $i_DestBottomX - Bottom X Destination where the drawing will end.
+;                  $i_DestBottomY - Bottom Y Destination where the drawing will end.
+;                  $i_SourceTopX - X top position of rectangle in the source texture
+;                  $i_SourceTopY - Y top position of rectangle in the source texture
+;                  $i_SourceBottomX - X bottom position of rectangle in the source texture
+;                  $i_SourceBottomY - Y bottom position of rectangle in the source texture
+;                  $i_UseAlpha - Whether or not to use the alpha channel should be one of the following values:
+;                  |$IRR_IGNORE_ALPHA
+;                  |$IRR_USE_ALPHA
+; Return values .: Success - True
+;                  Failure - False
+; Author ........: smashly
+; Modified.......:
+; Remarks .......: The image is copied from the specified rectangle in the source texture, this enables you to put many images onto a single texture.
+;                  If the rectangles are different sizes this function will scale the images appropriately.
+;                  This function also supports the alpha channel when drawing the image to the display and can draw the image transparently.
+; Related .......: _IrrGetTexture, _IrrColorKeyTexture, _IrrDraw2DImageElement
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _IrrDraw2DImageElementStretch($h_Texture, $i_DestTopX, $i_DestTopY, $i_DestBottomX, $i_DestBottomY, $i_SourceTopX, $i_SourceTopY, $i_SourceBottomX, $i_SourceBottomY, $i_UseAlpha)
+    DllCall($_irrDll, "none:cdecl", "IrrDraw2DImageElementStretch", "ptr", $h_Texture, "int", $i_DestTopX, "int", $i_DestTopY, "int", $i_DestBottomX, "int", $i_DestBottomY, "int", $i_SourceTopX, "int", $i_SourceTopY, "int", $i_SourceBottomX, "int", $i_SourceBottomY, "int", $i_UseAlpha)
+    Return SetError(@error, 0, @error = 0)
+EndFunc   ;==>_IrrDraw2DImageElementStretch
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetFont
@@ -621,3 +655,60 @@ Func _IrrGetScreenShot($i_XPos, $i_YPos, $i_Width, $i_Height)
 		Return $result[0]
 	EndIf
 EndFunc   ;==>_IrrGetScreenShot
+
+; #FUNCTION# =============================================================================================================
+; Name...........: _IrrGetTextureInformation
+; Description ...: Get information on a texture. The width, height, pitch and color format is returned in an array.
+; Syntax.........: _IrrGetTextureInformation($h_Texture)
+; Parameters ....: $h_Texture - Handle to an irrlicht texture object
+; Return values .: Success - 1D Array with the information
+;                  |$Array[0] = Width of the texture
+;                  |$Array[1] = Height of the texture
+;                  |$Array[2] = Pitch of the texture
+;                  |$Array[3] = Color Reference of the texture (e.g.: $ECF_A1R5G5B5, $ECF_R5G6B5, $ECF_R8G8B8, $ECF_A8R8G8B8)
+;                  Failure - Empty Array and Sets @error to 1
+; Author ........: smashly
+; Modified.......:
+; Remarks .......: This function cannot be used for image objects. For this, use _IrrGetImageInformation instead.
+; Related .......: _IrrGetTexture, _IrrGetImageInformation
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _IrrGetTextureInformation($h_Texture)
+    Local $aResult, $aReturn[4]
+    $aResult = DllCall($_irrDll, "none:cdecl", "IrrGetTextureInformation", "ptr", $h_Texture, "uint*", 0, "uint*", 0, "uint*", 0, "int*", 0)
+    If @error Or UBound($aResult) <> 6 Then Return SetError(1, 0, $aReturn)
+    For $i = 2 To 5
+        $aReturn[$i - 2] = $aResult[$i]
+    Next
+    Return SetError(0, 0, $aReturn)
+EndFunc   ;==>_IrrGetTextureInformation
+
+
+; #FUNCTION# =============================================================================================================
+; Name...........: _IrrGetImageInformation
+; Description ...: Get information on an image. The width, height, pitch and color format is returned in an array.
+; Syntax.........: _IrrGetImageInformation($h_Image)
+; Parameters ....: $h_Texture - Handle to an irrlicht image object
+; Return values .: Success - 1D Array with the information
+;                  |$Array[0] = Width of the image
+;                  |$Array[1] = Height of the image
+;                  |$Array[2] = Pitch of the image
+;                  |$Array[3] = Color Reference of the image (e.g.: $ECF_A1R5G5B5, $ECF_R5G6B5, $ECF_R8G8B8, $ECF_A8R8G8B8)
+;                  Failure - Empty Array and Sets @error to 1
+; Author ........: smashly
+; Modified.......:
+; Remarks .......: This function cannot be used for texture objects. For this, use _IrrGetTextureInformation instead.
+; Related .......: _IrrGetImage, _IrrGetTextureInformation
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _IrrGetImageInformation($h_Image)
+    Local $aResult, $aReturn[4]
+    $aResult = DllCall($_irrDll, "none:cdecl", "IrrGetImageInformation", "ptr", $h_Image, "uint*", 0, "uint*", 0, "uint*", 0, "int*", 0)
+    If @error Or UBound($aResult) <> 6 Then Return SetError(1, 0, $aReturn)
+    For $i = 2 To 5
+        $aReturn[$i - 2] = $aResult[$i]
+    Next
+    Return SetError(0, 0, $aReturn)
+EndFunc   ;==>_IrrGetImageInformation
