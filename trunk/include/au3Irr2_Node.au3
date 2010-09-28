@@ -913,8 +913,8 @@ EndFunc   ;==>_IrrGetNodeBoundingBox
 ;                  |[moreExplanationIndented]
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......:
+; Related .......: __CreateVectStruct, __SetVectStruct, __GetVectStruct
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
