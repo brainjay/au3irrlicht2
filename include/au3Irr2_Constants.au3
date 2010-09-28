@@ -392,8 +392,17 @@ global Enum _ ; IRR_DEBUG
 	$EDS_OFF = 0, $EDS_BBOX = 1, $EDS_NORMALS = 2, $EDS_SKELETON = 4, $EDS_MESH_WIRE_OVERLAY = 8, _
 	$EDS_HALF_TRANSPARENCY = 16, $EDS_BBOX_BUFFERS = 32, $EDS_FULL = 0xffffffff
 
+Global Enum _ ; ; Constants for 2D Management TEXTURE_CREATION_FLAG
+	$ETCF_ALWAYS_16_BIT = 0x00000001, _
+	$ETCF_ALWAYS_32_BIT = 0x00000002, _
+	$ETCF_OPTIMIZED_FOR_QUALITY = 0x00000004, _
+	$ETCF_OPTIMIZED_FOR_SPEED = 0x00000008, _
+	$ETCF_CREATE_MIP_MAPS = 0x00000010, _
+	$ETCF_NO_ALPHA_CHANNEL = 0x00000020
 
-; struct definition and constants for __CreateVertStruct, __GetVertStruct, __SetVertStruct, _IrrCreateMesh
+
+
+; vertex struct definition and constants for __CreateVertStruct, __GetVertStruct, __SetVertStruct, _IrrCreateMesh
 Global Const $tagIRR_VERTEX = "float x; " & _ ;         The x position of the vertex
 							"float y; " & _ ;         The y position of the vertex
 							"float z; " & _ ;         The z position of the vertex
@@ -403,20 +412,24 @@ Global Const $tagIRR_VERTEX = "float x; " & _ ;         The x position of the ve
 							"uint vcolor; " & _ ;     The 32bit ARGB color of the vertex
 							"float texture_x; " & _ ; the x co-ordinate of the vertex on the texture (0 to 1)
 							"float texture_y; " ;     the y co-ordinate of the vertex on the texture (0 to 1)
-global const $VERT_X = "x"
-global const $VERT_Y = "y"
-global const $VERT_Z = "z"
-global const $VERT_NORMALX = "normal_x"
-global const $VERT_NORMALY = "normal_y"
-global const $VERT_NORMALZ = "normal_z"
-global const $VERT_VCOLOR = "vcolor"
-global const $VERT_TEXTUREX = "texture_x"
-global const $VERT_TEXTUREY = "texture_y"
 
-; struct definition and constants for __CreateVectStruct, __GetVectStruct, __SetVectStruct
+global Enum _ ; elements for vertex struct $tagIRR_VERTEX
+	$VERT_X = "x", _
+	$VERT_Y = "y", _
+	$VERT_Z = "z", _
+	$VERT_NORMALX = "normal_x", _
+	$VERT_NORMALY = "normal_y", _
+	$VERT_NORMALZ = "normal_z", _
+	$VERT_VCOLOR = "vcolor", _
+	$VERT_TEXTUREX = "texture_x", _
+	$VERT_TEXTUREY = "texture_y"
+
+; vector struct definition and constants for __CreateVectStruct, __GetVectStruct, __SetVectStruct
 Global Const $tagIRR_VECTOR = "float x; " & _ ;         The x position of the vector
 							"float y; " & _ ;         The y position of the vector
 							"float z; "	;	          The z position of the vector
-global const $VECT_X = "x"
-global const $VECT_Y = "y"
-global const $VECT_Z = "z"
+
+global Enum _ ; elements for vector struct $tagIRR_VECTOR
+	$VECT_X = "x", _
+	$VECT_Y = "y", _
+	$VECT_Z = "z"

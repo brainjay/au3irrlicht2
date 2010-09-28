@@ -16,7 +16,6 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
-;_IrrSetTextureCreationFlag
 ;_IrrCreateTexture
 ;_IrrCreateImage
 ;_IrrLockTexture
@@ -27,6 +26,7 @@
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
+;_IrrSetTextureCreationFlag
 ;_IrrGetTexture
 ;_IrrGetImage
 ;_IrrRemoveTexture
@@ -48,33 +48,41 @@
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; ===============================================================================================================================
 
-;2D functions
-
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetTextureCreationFlag
-; Description ...: [todo]
+; Description ...: Sets texture creation flags controlling how textures are handled when they are created.
 ; Syntax.........: _IrrSetTextureCreationFlag($i_Flag, $i_Value)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $i_Value -  The following flags can be set;
+;                  |$ETCF_ALWAYS_16_BIT - Forces the driver to always create 16 bit textures, independently of which format the file on disk has.
+;                   When choosing this you may loose some color detail, but gain speed and save memory.
+;                   16 bit textures can be transferred twice as quickly as 32 bit textures and only use half of the memory space.
+;                   When using this flag, it does not make sense to use the flags ETCF_ALWAYS_32_BIT, ETCF_OPTIMIZED_FOR_QUALITY, or ETCF_OPTIMIZED_FOR_SPEED at the same time.
+;                  |$ETCF_ALWAYS_32_BIT - Forces the driver to always create 32 bit textures, independently of which format the file on disk has.
+;                   Note that some drivers (like the software device) will ignore this, because they are only able to create and use 16 bit textures.
+;                   When using this flag, it does not make sense to use the flags ETCF_ALWAYS_16_BIT, ETCF_OPTIMIZED_FOR_QUALITY, or ETCF_OPTIMIZED_FOR_SPEED at the same time.
+;                  |$ETCF_OPTIMIZED_FOR_QUALITY - Lets the driver decide in which format the textures are created and tries to make the textures look as good as possible.
+;                   Usually it simply chooses the format in which the texture was stored on disk.
+;                   When using this flag, it does not make sense to use the flags ETCF_ALWAYS_16_BIT, ETCF_ALWAYS_32_BIT, or ETCF_OPTIMIZED_FOR_SPEED at the same time.
+;                  |$ETCF_OPTIMIZED_FOR_SPEED - Lets the driver decide in which format the textures are created and tries to create them maximizing render speed.
+;                   When using this flag, it does not make sense to use the flags ETCF_ALWAYS_16_BIT, ETCF_ALWAYS_32_BIT, or ETCF_OPTIMIZED_FOR_QUALITY, at the same time.
+;                  |$ETCF_CREATE_MIP_MAPS - Automatically creates mip map levels for the textures.
+;                  |$ETCF_NO_ALPHA_CHANNEL - Discard any alpha layer and use non-alpha color format.
+;                  $i_Flag - Turn Creation Flag Off or On ($IRR_OFF or $IRR_ON)
+; Return values .: Success - True
+;                  Failure - False
+; Author ........: smashly
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......:
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrSetTextureCreationFlag($i_Flag, $i_Value)
-	DllCall($_irrDll, "none:cdecl", "IrrSetTextureCreationFlag", "int", $i_Flag, "int", $i_Value)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+Func _IrrSetTextureCreationFlag($i_Value, $i_Flag)
+    DllCall($_irrDll, "none:cdecl", "IrrSetTextureCreationFlag", "int", $i_Value, "int", $i_Flag)
+    Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetTextureCreationFlag
+
+
 
 
 ; #FUNCTION# =============================================================================================================

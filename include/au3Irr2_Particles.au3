@@ -1,6 +1,7 @@
 #include-once
 
 #include "au3Irr2_constants.au3"
+#include "au3Irr2_system.au3"
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: System
@@ -448,7 +449,7 @@ EndFunc   ;==>_IrrAddColorMorphAffector
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddSplineAffector
 ; Description ...: [todo]
-; Syntax.........: _IrrAddSplineAffector($h_ParticleSystem, $tVertexArray, $f_Speed, $f_Tightness, $f_Attraction, $b_DeleteAtEnd)
+; Syntax.........: _IrrAddSplineAffector($h_ParticleSystem, $tVectors, $f_Speed, $f_Tightness, $f_Attraction, $b_DeleteAtEnd)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -462,10 +463,19 @@ EndFunc   ;==>_IrrAddColorMorphAffector
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrAddSplineAffector($h_ParticleSystem, $tVertexArray, $f_Speed, $f_Tightness, $f_Attraction, $b_DeleteAtEnd)
-	if not IsDllStruct($tVertexArray) then Return SetError(2, 0, False)
+Func _IrrAddSplineAffector($h_ParticleSystem, $tVectors, $f_Speed, $f_Tightness, $f_Attraction, $b_DeleteAtEnd)
+	if not IsDllStruct($tVectors) then Return SetError(2, 0, False)
 
-	local $iSplineVerts = DllStructGetSize($tVertexArray) / DllStructGetSize(DllStructCreate($tagIRR_VERTEX))
+	local $iSplineVerts = DllStructGetSize($tVectors) / DllStructGetSize(DllStructCreate($tagIRR_VECTOR))
+
+	; whyever - dll function expects vectors inside vertices array. So prepare needed structure:
+	local $tVertexArray = __CreateVertStruct($iSplineVerts)
+	local $i
+	for $i = 0 to $iSplineVerts - 1
+		__SetVertStruct($tVertexArray, $i, $VERT_X, __GetVectStruct($tVectors, $i, $VECT_X) )
+		__SetVertStruct($tVertexArray, $i, $VERT_Y, __GetVectStruct($tVectors, $i, $VECT_Y) )
+		__SetVertStruct($tVertexArray, $i, $VERT_Z, __GetVectStruct($tVectors, $i, $VECT_Z) )
+	Next
 
 	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddSplineAffector", "UINT_PTR", $h_ParticleSystem, _
 				"UINT", $iSplineVerts, "ptr", DllStructGetPtr($tVertexArray), "float", $f_Speed, _

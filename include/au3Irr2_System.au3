@@ -960,42 +960,45 @@ EndFunc   ;==>_IrrSetTime
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: __CreateVertStruct
-; Description ...: [todo]
-; Syntax.........: __CreateVertStruct($iCount)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Description ...: Helper function: creates a structure array of vertices as expected from some functions.
+; Syntax.........: __CreateVertStruct($iVert)
+; Parameters ....: $iVert - Number of vertex elements the struct array shall contain.
+; Return values .: The created vertex array struct
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: __GetVertStruct, __SetVertStruct, __CreateVectStruct
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func __CreateVertStruct($iCount)
+Func __CreateVertStruct($iVert)
     Local $iSize = DllStructGetSize(DllStructCreate($tagIRR_VERTEX))
-    Return DllStructCreate("byte[" & $iSize * $iCount & "]")
+    Return DllStructCreate("byte[" & $iSize * $iVert & "]")
 EndFunc ;==>__CreateVertStruct
 
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: __GetVertStruct
-; Description ...: [todo]
+; Description ...: Helper function: Returns a specific value from a structure array of vertices.
 ; Syntax.........: __GetVertStruct(ByRef $tVertex, $iVertex, $vMember)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $tVertex - Structure array of vertices as created with __CreateVertStruct
+;                  $iVertex - Vertex element from which value shall be returned (0-based!)
+;                  $vMember - One of following values to return:
+;                  |$VERT_X
+;                  |$VERT_Y
+;                  |$VERT_Z
+;                  |$VERT_NORMALX
+;                  |$VERT_NORMALY
+;                  |$VERT_NORMALZ
+;                  |$VERT_VCOLOR
+;                  |$VERT_TEXTUREX
+;                  |$VERT_TEXTUREY
+; Return values .: Requested $vMember
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: __CreateVertStruct, __SetVertStruct, __CreateVectStruct
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
@@ -1007,18 +1010,25 @@ EndFunc ;==>__GetVertStruct
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: __SetVertStruct
-; Description ...: [todo]
+; Description ...: Helper function: Sets a value into a structure array of vertices.
 ; Syntax.........: __SetVertStruct(ByRef $tVertex, $iVertex, $vMember, $vData)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $tVertex - Structure array of vertices as created with __CreateVertStruct
+;                  $iVertex - Vertex element where specific value shall be set (0-based!)
+;                  $vMember - One of following values to set:
+;                  |$VERT_X
+;                  |$VERT_Y
+;                  |$VERT_Z
+;                  |$VERT_NORMALX
+;                  |$VERT_NORMALY
+;                  |$VERT_NORMALZ
+;                  |$VERT_VCOLOR
+;                  |$VERT_TEXTUREX
+;                  |$VERT_TEXTUREY
+; Return values .: None
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: __CreateVertStruct, __GetVertStruct, __CreateVectStruct
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
@@ -1032,42 +1042,39 @@ EndFunc ;==>__SetVertStruct
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: __CreateVectStruct
-; Description ...: [todo]
-; Syntax.........: __CreateVectStruct($iCount)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Description ...: Helper function: creates a structure array of vectors as expected from some functions.
+; Syntax.........: __CreateVectStruct($iVect)
+; Parameters ....: $iVect - Number of vector elements the created struct array shall contain.
+; Return values .: The created vector struct.
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: __SetVectStruct, __GetVectStruct, __CreateVertStruct
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func __CreateVectStruct($iCount)
+Func __CreateVectStruct($iVect)
     Local $iSize = DllStructGetSize(DllStructCreate($tagIRR_VECTOR))
-    Return DllStructCreate("byte[" & $iSize * $iCount & "]")
+    Return DllStructCreate("byte[" & $iSize * $iVect & "]")
 EndFunc ;==>__CreateVectStruct
 
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: __GetVectStruct
-; Description ...: [todo]
+; Description ...: Helper function: Returns a specific value from a structure array of vectors.
 ; Syntax.........: __GetVectStruct(ByRef $tVector, $iVector, $vMember)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $tVector - Structure array of vectors as created with __CreateVectStruct
+;                  $iVector - Vector element from which value shall be returned (0-based!)
+;                  $vMember - One of following values to return:
+;                  |$VECT_X
+;                  |$VECT_Y
+;                  |$VECT_Z
+; Return values .: Requested $vMember
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: __CreateVectStruct, __SetVectStruct, __CreateVertStruct
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
@@ -1079,18 +1086,16 @@ EndFunc ;==>__GetVectStruct
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: __SetVectStruct
-; Description ...: [todo]
+; Description ...: Helper function: Sets x, y, z values into a structure array of vectors.
 ; Syntax.........: __SetVectStruct(ByRef $tVector, $iVector, $fX, $fY, $fZ)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $tVector - Structure array of vectors as created with __CreateVectStruct
+;                  $iVector - Vector element to set (0-based!)
+;                  $fX, $fY, $fZ - X, Y, Z values of the vector
+; Return values .: None
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: __CreateVectStruct, __GetVectStruct, __CreateVertStruct
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================

@@ -2,7 +2,7 @@
 ; copy or (replace) content of this file to your usercalltips of scite via Tools > UserCallTipEntries.
 ; === Start of au3Irrlicht2 calltip definitions ======================================================
 
-_IrrSetTextureCreationFlag($i_Flag,$i_Value) 
+_IrrSetTextureCreationFlag($i_Flag,$i_Value) Sets texture creation flags controlling how textures are handled when they are created.
 _IrrGetTexture($s_ImageFile) Loads 2D texture from bitmap file into video memory that can then be used to texture a model or to draw onto the screen.
 _IrrGetImage($s_ImageFile) Loads 2D texture from bitmap file into main memory for CPU based operations.
 _IrrCreateTexture($s_TextureName,$i_XSize,$i_YSize,$i_ColorFormat) 
@@ -38,7 +38,7 @@ _IrrAddDeleteAnimator($h_Node,$i_Time) Animator deleting its parent node after s
 _IrrAddFlyCircleAnimator($h_Node,$f_CenterX,$f_CenterY,$f_CenterZ,$f_Radius,$f_Speed) Animator moving its parent node in a circular path.
 _IrrAddFlyStraightAnimator($h_Node,$f_StartX,$f_StartY,$f_StartZ,$f_EndX,$f_EndY,$f_EndZ,$i_Time,$i_DoLoop) Animator moving its parent node in a straight line from a start to an end point.
 _IrrAddRotationAnimator($h_Node,$f_RotX,$f_RotY,$f_RotZ) Animator spinning its parent node around each axis.
-_IrrAddSplineAnimator($h_Node,$i_ArraySize,$a_ArrayFloatsX,$a_ArrayFloatsY,$a_ArrayFloatsZ,$i_Start,$f_Speed,$f_Tightness) Animator moving its parent node along a spline curve.
+_IrrAddSplineAnimator($h_Node,$tVectorStruct,$i_Start,$f_Speed,$f_Tightness) Animator moving its parent node along a spline curve.
 _IrrAddFadeAnimator($h_Node,$i_DeleteAfterMiliseconds,$f_Scale=1.0) 
 _IrrRemoveAnimator($h_Node,$h_Animator) Removes an applied animator from a node.
 _IrrAddFPSCamera($h_ParentNode=0,$f_RotateSpeed=100.0,$f_MoveSpeed=0.5,$i_ID=-1,$h_KeyMapArray=0,$i_KeyMapSize=0,$i_NoVerticalMovement=0,$f_JumpSpeed=0.0) Adds a 'first person shooter' style camera with mouse and keyboard control into the scene.
@@ -494,6 +494,12 @@ $EDS_MESH_WIRE_OVERLAY
 $EDS_HALF_TRANSPARENCY
 $EDS_BBOX_BUFFERS
 $EDS_FULL
+$ETCF_ALWAYS_16_BIT
+$ETCF_ALWAYS_32_BIT
+$ETCF_OPTIMIZED_FOR_QUALITY
+$ETCF_OPTIMIZED_FOR_SPEED
+$ETCF_CREATE_MIP_MAPS
+$ETCF_NO_ALPHA_CHANNEL
 $tagIRR_VERTEX
 $VERT_X
 $VERT_Y
@@ -646,7 +652,7 @@ _IrrCreateRotationAffector($h_ParticleSystem,$f_SpeedX,$f_SpeedY,$f_SpeedZ,$f_Ro
 _IrrAddStopParticleAffector($h_ParticleSystem,$i_Time,$h_Emitter) 
 _IrrAddParticlePushAffector($h_ParticleSystem,$f_X,$f_Y,$f_Z,$f_SpeedX,$f_SpeedY,$f_SpeedZ,$f_Far,$f_Near,$f_Column,$i_Distant) 
 _IrrAddColorMorphAffector($h_ParticleSystem,$a_ParticleColors,$a_ParticleTimes,$b_Smooth) 
-_IrrAddSplineAffector($h_ParticleSystem,$tVertexArray,$f_Speed,$f_Tightness,$f_Attraction,$b_DeleteAtEnd) 
+_IrrAddSplineAffector($h_ParticleSystem,$tVectors,$f_Speed,$f_Tightness,$f_Attraction,$b_DeleteAtEnd) 
 _IrrRemoveAffectors($h_ParticleSystem) 
 _IrrSetParticleEmitterDirection($h_ParticleEmitter,$f_X,$f_Y,$f_Z) 
 _IrrSetParticleEmitterMinParticlesPerSecond($h_ParticleEmitter,$i_Min) 
@@ -765,12 +771,12 @@ _IrrQueryFeature($i_Feature)
 _IrrDisableFeature($i_Feature,$i_Flag) 
 _IrrGetTime() 
 _IrrSetTime($i_Time) 
-__CreateVertStruct($iCount) 
-__GetVertStruct(ByRef $tVertex,$iVertex,$vMember) 
-__SetVertStruct(ByRef $tVertex,$iVertex,$vMember,$vData) 
-__CreateVectStruct($iCount) 
-__GetVectStruct(ByRef $tVector,$iVector,$vMember) 
-__SetVectStruct(ByRef $tVector,$iVector,$fX,$fY,$fZ) 
+__CreateVertStruct($iVert) Helper function: creates a structure array of vertices as expected from some functions.
+__GetVertStruct(ByRef $tVertex,$iVertex,$vMember) Helper function: Returns a specific value from a structure array of vertices.
+__SetVertStruct(ByRef $tVertex,$iVertex,$vMember,$vData) Helper function: Sets a value into a structure array of vertices.
+__CreateVectStruct($iVect) Helper function: creates a structure array of vectors as expected from some functions.
+__GetVectStruct(ByRef $tVector,$iVector,$vMember) Helper function: Returns a specific value from a structure array of vectors.
+__SetVectStruct(ByRef $tVector,$iVector,$fX,$fY,$fZ) Helper function: Sets x, y, z values into a structure array of vectors.
 _IrrAddTerrain($s_Path,$f_PosX=0.0,$f_PosY=0.0,$f_PosZ=0.0,$f_RotX=0.0,$f_RotY=0.0,$f_RotZ=0.0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0,$i_VertexAlpha=255,$i_VertexRed=255,$i_VertexGreen=255,$i_VertexBlue=255,$i_Smoothing=0,$i_MaxLOD=5,$i_PatchSize=$ETPS_17) Creates a terrain object from a gray scale bitmap.
 _IrrAddTerrainTile($h_Image,$i_TileSize=256,$i_DataX=0,$i_DataY=0,$f_PosX=0.0,$f_PosY=0.0,$f_PosZ=0.0,$f_RotX=0.0,$f_RotY=0.0,$f_RotZ=0.0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0,$i_Smoothing=1,$i_MaxLOD=5,$i_PatchSize=$ETPS_17) 
 _IrrAddSphericalTerrain($s_TopPath,$s_FrontPath,$s_BackPath,$s_LeftPath,$RightPath,$s_BottomPath,$f_PosX=0.0,$f_PosY=0.0,$f_PosZ=0.0,$f_RotX=0.0,$f_RotY=0.0,$f_RotZ=0.0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0,$i_VertexAlpha=255,$i_VertexRed=255,$i_VertexGreen=255,$i_VertexBlue=255,$i_Smoothing=0,$i_Spherical=0,$i_MaxLOD=5,$i_PatchSize=$ETPS_17) 

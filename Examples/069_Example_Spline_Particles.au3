@@ -74,23 +74,14 @@ $SmokeEmitter = __CreateParticleSettings( _
 $smoke_emitter = _IrrAddParticleEmitter( $SmokeParticles, $SmokeEmitter )
 
 ; define the co-ordinates of the points in the spline path
-; _IrrAddSplineAffector expects them as array of vertices:
-local $tSplineverticies = __CreateVertStruct(4)
-__SetVertStruct($tSplineverticies, 0, $VERT_X, 0.0)
-__SetVertStruct($tSplineverticies, 0, $VERT_Y, 0.0)
-__SetVertStruct($tSplineverticies, 0, $VERT_Z, 0.0)
-__SetVertStruct($tSplineverticies, 1, $VERT_X, 0.0)
-__SetVertStruct($tSplineverticies, 1, $VERT_Y, 20.0)
-__SetVertStruct($tSplineverticies, 1, $VERT_Z, 25.0)
-__SetVertStruct($tSplineverticies, 2, $VERT_X, 0.0)
-__SetVertStruct($tSplineverticies, 2, $VERT_Y, 40.0)
-__SetVertStruct($tSplineverticies, 2, $VERT_Z, -25.0)
-__SetVertStruct($tSplineverticies, 3, $VERT_X, 0.0)
-__SetVertStruct($tSplineverticies, 3, $VERT_Y, 60.0)
-__SetVertStruct($tSplineverticies, 3, $VERT_Z, 0.0)
+local $tSplineVectors = __CreateVectStruct(4)
+__SetVectStruct($tSplineVectors, 0, 0.0, 0.0, 0.0)
+__SetVectStruct($tSplineVectors, 1, 0.0, 20.0, 25.0)
+__SetVectStruct($tSplineVectors, 2, 0.0, 40.0, -25.0)
+__SetVectStruct($tSplineVectors, 3, 0.0, 60.0, 0.0)
 
 ; add the affector using the path
-_IrrAddSplineAffector($SmokeParticles, $tSplineverticies, 2.0, 1.0, 5.0, $IRR_ON)
+_IrrAddSplineAffector($SmokeParticles, $tSplineVectors, 2.0, 1.0, 5.0, $IRR_ON)
 
 ; load a grey smoke like image for the particle
 $ParticleTexture = _IrrGetTexture( "../media/ParticleGrey.bmp" )

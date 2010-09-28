@@ -1,6 +1,7 @@
 #include-once
 
 #include "au3Irr2_constants.au3"
+#include "au3Irr2_system.au3"
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: Animation
@@ -391,10 +392,10 @@ EndFunc   ;==>_IrrAddRotationAnimator
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddSplineAnimator
 ; Description ...: Animator moving its parent node along a spline curve.
-; Syntax.........: _IrrAddSplineAnimator($h_Node, $i_ArraySize, $a_ArrayFloatsX, $a_ArrayFloatsY, $a_ArrayFloatsZ, $i_Start, $f_Speed, $f_Tightness)
+; Syntax.........: _IrrAddSplineAnimator($h_Node, $tVectorStruct, $i_Start, $f_Speed, $f_Tightness)
 ; Parameters ....: $h_Node - Handle of a scene Node.
-;                  $i_ArraySize - Number of 3D-points for spline motion.
-;                  $a_ArrayFloatsX, $a_ArrayFloatsY, $a_ArrayFloatsZ - Coordinates defining the spline curve, one array each for the X, Y and Z locations of all the points.
+;                  $tVectorStruct - Struct array with 3D-points defining the spline curve.
+;                  |Use __CreateVectStruct and __SetVectStruct to build the required struct.
 ;                  $i_Start - Time in milliseconds that must pass before the animation starts.
 ;                  $f_Speed - Defines the rate the node moves along the spline curve.
 ;                  $f_Tightness - Specifies how tightly the curve is tied to the points.
@@ -402,36 +403,34 @@ EndFunc   ;==>_IrrAddRotationAnimator
 ; Return values .: success - Handle of the created animator.
 ;                  failure - False and sets @error:
 ;                  |1 - error from .dll call
-;                  |2 - Wrong size of one of the coordinate arrays (unequal $i_ArraySize)
+;                  |2 - $tVectorStruct is not a dllstruct
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: This is one of the more difficult to set up of the animators but is very natural looking and powerful.
 ;                  A spline is a curved line that passes through or close to a list of co-ordinates, creating a smooth flight.
-;                  This animator needs a list of coordinates stored in three arrays, one array each for the X, Y and Z locations of all the points.
-;                  A good way to get coordinates for these arrays is to load in the camera position example and move your camera to a point and write down its coordinates.
-; Related .......: _IrrRemoveAnimator
+;                  This animator needs a list of coordinates stored in a struct array for the X, Y and Z locations of all the points.
+;                  A good way to get coordinates for this struct is to load in the camera position example and move your camera to a point and write down its coordinates.
+; Related .......: __CreateVectStruct, __SetVectStruct, _IrrRemoveAnimator
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrAddSplineAnimator($h_Node, $i_ArraySize, $a_ArrayFloatsX, $a_ArrayFloatsY, $a_ArrayFloatsZ, $i_Start, $f_Speed, $f_Tightness)
+Func _IrrAddSplineAnimator($h_Node, $tVectorStruct, $i_Start, $f_Speed, $f_Tightness)
 
-	if UBound($a_ArrayFloatsX) <> $i_arraySize OR _
-	    UBound($a_ArrayFloatsY) <> $i_arraySize OR _
-		UBound($a_ArrayFloatsZ) <> $i_arraySize Then
-		return SetError(2, 0, False)
-	EndIf
+	if not IsDllStruct($tVectorStruct) then return SetError(2, 0, False)
+	local $iSplineVects = DllStructGetSize($tVectorStruct) / DllStructGetSize(DllStructCreate($tagIRR_VECTOR))
 
-	Local $XArrayStruct = DllStructCreate("float[" & $i_arraySize & "]")
-	Local $YArrayStruct = DllStructCreate("float[" & $i_arraySize & "]")
-	Local $ZArrayStruct = DllStructCreate("float[" & $i_arraySize & "]")
+	Local $XArrayStruct = DllStructCreate("float[" & $iSplineVects & "]")
+	Local $YArrayStruct = DllStructCreate("float[" & $iSplineVects & "]")
+	Local $ZArrayStruct = DllStructCreate("float[" & $iSplineVects & "]")
 
-	For $i = 1 To $i_arraySize
-		DllStructSetData($XArrayStruct, 1, $a_ArrayFloatsX[$i - 1], $i)
-		DllStructSetData($YArrayStruct, 1, $a_ArrayFloatsY[$i - 1], $i)
-		DllStructSetData($ZArrayStruct, 1, $a_ArrayFloatsZ[$i - 1], $i)
+	; dll funtion expect 3 structs, each for x/y/z. So sort $TVectorStruct into them:
+	For $i = 1 To $iSplineVects
+		DllStructSetData($XArrayStruct, 1, __GetVectStruct($tVectorStruct, $i-1, $VECT_X), $i ) ; x values
+		DllStructSetData($YArrayStruct, 1, __GetVectStruct($tVectorStruct, $i-1, $VECT_Y), $i ) ; y values
+		DllStructSetData($ZArrayStruct, 1, __GetVectStruct($tVectorStruct, $i-1, $VECT_Z), $i ) ; z values
 	Next
 
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddSplineAnimator", "ptr", $h_Node, "int", $i_arraySize, _
+	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddSplineAnimator", "ptr", $h_Node, "int", $iSplineVects, _
 	"ptr", DllStructGetPtr($XArrayStruct,1), "ptr", DllStructGetPtr($YArrayStruct,1), "ptr", DllStructGetPtr($ZArrayStruct,1), _
 	"int", $i_Start, "float", $f_Speed, "float", $f_Tightness)
 
