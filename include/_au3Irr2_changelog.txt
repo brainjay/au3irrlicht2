@@ -25,8 +25,9 @@
 
 > UDFs:
 
-+ Some more working functions (mainly around added examples)
-+ Fixed _IrrSetFog (linear and exponential fog were interchanged)
++ Fixed/Added: Some more working functions (mainly around added examples)
++ Added: Some missing 2D functions and documentation (contributions from smashly)
++ Fixed: _IrrSetFog (linear and exponential fog were interchanged)
 
 
 
@@ -44,16 +45,16 @@
 > Help file:
 
 + Added: Completed documentation including example code for some more functions.
-  Current status: Topics completed along examples 1-6, 8-13 + some more.
+  Current status: Topics completed along examples 1-13 + some more.
   Naked reference w/o detailed informations for all functions inside other examples.
 - Changed: Reworked several help file descriptions and examples.
-+ Added: 'Copy to clipboard' for included examples (using VBS code from GEOSoft)
++ Added: 'Copy to clipboard'-button for included examples (using VBS code from GEOSoft)
 
 
 
 > Internal tools:
 
-+ Fixed help_tool.au3 - added functions in UDFs w/o info block were not updated correctly.
++ Fixed: help_tool.au3 - added functions in UDFs w/o info block were not updated correctly.
 
 
 
@@ -92,8 +93,15 @@
 + Fixed: \media\fonthaettenschweiler.bmp ([bogQ])
 + Added: msvcr71.dll - possibly missing on some machines ([jl])
 
+
+
 === 2.02 (2010-07-29) ==========================================================
-First release in one package (UDF + all needed .dll's, examples, ExampleLauncher)
+First release in one package (updated UDF + all needed .dll's, more examples, ExampleLauncher)
+
+
+
+=== 2.01 (2010-07-20) ==========================================================
+Updated UDF with fixes, additions and separate example package
 
 
 

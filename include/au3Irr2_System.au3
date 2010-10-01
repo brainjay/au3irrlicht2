@@ -963,7 +963,7 @@ EndFunc   ;==>_IrrSetTime
 ; Description ...: Helper function: creates a structure array of vertices as expected from some functions.
 ; Syntax.........: __CreateVertStruct($iVert)
 ; Parameters ....: $iVert - Number of vertex elements the struct array shall contain.
-; Return values .: The created vertex array struct
+; Return values .: Success - The created vertex array struct
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: None
@@ -994,7 +994,7 @@ EndFunc ;==>__CreateVertStruct
 ;                  |$VERT_VCOLOR
 ;                  |$VERT_TEXTUREX
 ;                  |$VERT_TEXTUREY
-; Return values .: Requested $vMember
+; Return values .: Success - Requested $vMember
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: None
@@ -1045,7 +1045,7 @@ EndFunc ;==>__SetVertStruct
 ; Description ...: Helper function: creates a structure array of vectors as expected from some functions.
 ; Syntax.........: __CreateVectStruct($iVect)
 ; Parameters ....: $iVect - Number of vector elements the created struct array shall contain.
-; Return values .: The created vector struct.
+; Return values .: Success - The created vector struct.
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: None
@@ -1070,7 +1070,7 @@ EndFunc ;==>__CreateVectStruct
 ;                  |$VECT_X
 ;                  |$VECT_Y
 ;                  |$VECT_Z
-; Return values .: Requested $vMember
+; Return values .: Success - Requested $vMember
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: None

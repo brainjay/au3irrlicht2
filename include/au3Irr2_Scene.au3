@@ -881,24 +881,28 @@ EndFunc   ;==>_IrrAddBillboardTextSceneNode
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddParticleSystemToScene
-; Description ...: [todo]
-; Syntax.........: _IrrAddParticleSystemToScene($i_AddEmitter, $h_Parent = 0, $i_Id = -1, $f_PosX = 0, $f_PosY = 0, $f_PosZ = 0, $f_RotX = 0, $f_RotY = 0, $f_RotZ = 0, $f_ScaleX = 1, $f_ScaleY = 1, $f_ScaleZ = 1)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Description ...: Adds a particle system to the irrlicht scene manager.
+; Syntax.........: _IrrAddParticleSystemToScene($b_AddEmitter, $h_Parent = 0, $i_Id = -1, $f_PosX = 0, $f_PosY = 0, $f_PosZ = 0, $f_RotX = 0, $f_RotY = 0, $f_RotZ = 0, $f_ScaleX = 1, $f_ScaleY = 1, $f_ScaleZ = 1)
+; Parameters ....: $b_AddEmitter - Whether default emitter shall be created or not:
+;                  |$IRR_NO_EMITTER - For no default emitter (this is probably the option you will use and you will then add a specific emitter later).
+;                  |IRR_DEFAULT_EMITTER - To create a default emitter that ejects a thin vertical stream of particles.
+;                  $h_Parent - [optional] Handle of scene node the particle shall be attached to (0 means attach to the root scene node)
+;                  $i_Id  - [optional] Assigns given integer as ID to the created particle system.
+;                  $f_PosX, $f_PosY, $f_PosZ - [optional] Set position of particle system in the Irrlicht scene.
+;                  $f_RotX, $f_RotY, $f_RotZ - [optional] Rotate the particle system along x, y, z axes (0-360).
+;                  $f_ScaleX, $f_ScaleY, $f_ScaleZ - [optional] Scaling factors for created particle system.
+; Return values .: success - Handle of the created particle system.
+;                  failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: A particle system is an object that creates and manages hundreds of small billboard like objects that are used to represent smoke, rain and other natural effects.
+;                  Once created you then need to add emitters and affectors to create and control the particles.
+; Related .......: _IrrAddParticleEmitter, _IrrAddFadeOutParticleAffector, _IrrAddGravityParticleAffector, _IrrAddParticleAttractionAffector, _IrrAddRotationAffector
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrAddParticleSystemToScene($i_AddEmitter, $h_Parent = 0, $i_Id = -1, $f_PosX = 0, $f_PosY = 0, $f_PosZ = 0, $f_RotX = 0, $f_RotY = 0, $f_RotZ = 0, $f_ScaleX = 1, $f_ScaleY = 1, $f_ScaleZ = 1)
-; add a particle system to the irrlicht scene manager
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddParticleSystemToScene", "int", $i_AddEmitter, "UINT_PTR", $h_Parent, "int", $i_Id, _
+Func _IrrAddParticleSystemToScene($b_AddEmitter, $h_Parent = 0, $i_Id = -1, $f_PosX = 0, $f_PosY = 0, $f_PosZ = 0, $f_RotX = 0, $f_RotY = 0, $f_RotZ = 0, $f_ScaleX = 1, $f_ScaleY = 1, $f_ScaleZ = 1)
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddParticleSystemToScene", "int", $b_AddEmitter, "UINT_PTR", $h_Parent, "int", $i_Id, _
 	"float", $f_PosX = 0, "float", $f_PosY, "float", $f_PosZ, "float", $f_RotX, "float", $f_RotY, "float", $f_RotZ, _
 	"float", $f_ScaleX, "float", $f_ScaleY, "float", $f_ScaleZ)
 	if @error Then
