@@ -70,7 +70,8 @@ EndFunc   ;==>_IrrAddLight
 ; Name...........: _IrrSetAmbientLight
 ; Description ...: Sets the ambient lighting level across entire scene.
 ; Syntax.........: _IrrSetAmbientLight($f_Red, $f_Green, $f_Blue)
-; Parameters ....: $i_Red, $i_Green, $i_Blue - Colour values for ambient lighting from 0 to 255.
+; Parameters ....: $i_Red, $i_Green, $i_Blue - Colour values for ambient lighting.
+;                  |<b>Red/green/blue are fractional values from 0 to 1!</b>
 ; Return values .: Success - True
 ;                  Failure - False
 ; Author ........:

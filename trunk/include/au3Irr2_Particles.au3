@@ -20,7 +20,6 @@
 ;_IrrSetParticleMaxSize
 ;_IrrCreateRotationAffector
 ;_IrrSetParticleEmitterDirection
-;_IrrSetParticleAffectorEnable
 ;_IrrSetFadeOutParticleAffectorTargetColor
 ;_IrrSetGravityParticleAffectorTimeForceLost
 ;_IrrSetParticleAttractionAffectorAffectX
@@ -52,6 +51,7 @@
 ;_IrrSetParticleEmitterMaxParticlesPerSecond
 ;_IrrSetParticleEmitterMinStartColor
 ;_IrrSetParticleEmitterMaxStartColor
+;_IrrSetParticleAffectorEnable
 ;_IrrSetFadeOutParticleAffectorTime
 ;_IrrSetGravityParticleAffectorDirection
 ;_IrrSetCenterOfEffect
@@ -62,20 +62,23 @@
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: __CreateParticleSettings
-; Description ...: [todo]
+; Description ...: Helper function: Creates particle settings as required from _IrrAddParticleEmitter.
 ; Syntax.........: __CreateParticleSettings($minBoxX, $minBoxY, $minBoxZ, $maxBoxX, $maxBoxY, $maxBoxZ, $directionX, $directionY, $directionZ, $minParticlesSecond, $maxParticlesSecond, $minStartColorR, $minStartColorG, $minStartColorB, $maxStartColorR, $maxStartColorG, $maxStartColorB, $minLifetime, $maxLifetime, $minStartSizeX, $minStartSizeY, $maxStartSizeX, $maxStartSizeY, $maxAngleDegrees)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $minBoxX, $minBoxY, $minBoxZ - Minimal positions of a a box in space inside which the position of a particle is randomly created.
+;                  $maxBoxX, $maxBoxY, $maxBoxZ - Maximal positions of a a box in space inside which the position of a particle is randomly created.
+;                  $directionX, $directionY, $directionZ - Define a direction into which the particles will be ejected as the animation plays.
+;                  $minParticlesSecond, $maxParticlesSecond - A range defining the minimum and maximum number of particles that will be created each second.
+;                  $minStartColorR, $minStartColorG, $minStartColorB, $maxStartColorR, $maxStartColorG, $maxStartColorB - Although particles can be textured by texturing the particle system node, these can be used to apply a range that tints the color of the particles.
+;                  $minLifetime, $maxLifetime - How long the partilce will live, long lifespans can create very large numbers of particles.
+;                  $minStartSizeX, $minStartSizeY, $maxStartSizeX, $maxStartSizeY - The minimum and maximum start sizes for the particles.
+;                  $maxAngleDegrees - The maximum number of degrees that the ejected particles will deviate from the defined direction.
+; Return values .: Array that can be passed to _IrrAddParticleEmitter
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrAddParticleSystemToScene, _IrrAddParticleEmitter
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func __CreateParticleSettings($minBoxX, $minBoxY, $minBoxZ, $maxBoxX, $maxBoxY, $maxBoxZ, $directionX, $directionY, $directionZ, $minParticlesSecond, $maxParticlesSecond, $minStartColorR, $minStartColorG, $minStartColorB, $maxStartColorR, $maxStartColorG, $maxStartColorB, $minLifetime, $maxLifetime, $minStartSizeX, $minStartSizeY, $maxStartSizeX, $maxStartSizeY, $maxAngleDegrees)
 	local $arr[24] =  [ $minBoxX, $minBoxY, $minBoxZ, $maxBoxX, $maxBoxY, $maxBoxZ, _
@@ -88,20 +91,18 @@ EndFunc   ;==>__CreateParticleEmitter
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddParticleEmitter
-; Description ...: [todo]
+; Description ...: Adds a particle emitter to a particle system.
 ; Syntax.........: _IrrAddParticleEmitter($h_ParticleSystem, $a_Settings)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_ParticleSystem - Handle of particle system the emitter shall be attached to.
+;                  $a_Settings - Array with particle emitter settings created with __CreateParticleSettings.
+; Return values .: success - Handle of the created particle emitter
+;                  failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: The emitter creates particles and controls how they move and when they are to be removed.
+; Related .......: _IrrAddParticleSystemToScene, __CreateParticleSettings
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddParticleEmitter($h_ParticleSystem, $a_Settings)
 	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddParticleEmitter", "UINT_PTR", $h_ParticleSystem, _
@@ -209,20 +210,19 @@ EndFunc   ;==>_IrrAddAnimatedMeshSceneNodeEmitter
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddRotationAffector
-; Description ...: [todo]
+; Description ...: Adds a an affector to a particle system rotating the particles.
 ; Syntax.........: _IrrAddRotationAffector($h_ParticleSystem, $f_SpeedX, $f_SpeedY, $f_SpeedZ, $f_PivotX, $f_pivotY, $f_pivotZ)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_ParticleSystem - Handle of the particle system the created affector is attached to.
+;                  $f_SpeedX, $f_SpeedY, $f_SpeedZ - Set the speed in degrees per second in all 3 dimensions.
+;                  $f_PivotX, $f_pivotY, $f_pivotZ - Set the point that particles will rotate around.
+; Return values .: success - Handle of the created affector.
+;                  failure - false
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: This affector modifies the positions of the particles and attracts them to a specified point at a specified speed per second.
+; Related .......: _IrrAddParticleSystemToScene, _IrrSetParticleAffectorEnable, _IrrRemoveAffectors
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddRotationAffector($h_ParticleSystem, $f_SpeedX, $f_SpeedY, $f_SpeedZ, $f_PivotX, $f_pivotY, $f_pivotZ)
 ; Creates a rotation affector. This affector modifies the positions of the
@@ -240,20 +240,19 @@ EndFunc   ;==>_IrrAddRotationAffector
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddFadeOutParticleAffector
-; Description ...: [todo]
+; Description ...: Adds a fade out affector to a particle system gradually fading particles out so they are invisible when they are deleted.
 ; Syntax.........: _IrrAddFadeOutParticleAffector($h_ParticleSystem, $i_FadeFactor, $i_Red, $i_Green, $i_Blue)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_ParticleSystem - Handle of the particle system the created affector is attached to.
+;                  $i_FadeFactor - Milliseconds the fade out effect will take place.
+;                  $i_Red, $i_Green, $i_Blue - Values of the colour the particles are faded to (0-255)
+; Return values .: success - Handle of the created affector.
+;                  failure - false
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: The fade out affector fades the particles out as they come to the end of their lifespan and stops them 'popping' out of existance. This creates a convincing effect for fire and smoke in particular.
+; Related .......: _IrrAddParticleSystemToScene, _IrrSetParticleAffectorEnable, _IrrRemoveAffectors
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddFadeOutParticleAffector($h_ParticleSystem, $i_FadeFactor, $i_Red, $i_Green, $i_Blue)
 	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddFadeOutParticleAffector", "ptr", $h_ParticleSystem, "int", $i_FadeFactor, "int", $i_Red, "int", $i_Green, "int", $i_Blue)
@@ -267,20 +266,19 @@ EndFunc   ;==>_IrrAddFadeOutParticleAffector
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddGravityParticleAffector
-; Description ...: [todo]
+; Description ...: Adds a gravity affector to a particle system gradually pulling the particles in the direction of the effect.
 ; Syntax.........: _IrrAddGravityParticleAffector($h_ParticleSystem, $f_X, $f_Y, $f_Z, $i_TimeForceLost = 1000)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_ParticleSystem - Handle of the particle system the created affector is attached to.
+;                  $f_X, $f_Y, $f_Z - Set the direction and force of gravity in all 3 dimensions.
+;                  $i_TimeForceLost - [optional] Set the time in milliseconds when the gravity force is totally lost. At that point the particle does not move any more.
+; Return values .: success - Handle of the created affector.
+;                  failure - false
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: The gravity affector is adding a small amount of velocity to the particles each frame. Although its called a gravity affector it can be used to push the particles in any direction so you can have drifting smoke bubbling fountains, to make a wind effect and have the particles drift off to the side, etc.
+; Related .......: _IrrAddParticleSystemToScene, _IrrSetParticleAffectorEnable, _IrrRemoveAffectors
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddGravityParticleAffector($h_ParticleSystem, $f_X, $f_Y, $f_Z, $i_TimeForceLost = 1000)
 	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddGravityParticleAffector", "UINT_PTR", $h_ParticleSystem, _
@@ -295,23 +293,26 @@ EndFunc   ;==>_IrrAddGravityParticleAffector
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddParticleAttractionAffector
-; Description ...: [todo]
-; Syntax.........: _IrrAddParticleAttractionAffector($h_ParticleSystem, $f_X, $f_Y, $f_Z, $f_Speed = 1, $i_Attract = 1, $i_AffectX = 1, $i_AffectY = 1, $i_AffectZ = 1)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Description ...: Adds an affector to a particle system attracting particles to a specified point at a specified speed.
+; Syntax.........: _IrrAddParticleAttractionAffector($h_ParticleSystem, $f_X, $f_Y, $f_Z, $f_Speed = 1, $i_Attract = $IRR_ATTRACT, $b_AffectX = true, $b_AffectY = true, $b_AffectZ = true)
+; Parameters ....: $h_ParticleSystem - Handle of the particle system the created affector is attached to.
+;                  $f_X, $f_Y, $f_Z - Set the point that particles will attract to.
+;                  $f_Speed - [optional] Speed in units per second, to attract to the specified point.
+;                  $i_Attract - [optional] Set whether or not the particles are attracting or detracting. Values are:
+;                  |$IRR_ATTRACT - particles are attracting.
+;                  |IRR_REPEL - particles are detracting.
+;                  $b_AffectX, $b_AffectY, $b_AffectZ - [optional] Set whether or not this will affect particles in the X, Y, Z direction.
+; Return values .: success - Handle of the created affector.
+;                  failure - false
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrAddParticleSystemToScene, _IrrSetParticleAffectorEnable, _IrrRemoveAffectors
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrAddParticleAttractionAffector($h_ParticleSystem, $f_X, $f_Y, $f_Z, $f_Speed = 1, $i_Attract = 1, $i_AffectX = 1, $i_AffectY = 1, $i_AffectZ = 1)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddParticleAttractionAffector", "ptr", $h_ParticleSystem, "float", $f_X, "float", $f_Y, "float", $f_Z, "float", $f_Speed, "int", $i_Attract, "int", $i_AffectX, "int", $i_AffectY, "int", $i_AffectZ)
+Func _IrrAddParticleAttractionAffector($h_ParticleSystem, $f_X, $f_Y, $f_Z, $f_Speed = 1, $i_Attract = $IRR_ATTRACT, $b_AffectX = true, $b_AffectY = true, $b_AffectZ = true)
+	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddParticleAttractionAffector", "UINT_PTR", $h_ParticleSystem, "float", $f_X, "float", $f_Y, "float", $f_Z, "float", $f_Speed, "UINT", $i_Attract, "UINT", $b_AffectX, "UINT", $b_AffectY, "UINT", $b_AffectZ)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
@@ -490,23 +491,20 @@ EndFunc   ;==>_IrrAddSplineAffector
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrRemoveAffectors
-; Description ...: [todo]
+; Description ...: Removes all affectors from a particle system.
 ; Syntax.........: _IrrRemoveAffectors($h_ParticleSystem)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_ParticleSystem - Handle of an Irrlicht particle system.
+; Return values .: success - true
+;                  failure - false
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: You might use this if you want to change the direction or strength of the wind for example.
+; Related .......: _IrrAddParticleSystemToScene, _IrrSetParticleAffectorEnable
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrRemoveAffectors($h_ParticleSystem)
-	DllCall($_irrDll, "none:cdecl", "IrrRemoveAffectors", "ptr", $h_ParticleSystem)
+	DllCall($_irrDll, "none:cdecl", "IrrRemoveAffectors", "UINT_PTR", $h_ParticleSystem)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
@@ -650,25 +648,23 @@ Func _IrrSetParticleEmitterMaxStartColor($h_ParticleEmitter, $i_Red, $i_Green, $
 EndFunc   ;==>_IrrSetParticleEmitterMaxStartColor
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetParticleAffectorEnable
-; Description ...: [todo]
-; Syntax.........: _IrrSetParticleAffectorEnable($h_ParticleAffector, $i_Enabled)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Description ...: Enables or disables an Irrlicht affector.
+; Syntax.........: _IrrSetParticleAffectorEnable($h_ParticleAffector, $b_Enabled)
+; Parameters ....: $h_ParticleAffector - Handle of an Irrlicht particle affector
+;                  $i_Enabled - $IRR_ON (or true) enables the affector, $IRR_OFF (or false) disables it.
+; Return values .: success - true
+;                  failure - false
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrAddParticleSystemToScene, _IrrRemoveAffectors
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrSetParticleAffectorEnable($h_ParticleAffector, $i_Enabled)
-	DllCall($_irrDll, "none:cdecl", "IrrSetParticleAffectorEnable", "ptr", $h_ParticleAffector, "int", $i_Enabled)
+Func _IrrSetParticleAffectorEnable($h_ParticleAffector, $b_Enabled)
+	DllCall($_irrDll, "none:cdecl", "IrrSetParticleAffectorEnable", "ptr", $h_ParticleAffector, "int", $b_Enabled)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
