@@ -418,27 +418,34 @@ EndFunc   ;==>_IrrLoadSphericalTerrainVertexColor
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetSphericalTerrainSurfacePosition
-; Description ...: [todo]
-; Syntax.........: _IrrGetSphericalTerrainSurfacePosition($h_Terrain, $i_Face, $f_LogicalX, $f_LogicalY, $f_LogicalZ)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Description ...: Get the surface position of a logical point on the terrain.
+; Syntax.........: _IrrGetSphericalTerrainSurfacePosition($h_Terrain, $i_Face, $f_LogicalX, $f_LogicalZ)
+; Parameters ....: $h_Terrain - Handle to a Spherical Terrain object as returned by _IrrAddSphericalTerrain function
+;                  $i_Face - Integer value of a Face to calculate for.
+;                  $f_LogicalX - Float value for Logical X position.
+;                  $f_LogicalZ - Float value for Logical Z position.
+; Return values .: Success - 1D Array with the returned values
+;                  |$Array[0] = X float value
+;                  |$Array[1] = Y float value
+;                  |$Array[2] = Z float value
+;                  Failure - False and set @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: You supply a face number and a logical X, Y position on that face and this call will return the height of that point on the terrain sphere.
+;                  X, Y, Z is returned in a 1D Array.
+;                  Note: By subtracting the center of the sphere from this co-ordinate and converting this vector to angles you can find the upward direction of the point on the surface.
+; Related .......: _IrrAddSphericalTerrain
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrGetSphericalTerrainSurfacePosition($h_Terrain, $i_Face, $f_LogicalX, $f_LogicalY, $f_LogicalZ)
-	Local $X = DllStructCreate("float")
-	Local $Y = DllStructCreate("float")
-	Local $Z = DllStructCreate("float")
-	DllCall($_irrDll, "none:cdecl", "IrrGetSphericalTerrainSurfacePosition", "ptr", $h_Terrain, "int", $i_Face, "float", $f_LogicalX, "float", $f_LogicalY, "float", $f_LogicalZ, "float*", DllStructGetPtr($X), "float*", DllStructGetPtr($Y), "float*", DllStructGetPtr($Z))
-	Local $result[3] = [DllStructGetData($X, 1), DllStructGetData($Y, 1), DllStructGetData($Z, 1)]
+Func _IrrGetSphericalTerrainSurfacePosition($h_Terrain, $i_Face, $f_LogicalX, $f_LogicalZ)
+    Local $aResult, $aReturn[3]
+    $aResult = DllCall($_irrDll, "none:cdecl", "IrrGetSphericalTerrainSurfacePosition", "ptr", $h_Terrain, "int", $i_Face, "float", $f_LogicalX, "float", $f_LogicalZ, "float*", 0, "float*", 0, "float*", 0)
+    If @error Or Not IsArray($aResult) Then Return SetError(1, 0, False)
+    For $i = 0 To 2
+        $aReturn[$i] = $aResult[$i + 5]
+    Next
+    Return SetError(0, 0, $aReturn)
 EndFunc   ;==>_IrrGetSphericalTerrainSurfacePosition
 
 

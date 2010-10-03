@@ -29,8 +29,6 @@ DIM $DirectXMesh ; irr_mesh
 DIM $MeshTexture ; irr_texture
 DIM $SceneNode ; irr_node
 DIM $OurCamera ; irr_camera
-DIM $index_count ; integer
-DIM $vertex_count ; integer
 DIM $i ; integer
 CONST $SCRIPTTITLE = "Example 22: Indices and Vertices"
 
@@ -47,23 +45,16 @@ _IrrSetWindowCaption($SCRIPTTITLE)
 ; load a mesh
 $DirectXMesh = _IrrGetMesh( "../media/cube.x" )
 
+; copy the vertex information into the array struct
+local $tVertex; will be set to an vertex struct from _IrrGetMeshVertices:
+local $vertex_count = _IrrGetMeshVertices( $DirectXMesh, 0, $tVertex)
+
 ; display metric information on the mesh, the number of indices and vertices
-$index_count = _IrrGetMeshIndexCount( $DirectXMesh, 0 )
-$vertex_count = _IrrGetMeshVertexCount( $DirectXMesh, 0 )
+local $index_count = _IrrGetMeshIndexCount( $DirectXMesh, 0 )
 MsgBox(0, $SCRIPTTITLE, "Index count: " & $index_count & @LF & "Vertex count: " & $vertex_count)
-
-; dimention an array large enough to contain the list of vertices
-local $tVertex = __CreateVertStruct($vertex_count) ; ( 0 to $vertex_count ) ; $IRR_VERT
-
-; copy the vertex information into the array
-_IrrGetMeshVertices( $DirectXMesh, 0, $tVertex) ; $vertices(0))
-
 
 ; itterate through all of the vertices
 for $i = 0 to $vertex_count - 1
-    ; display the vertex location in 3D space
-;todo    print "Vertex ";str(i);" is at ";str($tVertex(i).x);", ";str($tVertex(i).y);", ";str($tVertex(i).z)
-
     ; shrink the vertex X location by half its size
 	__SetVertStruct($tVertex, $i, $VERT_X, __GetVertStruct($tVertex, $i, $VERT_X) * 0.5 )
     ; change the color of the vertex to a random value
@@ -76,11 +67,10 @@ _IrrSetMeshVertices( $DirectXMesh, 0, $tVertex )
 ; add the mesh to the scene
 $SceneNode = _IrrAddMeshToScene( $DirectXMesh )
 
-; scale the node size up ; the origonal mesh is very small
+; scale the node size up - the origonal mesh is very small
 _IrrSetNodeScale( $SceneNode, 20,20,20 )
 
-; switch on debugging information so that you can see the bounding box around
-; the node
+; switch on debugging information so that you can see the bounding box around the node
 _IrrDebugDataVisible ( $SceneNode, $IRR_ON )
 
 ; switch off lighting effects on this model

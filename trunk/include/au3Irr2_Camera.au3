@@ -135,20 +135,17 @@ EndFunc   ;==>_IrrAddMayaCamera
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetCameraTarget
-; Description ...: [todo]
+; Description ...: Sets the point in space that the camera is looking at.
 ; Syntax.........: _IrrSetCameraTarget($h_Camera, $f_CamX, $f_CamY, $f_CamZ)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Camera - Handle of a camera object
+;                  $f_CamX, $f_CamY, $f_CamZ - Position in the scene to target with the camera.
+; Return values .: None
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: The camera view point can be moved by simply using the _IrrSetNodePosition function but this operation will change the point that the camera is pointing at.
+; Related .......: _IrrGetCameraTarget, _IrrSetCameraUpAtRightAngle, _IrrSetCameraUpDirection, _IrrGetCameraOrientation, _IrrGetCameraUpDirection
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetCameraTarget($h_Camera, $f_CamX, $f_CamY, $f_CamZ)
 	DllCall($_irrDll, "none:cdecl", "IrrSetCameraTarget", "ptr", $h_Camera, "float", $f_CamX, "float", $f_CamY, "float", $f_CamZ)
@@ -162,20 +159,19 @@ EndFunc   ;==>_IrrSetCameraTarget
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCameraTarget
-; Description ...: [todo]
+; Description ...: Get the point in space that the camera is looking at.
 ; Syntax.........: _IrrGetCameraTarget($h_Camera, ByRef $a_Vector3df)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Camera - Handle of a camera object
+;                  $a_Vector3df - Any variable to populate with the camera target position, must not explicitly be an array.
+;                  The passed variable will be re-dimed to an array with the X, Y, Z coordinates stored in its three elements.
+; Return values .: success - Array with three elements for X, Y, Z.
+;                  failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrSetCameraTarget, _IrrSetCameraUpAtRightAngle, _IrrSetCameraUpDirection, _IrrGetCameraOrientation, _IrrGetCameraUpDirection
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetCameraTarget($h_Camera, ByRef $a_Vector3df)
 	Dim $a_Vector3df[3]
@@ -252,20 +248,19 @@ EndFunc   ;==>_IrrSetCameraUpDirection
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCameraOrientation
-; Description ...: [todo]
+; Description ...: Gets the camera orientation (forward, upward and sideways vectors of the camera)
 ; Syntax.........: _IrrGetCameraOrientation($h_Camera, ByRef $a_Vector1, ByRef $a_Vector2, ByRef $a_Vector3)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Camera - Handle of a camera object
+;                  $a_Vector1, $a_Vector2, $a_Vector3 - Any variables to populate with the camera orientation vectors, must not explicitly be arrays.
+;                  The passed variables will be re-dimed to arrays each with the X, Y, Z vector values stored in their three elements.
+; Return values .: success - True
+;                  failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: Returned vectors will be different lengths depending on how much the camera is rotated The described camera direction is useful after the camera has been revolved.
+; Related .......: _IrrGetCameraTarget, _IrrSetCameraTarget, _IrrSetCameraUpAtRightAngle, _IrrSetCameraUpDirection, _IrrGetCameraUpDirection
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetCameraOrientation($h_Camera, ByRef $a_Vector1, ByRef $a_Vector2, ByRef $a_Vector3)
 	Dim $a_Vector1[3], $a_Vector2[3], $a_Vector3[3]
@@ -385,7 +380,7 @@ EndFunc   ;==>_IrrSetCameraOrthagonal
 ;                  failure - False
 ; Author ........:
 ; Modified.......:
-; Remarks .......: The clipping distances of a camera are the distances beyond and before which no triangles are rendered.
+; Remarks .......: The clipping distances of a camera are the distances beyond and before which no triangles are rendered. Default clipping is before 1.0 and behind 2000.0.
 ;                  This speeds the scene up by not showing geometry that is beyond or before the defined distances and increases rendering performance without requiring you to manage adding and deleting the objects from the view.
 ;                  To make the far distance clipping less abrupt you can use it in combination with _IrrSetFog.
 ; Related .......: _IrrAddCamera, _IrrAddFPSCamera, _IrrSetFog

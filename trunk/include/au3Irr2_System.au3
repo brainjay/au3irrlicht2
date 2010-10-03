@@ -16,12 +16,10 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
-;_IrrBeginSceneAdvanced
 ;_IrrIsFullscreen
 ;_IrrIsWindowActive
 ;_IrrIsWindowFocused
 ;_IrrIsWindowMinimized
-;_IrrGetScreenSize
 ;_IrrDisableFeature
 ;_IrrSetTime
 ; ===============================================================================================================================
@@ -32,6 +30,7 @@
 ;_IrrRunning
 ;_IrrSetViewPort
 ;_IrrBeginScene
+;_IrrBeginSceneAdvanced
 ;_IrrDrawScene
 ;_IrrDrawSceneToTexture
 ;_IrrSetRenderTarget
@@ -42,6 +41,7 @@
 ;_IrrGetFPS
 ;_IrrGetPrimitivesDrawn
 ;_IrrSetWindowCaption
+;_IrrGetScreenSize
 ;_IrrMaximizeWindow
 ;_IrrMinimizeWindow
 ;_IrrRestoreWindow
@@ -63,7 +63,7 @@
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrStart
 ; Description ...: Opens the IrrlichtWrapper.dll, starts Irrlicht interface and opens a window for rendering.
-; Syntax.........: _IrrStart($i_DeviceType=$IRR_EDT_DIRECT3D9, $i_ScreenWidth=800, $i_ScreenHeight=600, $i_BitsPerPixel=1, $i_FullScreen=0, $i_Shadows=0, $i_InputCapture=0, $i_VSync=0)
+; Syntax.........: _IrrStart($i_DeviceType=$IRR_EDT_DIRECT3D9, $i_ScreenWidth=800, $i_ScreenHeight=600, $i_BitsPerPixel=$IRR_BITS_PER_PIXEL_32, $b_FullScreen=$IRR_WINDOWED, $b_Shadows=$IRR_NO_SHADOWS, $b_InputCapture=$IRR_IGNORE_EVENTS, $b_VSync=$IRR_VERTICAL_SYNC_OFF)
 ; Parameters ....: $i_DeviceType - [optional] specifies the renderer to use when drawing to the display this may be one of the following types:
 ;                  |$IRR_EDT_NULL - A NULL device with no display
 ;                  |$IRR_EDT_SOFTWARE - Irrlichts default software renderer
@@ -77,16 +77,16 @@
 ;                  +This setting can be either of:
 ;                  |$IRR_BITS_PER_PIXEL_16
 ;                  |$IRR_BITS_PER_PIXEL_32
-;                  $i_FullScreen - [optional] Specifies whether the display is to opened in full screen mode or in a window:
+;                  $b_FullScreen - [optional] Specifies whether the display is to opened in full screen mode or in a window:
 ;                  |$IRR_WINDOWED - For window mode
 ;                  |$IRR_FULLSCREEN - For fullscreen mode. When using full screen mode you will need to adjust the window size to the same dimensions as a supported screen resolution on the target display 640x400 for example.
-;                  $i_Shadows - [optional] Use shadows starts the engine in a mode that supports the rendering of stencil shadows.
+;                  $b_Shadows - [optional] Use shadows starts the engine in a mode that supports the rendering of stencil shadows.
 ;                  |$IRR_NO_SHADOWS - For a display that does not support shadows.
 ;                  |$IRR_SHADOWS - For a display that supports shadows.
-;                  $i_InputCapture - [optional] Capture mouse and keyboard specified whether you want to capture keyboard and mouse events, if you choose to ignore them they will be handled by Irrlicht for FPS camera control. This parameter should be either of:
+;                  $b_InputCapture - [optional] Capture mouse and keyboard specified whether you want to capture keyboard and mouse events, if you choose to ignore them they will be handled by Irrlicht for FPS camera control. This parameter should be either of:
 ;                  |$IRR_IGNORE_EVENTS
 ;                  |$IRR_CAPTURE_EVENTS
-;                  $i_VSync - [optional] Vertical syncronisation specifies whether the display of each new frame is syncronised with vertical refresh of the graphics card. This produces a smoother display and avoids 'tearing' where the viewer can see parts of two different frames at the same time. The setting can be either of:
+;                  $b_VSync - [optional] Vertical syncronisation specifies whether the display of each new frame is syncronised with vertical refresh of the graphics card. This produces a smoother display and avoids 'tearing' where the viewer can see parts of two different frames at the same time. The setting can be either of:
 ;                  |$IRR_VERTICAL_SYNC_OFF
 ;                  |$IRR_VERTICAL_SYNC_ON
 ; Return values .: Success		- True
@@ -105,7 +105,7 @@
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrStart($i_DeviceType = $IRR_EDT_DIRECT3D9, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel = 1, $i_FullScreen = 0, $i_Shadows = 0, $i_InputCapture = 0, $i_VSync = 0)
+Func _IrrStart($i_DeviceType = $IRR_EDT_DIRECT3D9, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel=$IRR_BITS_PER_PIXEL_32, $b_FullScreen=$IRR_WINDOWED, $b_Shadows=$IRR_NO_SHADOWS, $b_InputCapture=$IRR_IGNORE_EVENTS, $b_VSync=$IRR_VERTICAL_SYNC_OFF)
 
 	$_irrDll = DllOpen("IrrlichtWrapper.dll")
 	if $_irrDll = -1 Then ; .dll cannot be opened - try to get it by extending %path%:
@@ -118,7 +118,7 @@ Func _IrrStart($i_DeviceType = $IRR_EDT_DIRECT3D9, $i_ScreenWidth = 800, $i_Scre
 		EndIf
 	EndIf
 
-	DllCall($_irrDll, "none:cdecl", "IrrStart", "int", $i_DeviceType, "int", $i_ScreenWidth, "int", $i_ScreenHeight, "int", $i_BitsPerPixel, "uint", $i_FullScreen, "int", $i_Shadows, "int", $i_InputCapture, "int", $i_VSync)
+	DllCall($_irrDll, "none:cdecl", "IrrStart", "int", $i_DeviceType, "int", $i_ScreenWidth, "int", $i_ScreenHeight, "int", $i_BitsPerPixel, "uint", $b_FullScreen, "int", $b_Shadows, "int", $b_InputCapture, "int", $b_VSync)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
@@ -131,7 +131,7 @@ EndFunc   ;==>_IrrStart
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrStartAdvanced
 ; Description ...: Opens the IrrlichtWrapper.dll and starts Irrlicht engine with advanced method.
-; Syntax.........: _IrrStartAdvanced($i_DeviceType=3, $i_ScreenWidth=800, $i_ScreenHeight=600, $i_BitsPerPixel=1, $i_FullScreen=0, $i_Shadows=0, $i_InputCapture=0, $i_VSync=0, $i_TypeOfDevice=0, $i_DoublebufferEnabled=0, $i_AntialiasEnabled=0, $i_HighPrecisionFpu=0)
+; Syntax.........: _IrrStartAdvanced($i_DeviceType=$IRR_EDT_DIRECT3D9, $i_ScreenWidth=800, $i_ScreenHeight=600, $i_BitsPerPixel=$IRR_BITS_PER_PIXEL_32, $b_FullScreen=$IRR_WINDOWED, $b_Shadows=$IRR_NO_SHADOWS, $b_InputCapture=$IRR_IGNORE_EVENTS, $b_VSync=$IRR_VERTICAL_SYNC_OFF, $i_TypeOfDevice=0, $b_DoublebufferEnabled=$IRR_OFF, $i_AntialiasEnabled=0, $b_HighPrecisionFpu=$IRR_OFF)
 ; Parameters ....: $i_DeviceType - [optional] specifies the renderer to use when drawing to the display this may be one of the following types:
 ;                  |$IRR_EDT_NULL - A NULL device with no display
 ;                  |$IRR_EDT_SOFTWARE - Irrlichts default software renderer
@@ -145,24 +145,24 @@ EndFunc   ;==>_IrrStart
 ;                  +This setting can be either of:
 ;                  |$IRR_BITS_PER_PIXEL_16
 ;                  |$IRR_BITS_PER_PIXEL_32
-;                  $i_FullScreen - [optional] Specifies whether the display is to opened in full screen mode or in a window:
+;                  $b_FullScreen - [optional] Specifies whether the display is to opened in full screen mode or in a window:
 ;                  |$IRR_WINDOWED - For window mode
 ;                  |$IRR_FULLSCREEN - For fullscreen mode. When using full screen mode you will need to adjust the window size to the same dimensions as a supported screen resolution on the target display 640x400 for example.
-;                  $i_Shadows - [optional] Use shadows starts the engine in a mode that supports the rendering of stencil shadows.
+;                  $b_Shadows - [optional] Use shadows starts the engine in a mode that supports the rendering of stencil shadows.
 ;                  |$IRR_NO_SHADOWS - For a display that does not support shadows.
 ;                  |$IRR_SHADOWS - For a display that supports shadows.
-;                  $i_InputCapture - [optional] Capture mouse and keyboard specified whether you want to capture keyboard and mouse events, if you choose to ignore them they will be handled by Irrlicht for FPS camera control. This parameter should be either of:
+;                  $b_InputCapture - [optional] Capture mouse and keyboard specified whether you want to capture keyboard and mouse events, if you choose to ignore them they will be handled by Irrlicht for FPS camera control. This parameter should be either of:
 ;                  |$IRR_IGNORE_EVENTS
 ;                  |$IRR_CAPTURE_EVENTS
-;                  $i_VSync - [optional] Vertical syncronisation specifies whether the display of each new frame is syncronised with vertical refresh of the graphics card. This produces a smoother display and avoids 'tearing' where the viewer can see parts of two different frames at the same time. The setting can be either of:
+;                  $b_VSync - [optional] Vertical syncronisation specifies whether the display of each new frame is syncronised with vertical refresh of the graphics card. This produces a smoother display and avoids 'tearing' where the viewer can see parts of two different frames at the same time. The setting can be either of:
 ;                  |$IRR_VERTICAL_SYNC_OFF
 ;                  |$IRR_VERTICAL_SYNC_ON
 ;                  $i_TypeOfDevice - [optional] Devicetype allows a specific type of device for example a windows screen or a console to be selected. For the time being this should be set to 0 which automatically selects the best device.
-;                  $i_DoublebufferEnabled - [optional] Doublebufferenabled is used to control whether double buffering is used. When double buffering is used two drawing surfaces are created one for display and the other that is used for drawing too. Double buffering is required for anit-aliasing the options are:
+;                  $b_DoublebufferEnabled - [optional] Doublebufferenabled is used to control whether double buffering is used. When double buffering is used two drawing surfaces are created one for display and the other that is used for drawing too. Double buffering is required for anit-aliasing the options are:
 ;                  |$IRR_ON or $IRR_OFF
 ;                  $i_AntialiasEnabled - [optional] Antialiasenabled is used to enable the antialiasing effect, this effect produces a blurring at the edges of object giving their lines a smooth natural appearence. There is usually a big penalty for using this effect though sometimes as high as 30%  of the frame rate or more. This is a value for the anti-aliasing and should be a power of 2.
 ;                  |(e.g: 2, 4, 8, 16)
-;                  $i_HighPrecisionFpu - [optional] Highprecisionfpu is used to enable high precision Floating point calculations, that produce more accurate result at the expense of a slower operating speed.
+;                  $b_HighPrecisionFpu - [optional] Highprecisionfpu is used to enable high precision Floating point calculations, that produce more accurate result at the expense of a slower operating speed.
 ; Return values .: Success		- True
 ;                  Failure		- False and sets @error:
 ;                  |1 - error occured on dll call
@@ -179,7 +179,7 @@ EndFunc   ;==>_IrrStart
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrStartAdvanced($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel = 1, $i_FullScreen = 0, $i_Shadows = 0, $i_InputCapture = 0, $i_VSync = 0, $i_TypeOfDevice = 0, $i_DoublebufferEnabled = 0, $i_AntialiasEnabled = 0, $i_HighPrecisionFpu = 0)
+Func _IrrStartAdvanced($i_DeviceType=$IRR_EDT_DIRECT3D9, $i_ScreenWidth=800, $i_ScreenHeight=600, $i_BitsPerPixel=$IRR_BITS_PER_PIXEL_32, $b_FullScreen=$IRR_WINDOWED, $b_Shadows=$IRR_NO_SHADOWS, $b_InputCapture=$IRR_IGNORE_EVENTS, $b_VSync=$IRR_VERTICAL_SYNC_OFF, $i_TypeOfDevice=0, $b_DoublebufferEnabled=$IRR_OFF, $i_AntialiasEnabled=0, $b_HighPrecisionFpu=$IRR_OFF)
 
 	$_irrDll = DllOpen("IrrlichtWrapper.dll")
 	if $_irrDll = -1 Then ; .dll cannot be opened - try to get it by extending %path%:
@@ -193,8 +193,8 @@ Func _IrrStartAdvanced($i_DeviceType = 3, $i_ScreenWidth = 800, $i_ScreenHeight 
 	EndIf
 
 	$result = DllCall($_irrDll, "uint:cdecl", "IrrStart", "int", $i_DeviceType, "int", $i_ScreenWidth, "int", $i_ScreenHeight, _
-			"int", $i_BitsPerPixel, "uint", $i_FullScreen, "uint", $i_Shadows, "uint", $i_InputCapture, "uint", $i_VSync, _
-			"uint", $i_TypeOfDevice, "uint", $i_DoublebufferEnabled, "uint", $i_AntialiasEnabled, "uint", $i_HighPrecisionFpu)
+			"int", $i_BitsPerPixel, "uint", $b_FullScreen, "uint", $b_Shadows, "uint", $b_InputCapture, "uint", $b_VSync, _
+			"uint", $i_TypeOfDevice, "uint", $b_DoublebufferEnabled, "uint", $i_AntialiasEnabled, "uint", $b_HighPrecisionFpu)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
@@ -283,10 +283,10 @@ EndFunc   ;==>_IrrBeginScene
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrBeginSceneAdvanced
 ; Description ...: [todo]
-; Syntax.........: _IrrBeginSceneAdvanced($i_SceneBGColor, $i_ClearBackBuffer = 1, $i_ClearZBuffer = 1)
+; Syntax.........: _IrrBeginSceneAdvanced($i_SceneBGColor, $b_ClearBackBuffer = $IRR_ON, $b_ClearZBuffer = $IRR_ON)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -300,9 +300,8 @@ EndFunc   ;==>_IrrBeginScene
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrBeginSceneAdvanced($i_SceneBGColor, $i_ClearBackBuffer = 1, $i_ClearZBuffer = 1)
-; Readies a scene for rendering, erasing the canvas and setting a background color.
-	DllCall($_irrDll, "none:cdecl", "IrrBeginSceneAdvanced", "uint", $i_SceneBGColor, "byte", $i_ClearBackBuffer, "byte", $i_ClearZBuffer)
+Func _IrrBeginSceneAdvanced($i_SceneBGColor, $b_ClearBackBuffer = $IRR_ON, $b_ClearZBuffer = $IRR_ON)
+	DllCall($_irrDll, "none:cdecl", "IrrBeginSceneAdvanced", "UINT", $i_SceneBGColor, "byte", $b_ClearBackBuffer, "byte", $b_ClearZBuffer)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
@@ -368,7 +367,7 @@ EndFunc   ;==>_IrrDrawSceneToTexture
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetRenderTarget
 ; Description ...: [todo]
-; Syntax.........: _IrrSetRenderTarget($h_Texture, $i_SceneBGColor = 0, $i_ClearBackBuffer = 1, $i_ClearZBuffer = 1)
+; Syntax.........: _IrrSetRenderTarget($h_Texture, $i_SceneBGColor = 0, $b_ClearBackBuffer = $IRR_ON, $b_ClearZBuffer = $IRR_ON)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
@@ -382,10 +381,10 @@ EndFunc   ;==>_IrrDrawSceneToTexture
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrSetRenderTarget($h_Texture, $i_SceneBGColor = 0, $i_ClearBackBuffer = 1, $i_ClearZBuffer = 1)
+Func _IrrSetRenderTarget($h_Texture, $i_SceneBGColor = 0, $b_ClearBackBuffer = $IRR_ON, $b_ClearZBuffer = $IRR_ON)
 ; Sets a texture as a render target, or sets the device if the pointer is 0.
 	DllCall($_irrDll, "none:cdecl", "IrrSetRenderTarget", "ptr", $h_Texture, "uint", $i_SceneBGColor, _
-			"byte", $i_ClearBackBuffer, "byte", $i_ClearZBuffer)
+			"byte", $b_ClearBackBuffer, "byte", $b_ClearZBuffer)
 	if @error Then
 		Return Seterror(1,0,False)
 	Else
@@ -687,7 +686,7 @@ Func _IrrIsWindowMinimized()
 EndFunc   ;==>_IrrIsWindowMinimized
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetScreenSize
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetScreenSize(ByRef $i_Width, ByRef $i_Height)
@@ -832,23 +831,19 @@ EndFunc   ;==>_IrrSetResizableWindow
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMakeARGB
-; Description ...: [todo]
+; Description ...: Computes valid 32bit color value including alpha (translucency) as expected from several functions.
 ; Syntax.........: _IrrMakeARGB($i_Alpha, $i_Red, $i_Green, $i_Blue)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $i_Alpha - Alpha component of the colour.
+;                  $i_Red, $i_Green, $i_Blue - Red, green and blue components (0-255).
+; Return values .: success - 32bit unsigned int colour value including alpha.
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: None.
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrMakeARGB($i_Alpha, $i_Red, $i_Green, $i_Blue)
-; make 32 bit representation of an Alpha, Red, Green, Blue color
 	return int( ( "0x" & Hex($i_Alpha, 2) & Hex($i_Red, 2) & Hex($i_Green, 2) & Hex($i_Blue, 2) ) )
 EndFunc   ;==>_IrrMakeARGB
 

@@ -16,12 +16,7 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
-;_IrrCreateImage
-;_IrrLockTexture
 ;_IrrLockOpenGLTexture
-;_IrrUnlockTexture
-;_IrrLockImage
-;_IrrUnlockImage
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
@@ -29,8 +24,13 @@
 ;_IrrGetTexture
 ;_IrrGetImage
 ;_IrrCreateTexture
+;_IrrCreateImage
 ;_IrrRemoveTexture
 ;_IrrRemoveImage
+;_IrrLockTexture
+;_IrrUnlockTexture
+;_IrrLockImage
+;_IrrUnlockImage
 ;_IrrCreateRenderTargetTexture
 ;_IrrMakeNormalMapTexture
 ;_IrrBlendTextures
@@ -142,7 +142,7 @@ Func _IrrGetImage($s_ImageFile)
 	Local $aResult
 	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetImage", "str", $s_ImageFile)
 	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
-	Return SetError(0, 0, $aResult)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetImage
 
 
@@ -176,7 +176,7 @@ Func _IrrCreateTexture($s_TextureName, $i_XSize, $i_YSize, $i_ColorFormat)
 EndFunc   ;==>_IrrCreateTexture
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrCreateImage
 ; Description ...: Creates a blank image that does not use video memory.
 ; Syntax.........: _IrrCreateImage($i_XSize, $i_YSize, $i_ColorFormat)
@@ -246,7 +246,7 @@ Func _IrrRemoveImage($h_Image)
 EndFunc   ;==>_IrrRemoveImage
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrLockTexture
 ; Description ...: Locks the texture and returns a pointer to the pixels.
 ; Syntax.........: _IrrLockTexture($h_Texture)
@@ -290,7 +290,7 @@ Func _IrrLockOpenGLTexture($h_Texture)
 EndFunc   ;==>_IrrLockOpenGLTexture
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrUnlockTexture
 ; Description ...: Unlock the texture, presumably after it has been modified and recreate the mipmap levels.
 ; Syntax.........: _IrrUnlockTexture($h_Texture)
@@ -310,7 +310,7 @@ Func _IrrUnlockTexture($h_Texture)
 EndFunc   ;==>_IrrUnlockTexture
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrLockImage
 ; Description ...: Locks an image object and returns a pointer to the pixels.
 ; Syntax.........: _IrrLockImage($h_Image)
@@ -332,7 +332,7 @@ Func _IrrLockImage($h_Image)
 EndFunc   ;==>_IrrLockImage
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrUnlockImage
 ; Description ...: [todo]
 ; Syntax.........: _IrrUnlockImage($h_Image)
@@ -414,7 +414,7 @@ EndFunc   ;==>_IrrMakeNormalMapTexture
 ;                  |$BLEND_ADD          ; 1
 ;                  |$BLEND_SUBTRACT     ; 2
 ;                  |$BLEND_MULTIPLY     ; 3
-;                  |$BLEND_BLEND_DIVIDE ; 4
+;                  |$BLEND_DIVIDE       ; 4
 ; Return values .: Success - True
 ;                  Failure - False and set @error, check @extended to see what the error is.
 ;                  |@extended 0 then the @error is autoit failed the DllCall
