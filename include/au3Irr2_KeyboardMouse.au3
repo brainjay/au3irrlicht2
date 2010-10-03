@@ -34,9 +34,6 @@
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
 ; ===============================================================================================================================
 
-;Mouse and Keyboard event functions
-
-
 Global enum _ ; enumeration KEY_EVENT for possible Elements readable by __getKeyEvt
 	$EVT_KEY_IKEY = 1,	_ 	; unsigned integer "key"
 	$EVT_KEY_IDIRECTION, _ 	; unsigned integer "direction"
@@ -49,10 +46,10 @@ Global enum _ ; enumeration KEY_EVENT for possible Elements readable by __getKey
 ; Parameters ....: $p_KeyEvent - A pointer as returned from _IrrReadKeyEvent.
 ;                  $i_Element - [optional] Event type to return:
 ;                  |$EVT_KEY_IKEY - ID of pressed key (see remarks).
-;                  |$EVT_KEY_IDIRECTION - Direction value.
-;                  |$EVT_KEY_IFLAGS - Key flags value
+;                  |$EVT_KEY_IDIRECTION - Direction value - can be either $IRR_KEY_DOWN or $IRR_KEY_UP
+;                  |$EVT_KEY_IFLAGS - Bits are set in this parameter to specify whether the shift or control key was keydown at the time the key action occured.
 ; Return values .: Success - Value of selected event element.
-; Author ........: linus
+; Author ........:
 ; Modified.......:
 ; Remarks .......: $p_KeyEvent is a pointer as returned from _IrrReadKeyEvent.
 ;+
@@ -104,9 +101,9 @@ Global enum _ ; enumeration KEY_EVENT for possible Elements readable by __getKey
 ;                  $KEY_ZOOM	Zoom key	$KEY_PA1	PA1 key
 ;                  $KEY_OEM_CLEAR	Clear key	$KEY_KEY_CODES_COUNT	This Is Not a key but the amount of keycodes there are.
 ;                  @@End@@
-; Related .......: _IrrReadKeyEvent
+; Related .......: _IrrReadKeyEvent, _IrrKeyEventAvailable
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 func __getKeyEvt($p_KeyEvent, $i_Element = $EVT_KEY_IKEY)
 	local $EventStruct = DllStructCreate("uint;uint;uint", $p_KeyEvent)
@@ -131,17 +128,29 @@ Global enum _ ; enumeration MOUSE_EVENT for possible Elements readable by __getM
 ; Syntax.........: __getMouseEvt($p_MouseEvent, $i_Element = $EVT_MOUSE_IACTION)
 ; Parameters ....: $p_MouseEvent - A pointer as returned from _IrrReadMouseEvent.
 ;                  $i_Element - [optional] Event type to return:
-;                  |$EVT_MOUSE_IACTION - ID of mouse action
-;                  |$EVT_MOUSE_FDELTA - Delta value
-;                  |$EVT_MOUSE_IX - Mouse X value
-;                  |$EVT_MOUSE_IY - Mouse Y value
+;                  |$EVT_MOUSE_IACTION - ID of mouse action (see remarks).
+;                  |$EVT_MOUSE_FDELTA - Amount of movement of the mouse wheel (> 0 means wheel up, < 0 means wheel down).
+;                  |$EVT_MOUSE_IX - Horizontal screen coordinate at which the event took place.
+;                  |$EVT_MOUSE_IY - Vertical screen coordinate at which the event took place.
 ; Return values .: Success - Value of selected event element.
-; Author ........: linus
+; Author ........:
 ; Modified.......:
 ; Remarks .......: $p_MouseEvent is a pointer as returned from _IrrReadMouseEvent.
-; Related .......: _IrrReadMouseEvent
+;+
+;                  <b>Mouse actions table for $EVT_MOUSE_IACTION:</b>
+;                  @@StandardTable@@
+;                  $IRR_EMIE_LMOUSE_PRESSED_DOWN	Left mouse button pressed
+;                  $IRR_EMIE_RMOUSE_PRESSED_DOWN	Right mouse button pressed
+;                  $IRR_EMIE_MMOUSE_PRESSED_DOWN	Middle mouse button pressed
+;                  $IRR_EMIE_LMOUSE_LEFT_UP	Left mouse button released
+;                  $IRR_EMIE_RMOUSE_LEFT_UP	Right mouse button released
+;                  $IRR_EMIE_MMOUSE_LEFT_UP	Middle mouse button released
+;                  $IRR_EMIE_MOUSE_MOVED	Mouse was moved horizontal and/or vertical
+;                  $IRR_EMIE_MOUSE_WHEEL	Mouse wheel was moved up or down
+;                  @@End@@
+; Related .......: _IrrReadMouseEvent, _IrrMouseEventAvailable
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 func __getMouseEvt($p_MouseEvent, $i_Element = $EVT_MOUSE_IACTION)
 	local $EventStruct = DllStructCreate("uint;float;int;int", $p_MouseEvent)
@@ -156,47 +165,36 @@ EndFunc ;==> __getMouseEvt
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrKeyEventAvailable
-; Description ...: [todo]
+; Description ...: Determine if there are any keystrokes waiting to be read.
 ; Syntax.........: _IrrKeyEventAvailable()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: None
+; Return values .: Success - True if there are keystrokes, otherwise False.
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: Event capturing needs to be enabled before with _IrrStart or _IrrStartAdvanced!
+; Related .......: _IrrReadKeyEvent, __getKeyEvt, _IrrStart
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrKeyEventAvailable()
 	$result = DllCall($_irrDll, "int:cdecl", "IrrKeyEventAvailable")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Return $result[0]
 EndFunc   ;==>_IrrKeyEventAvailable
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrReadKeyEvent
-; Description ...: [todo]
+; Description ...: Read a key event from the Irrlicht window.
 ; Syntax.........: _IrrReadKeyEvent()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: None
+; Return values .: success - Pointer of a key event.
+;                  failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......:  The properties of the returned key event are readable with the helper function __getKeyEvt.
+; Related .......: _IrrKeyEventAvailable, __getKeyEvt
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrReadKeyEvent()
 	$result = DllCall($_irrDll, "ptr:cdecl", "IrrReadKeyEvent")
@@ -210,20 +208,16 @@ EndFunc   ;==>_IrrReadKeyEvent
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMouseEventAvailable
-; Description ...: [todo]
+; Description ...: Determine if there are any mouse events waiting to be read.
 ; Syntax.........: _IrrMouseEventAvailable()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: None
+; Return values .: Success - True if there are mouse events, otherwise False.
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: Event capturing needs to be enabled before with _IrrStart or _IrrStartAdvanced!
+; Related .......: _IrrReadMouseEvent, __getMouseEvt, _IrrStart
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrMouseEventAvailable()
 	$result = DllCall($_irrDll, "int:cdecl", "IrrMouseEventAvailable")
@@ -237,20 +231,17 @@ EndFunc   ;==>_IrrMouseEventAvailable
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrReadMouseEvent
-; Description ...: [todo]
+; Description ...: Read a key event from the Irrlicht window.
 ; Syntax.........: _IrrReadMouseEvent()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: None
+; Return values .: success - Pointer of a mouse event.
+;                  failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......:  The properties of the returned mouse event are readable with the helper function __getMouseEvt.
+; Related .......: _IrrMouseEventAvailable, __getMouseEvt
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrReadMouseEvent()
 	$result = DllCall($_irrDll, "int:cdecl", "IrrReadMouseEvent")
@@ -264,20 +255,18 @@ EndFunc   ;==>_IrrReadMouseEvent
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetMousePosition
-; Description ...: [todo]
+; Description ...: Sets relative position of the mouse pointer and returns relative position before this change.
 ; Syntax.........: _IrrSetMousePosition(ByRef $f_XPos, ByRef $f_YPos)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $f_XPos - Fractional value for new horizontal position (0-1).
+;                  $f_YPos - Fractional value for new vertical position (0-1).
+; Return values .: success - True and sets $f_XPos and $f_YPos to relative position where the mouse was before (both 0-1).
+;                  failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: This function works independent from the resolution of current Irrlicht display. Expected and returned values are fractional values, where 0/0 is top left and 1/1 bottom right of the Irrlicht display.
+; Related .......: _IrrReadMouseEvent, _IrrGetAbsoluteMousePosition
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetMousePosition(ByRef $f_XPos, ByRef $f_YPos)
 	$result = DllCall($_irrDll, "none:cdecl", "IrrSetMousePosition", "float*", $f_XPos, "float*", $f_YPos)

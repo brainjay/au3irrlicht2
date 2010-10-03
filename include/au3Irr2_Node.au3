@@ -418,7 +418,7 @@ EndFunc   ;==>_IrrDebugDataVisible
 ; Syntax.........: _IrrGetNodePosition($h_Node, ByRef $a_Vector3df)
 ; Parameters ....: $h_Node - Handle of a scene node
 ;                  $a_Vector3df - Any variable to populate with the node position, must not explicitly be an array.
-;                  |The passed variable will be re-dimed to an array with the X, Y, Z coordindates stored in its three elements.
+;                  |The passed variable will be re-dimed to an array with the X, Y, Z coordinates stored in its three elements.
 ; Return values .: success - Array with three elements for X, Y, Z.
 ;                  failure - False
 ; Author ........:

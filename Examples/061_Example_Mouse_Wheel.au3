@@ -27,7 +27,7 @@ DIM $MeshTexture ; irr_texture
 DIM $TestNode ; irr_node
 DIM $OurCamera ; irr_camera
 DIM $MouseEvent ; $IRR_MOUSE_EVENT PTR
-DIM $metrics ; wstring * 256
+DIM $metrics ; string
 DIM $BitmapFont ; irr_font
 DIM $mouseDelta ; single
 DIM $scale = 1.0
@@ -38,7 +38,7 @@ DIM $scale = 1.0
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_NO_SHADOWS, $IRR_CAPTURE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
@@ -64,13 +64,12 @@ _IrrSetNodePosition( $OurCamera, 10, 10, -20 )
 ; while the irrlicht environment is still running
 WHILE _IrrRunning()
     ; begin the scene, erasing the canvas with grey before rendering
-    _IrrBeginScene( 128,128,128 )
+    _IrrBeginScene(0, 0, 25)
 
     ; while there are mouse events waiting
     while _IrrMouseEventAvailable()
         ; read the mouse event out
         $MouseEvent = _IrrReadMouseEvent()
-		__getMouseEvt($MouseEvent, $EVT_MOUSE_IACTION)
         ; if this is a mouse wheel event
         if __getMouseEvt($MouseEvent, $EVT_MOUSE_IACTION) = $IRR_EMIE_MOUSE_WHEEL then
 			$mouseDelta = __getMouseEvt($MouseEvent, $EVT_MOUSE_FDELTA)

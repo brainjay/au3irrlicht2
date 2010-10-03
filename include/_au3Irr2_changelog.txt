@@ -34,6 +34,7 @@
 > Examples:
 
 + Added: 015 (CustomMesh), 022 (Indices+Vertices), 024 (Mesh to file), 062 (6D0F_Camera)
++ Added: (contribution from smashly): 039 (Texture blending), 070 (Texture_and_Images), 103 (Billboard Groups), 104 (LOD)
 + Added: 007/025/027/066/067/068/069/074/075 (ParticleSystem)
 + Reworked: 011 (Animators) shows usage of changed _IrrAddSplineAnimator
 + Fixed: 010 (TerrainAndFog) / 029/054 (Skydomes)
@@ -45,7 +46,7 @@
 > Help file:
 
 + Added: Completed documentation including example code for some more functions.
-  Current status: Topics completed along examples 1-13 + some more.
+  Current status: Topics completed along examples 1-14 + some more.
   Naked reference w/o detailed informations for all functions inside other examples.
 - Changed: Reworked several help file descriptions and examples.
 + Added: 'Copy to clipboard'-button for included examples (using VBS code from GEOSoft)
