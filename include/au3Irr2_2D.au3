@@ -190,7 +190,7 @@ EndFunc   ;==>_IrrCreateTexture
 ;                  |$ECF_A8R8G8B8 - Default 32 bit color format. 8 bits are used for every component: red, green, blue and alpha.
 ; Return values .: Success - Handle of the newly created device dependend irrlicht image object
 ;                  Failure - False and @error 1
-; Author ........:
+; Author ........: smashly
 ; Modified.......:
 ; Remarks .......: This images can not be used to texture 3D objects!
 ;                  Instead, they can be used to supply a heightmap to a terrain or other similar CPU based operations.
@@ -253,12 +253,12 @@ EndFunc   ;==>_IrrRemoveImage
 ; Parameters ....: $h_Texture - Handle to an irrlicht texture object
 ; Return values .: Success - Pointer to the pixels.
 ;                  Failure - False and @error 1
-; Author ........:
+; Author ........: smashly
 ; Modified.......:
 ; Remarks .......: None.
 ; Related .......: _IrrUnlockTexture
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrLockTexture($h_Texture)
 	Local $aResult
@@ -297,12 +297,12 @@ EndFunc   ;==>_IrrLockOpenGLTexture
 ; Parameters ....: $h_Texture - Handle to an irrlicht texture object that has been Locked by prior call to _IrrLockOpenGLTexture or _IrrLockTexture.
 ; Return values .: Success - True
 ;                  Failure - False
-; Author ........:
+; Author ........: smashly
 ; Modified.......:
 ; Remarks .......: None
 ; Related .......: _IrrLockOpenGLTexture, _IrrLockTexture
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrUnlockTexture($h_Texture)
 	DllCall($_irrDll, "none:cdecl", "IrrUnlockTexture", "ptr", $h_Texture)
@@ -317,12 +317,12 @@ EndFunc   ;==>_IrrUnlockTexture
 ; Parameters ....: $h_Image - Handle to an irrlicht image object
 ; Return values .: Success - Pointer to the image pixels
 ;                  Failure - False and @error 1
-; Author ........:
+; Author ........: smashly
 ; Modified.......:
 ; Remarks .......: None.
 ; Related .......: _IrrCreateImage, _IrrGetImage, _IrrUnlockImage
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrLockImage($h_Image)
 	Local $aResult
@@ -339,12 +339,12 @@ EndFunc   ;==>_IrrLockImage
 ; Parameters ....: $h_Image - Handle to an irrlicht image object that has been Locked by prior call to _IrrLockImage
 ; Return values .: Success - True
 ;                  Failure - False and @error > 0
-; Author ........:
+; Author ........: smashly
 ; Modified.......:
 ; Remarks .......: None.
 ; Related .......: _IrrLockImage
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrUnlockImage($h_Image)
 	DllCall($_irrDll, "none:cdecl", "IrrUnlockImage", "ptr", $h_Image)
