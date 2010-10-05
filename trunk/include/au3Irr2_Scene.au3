@@ -52,6 +52,7 @@
 ;_IrrGetSceneNodeFromId
 ;_IrrGetSceneNodeFromName
 ;_IrrAddBillBoardToScene
+;_IrrSetBillBoardSize
 ;_IrrAddBillboardTextSceneNode
 ;_IrrAddParticleSystemToScene
 ;_IrrAddSkyBoxToScene
@@ -84,7 +85,6 @@
 ;_IrrSetBeamPosition
 ;_IrrAddBoltSceneNode
 ;_IrrSetBoltProperties
-;_IrrSetBillBoardSize
 ;_IrrSetBillBoardColor
 ;_IrrAddBillBoardGroupToScene
 ;_IrrAddBillBoardToGroup
@@ -103,28 +103,23 @@
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetRootSceneNode
-; Description ...: [todo]
+; Description ...: Get the scenes root node, all scene nodes are children of this node.
 ; Syntax.........: _IrrGetRootSceneNode()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: None.
+; Return values .: Success - Handle of root node in the scene
+;                  Failure - False and @error 1
+; Author ........:
 ; Modified.......:
 ; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Related .......: _IrrAddMeshToScene
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrGetRootSceneNode()
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetRootSceneNode")
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrGetRootSceneNode")
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetRootSceneNode
 
 
@@ -159,27 +154,27 @@ EndFunc   ;==>_IrrGetRootSceneNode
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetMesh($s_MeshFile)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetMesh", "str", $s_MeshFile)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrGetMesh", "str", $s_MeshFile)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetMesh
 
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrCreateMesh
-; Description ...: [todo]
+; Description ...: Create a new mesh.
 ; Syntax.........: _IrrCreateMesh($s_MeshName, $tVertexArray, $a_Indices)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $s_MeshName - String name for the newly created mesh object.
+;                  $tVertexArray - ...
+;                  $a_Indices - ...
+; Return values .: Success - Handle to the newly created mesh object
+;                  Failure - False and set @error:
+;                  |@error 1 : either AutoIt DllCall or IrrCreateMesh call failed
+;                  |@error 2 : $tVertexArray param is not a Struct
+;                  |@error 2 : $a_Indices param is not an Array
+; Author ........:
 ; Modified.......:
 ; Remarks .......: [todo]
 ; Related .......: [todo: functionName, functionName]
@@ -190,22 +185,18 @@ Func _IrrCreateMesh($s_MeshName, $tVertexArray, $a_Indices)
 	If Not IsDllStruct($tVertexArray) Then Return SetError(2, 0, False)
 	If Not IsArray($a_Indices) Then Return SetError(3, 0, False)
 
-	Local $i
-	Local $iVerts = DllStructGetSize($tVertexArray) / DllStructGetSize(DllStructCreate($tagIRR_VERTEX))
-	Local $iIndices = UBound($a_Indices)
-	Local $tIndices = DllStructCreate("ushort[" & $iIndices & "]")
+	Local $iVerts, $iIndices, $tIndices, $aResult
+	$iVerts = DllStructGetSize($tVertexArray) / DllStructGetSize(DllStructCreate($tagIRR_VERTEX))
+	$iIndices = UBound($a_Indices)
+	$tIndices = DllStructCreate("ushort[" & $iIndices & "]")
 
 	For $i = 1 To $iIndices
 		DllStructSetData($tIndices, 1, $a_Indices[$i - 1], $i)
-	Next ; $i
+	Next
 
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrCreateMesh", "str", "TestMesh", "int", $iVerts, "ptr", DllStructGetPtr($tVertexArray), "int", $iIndices, "ptr", DllStructGetPtr($tIndices))
-
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrCreateMesh", "str", $s_MeshName, "int", $iVerts, "ptr", DllStructGetPtr($tVertexArray), "int", $iIndices, "ptr", DllStructGetPtr($tIndices))
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrCreateMesh
 
 
@@ -229,11 +220,12 @@ EndFunc   ;==>_IrrCreateMesh
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddSphereSceneMesh($s_MeshName, $f_Radius, $i_PolyCount)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddSphereSceneMesh", "str", $s_MeshName, "float", $f_Radius, "int", $i_PolyCount)
+	local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddSphereSceneMesh", "str", $s_MeshName, "float", $f_Radius, "int", $i_PolyCount)
 	If @error Then
 		Return SetError(1, 0, False)
 	Else
-		Return $result[0]
+		Return $aResult[0]
 	EndIf
 EndFunc   ;==>_IrrAddSphereSceneMesh
 
@@ -241,56 +233,73 @@ EndFunc   ;==>_IrrAddSphereSceneMesh
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddHillPlaneMesh
-; Description ...: [todo]
+; Description ...: Creates a hill plane mesh that represents a simple terrain.
 ; Syntax.........: _IrrAddHillPlaneMesh($s_Name, $f_TileSizeX, $f_TileSizeY, $i_TileCountX, $i_TileCountY, $h_Material = 0, $f_HillHeight = 0, $f_CountHillsX = 0, $f_CountHillsY = 0, $f_TextureRepeatCountX = 1, $f_TextureRepeatCountY = 1)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $s_Name -
+;                  $f_TileSizeX -
+;                  $f_TileSizeY -
+;                  $i_TileCountX -
+;                  $i_TileCountY -
+;                  $h_Material -
+;                  $f_HillHeight -
+;                  $f_CountHillsX -
+;                  $f_CountHillsY -
+;                  $f_TextureRepeatCountX -
+;                  $f_TextureRepeatCountY -
+; Return values .: Success - Handle to a Terrain Mesh
+;                  Failure - False and @error 1
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: Many properties have default values allowing a mesh to be created with a simple call.
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddHillPlaneMesh($s_Name, $f_TileSizeX, $f_TileSizeY, $i_TileCountX, $i_TileCountY, $h_Material = 0, $f_HillHeight = 0, $f_CountHillsX = 0, $f_CountHillsY = 0, $f_TextureRepeatCountX = 1, $f_TextureRepeatCountY = 1)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddHillPlaneMesh", "str", $s_Name, "float", $f_TileSizeX, "float", $f_TileSizeY, "int", $i_TileCountX, "int", $i_TileCountY, "ptr", $h_Material, "float", $f_HillHeight, "float", $f_CountHillsX, "float", $f_CountHillsY, "float", $f_TextureRepeatCountX, "float", $f_TextureRepeatCountY)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddHillPlaneMesh", "str", $s_Name, "float", $f_TileSizeX, "float", $f_TileSizeY, "int", $i_TileCountX, "int", $i_TileCountY, "ptr", $h_Material, "float", $f_HillHeight, "float", $f_CountHillsX, "float", $f_CountHillsY, "float", $f_TextureRepeatCountX, "float", $f_TextureRepeatCountY)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddHillPlaneMesh
-
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrWriteMesh
-; Description ...: [todo]
+; Description ...: Write the first frame of the supplied animated mesh out to a file using the specified file format.
 ; Syntax.........: _IrrWriteMesh($h_Mesh, $i_FileFormat, $s_Filename)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Mesh - Handle to mesh object
+;                  $i_FileFormat - Format to write the file as:
+;                  |$EMWT_IRR_MESH - Irrlicht Native mesh writer, for static .irrmesh files.
+;                  |$EMWT_COLLADA - COLLADA mesh writer for .dae and .xml files.
+;                  |$EMWT_STL - STL mesh writer for .stl files.
+;                  $s_Filename - File name to save as.
+; Return values .: Success - True
+;                  Failure - False and set @error
+;                  |@error 1 - AutoIt DllCall failed.
+;                  |@error 2 - Could not get mesh writer object.
+;                  |@error 3 - Could not open file.
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrCreateMesh, _IrrGetMesh
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrWriteMesh($h_Mesh, $i_FileFormat, $s_Filename)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrWriteMesh", "ptr", $h_Mesh, "int", $i_FileFormat, "str", $s_Filename)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult, $iError
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrWriteMesh", "ptr", $h_Mesh, "int", $i_FileFormat, "str", $s_Filename)
+	If @error Or Not IsArray($aResult) Then Return SetError(1, 0, False)
+	Switch $aResult[0]
+		Case 0
+			$iError = 2
+		Case 1
+			$iError = 3
+		Case 2
+			$iError = 4
+		Case 3
+			$iError = 0
+	EndSwitch
+	Return SetError($iError, 0, $aResult[0] = 3)
 EndFunc   ;==>_IrrWriteMesh
 
 
@@ -309,120 +318,100 @@ EndFunc   ;==>_IrrWriteMesh
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrRemoveMesh($h_Mesh)
-	$result = DllCall($_irrDll, "none:cdecl", "IrrRemoveMesh", "ptr", $h_Mesh)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+    DllCall($_irrDll, "none:cdecl", "IrrRemoveMesh", "ptr", $h_Mesh)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrRemoveMesh
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrClearUnusedMeshes
-; Description ...: [todo]
+; Description ...: Clears all meshes that are held in the mesh cache but not used anywhere else.
 ; Syntax.........: _IrrClearUnusedMeshes()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: None.
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: Any references to these meshes will become invalid.
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrClearUnusedMeshes()
 	DllCall($_irrDll, "none:cdecl", "IrrClearUnusedMeshes")
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrClearUnusedMeshes
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetMeshHardwareAccelerated
-; Description ...: [todo]
+; Description ...: Set the supplied mesh as a Hardware Accelerated object.
 ; Syntax.........: _IrrSetMeshHardwareAccelerated($h_mesh, $i_frame = 0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_mesh - Handle of a mesh object
+;                  $i_frame - Frame number
+; Return values .: Success - True
+;                  Failure] - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: This offloads the verticies and indicies to hardware support on the graphics card, making the process of rendering those meshes much faster.
+;                  The feature must be supported on the graphics card and the object must contain over 500 vertices for the operation to be successful.
+;                  This operation is applied to all mesh buffers in the mesh.
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrSetMeshHardwareAccelerated($h_Mesh, $i_frame = 0)
-	$result = DllCall($_irrDll, "none:cdecl", "IrrSetMeshHardwareAccelerated", "ptr", $h_Mesh, "int", $i_frame)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrSetMeshHardwareAccelerated", "ptr", $h_Mesh, "int", $i_frame)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetMeshHardwareAccelerated
+
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetMeshFrameCount
-; Description ...: [todo]
+; Description ...: Gets the number of frames in the supplied mesh.
 ; Syntax.........: _IrrGetMeshFrameCount($h_Mesh)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Mesh - Handle to a mesh object
+;                  $i_frame - Frame number of the mesh to retrieve the buffer count.
+; Return values .: Success - Number of frames
+;                  Failure - False and @error 1
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: You can use this value to traverse the indicies and vertices in a mesh containing a number of frames.
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetMeshFrameCount($h_Mesh)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGetMeshFrameCount", "ptr", $h_Mesh)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrGetMeshFrameCount", "ptr", $h_Mesh)
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
+
 EndFunc   ;==>_IrrGetMeshFrameCount
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetMeshBufferCount
-; Description ...: [todo]
+; Description ...: Gets the number of mesh buffers in the supplied mesh.
 ; Syntax.........: _IrrGetMeshBufferCount($h_Mesh, $i_FrameNumber)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Mesh - Handle to a mesh object
+;                  $i_FrameNumber - Frame number of the mesh to retrieve the buffer count.
+; Return values .: Success - Number of buffers
+;                  Failure - False and @error 1
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: You can use this value to traverse the indicies and vertices in a mesh containing a number of mesh buffers.
+;                  If the mesh is animated frame number indicates the number of the frame to recover mesh data for if it is not animated this value should be set to 0.
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetMeshBufferCount($h_Mesh, $i_FrameNumber)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGetMeshBufferCount", "ptr", $h_Mesh, "int", $i_FrameNumber)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrGetMeshBufferCount", "ptr", $h_Mesh, "int", $i_FrameNumber)
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetMeshBufferCount
 
 
@@ -444,12 +433,10 @@ EndFunc   ;==>_IrrGetMeshBufferCount
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetMeshIndexCount($h_Mesh, $i_frame, $i_MeshBuffer = 0)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGetMeshIndexCount", "ptr", $h_Mesh, "int", $i_frame, "int", $i_MeshBuffer)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrGetMeshIndexCount", "ptr", $h_Mesh, "int", $i_frame, "int", $i_MeshBuffer)
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetMeshIndexCount
 
 
@@ -542,12 +529,10 @@ EndFunc   ;==>_IrrSetMeshIndices
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetMeshVertexCount($h_Mesh, $i_frame, $i_MeshBuffer = 0)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGetMeshVertexCount", "ptr", $h_Mesh, "int", $i_frame, "int", $i_MeshBuffer)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrGetMeshVertexCount", "ptr", $h_Mesh, "int", $i_frame, "int", $i_MeshBuffer)
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetMeshVertexCount
 
 
@@ -629,6 +614,7 @@ EndFunc   ;==>_IrrSetMeshVertices
 Func _IrrSetMeshVertexColors($h_Mesh, $i_FrameNumber, $h_VertexColourArrayStruct, $h_VertexGroupStartIndices, $h_VertexGroupEndIndices, $i_NumberOfGroups, $i_MeshBuffer)
 	;RETURN TO THIS;
 	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertexColors", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", $h_VertexColourArrayStruct, "ptr", $h_VertexGroupStartIndices, "ptr", $h_VertexGroupEndIndices, "int", $i_NumberOfGroups, "int", $i_MeshBuffer)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetMeshVertexColors
 
 
@@ -652,6 +638,7 @@ EndFunc   ;==>_IrrSetMeshVertexColors
 Func _IrrSetMeshVertexCoords($h_Mesh, $i_FrameNumber, $h_VertexCoordArrayStruct, $h_VertexGroupStartIndices, $h_VertexGroupEndIndices, $i_NumberOfGroups, $i_MeshBuffer)
 	;RETURN TO THIS;
 	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertexCoords", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", $h_VertexCoordArrayStruct, "ptr", $h_VertexGroupStartIndices, "ptr", $h_VertexGroupEndIndices, "int", $i_NumberOfGroups, "int", $i_MeshBuffer)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetMeshVertexCoords
 
 
@@ -675,7 +662,10 @@ EndFunc   ;==>_IrrSetMeshVertexCoords
 Func _IrrSetMeshVertexSingleColor($h_Mesh, $i_FrameNumber, $h_VertexColourStruct, $h_VertexGroupStartIndices, $h_VertexGroupEndIndices, $i_NumberOfGroups, $i_MeshBuffer)
 	;RETURN TO THIS;
 	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertexSingleColor", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", $h_VertexColourStruct, "ptr", $h_VertexGroupStartIndices, "ptr", $h_VertexGroupEndIndices, "int", $i_NumberOfGroups, "int", $i_MeshBuffer)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetMeshVertexSingleColor
+
+
 
 
 
@@ -694,12 +684,10 @@ EndFunc   ;==>_IrrSetMeshVertexSingleColor
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddMeshToScene($h_Mesh)
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddMeshToScene", "UINT_PTR", $h_Mesh)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddMeshToScene", "UINT_PTR", $h_Mesh)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddMeshToScene
 
 
@@ -719,12 +707,10 @@ EndFunc   ;==>_IrrAddMeshToScene
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddMeshToSceneAsOcttree($h_Mesh)
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddMeshToSceneAsOcttree", "UINT_PTR", $h_Mesh)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddMeshToSceneAsOcttree", "UINT_PTR", $h_Mesh)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddMeshToSceneAsOcttree
 
 
@@ -746,12 +732,10 @@ EndFunc   ;==>_IrrAddMeshToSceneAsOcttree
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddStaticMeshForNormalMappingToScene($h_Mesh)
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddStaticMeshForNormalMappingToScene", "UINT_PTR", $h_Mesh)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddStaticMeshForNormalMappingToScene", "UINT_PTR", $h_Mesh)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddStaticMeshForNormalMappingToScene
 
 
@@ -774,11 +758,7 @@ EndFunc   ;==>_IrrAddStaticMeshForNormalMappingToScene
 ; ===============================================================================================================================
 Func _IrrLoadScene($s_Filename)
 	DllCall($_irrDll, "none:cdecl", "IrrLoadScene", "str", $s_Filename)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrLoadScene
 
 
@@ -801,13 +781,8 @@ EndFunc   ;==>_IrrLoadScene
 ; ===============================================================================================================================
 Func _IrrSaveScene($s_Filename)
 	DllCall($_irrDll, "none:cdecl", "IrrSaveScene", "str", $s_Filename)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSaveScene
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -829,12 +804,10 @@ EndFunc   ;==>_IrrSaveScene
 ; ===============================================================================================================================
 Func _IrrGetSceneNodeFromId($i_ID)
 	; get a scene node based on its ID and returns null if no node is found
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetSceneNodeFromId", "int", $i_ID)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrGetSceneNodeFromId", "int", $i_ID)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetSceneNodeFromId
 
 
@@ -857,12 +830,10 @@ EndFunc   ;==>_IrrGetSceneNodeFromId
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetSceneNodeFromName($s_Name)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetSceneNodeFromName", "str", $s_Name)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrGetSceneNodeFromName", "str", $s_Name)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetSceneNodeFromName
 
 
@@ -885,13 +856,36 @@ EndFunc   ;==>_IrrGetSceneNodeFromName
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddBillBoardToScene($f_XSize, $f_YSize, $f_XPos = 0.0, $f_YPos = 0.0, $f_ZPos = 0.0)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddBillBoardToScene", "float", $f_XSize, "float", $f_YSize, "float", $f_XPos, "float", $f_YPos, "float", $f_ZPos)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddBillBoardToScene", "float", $f_XSize, "float", $f_YSize, "float", $f_XPos, "float", $f_YPos, "float", $f_ZPos)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddBillBoardToScene
+
+
+
+; #FUNCTION# =============================================================================================================
+; Name...........: _IrrSetBillBoardSize
+; Description ...: [todo]
+; Syntax.........: _IrrSetBillBoardSize($h_Node, $f_Width, $f_Height)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetBillBoardSize($h_Node, $f_Width, $f_Height)
+	DllCall($_irrDll, "none:cdecl", "IrrSetBillBoardSize", "ptr", $h_Node, "float", $f_Width, "float", $f_Height)
+	Return SetError(@error, 0, @error = 0)
+EndFunc   ;==>_IrrSetBillBoardSize
+
 
 
 ; #FUNCTION# =============================================================================================================
@@ -912,14 +906,12 @@ EndFunc   ;==>_IrrAddBillBoardToScene
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddBillboardTextSceneNode($h_Font, $s_Text, $f_XSize, $f_YSize, $f_XPos = 0, $f_YPos = 0, $f_ZPos = 0, $h_Parent = 0, $i_TopRGBA = 0xFFFFFFFF, $i_BottomRGBA = 0xFFFFFFFF)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddBillboardTextSceneNode", "ptr", $h_Font, "wstr", $s_Text, _
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddBillboardTextSceneNode", "ptr", $h_Font, "wstr", $s_Text, _
 			"float", $f_XSize, "float", $f_YSize, "float", $f_XPos, "float", $f_YPos, "float", $f_ZPos, _
 			"ptr", $h_Parent, "uint", $i_TopRGBA, "uint", $i_BottomRGBA)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddBillboardTextSceneNode
 
 
@@ -947,14 +939,12 @@ EndFunc   ;==>_IrrAddBillboardTextSceneNode
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddParticleSystemToScene($b_AddEmitter, $h_Parent = 0, $i_ID = -1, $f_PosX = 0, $f_PosY = 0, $f_PosZ = 0, $f_RotX = 0, $f_RotY = 0, $f_RotZ = 0, $f_ScaleX = 1, $f_ScaleY = 1, $f_ScaleZ = 1)
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddParticleSystemToScene", "int", $b_AddEmitter, "UINT_PTR", $h_Parent, "int", $i_ID, _
+	Local $aResult
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddParticleSystemToScene", "int", $b_AddEmitter, "UINT_PTR", $h_Parent, "int", $i_ID, _
 			"float", $f_PosX = 0, "float", $f_PosY, "float", $f_PosZ, "float", $f_RotX, "float", $f_RotY, "float", $f_RotZ, _
 			"float", $f_ScaleX, "float", $f_ScaleY, "float", $f_ScaleZ)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddParticleSystemToScene
 
 
@@ -978,14 +968,11 @@ EndFunc   ;==>_IrrAddParticleSystemToScene
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddSkyBoxToScene($h_UpTexture, $h_DownTexture, $h_LeftTexture, $h_RightTexture, $h_FrontTexture, $h_BackTexture)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddSkyBoxToScene", "ptr", $h_UpTexture, "ptr", $h_DownTexture, "ptr", $h_LeftTexture, "ptr", $h_RightTexture, "ptr", $h_FrontTexture, "ptr", $h_BackTexture)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddSkyBoxToScene", "ptr", $h_UpTexture, "ptr", $h_DownTexture, "ptr", $h_LeftTexture, "ptr", $h_RightTexture, "ptr", $h_FrontTexture, "ptr", $h_BackTexture)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddSkyBoxToScene
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -1006,12 +993,10 @@ EndFunc   ;==>_IrrAddSkyBoxToScene
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddSkyDomeToScene($h_Texture, $i_HorizontalRes, $i_VerticalRes, $d_TexturePercent, $d_SpherePercent, $d_SphereRadius = 1000.0)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddSkyDomeToScene", "ptr", $h_Texture, "uint", $i_HorizontalRes, "uint", $i_VerticalRes, "double", $d_TexturePercent, "double", $d_SpherePercent, "double", $d_SphereRadius)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddSkyDomeToScene", "ptr", $h_Texture, "uint", $i_HorizontalRes, "uint", $i_VerticalRes, "double", $d_TexturePercent, "double", $d_SpherePercent, "double", $d_SphereRadius)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddSkyDomeToScene
 
 
@@ -1033,12 +1018,10 @@ EndFunc   ;==>_IrrAddSkyDomeToScene
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddEmptySceneNode()
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddEmptySceneNode")
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddEmptySceneNode")
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddEmptySceneNode
 
 
@@ -1057,12 +1040,10 @@ EndFunc   ;==>_IrrAddEmptySceneNode
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddTestSceneNode()
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddTestSceneNode")
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddTestSceneNode")
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddTestSceneNode
 
 
@@ -1081,12 +1062,10 @@ EndFunc   ;==>_IrrAddTestSceneNode
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddCubeSceneNode($f_Size)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddCubeSceneNode", "float", $f_Size)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddCubeSceneNode", "float", $f_Size)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddCubeSceneNode
 
 
@@ -1107,12 +1086,10 @@ EndFunc   ;==>_IrrAddCubeSceneNode
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddSphereSceneNode($f_Size, $i_PolyCount = 16)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddSphereSceneNode", "float", $f_Size, "int", $i_PolyCount)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddSphereSceneNode", "float", $f_Size, "int", $i_PolyCount)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddSphereSceneNode
 
 
@@ -1135,12 +1112,10 @@ EndFunc   ;==>_IrrAddSphereSceneNode
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddWaterSurfaceSceneNode($h_Mesh, $f_WaveHeight = 2.0, $f_WaveSpeed = 300.0, $f_WaveLength = 10.0, $h_Parent = 0, $i_ID = -1, $f_PosX = 0, $f_PosY = 0, $f_PosZ = 0, $f_RotX = 0, $f_RotY = 0, $f_RotZ = 0, $f_ScaleX = 1.0, $f_ScaleY = 1.0, $f_ScaleZ = 1.0)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddWaterSurfaceSceneNode", "ptr", $h_Mesh, "float", $f_WaveHeight, "float", $f_WaveSpeed, "float", $f_WaveLength, "ptr", $h_Parent, "int", $i_ID, "float", $f_PosX, "float", $f_PosY, "float", $f_PosZ, "float", $f_RotX, "float", $f_RotY, "float", $f_RotZ, "float", $f_ScaleX, "float", $f_ScaleY, "float", $f_ScaleZ)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddWaterSurfaceSceneNode", "ptr", $h_Mesh, "float", $f_WaveHeight, "float", $f_WaveSpeed, "float", $f_WaveLength, "ptr", $h_Parent, "int", $i_ID, "float", $f_PosX, "float", $f_PosY, "float", $f_PosZ, "float", $f_RotX, "float", $f_RotY, "float", $f_RotZ, "float", $f_ScaleX, "float", $f_ScaleY, "float", $f_ScaleZ)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddWaterSurfaceSceneNode
 
 
@@ -1162,12 +1137,10 @@ EndFunc   ;==>_IrrAddWaterSurfaceSceneNode
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddZoneManager($f_NearDistance = 0, $f_FarDistance = 12000)
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddZoneManager", "float", $f_NearDistance, "float", $f_FarDistance)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddZoneManager", "float", $f_NearDistance, "float", $f_FarDistance)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddZoneManager
 
 
@@ -1189,68 +1162,79 @@ EndFunc   ;==>_IrrAddZoneManager
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddClouds($h_Texture, $i_Lod, $i_Depth, $i_Density)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddClouds", "ptr", $h_Texture, "int", $i_Lod, "int", $i_Depth, "int", $i_Density)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddClouds", "ptr", $h_Texture, "int", $i_Lod, "int", $i_Depth, "int", $i_Density)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddClouds
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddLensFlare
-; Description ...: [todo]
+; Description ...: Adds a lens flare patch object to the scene, this object simulates the effect of bright lights on the optics of a camera.
 ; Syntax.........: _IrrAddLensFlare($h_Texture)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Texture - Handle to texture (image containing a series of 128x128 images representing stages of the the lens flare).
+; Return values .: Success - Handle to a flare node
+;                  Failure - False and @error 1
+; Author ........:
 ; Modified.......:
 ; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Related .......: _IrrSetFlareScale, _IrrGetTexture
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddLensFlare($h_Texture)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddLensFlare", "ptr", $h_Texture)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddLensFlare", "ptr", $h_Texture)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddLensFlare
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddGrass
-; Description ...: [todo]
+; Description ...: Adds a grass object to the scene.
 ; Syntax.........: _IrrAddGrass($h_Terrain, $i_X, $i_Y, $i_PatchSize, $f_FadeDistance, $i_Crossed, $f_GrassScale, $i_MaxDensity, $i_DataPosX, $i_DataPosY, $h_HeightMap, $h_TextureMap, $h_GrassMap, $h_GrassTexture)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Terrain - [explanation]
+;                  $i_X - X Positon of grass patch.
+;                  $i_Y - Y  Positon of grass patch.
+;                  $i_PatchSize - Size of grass patch
+;                  $f_FadeDistance - Distance at which the number of displayed grass elements in that patch are reduced.
+;                  |If this is set to 1.0 then when the cameral is inside the patch all of grass will be displayed but once outside less and less will be shown.
+;                  |By increasing this to 2.0 then all of the grass is shown until the camera is two patches distant.
+;                  |This gives a better appearence but reduces performance as more grass has to be drawn.
+;                  $i_Crossed - IRR_ON or IRR_OFF.
+;                  |When off each piece of grass is a separate entity with its own position and rotation.
+;                  |When On grass is paired up and placed to form a cross. Crossed grass can have a better appearance as you rotate around it.
+;                  |However individual grass can give the impression that there is more of it and you can therefore reduce the number of grass blades and increase performance.
+;                  $f_GrassScale - Scale of a grass patch.
+;                  $i_MaxDensity - number of individual clumps of folliage that are created.
+;                  $i_DataPosX - X position of large bitmap associated with a tiled terrain and allow the color information to be taken from an offset position on the bitmap.
+;                  $i_DataPosY - Y position of large bitmap associated with a tiled terrain and allow the color information to be taken from an offset position on the bitmap.
+;                  $h_TextureMap - Handle to an image that contains the height of the terrain onto which the grass is placed.
+;                  $h_GrassMap - Handle to an image used to adjust the height and density of the grass. For example you might have a patch where you dont want to see any grass or a barren patch where you want short stubble.
+;                  $h_GrassTexture - Handle to a Texture used for the grass. This RGBA image is automatically broken up into a number of sections that are used to texure different clumps of grass.
+; Return values .: Success - Handle to a Grass node.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: Grass objects are associated with terrain and tile terrain objects and are used to place small billboard objects into the scene representing folliage,
+;                  this implementation of grass creates a large number of grass objects already positioned across the terrain and then dynamically shows or hides them depending on where the camera is within the scene.
+;                  The grass is also affected with a wind modifier that gently moves the grass as if it were caught in the wind.
+;                  By setting the speed of the wind to zero the grass will become static and you will see an increase in performance.
+;                  Grass usually looks best when it is closely matched to the color of the terrain and to assist with this a new Material Type has been
+;                  added IRR_EMT_TRANSPARENT_ADD_ALPHA_CHANNEL_REF that adds the color of grass texture to the color of the grass which is automatically set to the color of the terrain that it lies upon.
+; Related .......: _IrrGetGrassDrawCount, _IrrSetGrassDensity, _IrrSetGrassWind
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddGrass($h_Terrain, $i_X, $i_Y, $i_PatchSize, $f_FadeDistance, $i_Crossed, $f_GrassScale, $i_MaxDensity, $i_DataPosX, $i_DataPosY, $h_HeightMap, $h_TextureMap, $h_GrassMap, $h_GrassTexture)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddGrass", "ptr", $h_Terrain, "int", $i_X, "int", $i_Y, "int", $i_PatchSize, _
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddGrass", "ptr", $h_Terrain, "int", $i_X, "int", $i_Y, "int", $i_PatchSize, _
 			"float", $f_FadeDistance, "int", $i_Crossed, "float", $f_GrassScale, "int", $i_MaxDensity, "int", $i_DataPosX, "int", $i_DataPosY, _
 			"ptr", $h_HeightMap, "ptr", $h_TextureMap, "ptr", $h_GrassMap, "ptr", $h_GrassTexture)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddGrass
 
 
@@ -1273,11 +1257,7 @@ EndFunc   ;==>_IrrAddGrass
 ; ===============================================================================================================================
 Func _IrrSetShadowColor($i_Alpha, $i_Red, $i_Green, $i_Blue)
 	DllCall($_irrDll, "none:cdecl", "IrrSetShadowColor", "int", $i_Alpha, "int", $i_Red, "int", $i_Green, "int", $i_Blue)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetShadowColor
 
 
@@ -1304,12 +1284,8 @@ EndFunc   ;==>_IrrSetShadowColor
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetFog($i_Red, $i_Green, $i_Blue, $i_FogType, $f_FogStart, $f_FogEnd, $f_Density = 0.001)
-	$result = DllCall($_irrDll, "none:cdecl", "IrrSetFog", "int", $i_Red, "int", $i_Green, "int", $i_Blue, "int", $i_FogType, "float", $f_FogStart, "float", $f_FogEnd, "float", $f_Density)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrSetFog", "int", $i_Red, "int", $i_Green, "int", $i_Blue, "int", $i_FogType, "float", $f_FogStart, "float", $f_FogEnd, "float", $f_Density)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetFog
 
 
@@ -1331,105 +1307,103 @@ EndFunc   ;==>_IrrSetFog
 ; ===============================================================================================================================
 Func _IrrDraw3DLine($f_XStart, $f_YStart, $f_ZStart, $f_XEnd, $f_YEnd, $f_ZEnd, $i_Red, $i_Green, $i_Blue)
 	DllCall($_irrDll, "none:cdecl", "IrrDraw3DLine", "float", $f_XStart, "float", $f_YStart, "float", $f_ZStart, "float", $f_XEnd, "float", $f_YEnd, "float", $f_ZEnd, "int", $i_Red, "int", $i_Green, "int", $i_Blue)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrDraw3DLine
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetSkyDomeColor
-; Description ...: [todo]
+; Description ...: Set the color of the verticies in the skydome.
 ; Syntax.........: _IrrSetSkyDomeColor($h_Dome, $i_HorizontalRed, $i_HorizontalGreen, $i_HorizontalBlue, $i_ZenithRed, $i_ZenithGreen, $i_ZenithBlue)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Dome - [explanation]
+;                  $i_HorizontalRed - Red color 0 - 255
+;                  $i_HorizontalGreen - Green color 0 - 255
+;                  $i_HorizontalBlue - Blue color 0 - 255
+;                  $i_ZenithRed - Red color 0 - 255
+;                  $i_ZenithGreen - Green color 0 - 255
+;                  $i_ZenithBlue - Blue color 0 - 255
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: Two colors are defined one for the horizon and another for the top of the sky dome, this simulates the type of coloring effects you see in the sky.
+;                  If you are using a full spherical skydome the horizontal color will be the color at the bottom of the skydome.
+; Related .......: _IrrSetSkyDomeColorPoint, _IrrSetSkyDomeColorBand, _IrrSAddSkyDome
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrSetSkyDomeColor($h_Dome, $i_HorizontalRed, $i_HorizontalGreen, $i_HorizontalBlue, $i_ZenithRed, $i_ZenithGreen, $i_ZenithBlue)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrSetSkyDomeColor", "ptr", $h_Dome, "int", $i_HorizontalRed, "int", $i_HorizontalGreen, "int", $i_HorizontalBlue, "int", $i_ZenithRed, "int", $i_ZenithGreen, "int", $i_ZenithBlue)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrSetSkyDomeColor", "ptr", $h_Dome, "int", $i_HorizontalRed, "int", $i_HorizontalGreen, "int", $i_HorizontalBlue, "int", $i_ZenithRed, "int", $i_ZenithGreen, "int", $i_ZenithBlue)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetSkyDomeColor
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetSkyDomeColorBand
-; Description ...: [todo]
+; Description ...: Creates a horizontal band of color in the skydome.
 ; Syntax.........: _IrrSetSkyDomeColorBand($h_Dome, $i_HorizontalRed, $i_HorizontalGreen, $i_HorizontalBlue, $i_BandVerticalPosition, $f_BandFade, $i_Additive)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Dome - [explanation]
+;                  $i_HorizontalRed - Red color 0 - 255
+;                  $i_HorizontalGreen - Green color 0 - 255
+;                  $i_HorizontalBlue - Blue color 0 - 255
+;                  $i_BandVerticalPosition - Vertex at which you wish to create the band.
+;                  $f_BandFade - Amount that the band is faded into the existing skydome color.
+;                  $i_Additive - IRR_ON to add the color of the band to the existing color of the skydome or IRR_OFF to replace it.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: This is mainly useful for creating additional bands of color at the horizon,
+;                  where your sky is a graduation of blues and then in the morning you have a brighter golden band as the sun rises.
+; Related .......: _IrrSetSkyDomeColorPoint, _IrrSetSkyDomeColor, _IrrSAddSkyDome
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrSetSkyDomeColorBand($h_Dome, $i_HorizontalRed, $i_HorizontalGreen, $i_HorizontalBlue, $i_BandVerticalPosition, $f_BandFade, $i_Additive)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrSetSkyDomeColorBand", "ptr", $h_Dome, "int", $i_HorizontalRed, "int", $i_HorizontalGreen, "int", $i_HorizontalBlue, "int", $i_BandVerticalPosition, "float", $f_BandFade, "int", $i_Additive)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrSetSkyDomeColorBand", "ptr", $h_Dome, "int", $i_HorizontalRed, "int", $i_HorizontalGreen, "int", $i_HorizontalBlue, "int", $i_BandVerticalPosition, "float", $f_BandFade, "int", $i_Additive)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetSkyDomeColorBand
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetSkyDomeColorPoint
-; Description ...: [todo]
+; Description ...: Set the color of the verticies in the skydome radiating out from a point.
 ; Syntax.........: _IrrSetSkyDomeColorPoint($h_Dome, $i_Red, $i_Green, $i_Blue, $f_PosX, $f_PosY, $f_PosZ, $f_Radius, $f_PointFade, $i_Additive)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Dome - Handle to a SkyDome node.
+;                  $i_Red - Red color 0 - 255
+;                  $i_Green - Green color 0 - 255
+;                  $i_Blue - Blue color 0 - 255
+;                  $f_PosX - X position.
+;                  $f_PosY - Y position.
+;                  $f_PosZ - Z position.
+;                  $f_Radius - Limit the distance of the coloring
+;                  $f_PointFade - Amount that the band is faded into the existing skydome color.
+;                  $i_Additive - IRR_ON to add the color of the band to the existing color of the skydome or IRR_OFF to replace it.
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: This is powerful effect that can be used to color parts of the skydome and create effects to represent the glows of the rising sun or the moon in the sky.
+; Related .......: _IrrSetSkyDomeColorBand, _IrrSetSkyDomeColor, _IrrSAddSkyDome
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrSetSkyDomeColorPoint($h_Dome, $i_Red, $i_Green, $i_Blue, $f_PosX, $f_PosY, $f_PosZ, $f_Radius, $f_PointFade, $i_Additive)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrSetSkyDomeColorPoint", "ptr", $h_Dome, "int", $i_Red, "int", $i_Green, "int", $i_Blue, "float", $f_PosX, "float", $f_PosY, "float", $f_Radius, "float", $f_PointFade, "int", $i_Additive)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrSetSkyDomeColorPoint", "ptr", $h_Dome, "int", $i_Red, "int", $i_Green, "int", $i_Blue, "float", $f_PosX, "float", $f_PosY, "float", $f_Radius, "float", $f_PointFade, "int", $i_Additive)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetSkyDomeColorPoint
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetZoneManagerProperties
-; Description ...: [todo]
+; Description ...: Sets the draw distances of nodes in the zone/distance management node and whether or not the zone manager is to accumulate the bounding boxes of its children as they are added.
 ; Syntax.........: _IrrSetZoneManagerProperties($h_ZoneManager, $f_NearDistance, $f_FarDistance, $i_AccumulateBoxes)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_ZoneManager - Handle to the zone node.
+;                  $f_NearDistance -
+;                  $f_FarDistance -
+;                  $i_AccumulateBoxes -
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: [todo]
@@ -1438,55 +1412,61 @@ EndFunc   ;==>_IrrSetSkyDomeColorPoint
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrSetZoneManagerProperties($h_ZoneManager, $f_NearDistance, $f_FarDistance, $i_AccumulateBoxes)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrSetZoneManagerProperties", "ptr", $h_ZoneManager, "float", $f_NearDistance, "float", $f_FarDistance, "int", $i_AccumulateBoxes)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrSetZoneManagerProperties", "ptr", $h_ZoneManager, "float", $f_NearDistance, "float", $f_FarDistance, "int", $i_AccumulateBoxes)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetZoneManagerProperties
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetZoneManagerBoundingBox
-; Description ...: [todo]
+; Description ...: Allows the user to manually set the bounding box of a zone manager node.
 ; Syntax.........: _IrrSetZoneManagerBoundingBox($h_ZoneManager, $f_X, $f_Y, $f_Z, $f_BoxWidth, $f_BoxHeight, $f_BoxDepth)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_ZoneManager - Handle to the zone node.
+;                  $f_X - X position.
+;                  $f_Y - Y position.
+;                  $f_Z - Z position.
+;                  $f_BoxWidth - Width of zone box.
+;                  $f_BoxHeight - Height of zone box.
+;                  $f_BoxDepth - Depth of zone box.
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: None.
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrSetZoneManagerBoundingBox($h_ZoneManager, $f_X, $f_Y, $f_Z, $f_BoxWidth, $f_BoxHeight, $f_BoxDepth)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrSetZoneManagerBoundingBox", "ptr", $h_ZoneManager, "float", $f_X, "float", $f_Y, "float", $f_Z, "float", $f_BoxWidth, "float", $f_BoxHeight, "float", $f_BoxDepth)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrSetZoneManagerBoundingBox", "ptr", $h_ZoneManager, "float", $f_X, "float", $f_Y, "float", $f_Z, "float", $f_BoxWidth, "float", $f_BoxHeight, "float", $f_BoxDepth)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetZoneManagerBoundingBox
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetZoneManagerAttachTerrain
-; Description ...: [todo]
+; Description ...: Attach a terrain node to a the zone manager.
 ; Syntax.........: _IrrSetZoneManagerAttachTerrain($h_ZoneNode, $h_Terrain, $s_StructureMapFile, $s_ColorMapFile, $s_DetailMapFile, $i_ImageX, $i_ImageY, $i_SliceSize)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_ZoneNode - Handle to a zone node.
+;                  $h_Terrain - Handle to an irr terrain object.
+;                  $s_StructureMapFile - Name of an RGBA bitmap file that is to be used to set the structure of the terrain.
+;                  |The Alpha channel is used to set the height and the RGB channels are used to set the color of the vertex at that position.
+;                  |This can be used to load lighting into the scene or to load detail map blending into the scene for simple terrain spattering
+;                  $s_ColorMapFile - Color map file to apply new color to the terrain, if not need use $IRR_NO_OBJECT
+;                  $s_DetailMapFile - Detail map file to apply new detail to the terrain, if not need use $IRR_NO_OBJECT
+;                  $i_ImageX - X, $i_ImageY - X and Y position of this tile on the structure and color images,
+;                  |so you could load a 1024x1024 structure image and a 1024x1024 detail image in and have your zones form a grid across these large bitmaps.
+;                  $i_SliceSize - Allows you to only process a slice of the terrain on each frame,
+;                  |as a tile is swapped loading in bitmaps and then adjusting what could be 65,000 vertices in a single frame will cause a noticable hiccup in the smooth running of the scene,
+;                  |so by setting the SliceSize you can define how many rows of the terrain are to be processed on each frame.
+;                  |For example if your tile is 128x128 you might process 32 rows, the tile would then be restructured over 4 frames instead of trying to do it all in one.
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: A special feature of the zone manager is its ability to manage tiled terrain nodes, a zone does this by taking position of an attached terrain object that it shares with other zone objects whenever the camera starts to come into range.
+;                  The terrain object is loaded with new height information, color and detail ready for when it becomes visible to the camera.
+;                  You can load your images manually to save them with IrrGetImage and IrrGetTexture and let them stay in memory to avoid having to load images while the scene is running however you should stay aware of how much memory you are using especially the graphics card memory used by IrrGetTexture.
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
@@ -1494,206 +1474,180 @@ EndFunc   ;==>_IrrSetZoneManagerBoundingBox
 Func _IrrSetZoneManagerAttachTerrain($h_ZoneNode, $h_Terrain, $s_StructureMapFile, $s_ColorMapFile, $s_DetailMapFile, $i_ImageX, $i_ImageY, $i_SliceSize)
 	DllCall($_irrDll, "none:cdecl", "IrrSetZoneManagerAttachTerrain", "UINT_PTR", $h_ZoneNode, "UINT_PTR", $h_Terrain, _
 			"str", $s_StructureMapFile, "str", $s_ColorMapFile, "str", $s_DetailMapFile, "int", $i_ImageX, "int", $i_ImageY, "int", $i_SliceSize)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetZoneManagerAttachTerrain
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetGrassDensity
-; Description ...: [todo]
+; Description ...: Set the grass density.
 ; Syntax.........: _IrrSetGrassDensity($h_Grass, $f_Density, $f_Distance)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Grass - Handle to the grass node.
+;                  $f_Density - Number of grass nodes visible in the scene.
+;                  $f_Distance - Distance at which they can be seen.
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrAddGrass, _IrrGetGrassDrawCount, _IrrSetGrassWind
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrSetGrassDensity($h_Grass, $f_Density, $f_Distance)
 	DllCall($_irrDll, "none:cdecl", "IrrSetGrassDensity", "ptr", $h_Grass, "float", $f_Density, "float", $f_Distance)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetGrassDensity
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetGrassWind
-; Description ...: [todo]
+; Description ...: Set the grass wind effect.
 ; Syntax.........: _IrrSetGrassWind($h_Grass, $f_Strength, $f_Resolution)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Grass - Handle to the grass node.
+;                  $f_Strength - Strength of the wind.
+;                  $f_Resolution - How often the effect is calculated.
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: By setting the resoloution to zero the wind effect will be stopped and there will be a performance increase,
+;                  however the wind effect adds significantly to the subtle atmosphere of the scene.
+; Related .......: _IrrAddGrass, _IrrGetGrassDrawCount, _IrrSetGrassDensity
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrSetGrassWind($h_Grass, $f_Strength, $f_Resolution)
 	DllCall($_irrDll, "none:cdecl", "IrrSetGrassWind", "ptr", $h_Grass, "float", $f_Strength, "float", $f_Resolution)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetGrassWind
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetGrassDrawCount
-; Description ...: [todo]
+; Description ...: Get the number of grass objects drawn.
 ; Syntax.........: _IrrGetGrassDrawCount($h_Grass)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Grass - Handle to the grass node.
+; Return values .: Success - Number of grass objects drawn
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrAddGrass, _IrrSetGrassWind, _IrrSetGrassDensity
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetGrassDrawCount($h_Grass)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGetGrassDrawCount", "ptr", $h_Grass)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrGetGrassDrawCount", "ptr", $h_Grass)
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetGrassDrawCount
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetFlareScale
-; Description ...: [todo]
+; Description ...: Sets the scale of optics in the scene.
 ; Syntax.........: _IrrSetFlareScale($h_Flare, $f_Source, $f_Optics)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Flare - Handle to a flare node
+;                  $f_Source - The source is the texture used to surround the light source (affects the size at the source of the flare)
+;                  $f_Optics - Scale of textures in the optics of the camera.
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: Sometimes it is effected to make the scale of the source considerably larger than those of the optics and to scale the effect in the optics down so that their appearence is more subtle.
+; Related .......: _IrrAddLensFlare
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetFlareScale($h_Flare, $f_Source, $f_Optics)
 	DllCall($_irrDll, "none:cdecl", "IrrSetFlareScale", "ptr", $h_Flare, "float", $f_Source, "float", $f_Optics)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetFlareScale
 
-;Scene Node functions
+
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrCreateBatchingMesh
-; Description ...: [todo]
+; Description ...: Create a batching mesh that will be a collection of other meshes into a single source mesh.
 ; Syntax.........: _IrrCreateBatchingMesh()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: None.
+; Return values .: Success - Handle to a bactching mesh.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: The function of the batching mesh is to avoid the use of large numbers of nodes that adds an overhead to the rendering process that can significantly slow it down.
+;                  Where you have a forest with a thousand trees you will see a significant increase in performance by batching all of those trees into a smaller number of node.
+;                  While this is handled as an irr_mesh it should only be used with batching mesh commands.
 ; Related .......: [todo: functionName, functionName]
-; Link ..........:
+; Link ..........: _IrrAddToBatchingMesh, _IrrFinalizeBatchingMesh
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrCreateBatchingMesh()
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrCreateBatchingMesh")
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrCreateBatchingMesh")
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrCreateBatchingMesh
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddToBatchingMesh
-; Description ...: [todo]
+; Description ...: Adds a mesh to the batching mesh at the specified position, rotation and scale.
 ; Syntax.........: _IrrAddToBatchingMesh($h_meshBatch, $h_mesh, $f_posX = 0.0, $f_posY = 0.0, $f_posZ = 0.0, $f_rotX = 0.0, $f_rotY = 0.0, $f_rotZ = 0.0, $f_scaleX = 1.0, $f_scaleY = 1.0, $f_scaleZ = 1.0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_meshBatch - Handle to a bactching mesh as returned by _IrrCreateBatchingMesh.
+;                  $h_mesh - Handle to the meash to add.
+;                  $f_posX - X position
+;                  $f_posY - Y position
+;                  $f_posZ - Z position
+;                  $f_rotX - X rotation
+;                  $f_rotY - Y rotation
+;                  $f_rotZ - Z rotation
+;                  $f_scaleX - X scale
+;                  $f_scaleY - Y scale
+;                  $f_scaleZ - Z scale
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: If each of your meshes requires a different texture you should call IrrSetMeshMaterialTexture for the mesh you are about to add prior to adding the mesh to the batch.
+; Related .......: _IrrCreateBatchingMesh, _IrrFinalizeBatchingMesh
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddToBatchingMesh($h_meshBatch, $h_Mesh, $f_PosX = 0.0, $f_PosY = 0.0, $f_PosZ = 0.0, $f_RotX = 0.0, $f_RotY = 0.0, $f_RotZ = 0.0, $f_ScaleX = 1.0, $f_ScaleY = 1.0, $f_ScaleZ = 1.0)
-	$result = DllCall($_irrDll, "none:cdecl", "IrrAddToBatchingMesh", "ptr", $h_meshBatch, "ptr", $h_Mesh, _
+	DllCall($_irrDll, "none:cdecl", "IrrAddToBatchingMesh", "ptr", $h_meshBatch, "ptr", $h_Mesh, _
 			"float", $f_PosX, "float", $f_PosY, "float", $f_PosZ, _
 			"float", $f_RotX, "float", $f_RotY, "float", $f_RotZ, _
 			"float", $f_ScaleX, "float", $f_ScaleY, "float", $f_ScaleZ)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrAddToBatchingMesh
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrFinalizeBatchingMesh
-; Description ...: [todo]
+; Description ...: Finalises the batching mesh.
 ; Syntax.........: _IrrFinalizeBatchingMesh($h_meshBatch)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_meshBatch - Handle to a bactching mesh as returned by _IrrCreateBatchingMesh.
+; Return values .: Success - Handle to a new mesh
+;                  Failure - False and @error 1
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: This should be called once all of the meshes have been added to the batching mesh.
+;                  The function returns a new mesh object that can be used in all standard mesh calls..
+; Related .......: _IrrCreateBatchingMesh, _IrrAddToBatchingMesh
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrFinalizeBatchingMesh($h_meshBatch)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrFinalizeBatchingMesh", "ptr", $h_meshBatch)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrFinalizeBatchingMesh", "ptr", $h_meshBatch)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrFinalizeBatchingMesh
+
 
 
 ; #FUNCTION# =============================================================================================================
@@ -1714,13 +1668,10 @@ EndFunc   ;==>_IrrFinalizeBatchingMesh
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrSetMeshMaterialTexture($h_Mesh, $h_Texture, $i_index, $i_buffer = 0)
-	$result = DllCall($_irrDll, "none:cdecl", "IrrSetMeshMaterialTexture", "ptr", $h_Mesh, "ptr", $h_Texture, "int", $i_index, "int", $i_buffer)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrSetMeshMaterialTexture", "ptr", $h_Mesh, "ptr", $h_Texture, "int", $i_index, "int", $i_buffer)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetMeshMaterialTexture
+
 
 
 ; #FUNCTION# =============================================================================================================
@@ -1741,185 +1692,137 @@ EndFunc   ;==>_IrrSetMeshMaterialTexture
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrScaleMesh($h_Mesh, $f_scale, $i_frame = 0, $i_MeshBuffer = 0, $h_sourceMesh = 0)
-	$result = DllCall($_irrDll, "none:cdecl", "IrrScaleMesh", "ptr", $h_Mesh, "float", $f_scale, "int", $i_frame, "int", $i_MeshBuffer, "ptr", $h_sourceMesh)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrScaleMesh", "ptr", $h_Mesh, "float", $f_scale, "int", $i_frame, "int", $i_MeshBuffer, "ptr", $h_sourceMesh)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrScaleMesh
-
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddBeamSceneNode
-; Description ...: [todo]
+; Description ...: Add a beam scene node.
 ; Syntax.........: _IrrAddBeamSceneNode()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: None.
+; Return values .: Success - Handle to a beam node.
+;                  Failure - False and @error 1
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: The beam is a special scene node that can be used to replicate beam effects like lasers and tracer gun fire.
+;                  This command simply adds the beam you should then make calls to set the beams properties.
+; Related .......: _IrrSetBeamSize, _IrrSetBeamPosition
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddBeamSceneNode()
-	; add a beam node to the scene
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddBeamSceneNode")
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddBeamSceneNode")
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddBeamSceneNode
+
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetBeamSize
-; Description ...: [todo]
+; Description ...: Sets the width of a beam node.
 ; Syntax.........: _IrrSetBeamSize($h_BeamNode, $f_Size)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_BeamNode - Handle to a beam node.
+;                  $f_Size - Width of the beam node.
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrAddBeamSceneNode, _IrrSetBeamPosition
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetBeamSize($h_BeamNode, $f_Size)
-	; set the size of a beam
-	$result = DllCall($_irrDll, "none:cdecl", "IrrSetBeamSize", "ptr", $h_BeamNode, "float", $f_Size)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrSetBeamSize", "ptr", $h_BeamNode, "float", $f_Size)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetBeamSize
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetBeamPosition
-; Description ...: [todo]
+; Description ...: Sets the start and end positions of a beam node. The beam will stretch between the two nodes.
 ; Syntax.........: _IrrSetBeamPosition($h_BeamNode, $f_SX, $f_SY, $f_SZ, $f_EX, $f_EY, $f_EZ)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_BeamNode - Handle to a beam node.
+;                  $f_SX - X start position
+;                  $f_SY - Y start position
+;                  $f_SZ - Z start position
+;                  $f_EX - X end position
+;                  $f_EY - X end position
+;                  $f_EZ - X end position
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrAddBeamSceneNode, _IrrSetBeamSize
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetBeamPosition($h_BeamNode, $f_SX, $f_SY, $f_SZ, $f_EX, $f_EY, $f_EZ)
-	; set the position of a beam
-	$result = DllCall($_irrDll, "none:cdecl", "IrrSetBeamPosition", "ptr", $h_BeamNode, _
+	DllCall($_irrDll, "none:cdecl", "IrrSetBeamPosition", "ptr", $h_BeamNode, _
 			"float", $f_SX, "float", $f_SY, "float", $f_SZ, "float", $f_EX, "float", $f_EY, "float", $f_EZ)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetBeamPosition
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddBoltSceneNode
-; Description ...: [todo]
+; Description ...: The bolt is a special scene node that can be used to replicate electrical effects.
 ; Syntax.........: _IrrAddBoltSceneNode()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: None.
+; Return values .: Success - Handle to a Bolt node
+;                  Failure - False and @error 1
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: This command simply adds the bolt you should then make a call to set the bolts properties.
+;                  This node can be used to simulate lightning and other electrical effects.
+; Related .......: _IrrSetBoltProperties
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddBoltSceneNode()
-	; add a bolt node to the scene
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddBoltSceneNode")
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddBoltSceneNode")
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddBoltSceneNode
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetBoltProperties
-; Description ...: [todo]
+; Description ...: This sets the properties of a bolt node that simulates an electrical effect.
 ; Syntax.........: _IrrSetBoltProperties($h_BoltNode, $f_SX, $f_SY, $f_SZ, $f_EX, $f_EY, $f_EZ, $i_UpdateTime=50, $i_Height=10, $f_Thickness=5.0, $i_Parts=10, $i_Bolts=6, $i_Steadyend=$IRR_OFF, $i_Color=0x0000FFFF)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_BoltNode - [explanation]
+;                  $f_SX, $f_SY, $f_SZ - Starting point that the bolt origionates from.
+;                  $f_EX, $f_EY, $f_EZ - End terminating point for the bolt.
+;                  $i_UpdateTime - Number of miliseconds between updates to the appearence of the bolt.
+;                  $i_Height - Radius is the radius of the entire bolt effect.
+;                  $f_Thickness - Thickness of a single electrical element in the bolt.
+;                  $i_Parts - Number of segments the bolt is divided into.
+;                  $i_Bolts - Number of individual electrical arcs that are rendered.
+;                  $i_Steadyend - Set to IRR_ON ends in a tight point, Set to IRR_OFF it ends with the same width as the rest of the bolt.
+;                  $i_Color - Diffuse color that is applied to the bolt.
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: There are a number of properties that control many aspects of the bolt to produce a wide range of appearences.
+; Related .......: _IrrAddBoltSceneNode
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetBoltProperties($h_BoltNode, $f_SX, $f_SY, $f_SZ, $f_EX, $f_EY, $f_EZ, $i_UpdateTime = 50, $i_Height = 10, $f_Thickness = 5.0, $i_Parts = 10, $i_Bolts = 6, $i_Steadyend = $IRR_OFF, $i_Color = 0x0000FFFF)
-	; aset the properties of the bolt node
-	$result = DllCall($_irrDll, "none:cdecl", "IrrSetBoltProperties", "ptr", $h_BoltNode, _
+	DllCall($_irrDll, "none:cdecl", "IrrSetBoltProperties", "ptr", $h_BoltNode, _
 			"float", $f_SX, "float", $f_SY, "float", $f_SZ, "float", $f_EX, "float", $f_EY, "float", $f_EZ, _
 			"int", $i_UpdateTime, "int", $i_Height, "float", $f_Thickness, "int", $i_Parts, _
 			"int", $i_Bolts, "int", $i_Steadyend, "UINT", $i_Color)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetBoltProperties
 
 
-; #FUNCTION# =============================================================================================================
-; Name...........: _IrrSetBillBoardSize
-; Description ...: [todo]
-; Syntax.........: _IrrSetBillBoardSize($h_Node, $f_Width, $f_Height)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrSetBillBoardSize($h_Node, $f_Width, $f_Height)
-	; sets the size of a billboard node
-	$result = DllCall($_irrDll, "none:cdecl", "IrrSetBillBoardSize", "ptr", $h_Node, "float", $f_Width, "float", $f_Height)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
-EndFunc   ;==>_IrrSetBillBoardSize
 
 
 ; #FUNCTION# =============================================================================================================
@@ -1940,14 +1843,11 @@ EndFunc   ;==>_IrrSetBillBoardSize
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrSetBillBoardColor($h_Node, $i_TopColor, $i_BottomColor)
-	; sets the color of a billboard node
-	$result = DllCall($_irrDll, "none:cdecl", "IrrSetBillBoardColor", "ptr", $h_Node, "UINT", $i_TopColor, "UINT", $i_BottomColor)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrSetBillBoardColor", "ptr", $h_Node, "UINT", $i_TopColor, "UINT", $i_BottomColor)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetBillBoardColor
+
+
 
 
 ; #FUNCTION# =============================================================================================================
@@ -1963,17 +1863,17 @@ EndFunc   ;==>_IrrSetBillBoardColor
 ;                  They are all treated as a single object rather than as many individual nodes. This is particuallarly useful for custom particle effects.
 ; Related .......: _IrrAddBillBoardToGroup, _IrrRemoveBillBoardFromGroup, _IrrAddBillBoardByAxisToGroup, _IrrGetBillBoardGroupCount, IrrBillBoardGroupShadows, , _IrrBillBoardForceUpdate
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddBillBoardGroupToScene()
-    ; In the wrapper reference docs this function doesn't have any params.
-    ; Looking at the source of the wrapper, I can see this function call takes 5 paramaters..
-    ; When you see what the function call is doing, it doesn't actually use the parameters at all.
-    ; I still pass the 5 params as 0 so the function will proceed without error
-    Local $aResult
-    $aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddBillBoardGroupToScene", "float", 0, "float", 0, "float", 0, "float", 0, "float", 0)
-    If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
-    Return SetError(0, 0, $aResult[0])
+	; In the wrapper reference docs this function doesn't have any params.
+	; Looking at the source of the wrapper, I can see this dll call expects 5 paramaters..
+	; When you see what the function call is doing, it doesn't actually use the parameters at all.
+	; I still pass the 5 params as 0 so the call will proceed without error.
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddBillBoardGroupToScene", "float", 0, "float", 0, "float", 0, "float", 0, "float", 0)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddBillBoardGroupToScene
 
 
@@ -1999,15 +1899,16 @@ EndFunc   ;==>_IrrAddBillBoardGroupToScene
 ; Remarks .......: None
 ; Related .......: _IrrAddBillBoardGroupToScene, _IrrRemoveBillBoardFromGroup, _IrrGetBillBoardGroupCount, _IrrAddBillBoardByAxisToGroup, _IrrBillBoardForceUpdate
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrAddBillBoardToGroup($h_BillboardGroup, $f_XSize, $f_YSize, $f_XPos, $f_YPos, $f_ZPos, $f_Roll, $u_Alpha, $u_Red, $u_Green, $u_Blue)
-    Local $aResult
-    $aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddBillBoardToGroup", "ptr", $h_BillboardGroup, "float", $f_XSize, "float", $f_YSize, "float", $f_XPos, "float", $f_YPos, "float", $f_ZPos, _
-            "float", $f_Roll, "uint", $u_Alpha, "uint", $u_Red, "uint", $u_Green, "uint", $u_Blue)
-    If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
-    Return SetError(0, 0, $aResult[0])
+Func _IrrAddBillBoardToGroup($h_BillboardGroup, $f_XSize, $f_YSize, $f_XPos, $f_YPos, $f_ZPos, $f_Roll = 0, $u_Alpha = 255, $u_Red = 255, $u_Green = 255, $u_Blue = 255)
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddBillBoardToGroup", "ptr", $h_BillboardGroup, "float", $f_XSize, "float", $f_YSize, "float", $f_XPos, "float", $f_YPos, "float", $f_ZPos, _
+			"float", $f_Roll, "uint", $u_Alpha, "uint", $u_Red, "uint", $u_Green, "uint", $u_Blue)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddBillBoardToGroup
+
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddBillBoardByAxisToGroup
@@ -2031,21 +1932,24 @@ EndFunc   ;==>_IrrAddBillBoardToGroup
 ;                  Failure - False and @error 1
 ; Author ........: smashly
 ; Modified.......:
-; Remarks .......: These billboards are particularly useful for things like grass..There are a number of properties that are used to specify the billboard.
+; Remarks .......: These billboards are particularly useful for things like grass.
+;                  There are a number of properties that are used to specify the billboard.
 ; Related .......: _IrrAddBillBoardGroupToScene, _IrrRemoveBillBoardFromGroup, _IrrGetBillBoardGroupCount, _IrrBillBoardForceUpdate
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddBillBoardByAxisToGroup($h_BillboardGroup, $f_XSize, $f_YSize, $f_XPos, $f_YPos, $f_ZPos, $f_Roll, $u_Alpha, $u_Red, $u_Green, $u_Blue, $f_XAxis, $f_YAxis, $f_ZAxis)
-    Local $aResult
-    $aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddBillBoardByAxisToGroup", "ptr", $h_BillboardGroup, _
-            "float", $f_XSize, "float", $f_YSize, _
-            "float", $f_XPos, "float", $f_YPos, "float", $f_ZPos, "float", $f_Roll, _
-            "uint", $u_Alpha, "uint", $u_Red, "uint", $u_Green, "uint", $u_Blue, _
-            "float", $f_XAxis, "float", $f_YAxis, "float", $f_ZAxis)
-    If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
-    Return SetError(0, 0, $aResult[0])
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddBillBoardByAxisToGroup", "ptr", $h_BillboardGroup, _
+			"float", $f_XSize, "float", $f_YSize, _
+			"float", $f_XPos, "float", $f_YPos, "float", $f_ZPos, "float", $f_Roll, _
+			"uint", $u_Alpha, "uint", $u_Red, "uint", $u_Green, "uint", $u_Blue, _
+			"float", $f_XAxis, "float", $f_YAxis, "float", $f_ZAxis)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddBillBoardByAxisToGroup
+
+
 
 
 ; #FUNCTION# =============================================================================================================
@@ -2061,12 +1965,16 @@ EndFunc   ;==>_IrrAddBillBoardByAxisToGroup
 ; Remarks .......:
 ; Related .......: _IrrAddBillBoardGroupToScene, _IrrAddBillBoardToGroup
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrRemoveBillBoardFromGroup($h_BillboardGroup, $h_BillboardGroupSceneNode)
-    DllCall($_irrDll, "none:cdecl", "IrrRemoveBillBoardFromGroup", "ptr", $h_BillboardGroup, "ptr", $h_BillboardGroupSceneNode)
-    Return SetError(@error, 0, @error = 0)
+	DllCall($_irrDll, "none:cdecl", "IrrRemoveBillBoardFromGroup", "ptr", $h_BillboardGroup, "ptr", $h_BillboardGroupSceneNode)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrRemoveBillBoardFromGroup
+
+
+
+
 
 
 ; #FUNCTION# =============================================================================================================
@@ -2086,11 +1994,11 @@ EndFunc   ;==>_IrrRemoveBillBoardFromGroup
 ; Remarks .......: This can be used for example to shade the particles in a group of billboards representing a cloud.
 ; Related .......: _IrrAddBillBoardGroupToScene, _IrrAddBillBoardToGroup
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrBillBoardGroupShadows($h_BillboardGroup, $f_X, $f_Y, $f_Z, $f_Intensity, $f_Ambient)
-    DllCall($_irrDll, "none:cdecl", "IrrBillBoardGroupShadows", "ptr", $h_BillboardGroup, "float", $f_X, "float", $f_Y, "float", $f_Z, "float", $f_Intensity, "float", $f_Ambient)
-    Return SetError(@error, 0, @error = 0)
+	DllCall($_irrDll, "none:cdecl", "IrrBillBoardGroupShadows", "ptr", $h_BillboardGroup, "float", $f_X, "float", $f_Y, "float", $f_Z, "float", $f_Intensity, "float", $f_Ambient)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrBillBoardGroupShadows
 
 
@@ -2106,14 +2014,15 @@ EndFunc   ;==>_IrrBillBoardGroupShadows
 ; Remarks .......:
 ; Related .......: _IrrAddBillBoardGroupToScene, _IrrAddBillBoardToGroup, _IrrRemoveBillBoardFromGroup
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetBillBoardGroupCount($h_BillboardGroup)
-    Local $aResult
-    $aResult = DllCall($_irrDll, "int:cdecl", "IrrGetBillBoardGroupCount", "ptr", $h_BillboardGroup)
-    If @error Or Not IsArray($aResult) Then Return SetError(1, 0, False)
-    Return SetError(0, 0, $aResult[0])
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrGetBillBoardGroupCount", "ptr", $h_BillboardGroup)
+	If @error Or Not IsArray($aResult) Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetBillBoardGroupCount
+
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrBillBoardForceUpdate
@@ -2133,9 +2042,10 @@ EndFunc   ;==>_IrrGetBillBoardGroupCount
 ; Example .......: No
 ; ===============================================================================================================================
 Func _IrrBillBoardForceUpdate($h_BillboardGroup)
-    DllCall($_irrDll, "none:cdecl", "IrrBillBoardForceUpdate", "ptr", $h_BillboardGroup)
-    Return SetError(@error, 0, @error = 0)
+	DllCall($_irrDll, "none:cdecl", "IrrBillBoardForceUpdate", "ptr", $h_BillboardGroup)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrBillBoardForceUpdate
+
 
 
 ; #FUNCTION# =============================================================================================================
@@ -2156,13 +2066,13 @@ EndFunc   ;==>_IrrBillBoardForceUpdate
 ;                  This is achieved by applying a distance without supplying a mesh.
 ; Related .......: _IrrAddLODMesh, _IrrSetLODMaterialMap
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddLODManager($u_FadeScale, $u_UseAlpha, $p_Callback = 0)
-    Local $aResult
-    $aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddLODManager", "uint", $u_FadeScale, "uint", $u_UseAlpha, "ptr", $p_Callback)
-    If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
-    Return SetError(0, 0, $aResult[0])
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddLODManager", "uint", $u_FadeScale, "uint", $u_UseAlpha, "ptr", $p_Callback)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddLODManager
 
 
@@ -2180,11 +2090,11 @@ EndFunc   ;==>_IrrAddLODManager
 ; Remarks .......: If no mesh is supplied it specifies the distance at which the node should be faded in an out.
 ; Related .......: _IrrAddLODManager, _IrrSetLODMaterialMap
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddLODMesh($h_LODManager, $f_Distance, $h_Mesh)
-    DllCall($_irrDll, "none:cdecl", "IrrAddLODMesh", "ptr", $h_LODManager, "float", $f_Distance, "ptr", $h_Mesh)
-    Return SetError(@error, 0, @error = 0)
+	DllCall($_irrDll, "none:cdecl", "IrrAddLODMesh", "ptr", $h_LODManager, "float", $f_Distance, "ptr", $h_Mesh)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrAddLODMesh
 
 
@@ -2203,9 +2113,11 @@ EndFunc   ;==>_IrrAddLODMesh
 ;                  By default fading is applied with the $IRR_EMT_TRANSPARENT_VERTEX_ALPHA material.
 ; Related .......: _IrrAddLODManager, _IrrAddLODMesh
 ; Link ..........:
-; Example .......: No
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetLODMaterialMap($h_LODManager, $i_SourceType, $i_TargetType)
-    DllCall($_irrDll, "none:cdecl", "IrrSetLODMaterialMap", "uint_ptr", $h_LODManager, "uint", $i_SourceType, "uint", $i_TargetType)
-    Return SetError(@error, 0, @error = 0)
+	DllCall($_irrDll, "none:cdecl", "IrrSetLODMaterialMap", "uint_ptr", $h_LODManager, "uint", $i_SourceType, "uint", $i_TargetType)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetLODMaterialMap
+
+

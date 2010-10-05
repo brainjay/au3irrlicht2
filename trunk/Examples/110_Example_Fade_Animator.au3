@@ -34,7 +34,7 @@ DIM $OurCamera ; irr_camera
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_OPENGL, 512, 512, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; set the window caption
@@ -88,7 +88,7 @@ WHILE _IrrRunning()
          $frameTime = TimerInit()
 
         ; begin the scene, erasing the canvas with sky-blue before rendering
-        _IrrBeginScene( 240, 255, 255 )
+        _IrrBeginScene( 0, 0, 50 )
 
         ; draw the scene
         _IrrDrawScene()

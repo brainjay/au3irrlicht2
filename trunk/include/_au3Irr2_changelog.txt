@@ -28,6 +28,14 @@
 + Fixed/Added: Some more working functions (mainly around added examples)
 + Added: Some missing 2D functions and documentation (contributions from smashly)
 + Fixed: _IrrSetFog (linear and exponential fog were interchanged)
++ Fixed: _IrrCreateMesh ($s_MeshName not being passed in the DLL call)
+- Fixed: wrong return type in _IrrWriteMesh - "ptr:cdecl" is now "int:cdecl"
+  Also reworked returned error codes
+- _IrrSetZoneManagerBoundingBox, _IrrSetZoneManagerProperties:
+  changed "ptr:cdecl" to "none:cdecl" as this dllcall doesn't offer a return.
+- _IrrSetSkyDomeColor, _IrrSetSkyDomeColorBand, _IrrSetSkyDomeColorPoint 
+  changed "ptr:cdecl" to "none:cdecl" as this dllcall doesn't offer a return by call.
+  These dll calls outputs printf errors straight to console.
 
 
 
@@ -56,7 +64,11 @@
 > Internal tools:
 
 + Fixed: help_tool.au3 - added functions in UDFs w/o info block were not updated correctly.
++ Fixed: Examples could not be opened when running launcher from path with spaces
 
+
+> Other:
++ Changed: global $result used in UDF files switched to local variables (WIP, finished for 2D, Scene)
 
 
 === 2.03 (2010-09-05) ==========================================================

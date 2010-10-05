@@ -681,17 +681,17 @@ _IrrSetNearestDistanceOfEffect($h_ParticleAffector,$f_Distance)
 _IrrSetColumnDistanceOfEffect($h_ParticleAffector,$f_Distance) 
 _IrrSetCenterOfEffect($h_ParticleAffector,$f_X,$f_Y,$f_Z) 
 _IrrSetStrengthOfEffect($h_ParticleAffector,$f_X,$f_Y,$f_Z) 
-_IrrGetRootSceneNode() 
+_IrrGetRootSceneNode() Get the scenes root node, all scene nodes are children of this node.
 _IrrGetMesh($s_MeshFile) Loads the specified mesh ready to be added to the scene.
-_IrrCreateMesh($s_MeshName,$tVertexArray,$a_Indices) 
+_IrrCreateMesh($s_MeshName,$tVertexArray,$a_Indices) Create a new mesh.
 _IrrAddSphereSceneMesh($s_MeshName,$f_Radius,$i_PolyCount) 
-_IrrAddHillPlaneMesh($s_Name,$f_TileSizeX,$f_TileSizeY,$i_TileCountX,$i_TileCountY,$h_Material=0,$f_HillHeight=0,$f_CountHillsX=0,$f_CountHillsY=0,$f_TextureRepeatCountX=1,$f_TextureRepeatCountY=1) 
-_IrrWriteMesh($h_Mesh,$i_FileFormat,$s_Filename) 
+_IrrAddHillPlaneMesh($s_Name,$f_TileSizeX,$f_TileSizeY,$i_TileCountX,$i_TileCountY,$h_Material=0,$f_HillHeight=0,$f_CountHillsX=0,$f_CountHillsY=0,$f_TextureRepeatCountX=1,$f_TextureRepeatCountY=1) Creates a hill plane mesh that represents a simple terrain.
+_IrrWriteMesh($h_Mesh,$i_FileFormat,$s_Filename) Write the first frame of the supplied animated mesh out to a file using the specified file format.
 _IrrRemoveMesh($h_Mesh) Removes a mesh from the scene cache, freeing up resources.
-_IrrClearUnusedMeshes() 
-_IrrSetMeshHardwareAccelerated($h_mesh,$i_frame=0) 
-_IrrGetMeshFrameCount($h_Mesh) 
-_IrrGetMeshBufferCount($h_Mesh,$i_FrameNumber) 
+_IrrClearUnusedMeshes() Clears all meshes that are held in the mesh cache but not used anywhere else.
+_IrrSetMeshHardwareAccelerated($h_mesh,$i_frame=0) Set the supplied mesh as a Hardware Accelerated object.
+_IrrGetMeshFrameCount($h_Mesh) Gets the number of frames in the supplied mesh.
+_IrrGetMeshBufferCount($h_Mesh,$i_FrameNumber) Gets the number of mesh buffers in the supplied mesh.
 _IrrGetMeshIndexCount($h_Mesh,$i_Frame,$i_MeshBuffer=0) 
 _IrrGetMeshIndices($h_Mesh,$i_FrameNumber,ByRef $a_IndicesArray,$i_MeshBuffer=0) 
 _IrrSetMeshIndices($h_Mesh,$i_FrameNumber,ByRef $a_IndicesArray,$i_MeshBuffer=0) 
@@ -709,6 +709,7 @@ _IrrSaveScene($s_Filename)
 _IrrGetSceneNodeFromId($i_ID) 
 _IrrGetSceneNodeFromName($s_Name) 
 _IrrAddBillBoardToScene($f_XSize,$f_YSize,$f_XPos=0.0,$f_YPos=0.0,$f_ZPos=0.0) Adds a billboard to the scene of the specified size and at the specified position.
+_IrrSetBillBoardSize($h_Node,$f_Width,$f_Height) 
 _IrrAddBillboardTextSceneNode($h_Font,$s_Text,$f_XSize,$f_YSize,$f_XPos=0,$f_YPos=0,$f_ZPos=0,$h_Parent=0,$i_TopRGBA=0xFFFFFFFF,$i_BottomRGBA=0xFFFFFFFF) 
 _IrrAddParticleSystemToScene($b_AddEmitter,$h_Parent=0,$i_Id=-1,$f_PosX=0,$f_PosY=0,$f_PosZ=0,$f_RotX=0,$f_RotY=0,$f_RotZ=0,$f_ScaleX=1,$f_ScaleY=1,$f_ScaleZ=1) Adds a particle system to the irrlicht scene manager.
 _IrrAddSkyBoxToScene($h_UpTexture,$h_DownTexture,$h_LeftTexture,$h_RightTexture,$h_FrontTexture,$h_BackTexture) Adds a skybox node to the scene.
@@ -720,32 +721,31 @@ _IrrAddSphereSceneNode($f_Size,$i_PolyCount=16) Adds a simple sphere object to t
 _IrrAddWaterSurfaceSceneNode($h_Mesh,$f_WaveHeight=2.0,$f_WaveSpeed=300.0,$f_WaveLength=10.0,$h_Parent=0,$i_ID=-1,$f_PosX=0,$f_PosY=0,$f_PosZ=0,$f_RotX=0,$f_RotY=0,$f_RotZ=0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0) 
 _IrrAddZoneManager($f_NearDistance=0,$f_FarDistance=12000) 
 _IrrAddClouds($h_Texture,$i_Lod,$i_Depth,$i_Density) 
-_IrrAddLensFlare($h_Texture) 
-_IrrAddGrass($h_Terrain,$i_X,$i_Y,$i_PatchSize,$f_FadeDistance,$i_Crossed,$f_GrassScale,$i_MaxDensity,$i_DataPosX,$i_DataPosY,$h_HeightMap,$h_TextureMap,$h_GrassMap,$h_GrassTexture) 
+_IrrAddLensFlare($h_Texture) Adds a lens flare patch object to the scene, this object simulates the effect of bright lights on the optics of a camera.
+_IrrAddGrass($h_Terrain,$i_X,$i_Y,$i_PatchSize,$f_FadeDistance,$i_Crossed,$f_GrassScale,$i_MaxDensity,$i_DataPosX,$i_DataPosY,$h_HeightMap,$h_TextureMap,$h_GrassMap,$h_GrassTexture) Adds a grass object to the scene.
 _IrrSetShadowColor($i_Alpha,$i_Red,$i_Green,$i_Blue) Sets the colour of shadows cast by objects in the scene.
 _IrrSetFog($i_Red,$i_Green,$i_Blue,$i_FogType,$f_FogStart,$f_FogEnd,$f_Density=0.025) Set the properties of fog in the scene
 _IrrDraw3DLine($f_XStart,$f_YStart,$f_ZStart,$f_XEnd,$f_YEnd,$f_ZEnd,$i_Red,$i_Green,$i_Blue) Draws a line onto the display using 3D co-ordinates and a specified colour.
-_IrrSetSkyDomeColor($h_Dome,$i_HorizontalRed,$i_HorizontalGreen,$i_HorizontalBlue,$i_ZenithRed,$i_ZenithGreen,$i_ZenithBlue) 
-_IrrSetSkyDomeColorBand($h_Dome,$i_HorizontalRed,$i_HorizontalGreen,$i_HorizontalBlue,$i_BandVerticalPosition,$f_BandFade,$i_Additive) 
-_IrrSetSkyDomeColorPoint($h_Dome,$i_Red,$i_Green,$i_Blue,$f_PosX,$f_PosY,$f_PosZ,$f_Radius,$f_PointFade,$i_Additive) 
-_IrrSetZoneManagerProperties($h_ZoneManager,$f_NearDistance,$f_FarDistance,$i_AccumulateBoxes) 
-_IrrSetZoneManagerBoundingBox($h_ZoneManager,$f_X,$f_Y,$f_Z,$f_BoxWidth,$f_BoxHeight,$f_BoxDepth) 
-_IrrSetZoneManagerAttachTerrain($h_ZoneNode,$h_Terrain,$s_StructureMapFile,$s_ColorMapFile,$s_DetailMapFile,$i_ImageX,$i_ImageY,$i_SliceSize) 
-_IrrSetGrassDensity($h_Grass,$f_Density,$f_Distance) 
-_IrrSetGrassWind($h_Grass,$f_Strength,$f_Resolution) 
-_IrrGetGrassDrawCount($h_Grass) 
-_IrrSetFlareScale($h_Flare,$f_Source,$f_Optics) 
-_IrrCreateBatchingMesh() 
-_IrrAddToBatchingMesh($h_meshBatch,$h_mesh,$f_posX=0.0,$f_posY=0.0,$f_posZ=0.0,$f_rotX=0.0,$f_rotY=0.0,$f_rotZ=0.0,$f_scaleX=1.0,$f_scaleY=1.0,$f_scaleZ=1.0) 
-_IrrFinalizeBatchingMesh($h_meshBatch) 
+_IrrSetSkyDomeColor($h_Dome,$i_HorizontalRed,$i_HorizontalGreen,$i_HorizontalBlue,$i_ZenithRed,$i_ZenithGreen,$i_ZenithBlue) Set the color of the verticies in the skydome.
+_IrrSetSkyDomeColorBand($h_Dome,$i_HorizontalRed,$i_HorizontalGreen,$i_HorizontalBlue,$i_BandVerticalPosition,$f_BandFade,$i_Additive) Creates a horizontal band of color in the skydome.
+_IrrSetSkyDomeColorPoint($h_Dome,$i_Red,$i_Green,$i_Blue,$f_PosX,$f_PosY,$f_PosZ,$f_Radius,$f_PointFade,$i_Additive) Set the color of the verticies in the skydome radiating out from a point.
+_IrrSetZoneManagerProperties($h_ZoneManager,$f_NearDistance,$f_FarDistance,$i_AccumulateBoxes) Sets the draw distances of nodes in the zone/distance management node and whether or not the zone manager is to accumulate the bounding boxes of its children as they are added.
+_IrrSetZoneManagerBoundingBox($h_ZoneManager,$f_X,$f_Y,$f_Z,$f_BoxWidth,$f_BoxHeight,$f_BoxDepth) Allows the user to manually set the bounding box of a zone manager node.
+_IrrSetZoneManagerAttachTerrain($h_ZoneNode,$h_Terrain,$s_StructureMapFile,$s_ColorMapFile,$s_DetailMapFile,$i_ImageX,$i_ImageY,$i_SliceSize) Attach a terrain node to a the zone manager.
+_IrrSetGrassDensity($h_Grass,$f_Density,$f_Distance) Set the grass density.
+_IrrSetGrassWind($h_Grass,$f_Strength,$f_Resolution) Set the grass wind effect.
+_IrrGetGrassDrawCount($h_Grass) Get the number of grass objects drawn.
+_IrrSetFlareScale($h_Flare,$f_Source,$f_Optics) Sets the scale of optics in the scene.
+_IrrCreateBatchingMesh() Create a batching mesh that will be a collection of other meshes into a single source mesh.
+_IrrAddToBatchingMesh($h_meshBatch,$h_mesh,$f_posX=0.0,$f_posY=0.0,$f_posZ=0.0,$f_rotX=0.0,$f_rotY=0.0,$f_rotZ=0.0,$f_scaleX=1.0,$f_scaleY=1.0,$f_scaleZ=1.0) Adds a mesh to the batching mesh at the specified position, rotation and scale.
+_IrrFinalizeBatchingMesh($h_meshBatch) Finalises the batching mesh.
 _IrrSetMeshMaterialTexture($h_mesh,$h_texture,$i_index,$i_buffer=0) 
 _IrrScaleMesh($h_mesh,$f_scale,$i_frame=0,$i_meshBuffer=0,$h_sourceMesh=0) 
-_IrrAddBeamSceneNode() 
-_IrrSetBeamSize($h_BeamNode,$f_Size) 
-_IrrSetBeamPosition($h_BeamNode,$f_SX,$f_SY,$f_SZ,$f_EX,$f_EY,$f_EZ) 
-_IrrAddBoltSceneNode() 
-_IrrSetBoltProperties($h_BoltNode,$f_SX,$f_SY,$f_SZ,$f_EX,$f_EY,$f_EZ,$i_UpdateTime=50,$i_Height=10,$f_Thickness=5.0,$i_Parts=10,$i_Bolts=6,$i_Steadyend=$IRR_OFF,$i_Color=0x0000FFFF) 
-_IrrSetBillBoardSize($h_Node,$f_Width,$f_Height) 
+_IrrAddBeamSceneNode() Add a beam scene node.
+_IrrSetBeamSize($h_BeamNode,$f_Size) Sets the width of a beam node.
+_IrrSetBeamPosition($h_BeamNode,$f_SX,$f_SY,$f_SZ,$f_EX,$f_EY,$f_EZ) Sets the start and end positions of a beam node. The beam will stretch between the two nodes.
+_IrrAddBoltSceneNode() The bolt is a special scene node that can be used to replicate electrical effects.
+_IrrSetBoltProperties($h_BoltNode,$f_SX,$f_SY,$f_SZ,$f_EX,$f_EY,$f_EZ,$i_UpdateTime=50,$i_Height=10,$f_Thickness=5.0,$i_Parts=10,$i_Bolts=6,$i_Steadyend=$IRR_OFF,$i_Color=0x0000FFFF) This sets the properties of a bolt node that simulates an electrical effect.
 _IrrSetBillBoardColor($h_Node,$i_TopColor,$i_BottomColor) 
 _IrrAddBillBoardGroupToScene() Adds a billboard group to the scene.
 _IrrAddBillBoardToGroup($h_BillboardGroup,$f_XSize,$f_YSize,$f_XPos,$f_YPos,$f_ZPos,$f_Roll,$u_Alpha,$u_Red ,$u_Green,$u_Blue) Adds a billboard to a billboard group. There are a number of properties that are used to specify the billboard

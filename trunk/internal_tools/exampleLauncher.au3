@@ -1,3 +1,6 @@
+#Region ;**** Directives created by AutoIt3Wrapper_GUI ****
+#AutoIt3Wrapper_UseUpx=n
+#EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 #cs ----------------------------------------------------------------------------
 
  AutoIt Version: 3.3.6.1
@@ -6,6 +9,7 @@
  History:
  2010-07-28: First Version 0.9
  2010-08-11: 0.91: Replaced launching _readme.txt with helpfile
+ 2010-10-05: 0.91b: Fixed: Examples could not be opened when running launcher from path with spaces
 
  Script Function:
 	Launcher for example scripts of the au3Irrlicht2 UDF.
@@ -29,7 +33,7 @@
 opt("MustDeclareVars", True)
 
 
-const $SCRIPTTITLE = "au3Irr2 Example Launcher V0.91 - 2010 by linus"
+const $SCRIPTTITLE = "au3Irr2 Example Launcher V0.91b - 2010 by linus"
 global $nMsg
 Global $pathScite = RegRead("HKLM\Software\Microsoft\Windows\Currentversion\App Paths\Scite.Exe", "")
 global $pathAu3 = RegRead("HKLM\Software\Microsoft\Windows\Currentversion\App Paths\AutoIt3.Exe", "")
@@ -72,7 +76,7 @@ While true
 	Switch $nMsg
 		case $btnRun
 			; start selected example from \examples with location of .dll's as working dir:
-			RunWait('"' & $pathAu3 & '" ' & @ScriptDir & '\' & $pathExamples & '\' & GUICtrlRead($cmbExamples), $pathExamples)
+			RunWait('"' & $pathAu3 & '" "' & @ScriptDir & '\' & $pathExamples & '\' & GUICtrlRead($cmbExamples) & '"', $pathExamples)
 
 		case $btnReadme
 			if not FileExists($pathExamples & "\..\au3Irr2.chm") Then
@@ -85,7 +89,7 @@ While true
 			if not FileExists($pathScite) Then
 				MsgBox(48, $SCRIPTTITLE, "Cannot find SciTe, sorry!")
 			Else
-				Run($pathScite & ' ' & @ScriptDir & '\' & $pathExamples & '\' & GUICtrlRead($cmbExamples), $pathExamples)
+				Run($pathScite & ' "' & @ScriptDir & '\' & $pathExamples & '\' & GUICtrlRead($cmbExamples) & '"', $pathExamples)
 			EndIf
 
 		Case $btnQuit, $GUI_EVENT_CLOSE
