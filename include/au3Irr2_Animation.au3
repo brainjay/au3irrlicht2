@@ -27,6 +27,7 @@
 ;_IrrSetNodeAnimationFrame
 ;_IrrSetTransitionTime
 ;_IrrAnimateJoints
+;_IrrSetJointMode
 ;_IrrAddCollisionAnimator
 ;_IrrAddDeleteAnimator
 ;_IrrAddFlyCircleAnimator
@@ -42,28 +43,23 @@
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeAnimationRange
-; Description ...: [todo]
+; Description ...: Sets the range of animation that is to be played in the node.
 ; Syntax.........: _IrrSetNodeAnimationRange($h_Node, $i_Start, $i_End)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Node - Handle to a character scene node.
+;                  $i_Start - Start frame
+;                  $i_End - End frame
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: An anaimation sequences might run from 0 to 200 frames and a sequence where your character is running might only occupy a portion of this.
+; Related .......: _IrrGetMesh, _IrrAddMeshToScene, _IrrGetMeshFrameCount, _IrrGetNodeAnimationFrame, _IrrPlayNodeMD2Animation, _IrrSetNodeAnimationSpeed
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetNodeAnimationRange($h_Node, $i_Start, $i_End)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeAnimationRange", "ptr", $h_Node, "int", $i_Start, "int", $i_End)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNodeAnimationRange
 
 
@@ -71,7 +67,7 @@ EndFunc   ;==>_IrrSetNodeAnimationRange
 ; Name...........: _IrrPlayNodeMD2Animation
 ; Description ...: Selects the animation sequence of MD2 to be played.
 ; Syntax.........: _IrrPlayNodeMD2Animation($h_Node, $i_Animation)
-; Parameters ....: $h_Node -
+; Parameters ....: $h_Node - Handle to a character scene node.
 ;                  $i_Animation - sequence should be one of the following values:
 ;                  |$IRR_EMAT_STAND
 ;                  |$IRR_EMAT_RUN
@@ -99,154 +95,146 @@ EndFunc   ;==>_IrrSetNodeAnimationRange
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: MD2 format models have specific animation sequences contained within them that can be played back with a simple call.
-; Related .......: None
+; Related .......: _IrrGetMesh, _IrrAddMeshToScene, _IrrGetMeshFrameCount, _IrrGetNodeAnimationFrame, _IrrSetNodeAnimationRange, _IrrSetNodeAnimationSpeed
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrPlayNodeMD2Animation($h_Node, $i_Animation)
 	DllCall($_irrDll, "none:cdecl", "IrrPlayNodeMD2Animation", "ptr", $h_Node, "int", $i_Animation)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrPlayNodeMD2Animation
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeAnimationSpeed
-; Description ...: [todo]
+; Description ...: Change the speed at which an animation is played for a node
 ; Syntax.........: _IrrSetNodeAnimationSpeed($h_Node, $f_Speed)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Node - Handle to a character scene node.
+;                  $f_Speed - How many frames per second.
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: You could use this to make a character run slowly or quickly and still keep its feet on the ground.
+; Related .......: _IrrGetMesh, _IrrAddMeshToScene, _IrrGetMeshFrameCount, _IrrGetNodeAnimationFrame, _IrrSetNodeAnimationRange
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetNodeAnimationSpeed($h_Node, $f_Speed)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeAnimationSpeed", "ptr", $h_Node, "float", $f_Speed)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNodeAnimationSpeed
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetNodeAnimationFrame
-; Description ...: [todo]
+; Description ...: Get the frame number that is currently being played by the node.
 ; Syntax.........: _IrrGetNodeAnimationFrame($h_Node)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Node - Handle to a character scene node.
+; Return values .: Success - Current frame number being played.
+;                  Failure - False and @error 1
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrGetMesh, _IrrAddMeshToScene, _IrrGetMeshFrameCount, _IrrSetNodeAnimationSpeed, _IrrSetNodeAnimationRange
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetNodeAnimationFrame($h_Node)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGetNodeAnimationFrame", "ptr", $h_Node)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrGetNodeAnimationFrame", "ptr", $h_Node)
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetNodeAnimationFrame
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeAnimationFrame
-; Description ...: [todo]
+; Description ...: Set the current frame number being played in the animation.
 ; Syntax.........: _IrrSetNodeAnimationFrame($h_Node, $f_Frame)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Node - Handle to a character scene node.
+;                  $f_Frame - Frame number to play
+; Return values .: Success - True
+;                  Failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrGetMesh, _IrrAddMeshToScene, _IrrGetMeshFrameCount
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetNodeAnimationFrame($h_Node, $f_Frame)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeAnimationFrame", "ptr", $h_Node, "float", $f_Frame)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNodeAnimationFrame
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetTransitionTime
-; Description ...: [todo]
+; Description ...: Sets the transition time across which two poses of an animated mesh are blended.
 ; Syntax.........: _IrrSetTransitionTime($h_Node, $f_Speed)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Node - Handle to a character scene node.
+;                  $f_Speed - Speed of the transition
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: For example a character in a sitting pose can be switched into a lying down pose by blending the two frames,
+;                  this will provide a more convincing smooth transition instead of a snap change in position.
+;                  _IrrAnimateJoints must be called before IrrDrawScene if blending is used.
+; Related .......: _IrrAnimateJoints, _IrrSetJointMode
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrSetTransitionTime($h_Node, $f_Speed)
 	DllCall($_irrDll, "none:cdecl", "IrrSetTransitionTime", "ptr", $h_Node, "float", $f_Speed)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetTransitionTime
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAnimateJoints
-; Description ...: [todo]
+; Description ...: Animates the mesh based on the position of the joints.
 ; Syntax.........: _IrrAnimateJoints($h_Node)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Node - Handle to a character scene node.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: This should be used at the end of any manual joint operations including blending and
+;                  joints animated using IRR_JOINT_MODE_CONTROL and _IrrSetNodeRotation on a bone node.
+; Related .......: _IrrSetNodeRotation, _IrrSetJointMode
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrAnimateJoints($h_Node)
-	DllCall($_irrDll, "int:cdecl", "IrrAnimateJoints", "ptr", $h_Node)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrAnimateJoints", "ptr", $h_Node)
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrAnimateJoints
 
+
+; #FUNCTION# =============================================================================================================
+; Name...........: _IrrSetJointMode
+; Description ...: Sets the animation mode of joints in a node.
+; Syntax.........: _IrrSetJointMode($h_Node, $i_Mode)
+; Parameters ....: $h_Node - Handle to a character scene node.
+;                  $i_Mode - can be one of the following;
+;                  |$IRR_JOINT_MODE_NONE - no animation of the model based on bones.
+;                  |$IRR_JOINT_MODE_READ - automatic animation based upon the animation defined with calls like _IrrSetNodeAnimationRange.
+;                  |IRR_JOINT_MODE_CONTROL - allow the position of the bones to be set through code.
+; Return values .: Success - True
+;                  Failure - False
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: When using the control mode _IrrAnimateJoints must be called before IrrDrawScene.
+; Related .......: _IrrSetNodeAnimationRange, _IrrAnimateJoints,  _IrrSetTransitionTime
+; Link ..........:
+; Example .......: No
+; ===============================================================================================================================
+Func _IrrSetJointMode($h_Node, $i_Mode)
+	DllCall($_irrDll, "none:cdecl", "IrrAnimateJoints", "ptr", $h_Node, "uint", $i_Mode)
+ 	Return SetError(@error, 0, @error = 0)
+EndFunc   ;==>_IrrSetJointMode
 
 
 ; #FUNCTION# =============================================================================================================
@@ -262,8 +250,8 @@ EndFunc   ;==>_IrrAnimateJoints
 ;                  |For example 0.0,-9.8,0.0 defines a typical downward force. Other values could be used to simulate e.g. wind effects.
 ;                  $f_OffsetX, $f_OffsetY, $f_OffsetZ - Offset the node by a specific distance from the center of the collision.
 ;                  |As the center of the object and the size of your collision ellipsoid vary you can use this to adjust the position of the node and to bring it into contact with the ground.
-; Return values .: success - Handle of the created animator.
-;                  failure - False
+; Return values .: Success - Handle of the created animator.
+;                  Failure - False
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: The collision detection will stop the object penetrating through a surface in the objects it is colliding against and will also press it against the surface using gravity.
@@ -272,12 +260,11 @@ EndFunc   ;==>_IrrAnimateJoints
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddCollisionAnimator($h_IrrSelector, $h_Node, $f_RadiusX, $f_RadiusY, $f_RadiusZ, $f_GravityX, $f_GravityY, $f_GravityZ, $f_OffsetX, $f_OffsetY, $f_OffsetZ)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddCollisionAnimator", "ptr", $h_IrrSelector, "ptr", $h_Node, "float", $f_RadiusX, "float", $f_RadiusY, "float", $f_RadiusZ, "float", $f_GravityX, "float", $f_GravityY, "float", $f_GravityZ, "float", $f_OffsetX, "float", $f_OffsetY, "float", $f_OffsetZ)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddCollisionAnimator", "ptr", $h_IrrSelector, "ptr", $h_Node, "float", $f_RadiusX, "float", $f_RadiusY, "float", $f_RadiusZ, "float", $f_GravityX, "float", $f_GravityY, "float", $f_GravityZ, "float", $f_OffsetX, "float", $f_OffsetY, "float", $f_OffsetZ)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
+
 EndFunc   ;==>_IrrAddCollisionAnimator
 
 
@@ -287,8 +274,8 @@ EndFunc   ;==>_IrrAddCollisionAnimator
 ; Syntax.........: _IrrAddDeleteAnimator($h_Node, $i_Time)
 ; Parameters ....: $h_Node - Handle of a scene Node.
 ;                  $i_Time - Living time of the animator in milliseconds.
-; Return values .: success - Handle of the created animator.
-;                  failure - False
+; Return values .: Success - Handle of the created animator.
+;                  Failure - False
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: You could use this animator to delete a falling rock for example, all you would need to do is attach the delete animator, a movement animator and then forget about it.
@@ -297,12 +284,10 @@ EndFunc   ;==>_IrrAddCollisionAnimator
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddDeleteAnimator($h_Node, $i_Time)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddDeleteAnimator", "ptr", $h_Node, "int", $i_Time)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddDeleteAnimator", "ptr", $h_Node, "int", $i_Time)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddDeleteAnimator
 
 
@@ -314,8 +299,8 @@ EndFunc   ;==>_IrrAddDeleteAnimator
 ;                  $f_CenterX, $f_CenterY, $f_CenterZ - Define center of the circular path.
 ;                  $f_Radius - Defines the radius of the circular path.
 ;                  $f_Speed - Defines how far the node is moved each frame.
-; Return values .: success - Handle of the created animator.
-;                  failure - False
+; Return values .: Success - Handle of the created animator.
+;                  Failure - False
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: None
@@ -324,12 +309,10 @@ EndFunc   ;==>_IrrAddDeleteAnimator
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddFlyCircleAnimator($h_Node, $f_CenterX, $f_CenterY, $f_CenterZ, $f_Radius, $f_Speed)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddFlyCircleAnimator", "ptr", $h_Node, "float", $f_CenterX, "float", $f_CenterY, "float", $f_CenterZ, "float", $f_Radius, "float", $f_Speed)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddFlyCircleAnimator", "ptr", $h_Node, "float", $f_CenterX, "float", $f_CenterY, "float", $f_CenterZ, "float", $f_Radius, "float", $f_Speed)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddFlyCircleAnimator
 
 
@@ -344,8 +327,8 @@ EndFunc   ;==>_IrrAddFlyCircleAnimator
 ;                  $i_DoLoop - Determines single or continously movement type:
 ;                  |$IRR_ONE_SHOT - For a single animation and then stop.
 ;                  |$IRR_LOOP - To continuously repeat the animation.
-; Return values .: success - Handle of the created animator.
-;                  failure - False
+; Return values .: Success - Handle of the created animator.
+;                  Failure - False
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: None
@@ -354,12 +337,10 @@ EndFunc   ;==>_IrrAddFlyCircleAnimator
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddFlyStraightAnimator($h_Node, $f_StartX, $f_StartY, $f_StartZ, $f_EndX, $f_EndY, $f_EndZ, $i_Time, $i_DoLoop)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddFlyStraightAnimator", "ptr", $h_Node, "float", $f_StartX, "float", $f_StartY, "float", $f_StartZ, "float", $f_EndX, "float", $f_EndY, "float", $f_EndZ, "uint", $i_Time, "int", $i_DoLoop)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddFlyStraightAnimator", "ptr", $h_Node, "float", $f_StartX, "float", $f_StartY, "float", $f_StartZ, "float", $f_EndX, "float", $f_EndY, "float", $f_EndZ, "uint", $i_Time, "int", $i_DoLoop)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddFlyStraightAnimator
 
 
@@ -369,8 +350,8 @@ EndFunc   ;==>_IrrAddFlyStraightAnimator
 ; Syntax.........: _IrrAddRotationAnimator($h_Node, $f_RotX, $f_RotY, $f_RotZ)
 ; Parameters ....: $h_Node - Handle of a scene Node.
 ;                  $f_RotX, $f_RotY, $f_RotZ - Specify number of radians the object is spun around each axis.
-; Return values .: success - Handle of the created animator.
-;                  failure - False
+; Return values .: Success - Handle of the created animator.
+;                  Failure - False
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: None
@@ -379,12 +360,10 @@ EndFunc   ;==>_IrrAddFlyStraightAnimator
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddRotationAnimator($h_Node, $f_RotX, $f_RotY, $f_RotZ)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddRotationAnimator", "ptr", $h_Node, "float", $f_RotX, "float", $f_RotY, "float", $f_RotZ)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddRotationAnimator", "ptr", $h_Node, "float", $f_RotX, "float", $f_RotY, "float", $f_RotZ)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddRotationAnimator
 
 
@@ -400,8 +379,8 @@ EndFunc   ;==>_IrrAddRotationAnimator
 ;                  $f_Speed - Defines the rate the node moves along the spline curve.
 ;                  $f_Tightness - Specifies how tightly the curve is tied to the points.
 ;                  |Value between 0 (angular) and 1 (very loose).
-; Return values .: success - Handle of the created animator.
-;                  failure - False and sets @error:
+; Return values .: Success - Handle of the created animator.
+;                  Failure - False and sets @error:
 ;                  |1 - error from .dll call
 ;                  |2 - $tVectorStruct is not a dllstruct
 ; Author ........:
@@ -416,55 +395,53 @@ EndFunc   ;==>_IrrAddRotationAnimator
 ; ===============================================================================================================================
 Func _IrrAddSplineAnimator($h_Node, $tVectorStruct, $i_Start, $f_Speed, $f_Tightness)
 
-	if not IsDllStruct($tVectorStruct) then return SetError(2, 0, False)
-	local $iSplineVects = DllStructGetSize($tVectorStruct) / DllStructGetSize(DllStructCreate($tagIRR_VECTOR))
+	If Not IsDllStruct($tVectorStruct) Then Return SetError(2, 0, False)
+	Local $iSplineVects, $XArrayStruct, $YArrayStruct, $ZArrayStruct, $aResult
 
-	Local $XArrayStruct = DllStructCreate("float[" & $iSplineVects & "]")
-	Local $YArrayStruct = DllStructCreate("float[" & $iSplineVects & "]")
-	Local $ZArrayStruct = DllStructCreate("float[" & $iSplineVects & "]")
+	$iSplineVects = DllStructGetSize($tVectorStruct) / DllStructGetSize(DllStructCreate($tagIRR_VECTOR))
+	$XArrayStruct = DllStructCreate("float[" & $iSplineVects & "]")
+	$YArrayStruct = DllStructCreate("float[" & $iSplineVects & "]")
+	$ZArrayStruct = DllStructCreate("float[" & $iSplineVects & "]")
 
 	; dll funtion expect 3 structs, each for x/y/z. So sort $TVectorStruct into them:
 	For $i = 1 To $iSplineVects
-		DllStructSetData($XArrayStruct, 1, __GetVectStruct($tVectorStruct, $i-1, $VECT_X), $i ) ; x values
-		DllStructSetData($YArrayStruct, 1, __GetVectStruct($tVectorStruct, $i-1, $VECT_Y), $i ) ; y values
-		DllStructSetData($ZArrayStruct, 1, __GetVectStruct($tVectorStruct, $i-1, $VECT_Z), $i ) ; z values
+		DllStructSetData($XArrayStruct, 1, __GetVectStruct($tVectorStruct, $i - 1, $VECT_X), $i) ; x values
+		DllStructSetData($YArrayStruct, 1, __GetVectStruct($tVectorStruct, $i - 1, $VECT_Y), $i) ; y values
+		DllStructSetData($ZArrayStruct, 1, __GetVectStruct($tVectorStruct, $i - 1, $VECT_Z), $i) ; z values
 	Next
 
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddSplineAnimator", "ptr", $h_Node, "int", $iSplineVects, _
-	"ptr", DllStructGetPtr($XArrayStruct,1), "ptr", DllStructGetPtr($YArrayStruct,1), "ptr", DllStructGetPtr($ZArrayStruct,1), _
-	"int", $i_Start, "float", $f_Speed, "float", $f_Tightness)
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddSplineAnimator", "ptr", $h_Node, "int", $iSplineVects, _
+			"ptr", DllStructGetPtr($XArrayStruct, 1), "ptr", DllStructGetPtr($YArrayStruct, 1), "ptr", DllStructGetPtr($ZArrayStruct, 1), _
+			"int", $i_Start, "float", $f_Speed, "float", $f_Tightness)
 
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return $result[0]
-	EndIf
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddSplineAnimator
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddFadeAnimator
-; Description ...: [todo]
+; Description ...: This animator deletes the node it is attached to after the specified number of milliseconds.
 ; Syntax.........: _IrrAddFadeAnimator($h_Node, $i_DeleteAfterMiliseconds, $f_Scale = 1.0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: success - Handle of the created animator.
-;                  failure - False
+; Parameters ....: $h_Node - Handle of a scene Node.
+;                  $i_DeleteAfterMiliseconds - Number of milliseconds before deleting the node.
+;                  $f_Scale - Scaled amount while fading.
+; Return values .: Success - Handle of the created animator.
+;                  Failure - False
 ; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: During the time while it is waiting to delete it the node is slowly faded to invisibility and is also scaled by the specified amount.
+;                  You could use this animator to fade and delete an object from a scene that was no longer required like a used medical pack,
+;                  all you would need to do is attach the fade animator and forget about it.
 ; Related .......: _IrrAddDeleteAnimator, _IrrRemoveAnimator
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddFadeAnimator($h_Node, $i_DeleteAfterMiliseconds, $f_Scale = 1.0)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddFadeAnimator", "ptr", $h_Node, "int", $i_DeleteAfterMiliseconds, "float", $f_Scale)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddFadeAnimator", "ptr", $h_Node, "int", $i_DeleteAfterMiliseconds, "float", $f_Scale)
+	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddFadeAnimator
 
 
@@ -474,8 +451,8 @@ EndFunc   ;==>_IrrAddFadeAnimator
 ; Syntax.........: _IrrRemoveAnimator($h_Node, $h_Animator)
 ; Parameters ....: $h_Node - Handle of a scene Node.
 ;                  $h_Animator - Handle of the animator to be removed.
-; Return values .: success - True
-;                  failure - False
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: After the function call a played animation is stopped or the animator cleaned up so you can apply a new one.
@@ -485,9 +462,5 @@ EndFunc   ;==>_IrrAddFadeAnimator
 ; ===============================================================================================================================
 Func _IrrRemoveAnimator($h_Node, $h_Animator)
 	DllCall($_irrDll, "none:cdecl", "IrrRemoveAnimator", "ptr", $h_Node, "ptr", $h_Animator)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrRemoveAnimator

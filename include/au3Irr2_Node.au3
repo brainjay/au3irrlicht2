@@ -39,7 +39,6 @@
 ;_IrrGetNodePosition
 ;_IrrGetNodeRotation
 ;_IrrGetJointNode
-;_IrrSetJointMode
 ;_IrrAddChildToParent
 ;_IrrGetNodeFirstChild
 ;_IrrGetNodeNextChild
@@ -530,32 +529,6 @@ Func _IrrGetJointNode($h_Node, $s_Joint)
 	EndIf
 EndFunc   ;==>_IrrGetJointNode
 
-
-; #FUNCTION# =============================================================================================================
-; Name...........: _IrrSetJointMode
-; Description ...: [todo]
-; Syntax.........: _IrrSetJointMode($h_Node, $i_Mode)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
-; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
-; Link ..........:
-; Example .......: [todo: Yes, No]
-; ===============================================================================================================================
-Func _IrrSetJointMode($h_Node, $i_Mode)
-	$result = DllCall($_irrDll, "none:cdecl", "IrrSetJointMode", "ptr", $h_Node, "int", $i_Mode)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
-EndFunc   ;==>_IrrSetJointMode
 
 
 ; #FUNCTION# =============================================================================================================
