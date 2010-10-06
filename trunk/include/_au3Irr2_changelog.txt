@@ -33,7 +33,7 @@
   Also reworked returned error codes
 - _IrrSetZoneManagerBoundingBox, _IrrSetZoneManagerProperties:
   changed "ptr:cdecl" to "none:cdecl" as this dllcall doesn't offer a return.
-- _IrrSetSkyDomeColor, _IrrSetSkyDomeColorBand, _IrrSetSkyDomeColorPoint 
+- _IrrSetSkyDomeColor, _IrrSetSkyDomeColorBand, _IrrSetSkyDomeColorPoint, _IrrAnimateJoints: 
   changed "ptr:cdecl" to "none:cdecl" as this dllcall doesn't offer a return by call.
   These dll calls outputs printf errors straight to console.
 
@@ -54,8 +54,8 @@
 > Help file:
 
 + Added: Completed documentation including example code for some more functions.
-  Current status: Topics completed along examples 1-14 + some more.
-  Naked reference w/o detailed informations for all functions inside other examples.
+  Current status: Topics completed along examples 1-14 + several more.
+  At least naked reference w/o detailed informations for all functions inside other examples.
 - Changed: Reworked several help file descriptions and examples.
 + Added: 'Copy to clipboard'-button for included examples (using VBS code from GEOSoft)
 
@@ -68,7 +68,8 @@
 
 
 > Other:
-+ Changed: global $result used in UDF files switched to local variables (WIP, finished for 2D, Scene)
++ Changed: global $result used in UDF files switched to local variables (WIP, finished for 2D, Scene, 
+  Camera, Animation)
 
 
 === 2.03 (2010-09-05) ==========================================================
