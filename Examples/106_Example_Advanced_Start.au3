@@ -36,7 +36,7 @@ const $STITLE = "Example 106: Advanced Start (Resize window!)"
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
 _IrrStartAdvanced ( _
-    $IRR_EDT_OPENGL, _       ; Use OpenGL
+    $IRR_EDT_DIRECT3D9, _       ; Use OpenGL
     800, 600, _              ; screen size
     $IRR_BITS_PER_PIXEL_32, _; using 32 bit true color
     $IRR_WINDOWED, _         ; in a window
@@ -80,7 +80,7 @@ _IrrPlayNodeMD2Animation( $SceneNode, $IRR_EMAT_STAND )
 _IrrAddRotationAnimator($SceneNode, 0, 0.3, 0)
 
 ; add a camera into the scene and target zumlin
-_IrrGetNodePosition($SceneNode, $vect)
+$vect = _IrrGetNodePosition($SceneNode)
 $OurCamera = _IrrAddCamera( 30, 30, 20, $vect[0], $vect[1], $vect[2] )
 
 ; add a  light source

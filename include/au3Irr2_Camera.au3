@@ -151,11 +151,9 @@ EndFunc   ;==>_IrrSetCameraTarget
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCameraTarget
-; Description ...: Get the point in space that the camera is looking at.
-; Syntax.........: _IrrGetCameraTarget($h_Camera, ByRef $a_Vector3df)
+; Description ...: Returns array with coordinates of point in space that the camera is looking at.
+; Syntax.........: _IrrGetCameraTarget($h_Camera)
 ; Parameters ....: $h_Camera - Handle of a camera object
-;                  $a_Vector3df - Any variable to populate with the camera target position, must not explicitly be an array.
-;                  The passed variable will be re-dimed to an array with the X, Y, Z coordinates stored in its three elements.
 ; Return values .: success - Array with three elements for X, Y, Z.
 ;                  failure - False
 ; Author ........:
@@ -165,27 +163,23 @@ EndFunc   ;==>_IrrSetCameraTarget
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrGetCameraTarget($h_Camera, ByRef $a_Vector3df)
+Func _IrrGetCameraTarget($h_Camera)
 	Dim $a_Vector3df[3], $aResult
 	$aResult = DllCall($_irrDll, "none:cdecl", "IrrGetCameraTarget", "ptr", $h_Camera, "float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2])
 	If @error Then Return SetError(1, 0, False)
 	$a_Vector3df[0] = $aResult[2]
 	$a_Vector3df[1] = $aResult[3]
 	$a_Vector3df[2] = $aResult[4]
-	Return SetError(0, 0, True)
+	Return $a_Vector3df
 EndFunc   ;==>_IrrGetCameraTarget
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCameraUpDirection
-; Description ...: Get the up vector of a camera object into the supplied variables
-; Syntax.........: _IrrGetCameraUpDirection($h_Camera, ByRef $a_Vector3df)
+; Description ...: Returns the up vector of a camera object as an array.
+; Syntax.........: _IrrGetCameraUpDirection($h_Camera)
 ; Parameters ....: $h_Camera - Handle of a camera node.
-;                  $a_Vector3df - Variable that will be filled with X Y Z coordinates, this doesn't have to be an array, it will be Dim'd into an array by the function.
-; Return values .: Success - True and supplied $a_Vector3df variable filled as a 1D 3 element array;
-;                  |$a_Vector3df[0] = X coordinate
-;                  |$a_Vector3df[1] = y coordinate
-;                  |$a_Vector3df[2] = Z coordinate
+; Return values .: Success - 0-bases array with x, y, z coordinates.
 ;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
@@ -194,14 +188,14 @@ EndFunc   ;==>_IrrGetCameraTarget
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrGetCameraUpDirection($h_Camera, ByRef $a_Vector3df)
+Func _IrrGetCameraUpDirection($h_Camera)
 	Dim $a_Vector3df[3], $aResult
 	$aResult = DllCall($_irrDll, "none:cdecl", "IrrGetCameraUpDirection", "ptr", $h_Camera, "float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2])
 	If @error Then Return SetError(1, 0, False)
 	$a_Vector3df[0] = $aResult[2]
 	$a_Vector3df[1] = $aResult[3]
 	$a_Vector3df[2] = $aResult[4]
-	Return SetError(0, 0, True)
+	Return $a_Vector3df
 EndFunc   ;==>_IrrGetCameraUpDirection
 
 

@@ -45,7 +45,7 @@ DIM $i ; integer
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_NO_SHADOWS, $IRR_CAPTURE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
@@ -128,7 +128,7 @@ WHILE _IrrRunning()
 
     ; reposition all of the objects
     for $i = 0 to $TEST_NODES - 1
-        _IrrGetNodePosition( $TestNode[$i], $POS )
+        $POS = _IrrGetNodePosition($TestNode[$i])
         $POS[1] += $x
         $POS[2] += $y
         _IrrSetNodePosition( $TestNode[$i], $POS[0], $POS[1], $POS[2] )

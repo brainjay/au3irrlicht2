@@ -43,7 +43,7 @@ global const $TILE_SIZE = 128
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
@@ -103,7 +103,7 @@ WHILE _IrrRunning()
     ; begin the scene, erasing the canvas with sky-blue before rendering
     _IrrBeginScene( 240, 255, 255 )
 
-    _IrrGetNodePosition( $CameraNode, $vector3df )
+    $vector3df = _IrrGetNodePosition($CameraNode)
     $vector3df[1] = _IrrGetTerrainTileHeight( $Terrain, $vector3df[0], $vector3df[2] )
     _IrrSetNodePosition( $CameraNode, $vector3df[0], $vector3df[1]+80, $vector3df[2] )
 

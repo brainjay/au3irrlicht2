@@ -15,7 +15,6 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
-;_IrrGetNodeAbsolutePosition
 ;_IrrSetNodeParent
 ;_IrrGetNodeID
 ;_IrrGetNodeBoundingBox
@@ -37,6 +36,7 @@
 ;_IrrSetNodeScale
 ;_IrrDebugDataVisible
 ;_IrrGetNodePosition
+;_IrrGetNodeAbsolutePosition
 ;_IrrGetNodeRotation
 ;_IrrGetJointNode
 ;_IrrAddChildToParent
@@ -318,7 +318,7 @@ EndFunc   ;==>_IrrSetNodeMaterialType
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: None
-; Related .......: _IrrSetNodeRotation, _IrrSetNodeScale, _IrrGetNodePosition
+; Related .......: _IrrGetNodePosition, _IrrGetNodeRotation, _IrrSetNodeRotation, _IrrGetNodeAbsolutePosition
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -344,7 +344,7 @@ EndFunc   ;==>_IrrSetNodePosition
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: None
-; Related .......: _IrrSetNodePosition, _IrrSetNodeScale, _IrrGetNodeRotation
+; Related .......: _IrrGetNodePosition, _IrrSetNodePosition, _IrrGetNodeRotation, _IrrGetNodeAbsolutePosition
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -413,21 +413,19 @@ EndFunc   ;==>_IrrDebugDataVisible
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetNodePosition
-; Description ...: Gets position of a scene node into passed variable.
-; Syntax.........: _IrrGetNodePosition($h_Node, ByRef $a_Vector3df)
+; Description ...: Returns array with position coordinates of a scene node.
+; Syntax.........: _IrrGetNodePosition($h_Node)
 ; Parameters ....: $h_Node - Handle of a scene node
-;                  $a_Vector3df - Any variable to populate with the node position, must not explicitly be an array.
-;                  |The passed variable will be re-dimed to an array with the X, Y, Z coordinates stored in its three elements.
-; Return values .: success - Array with three elements for X, Y, Z.
+; Return values .: success - 0-bases array with three elements for X, Y, Z coordinates.
 ;                  failure - False
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: None.
-; Related .......: _IrrGetNodeRotation, _IrrSetNodePosition
+; Related .......: _IrrSetNodePosition, _IrrGetNodeRotation, _IrrSetNodeRotation, _IrrGetNodeAbsolutePosition
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrGetNodePosition($h_Node, ByRef $a_Vector3df)
+Func _IrrGetNodePosition($h_Node)
 	Dim $a_Vector3df[3]
 	$result = DllCall($_irrDll, "none:cdecl", "IrrGetNodePosition", "ptr", $h_Node, "float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2])
 	if @error Then
@@ -442,24 +440,21 @@ EndFunc   ;==>_IrrGetNodePosition
 
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetNodeAbsolutePosition
-; Description ...: [todo]
-; Syntax.........: _IrrGetNodeAbsolutePosition($h_Node, ByRef $a_Vector3df)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Description ...: Get the absoloute position of the node in the scene.
+; Syntax.........: _IrrGetNodeAbsolutePosition($h_Node)
+; Parameters ....: $h_Node - Handle of a scene node
+; Return values .: success - 0-bases array with three elements for X, Y, Z coordinates.
+;                  failure - False
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: The absolute postion includes the position changes of all of the nodes parents too.
+; Related .......: _IrrGetNodePosition, _IrrSetNodePosition, _IrrGetNodeRotation, _IrrSetNodeRotation
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
-Func _IrrGetNodeAbsolutePosition($h_Node, ByRef $a_Vector3df)
+Func _IrrGetNodeAbsolutePosition($h_Node)
 	Dim $a_Vector3df[3]
 	$result = DllCall($_irrDll, "none:cdecl", "IrrGetNodeAbsolutePosition", "ptr", $h_Node, "float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2])
 	if @error Then
@@ -475,21 +470,19 @@ EndFunc   ;==>_IrrGetNodeAbsolutePosition
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetNodeRotation
-; Description ...: Gets rotation of a scene node into passed variable.
-; Syntax.........: _IrrGetNodeRotation($h_Node, ByRef $a_Vector3df)
+; Description ...: Returns array with rotation values of a scene node.
+; Syntax.........: _IrrGetNodeRotation($h_Node)
 ; Parameters ....: $h_Node - Handle of a scene node
-;                  $a_Vector3df - Any variable to populate with the node rotation, must not explicitly be an array.
-;                  |The passed variable will be re-dimed to an array with the X, Y, Z rotation values stored in its three elements.
-; Return values .: success - Array with three elements for X, Y, Z.
+; Return values .: success - 0-bases array with three elements for X, Y, Z rotation.
 ;                  failure - False
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: None.
-; Related .......: _IrrGetNodePosition, _IrrSetNodeRotation
+; Related .......: _IrrGetNodePosition, _IrrSetNodePosition, _IrrSetNodeRotation, _IrrGetNodeAbsolutePosition
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrGetNodeRotation($h_Node, ByRef $a_Vector3df)
+Func _IrrGetNodeRotation($h_Node)
 	Dim $a_Vector3df[3]
 	$result = DllCall($_irrDll, "none:cdecl", "IrrGetNodeRotation", "ptr", $h_Node, "float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2])
 	if @error Then

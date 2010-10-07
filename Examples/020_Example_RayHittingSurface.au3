@@ -40,7 +40,7 @@ DIM $aCollideAt[3] ; $IRR_VECTOR
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
@@ -91,10 +91,10 @@ _IrrHideMouse()
 WHILE _IrrRunning()
     ; begin the scene, erasing the canvas with sky-blue before rendering
     ;_IrrBeginScene( 240, 255, 255 )
-	_IrrBeginScene( 50, 50, 50 )
+	_IrrBeginScene( 0, 0, 25 )
 
-    _IrrGetNodePosition( $OurCamera, $aStartVector )
-    _IrrGetCameraTarget( $OurCamera, $aEndVector )
+    $aStartVector = _IrrGetNodePosition($OurCamera)
+    $aEndVector = _IrrGetCameraTarget($OurCamera)
 
     ; extend the line through the target point for 5000 times its origonal length
 

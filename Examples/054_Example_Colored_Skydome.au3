@@ -114,7 +114,7 @@ WHILE _IrrRunning()
     ; begin the scene, erasing the canvas with sky-blue before rendering
     _IrrBeginScene( 192, 192, 255 )
 
-    _IrrGetNodePosition( $CameraNode, $a_Vector3df )
+    $a_Vector3df = _IrrGetNodePosition($CameraNode)
     $a_Vector3df[1] = _IrrGetTerrainTileHeight( $Terrain, $a_Vector3df[0], $a_Vector3df[2] )
     _IrrSetNodePosition( $CameraNode, $a_Vector3df[0], $a_Vector3df[1]+80, $a_Vector3df[2] )
 

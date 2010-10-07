@@ -12,7 +12,7 @@ WHILE _IrrRunning()
     _IrrBeginScene( 0, 0, 50 )
     _IrrDrawScene()
 
-	_IrrGetNodePosition($nodeCamera, $aVector3df)
+	$aVector3df = _IrrGetNodePosition($nodeCamera)
 	_IrrSetWindowCaption("Camera position (x/y/z): " & _
 		int($aVector3df[0]) & " / " & int($aVector3df[1]) & " / " & int($aVector3df[2]))
 

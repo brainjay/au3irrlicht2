@@ -39,7 +39,7 @@ dim $a_vector3df[3]
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_NO_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 ; set the window caption
 _IrrSetWindowCaption( "Example 13: Camera Position and Rotation" )
@@ -77,7 +77,7 @@ WHILE _IrrRunning()
     _IrrDrawScene()
 
     ; get the position of the camera into the supplied array
-	_IrrGetNodePosition($CameraNode, $a_vector3df)
+	  $a_vector3df = _IrrGetNodePosition($CameraNode)
 
     ; create a wide string with a list of the positions in
     $metrics = "POSITION " & int($a_vector3df[0]) & " " & int($a_vector3df[1]) & " " & int($a_vector3df[2]) & "              "
@@ -86,7 +86,7 @@ WHILE _IrrRunning()
     _Irr2DFontDraw ( $BitmapFont, $metrics, 4, 4, 250, 24 )
 
     ; get the rotation of the camera into the supplied array
-    _IrrGetNodeRotation( $CameraNode, $a_vector3df )
+    $a_vector3df = _IrrGetNodeRotation($CameraNode)
 
     ; create a wide string with a list of the rotations in
     $metrics = "ROTATION " & int($a_vector3df[0]) & " " & int($a_vector3df[1]) & " " & int($a_vector3df[2]) & "              "
