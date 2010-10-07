@@ -41,7 +41,7 @@ dim $TerrainHeight ; single
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
@@ -107,7 +107,7 @@ WHILE _IrrRunning()
     ; begin the scene, erasing the canvas with sky-blue before rendering
     _IrrBeginScene( 128, 128, 255 )
 
-    _IrrGetNodePosition( $CameraNode, $aVector3df)
+    $aVector3df = _IrrGetNodePosition( $CameraNode)
     $TerrainHeight = _IrrGetTerrainHeight( $TerrainNode, $aVector3df[0], $aVector3df[2] )+50
     if $aVector3df[1] < $TerrainHeight THEN
         _IrrSetNodePosition( $CameraNode, $aVector3df[0], $TerrainHeight, $aVector3df[2] )

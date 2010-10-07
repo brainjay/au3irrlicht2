@@ -20,6 +20,9 @@
 > Script breaking changes:
 
 + _IrrAddSplineAnimator: Parameters changed to simplify usage (see examples)
++ _IrrGetNodePosition, _IrrGetNodeRotation, _IrrGetNodeAbsolutePosition,
+  _IrrGetCameraTarget: Removed required byRef array parameter
+  (see help file/adjusted examples for syntax)
 
 
 

@@ -47,8 +47,8 @@ _IrrAddFPSCamera($h_ParentNode=0,$f_RotateSpeed=100.0,$f_MoveSpeed=0.5,$i_ID=-1,
 _IrrAddCamera($f_CamX,$f_CamY,$f_CamZ,$f_TargetX,$f_TargetY,$f_TargetZ) Adds a camera into the scene.
 _IrrAddMayaCamera($h_Node=$IRR_NO_OBJECT,$f_Rotate=100.0,$f_Zoom=100.0,$f_Move=100.0) Adds a Maya style camera to into the scene.
 _IrrSetCameraTarget($h_Camera,$f_CamX,$f_CamY,$f_CamZ) Sets the point in space that the camera is looking at.
-_IrrGetCameraTarget($h_Camera,ByRef $a_Vector3df) Get the point in space that the camera is looking at.
-_IrrGetCameraUpDirection($h_Camera,ByRef $a_Vector3df) Get the up vector of a camera object into the supplied variables
+_IrrGetCameraTarget($h_Camera) Returns array with coordinates of point in space that the camera is looking at.
+_IrrGetCameraUpDirection($h_Camera) Returns the up vector of a camera object as an array.
 _IrrSetCameraUpDirection($h_Camera,$f_CamX,$f_CamY,$f_CamZ) Set the up vector of a camera object.
 _IrrGetCameraOrientation($h_Camera,ByRef $a_Vector1,ByRef $a_Vector2,ByRef $a_Vector3) Gets the camera orientation (forward, upward and sideways vectors of the camera)
 _IrrRevolveCamera($h_Camera,$f_Yaw,$f_Pitch,$f_Roll,$f_Drive,$f_Strafe,$f_Elevate) Revolve the camera using quaternion calculations.
@@ -627,9 +627,9 @@ _IrrSetNodePosition($h_Node,$f_X,$f_Y,$f_Z) Moves the node to the specified posi
 _IrrSetNodeRotation($h_Node,$f_X,$f_Y,$f_Z) Rotate a node to the specified orientation through its X, Y and Z axis
 _IrrSetNodeScale($h_Node,$f_X,$f_Y,$f_Z) Sets the scale of the scene node
 _IrrDebugDataVisible($h_Node,$i_Visible) 
-_IrrGetNodePosition($h_Node,ByRef $a_Vector3df) Gets position of a scene node into passed variable.
-_IrrGetNodeAbsolutePosition($h_Node,ByRef $a_Vector3df) 
-_IrrGetNodeRotation($h_Node,ByRef $a_Vector3df) Gets rotation of a scene node into passed variable.
+_IrrGetNodePosition($h_Node) Returns array with position coordinates of a scene node.
+_IrrGetNodeAbsolutePosition($h_Node) Get the absoloute position of the node in the scene.
+_IrrGetNodeRotation($h_Node) Returns array with rotation values of a scene node.
 _IrrGetJointNode($h_Node,$s_Joint) 
 _IrrAddChildToParent($h_ChildNode,$h_ParentNode) 
 _IrrGetNodeFirstChild($h_Node,ByRef $h_Position) 

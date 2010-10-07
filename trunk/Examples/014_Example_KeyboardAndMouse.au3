@@ -54,7 +54,7 @@ DIM $MY ; single
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
 ; here we
-_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_CAPTURE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
@@ -127,7 +127,7 @@ WHILE _IrrRunning()
         _IrrSetMousePosition( $MX, $MY )
 
         ; get the position of the camera
-        _IrrGetNodePosition( $CameraNode, $POS)
+        $POS = _IrrGetNodePosition( $CameraNode)
 
         ; while there are key events waiting to be processed
         while _IrrKeyEventAvailable()
