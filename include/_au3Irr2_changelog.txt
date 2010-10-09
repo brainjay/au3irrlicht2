@@ -12,8 +12,8 @@
 ; '[' and ']' can be used to set text to bold in .html
   
 
-=== 2.04 (2010-10-xx) ==========================================================
-[Work in progress!]
+
+=== 2.04 (2010-10-09) ==========================================================
 
 
 
@@ -39,6 +39,7 @@
 - _IrrSetSkyDomeColor, _IrrSetSkyDomeColorBand, _IrrSetSkyDomeColorPoint, _IrrAnimateJoints: 
   changed "ptr:cdecl" to "none:cdecl" as this dllcall doesn't offer a return by call.
   These dll calls outputs printf errors straight to console.
++ Fixed: _IrrGetScreenCoordinatesFrom3DPosition (did not return anything useable because of wrong dllCall)
 
 
 
@@ -57,7 +58,7 @@
 > Help file:
 
 + Added: Completed documentation including example code for some more functions.
-  Current status: Topics completed along examples 1-14 + several more.
+  Current status: Topics completed along examples 1-16 + several more.
   At least naked reference w/o detailed informations for all functions inside other examples.
 - Changed: Reworked several help file descriptions and examples.
 + Added: 'Copy to clipboard'-button for included examples (using VBS code from GEOSoft)

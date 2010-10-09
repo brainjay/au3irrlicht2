@@ -346,22 +346,27 @@ EndFunc   ;==>_IrrSetNodeScale
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrDebugDataVisible
-; Description ...: [todo]
-; Syntax.........: _IrrDebugDataVisible($h_Node, $i_Visible)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Description ...: Displays debugging data around a node (typically the bounding box around edges of the node).
+; Syntax.........: _IrrDebugDataVisible($h_Node, $i_Visible = $EDS_BBOX)
+; Parameters ....: $h_Node - Handle of a scene node.
+;                  $i_Visible - Type of debugging information (not all of them are supported on all node types):
+;                  |$EDS_OFF: No Debugging
+;                  |$EDS_BBOX: Bounding Box
+;                  |$EDS_NORMALS: Normals
+;                  |$EDS_SKELETON: Skeleton
+;                  |$EDS_MESH_WIRE_OVERLAY: Wireframe
+;                  |$EDS_HALF_TRANSPARENCY: Transparency
+;                  |$EDS_BBOX_BUFFERS: Bounding Box Buffers
+;                  |$EDS_FULL: Everything
+; Return values .: None.
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: None.
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrDebugDataVisible($h_Node, $i_Visible)
+Func _IrrDebugDataVisible($h_Node, $i_Visible = $EDS_BBOX)
 	DllCall($_irrDll, "none:cdecl", "IrrDebugDataVisible", "ptr", $h_Node, "int", $i_Visible)
 	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrDebugDataVisible
