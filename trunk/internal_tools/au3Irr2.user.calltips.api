@@ -1,4 +1,4 @@
-; userCallTips for au3Irr2 release 2.04 (2010-10-xx)
+; userCallTips for au3Irr2 release 2.04 (2010-10-09)
 ; === Start of au3Irrlicht2 calltip definitions ======================================================
 
 _IrrSetTextureCreationFlag($i_Flag,$i_Value) Sets texture creation flags controlling how textures are handled when they are created.
@@ -72,7 +72,7 @@ _IrrGetRayFromScreenCoordinates($i_X,$i_Y,$h_Camera)
 _IrrGetCollisionNodeFromCamera($h_Camera) 
 _IrrGetCollisionNodeFromRay(byRef $h_StartVector,byRef $h_EndVector) 
 _IrrGetCollisionNodeFromScreenCoordinates($i_X,$i_Y) 
-_IrrGetScreenCoordinatesFrom3DPosition(ByRef $i_ScreenX,ByRef $i_ScreenY,$a_3DPositionVector) 
+_IrrGetScreenCoordinatesFrom3DPosition(ByRef $i_ScreenX,ByRef $i_ScreenY,$a_3DPositionVector) Screen co-ordinates are returned for the position of the specified 3D co-ordinates.
 _IrrGet3DPositionFromScreenCoordinates($i_X,$i_Y,ByRef $a_Vector3df,$h_Camera,$f_NormalX=0.0,$f_NormalY=0.0,$f_NormalZ=1.0,$f_DistanceFromOrigin=0.0) 
 _IrrGet2DPositionFromScreenCoordinates($i_X,$i_Y,ByRef $f_X,ByRef $f_Y,$h_Camera) 
 _IrrGetChildCollisionNodeFromRay($h_Node,$i_Mask,$i_Recurse,$a_StartVector,$a_EndVector) 
@@ -625,14 +625,14 @@ _IrrSetNodeMaterialType($h_Node,$i_Type) Set the way that materials are applied 
 _IrrSetNodePosition($h_Node,$f_X,$f_Y,$f_Z) Moves the node to the specified position
 _IrrSetNodeRotation($h_Node,$f_X,$f_Y,$f_Z) Rotate a node to the specified orientation through its X, Y and Z axis
 _IrrSetNodeScale($h_Node,$f_X,$f_Y,$f_Z) Sets the scale of the scene node
-_IrrDebugDataVisible($h_Node,$i_Visible) 
+_IrrDebugDataVisible($h_Node,$i_Visible=$EDS_BBOX) Displays debugging data around a node (typically the bounding box around edges of the node).
 _IrrGetNodePosition($h_Node) Returns array with position coordinates of a scene node.
 _IrrGetNodeAbsolutePosition($h_Node) Get the absoloute position of the node in the scene.
 _IrrGetNodeRotation($h_Node) Returns array with rotation values of a scene node.
 _IrrGetJointNode($h_Node,$s_Joint) 
 _IrrAddChildToParent($h_ChildNode,$h_ParentNode) 
 _IrrGetNodeFirstChild($h_Node,ByRef $h_Position) 
-_IrrGetNodeNextChild($h_Node,ByRef $h_Position) 
+_IrrGetNodeNextChild($h_Node,ByRef $h_Position) Get the next child node of this node, returns 0 if there is no child.
 _IrrIsNodeLastChild($h_Node,ByRef $h_Position) 
 _IrrAddNodeShadow($h_Node,$h_mesh=0) Adds shadows to a node that are cast across other nodes in the scene.
 _IrrSetNodeVisibility($h_Node,$i_Visible) 
@@ -682,7 +682,7 @@ _IrrSetCenterOfEffect($h_ParticleAffector,$f_X,$f_Y,$f_Z)
 _IrrSetStrengthOfEffect($h_ParticleAffector,$f_X,$f_Y,$f_Z) 
 _IrrGetRootSceneNode() Get the scenes root node, all scene nodes are children of this node.
 _IrrGetMesh($s_MeshFile) Loads the specified mesh ready to be added to the scene.
-_IrrCreateMesh($s_MeshName,$tVertexArray,$a_Indices) Create a new mesh.
+_IrrCreateMesh($s_MeshName,$tVertexArray,$a_Indices) Create a new mesh from lists of vertices and indices.
 _IrrAddSphereSceneMesh($s_MeshName,$f_Radius,$i_PolyCount) 
 _IrrAddHillPlaneMesh($s_Name,$f_TileSizeX,$f_TileSizeY,$i_TileCountX,$i_TileCountY,$h_Material=0,$f_HillHeight=0,$f_CountHillsX=0,$f_CountHillsY=0,$f_TextureRepeatCountX=1,$f_TextureRepeatCountY=1) Creates a hill plane mesh that represents a simple terrain.
 _IrrWriteMesh($h_Mesh,$i_FileFormat,$s_Filename) Write the first frame of the supplied animated mesh out to a file using the specified file format.
@@ -692,11 +692,11 @@ _IrrSetMeshHardwareAccelerated($h_mesh,$i_frame=0) Set the supplied mesh as a Ha
 _IrrGetMeshFrameCount($h_Mesh) Gets the number of frames in the supplied mesh.
 _IrrGetMeshBufferCount($h_Mesh,$i_FrameNumber) Gets the number of mesh buffers in the supplied mesh.
 _IrrGetMeshIndexCount($h_Mesh,$i_Frame,$i_MeshBuffer=0) 
-_IrrGetMeshIndices($h_Mesh,$i_FrameNumber,ByRef $a_IndicesArray,$i_MeshBuffer=0) 
+_IrrGetMeshIndices($h_Mesh,$i_FrameNumber,ByRef $a_IndicesArray,$i_MeshBuffer=0) Gets the list of indices in a mesh and copies them into the supplied variable.
 _IrrSetMeshIndices($h_Mesh,$i_FrameNumber,ByRef $a_IndicesArray,$i_MeshBuffer=0) 
 _IrrGetMeshVertexCount($h_Mesh,$i_Frame,$i_MeshBuffer=0) 
-_IrrGetMeshVertices($h_Mesh,$i_FrameNumber,ByRef $h_IndicesArrayStruct,$i_MeshBuffer=0) 
-_IrrSetMeshVertices($h_Mesh,$i_FrameNumber,ByRef $h_IndicesArrayStruct,$i_MeshBuffer=0) 
+_IrrGetMeshVertices($h_Mesh,$i_FrameNumber,ByRef $tVertex,$i_MeshBuffer=0) Gets the list of vertices in a mesh and copies them into the supplied variable.
+_IrrSetMeshVertices($h_Mesh,$i_FrameNumber,ByRef $tVertex,$i_MeshBuffer=0) This sets the value of the list of vertices in a mesh copying them from the supplied vertex array struct.
 _IrrSetMeshVertexColors($h_Mesh,$i_FrameNumber,$h_VertexColourArrayStruct,$h_VertexGroupStartIndices,$h_VertexGroupEndIndices,$i_NumberOfGroups,$i_MeshBuffer) 
 _IrrSetMeshVertexCoords($h_Mesh,$i_FrameNumber,$h_VertexCoordArrayStruct,$h_VertexGroupStartIndices,$h_VertexGroupEndIndices,$i_NumberOfGroups,$i_MeshBuffer) 
 _IrrSetMeshVertexSingleColor($h_Mesh,$i_FrameNumber,$h_VertexColourStruct,$h_VertexGroupStartIndices,$h_VertexGroupEndIndices,$i_NumberOfGroups,$i_MeshBuffer) 

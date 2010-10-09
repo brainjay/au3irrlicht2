@@ -461,28 +461,24 @@ EndFunc   ;==>_IrrGetCollisionNodeFromScreenCoordinates
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetScreenCoordinatesFrom3DPosition
-; Description ...: [todo]
+; Description ...: Screen co-ordinates are returned for the position of the specified 3D co-ordinates.
 ; Syntax.........: _IrrGetScreenCoordinatesFrom3DPosition(ByRef $i_ScreenX, ByRef $i_ScreenY, $a_3DPositionVector)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $i_ScreenX, $i_ScreenY - Variables which will contain coordinates after call of the function.
+;                  $a_3DPositionVector - 1D array with three elements for x, y, z values of a position in space.
+; Return values .: Success - True and sets passed $i_ScreenX and $i_ScreenY
+;                  Failure - False and @error = 1
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: Screen co-ordinates are returned for the position of the specified 3D co-ordinates as if an object were drawn at them on the screen, this is ideal for drawing 2D bitmaps or text around or on your 3D object on the screen for example in the HUD of an aircraft.
+; Related .......: _IrrGet3DPositionFromScreenCoordinates, _IrrGet2DPositionFromScreenCoordinates
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetScreenCoordinatesFrom3DPosition(ByRef $i_ScreenX, ByRef $i_ScreenY, $a_3DPositionVector)
-	Local $PositionVectorStruct = DllStructCreate("float;float;float")
-	DllStructSetData($PositionVectorStruct, 1, $a_3DPositionVector[0])
-	DllStructSetData($PositionVectorStruct, 2, $a_3DPositionVector[1])
-	DllStructSetData($PositionVectorStruct, 3, $a_3DPositionVector[2])
+	if not UBound($a_3DPositionVector) = 3 then Return Seterror(2,0,False)
 
-	$result = DllCall($_irrDll, "none:cdecl", "IrrGetScreenCoordinatesFrom3DPosition", "int*", $i_ScreenX, "int*", $i_ScreenY, "ptr", DllStructGetPtr($PositionVectorStruct))
+	$result = DllCall($_irrDll, "none:cdecl", "IrrGetScreenCoordinatesFrom3DPosition", "int*", $i_ScreenX, "int*", $i_ScreenY, _
+						"float", $a_3DPositionVector[0], "float", $a_3DPositionVector[1], "float", $a_3DPositionVector[2])
 	if @error Then
 		Return Seterror(1,0,False)
 	Else

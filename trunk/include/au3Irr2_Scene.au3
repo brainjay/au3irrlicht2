@@ -164,11 +164,11 @@ EndFunc   ;==>_IrrGetMesh
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrCreateMesh
-; Description ...: Create a new mesh.
+; Description ...: Create a new mesh from lists of vertices and indices.
 ; Syntax.........: _IrrCreateMesh($s_MeshName, $tVertexArray, $a_Indices)
 ; Parameters ....: $s_MeshName - String name for the newly created mesh object.
-;                  $tVertexArray - ...
-;                  $a_Indices - ...
+;                  $tVertexArray - Vertex array struct  as created with __CreateVertStruct or returned from _IrrGetMeshVertices.
+;                  $a_Indices - 3D-array with list of indices as returned from _IrrGetMeshIndices or created e.g. with DIM $aIndices[indicesNumber] = [0,1,4,  1,2,4,  ...]
 ; Return values .: Success - Handle to the newly created mesh object
 ;                  Failure - False and set @error:
 ;                  |@error 1 : either AutoIt DllCall or IrrCreateMesh call failed
@@ -176,10 +176,11 @@ EndFunc   ;==>_IrrGetMesh
 ;                  |@error 2 : $a_Indices param is not an Array
 ; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: You must supply a list of vertices inside a vertex array struct and an array of indices that refer to these vertices.
+;                  The indices are taken in groups of three joining up the dots defined by the verticies and forming a collection of triangles.
+; Related .......: _IrrGetMeshVertices, _IrrGetMeshIndices, _IrrAddMeshToScene, __CreateVertStruct
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrCreateMesh($s_MeshName, $tVertexArray, $a_Indices)
 	If Not IsDllStruct($tVertexArray) Then Return SetError(2, 0, False)
@@ -443,18 +444,18 @@ EndFunc   ;==>_IrrGetMeshIndexCount
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetMeshIndices
-; Description ...: [todo]
+; Description ...: Gets the list of indices in a mesh and copies them into the supplied variable.
 ; Syntax.........: _IrrGetMeshIndices($h_Mesh, $i_FrameNumber, ByRef $a_IndicesArray, $i_MeshBuffer = 0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Parameters ....: $h_Mesh - Handle to a mesh object
+;                  $i_FrameNumber - Frame number of the mesh to get indices from (should be 0 for static meshes).
+;                  ByRef $tVertex - Any variable. Will be returned as array with indices.
+;                  $i_MeshBuffer - [optional] Mesh buffer to access.
+; Return values .: Success - Number of indices returned in the array $a_IndicesArray.
+;                  Failure - False and @error = 1
+; Author ........:
 ; Modified.......:
 ; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Related .......: _IrrSetMeshIndices, _IrrGetMeshIndexCount, _IrrGetMeshVertices
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
@@ -538,26 +539,28 @@ EndFunc   ;==>_IrrGetMeshVertexCount
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetMeshVertices
-; Description ...: [todo]
-; Syntax.........: _IrrGetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $i_MeshBuffer = 0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Description ...: Gets the list of vertices in a mesh and copies them into the supplied variable.
+; Syntax.........: _IrrGetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $tVertex, $i_MeshBuffer = 0)
+; Parameters ....: $h_Mesh - Handle to a mesh object
+;                  $i_FrameNumber - Frame number of the mesh to get vertices from (should be 0 for static meshes).
+;                  ByRef $tVertex - Any variable. Will be returned as vertex array struct.
+;                  $i_MeshBuffer - [optional] Mesh buffer to access.
+; Return values .: Success - Number of vertices returned in the vertex array struct $tVertex.
+;                  Failure - False and @error = 1
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: Each vertex represents a point in the mesh that is the corner of one of the group of triangles that is used to construct the mesh.
+;                  If the mesh is animated frame number indicates the number of the frame to recover mesh data for if it is not animated this value should be set to 0.
+;                  If the mesh contains a number of mesh buffers you can specific which mesh buffer you want to access, if you omit this parameter mesh buffer 0 will be used.
+; Related .......: __SetVertStruct, __GetVertStruct, _IrrSetMeshVertices, _IrrGetMeshVertexCount, _IrrGetMeshIndices
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrGetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $i_MeshBuffer = 0)
+Func _IrrGetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $tVertex, $i_MeshBuffer = 0)
 	Local $iVertices = _IrrGetMeshVertexCount($h_Mesh, $i_FrameNumber, $i_MeshBuffer)
-	$h_IndicesArrayStruct = __CreateVertStruct($iVertices)
+	$tVertex = __CreateVertStruct($iVertices)
 
-	DllCall($_irrDll, "none:cdecl", "IrrGetMeshVertices", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", DllStructGetPtr($h_IndicesArrayStruct), "int", $i_MeshBuffer)
+	DllCall($_irrDll, "none:cdecl", "IrrGetMeshVertices", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", DllStructGetPtr($tVertex), "int", $i_MeshBuffer)
 	If @error Then
 		Return SetError(1, 0, False)
 	Else
@@ -568,24 +571,26 @@ EndFunc   ;==>_IrrGetMeshVertices
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetMeshVertices
-; Description ...: [todo]
-; Syntax.........: _IrrSetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $i_MeshBuffer = 0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
-; Author ........: [todo]
+; Description ...: This sets the value of the list of vertices in a mesh copying them from the supplied vertex array struct.
+; Syntax.........: _IrrSetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $tVertex, $i_MeshBuffer = 0)
+; Parameters ....: $h_Mesh - Handle to a mesh object
+;                  $i_FrameNumber - Frame number of the mesh to write vertices to (should be 0 for static meshes).
+;                  ByRef $tVertex - Vertex array struct as created with __CreateVertStruct or returned from _IrrGetMeshVertices.
+;                  $i_MeshBuffer - [optional] Mesh buffer to access.
+; Return values .: Success - None.
+;                  Failure - False and @error = 1
+; Author ........:
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: Each vertex represents a point in the mesh that is the corner of one of the group of triangles that is used to construct the mesh.
+;                  If the mesh is animated frame number indicates the number of the frame to recover mesh data for if it is not animated this value should be set to 0.
+;                  If the mesh contains a number of mesh buffers you can specific which mesh buffer you want to access, if you omit this parameter mesh buffer 0 will be used.
+; Related .......: _IrrGetMeshVertices, __CreateVertStruct
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrSetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $h_IndicesArrayStruct, $i_MeshBuffer = 0)
-	if not IsDllStruct($h_IndicesArrayStruct) then Return SetError(2, 0, False)
-	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertices", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", DllStructGetPtr($h_IndicesArrayStruct), "int", $i_MeshBuffer)
+Func _IrrSetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $tVertex, $i_MeshBuffer = 0)
+	if not IsDllStruct($tVertex) then Return SetError(2, 0, False)
+	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertices", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", DllStructGetPtr($tVertex), "int", $i_MeshBuffer)
 	If @error Then
 		Return SetError(1, 0, False)
 	Else

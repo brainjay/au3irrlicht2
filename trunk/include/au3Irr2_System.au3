@@ -964,7 +964,7 @@ EndFunc   ;==>_IrrSetTime
 ; Remarks .......: None
 ; Related .......: __GetVertStruct, __SetVertStruct, __CreateVectStruct
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func __CreateVertStruct($iVert)
     Local $iSize = DllStructGetSize(DllStructCreate($tagIRR_VERTEX))
