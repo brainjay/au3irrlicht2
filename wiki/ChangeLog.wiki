@@ -1,6 +1,5 @@
 #summary au3Irrlicht2 ChangeLog
 #labels Featured
-#sidebar TableOfContents
 
 = au3Irrlicht2 !ChangeLog =
 
