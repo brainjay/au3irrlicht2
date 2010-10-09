@@ -4,6 +4,7 @@
  Author:         linus
 
  History:
+ 2010-10-09: Changed file name for calltips to "au3Irr2.user.calltips.api"
  2010-09-16: Fixed parseUDF - added functions in UDFs w/o info block were not updated correctly
  2010-09-05: Added some preparation for a merged help file (original au3 help + au3Irr2 help)
  2010-09-04: Added automatic building of the au3.user.calltips.api
@@ -33,7 +34,7 @@
 #include <Array.au3>
 Opt("MustDeclareVars", True)
 
-const $SCRIPTTITLE = "Help tool V0.4a - 2010 by linus"
+const $SCRIPTTITLE = "Help tool V0.4b - 2010 by linus"
 global $sLastMsg = ""
 
 
@@ -179,7 +180,7 @@ func main()
 		if $sRelInfo = "" then return false ; error in buildHistoryHTML or missing release info
 		if NOT updateIntroductionHTML($pathBuild & "html_static\au3irr2.htm", $sRelInfo) then Return False
 
-		FileDelete($pathBuild & "au3.user.calltips.api")
+		FileDelete(@ScriptDir & "\au3Irr2.user.calltips.api")
 		while True ; loop the UDF's:
 			$sUDF = FileFindNextFile($hFile)
 			if @error then ExitLoop
@@ -203,13 +204,12 @@ func main()
 
 		; complete the calltips file ...
 		$sCalltips = "; userCallTips for au3Irr2 release " & $sRelInfo & @LF & _
-                     "; copy or (replace) content of this file to your usercalltips of scite via Tools > UserCallTipEntries." & @LF & _
                      "; === Start of au3Irrlicht2 calltip definitions ======================================================" & @LF & _
 					 @LF & $sCalltips & @LF & _
 					"; === End of au3Irrlicht2 calltip definitions ========================================================"
 
 		; ... and write the calltips file:
-		$hFile = FileOpen($pathBuild & "au3.user.calltips.api", 1) ; appending
+		$hFile = FileOpen(@ScriptDir & "\au3Irr2.user.calltips.api", 1) ; appending
 		if $hFile = -1 then
 			$sLastMsg = "main: Cannot write calltips file!"
 			Return False
