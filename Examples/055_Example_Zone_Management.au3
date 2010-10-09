@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted/modified for the au3Irr2 project by linus
+; Converted for JRowe's au3Irrlicht2 UDF project by Linus
 ; ----------------------------------------------------------------------------
 ; Example 55: Zone Management
 ; This example demonstrates zone management objects, these are parent objects
@@ -47,7 +47,7 @@ _IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
 _IrrSetWindowCaption( "Example 55: Zone Management" )
 
 ; load the texture resource for the billboard
-$BillboardTexture = _IrrGetTexture( "../media/au3irr2_logo.jpg" )
+$BillboardTexture = _IrrGetTexture( "../media/freebasiclogo_big.jpg" )
 
 ; here we create 900 zones
 for $x = -15 to 15
@@ -99,7 +99,7 @@ _IrrHideMouse()
 ; while the irrlicht environment is still running
 WHILE _IrrRunning()
     ; begin the scene, erasing the canvas
-    _IrrBeginScene( 0, 0, 75 )
+    _IrrBeginScene( 255, 255, 255 )
 
     ; draw the scene
     _IrrDrawScene()

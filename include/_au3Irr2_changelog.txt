@@ -12,72 +12,15 @@
 ; '[' and ']' can be used to set text to bold in .html
   
 
-=== 2.04 (2010-10-xx) ==========================================================
+=== 2.04 (xxxx-xx-xx) ==========================================================
 [Work in progress!]
-
-
-
-> Script breaking changes:
-
-+ _IrrAddSplineAnimator: Parameters changed to simplify usage (see examples)
-+ _IrrGetNodePosition, _IrrGetNodeRotation, _IrrGetNodeAbsolutePosition,
-  _IrrGetCameraTarget: Removed required byRef array parameter
-  (see help file/adjusted examples for syntax)
-
-
-
-> UDFs:
-
-+ Fixed/Added: Some more working functions (mainly around added examples)
-+ Added: Some missing 2D functions and documentation (contributions from smashly)
-+ Fixed: _IrrSetFog (linear and exponential fog were interchanged)
-+ Fixed: _IrrCreateMesh ($s_MeshName not being passed in the DLL call)
-- Fixed: wrong return type in _IrrWriteMesh - "ptr:cdecl" is now "int:cdecl"
-  Also reworked returned error codes
-- _IrrSetZoneManagerBoundingBox, _IrrSetZoneManagerProperties:
-  changed "ptr:cdecl" to "none:cdecl" as this dllcall doesn't offer a return.
-- _IrrSetSkyDomeColor, _IrrSetSkyDomeColorBand, _IrrSetSkyDomeColorPoint, _IrrAnimateJoints: 
-  changed "ptr:cdecl" to "none:cdecl" as this dllcall doesn't offer a return by call.
-  These dll calls outputs printf errors straight to console.
-
-
-
-> Examples:
-
-+ Added: 015 (CustomMesh), 022 (Indices+Vertices), 024 (Mesh to file), 062 (6D0F_Camera)
-+ Added: (contribution from smashly): 039 (Texture blending), 070 (Texture_and_Images), 103 (Billboard Groups), 104 (LOD)
-+ Added: 007/025/027/066/067/068/069/074/075 (ParticleSystem)
-+ Reworked: 011 (Animators) shows usage of changed _IrrAddSplineAnimator
-+ Fixed: 010 (TerrainAndFog) / 029/054 (Skydomes)
-- 010: Corrected parameters and wrong documentation of _IrrSetFog. 029/054: renamed 
-  skydome.jpg to 'skydome2.jpg' and restored original texture needed for example 054.
-
-
 
 > Help file:
 
-+ Added: Completed documentation including example code for some more functions.
-  Current status: Topics completed along examples 1-14 + several more.
-  At least naked reference w/o detailed informations for all functions inside other examples.
-- Changed: Reworked several help file descriptions and examples.
-+ Added: 'Copy to clipboard'-button for included examples (using VBS code from GEOSoft)
++ Added: Complete documentation including example code for some more functions.
+- Topics completed including example code along examples 1-6, 8
+  Naked reference w/o detailed informations for other examples.
 
-
-
-> Internal tools:
-
-- Fixed: help_tool.au3 - added functions in UDFs w/o info block were not updated correctly.
-+ Fixed: Examples could not be opened when running launcher from path with spaces
-+ Added: Setup feature to example launcher to merge au3Irr2 help into local au3 help 
-  and add/update calltips for SciTe
-- calltip file and merged autoIt.chm are compiled into exampleLauncher.exe, so removed from root dir
-+ Excluded \internal_tools because not too interesting for 99.9% (for the 0.1%: available via the 
-  sources from project page)
-
-
-> Other:
-+ Changed: global $result used in UDF files switched to local variables (WIP, finished for 2D, Scene, 
-  Camera, Animation, Node)
 
 
 === 2.03 (2010-09-05) ==========================================================
@@ -115,17 +58,10 @@
 + Fixed: \media\fonthaettenschweiler.bmp ([bogQ])
 + Added: msvcr71.dll - possibly missing on some machines ([jl])
 
-
-
 === 2.02 (2010-07-29) ==========================================================
-First release in one package (updated UDF + all needed .dll's, more examples, ExampleLauncher)
+First release in one package (UDF + all needed .dll's, examples, ExampleLauncher)
 
 
 
-=== 2.01 (2010-07-20) ==========================================================
-Updated UDF with fixes, additions and separate example package
-
-
-
-=== 2.00 (2010-05-03) ===========================================================
+=== 2.0 (2010-05-03) ===========================================================
 First release of jRowe

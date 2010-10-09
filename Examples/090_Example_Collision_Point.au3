@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted/modified for the au3Irr2 project by linus
+; Converted for JRowe's au3Irrlicht2 UDF project by Linus
 ; ----------------------------------------------------------------------------
 ; Example 90 : Getting the point of collision
 ; This example gets the acurate point of collision between the triangles of a
@@ -40,7 +40,7 @@ DIM $CollideAt[3] ; $IRR_VECTOR
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
@@ -51,7 +51,7 @@ $MD2Mesh = _IrrGetMesh( "../media/zumlin.md2" )
 
 ; load texture resources for texturing models
 $MeshTexture = _IrrGetTexture( "../media/zumlin.pcx" )
-$TestTexture = _IrrGetTexture( "../media/au3irr2_logo.jpg" )
+$TestTexture = _IrrGetTexture( "../media/texture.jpg" )
 
 ; add the mesh to the scene
 $SceneNode = _IrrAddMeshToScene( $MD2Mesh )
@@ -91,10 +91,10 @@ DIM $nodeHit
 ; while the irrlicht environment is still running
 WHILE _IrrRunning()
     ; begin the scene, erasing the canvas with sky-blue before rendering
-    _IrrBeginScene( 0, 0, 25 )
+    _IrrBeginScene( 240, 255, 255 )
 
-    $StartVector = _IrrGetNodePosition( $OurCamera)
-    $EndVector = _IrrGetCameraTarget($OurCamera)
+    _IrrGetNodePosition( $OurCamera, $StartVector )
+    _IrrGetCameraTarget( $OurCamera, $EndVector )
 
     ; extend the line through the target point for 5000 times its origonal length
     $EndVector[0] += (($EndVector[0] - $StartVector[0]) * 5000)

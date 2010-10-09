@@ -2,14 +2,14 @@
 
 
 ; #INDEX# =======================================================================================================================
-; Title .........: Constants
-; AutoIt Version : v3.3.6.1
+; Title .........: [todo]
+; AutoIt Version : [todo]
 ; Language ......: English
-; Description ...: Global enumerations and constants for the au3Irr2 UDF.
-; Author(s) .....: jRowe, linus.
-;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (IrrlichtWrapper.dll),
-;                  and Nikolaus Gebhardt and Irrlicht team (Irrlicht.dll).
-; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
+; Description ...: [todo]
+;                  [todo]
+;                  [todo]
+; Author(s) .....: [todo]
+; Dll(s) ........: [todo]
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
@@ -153,7 +153,7 @@ global const $IRR_GUI_NOT_PASSWORD = 0
 global const $IRR_NO_PARENT = 0
 global const $IRR_NO_OBJECT = 0
 global enum $IRR_ONE_SHOT, $IRR_LOOP
-global enum $IRR_EXPONENTIAL_FOG, $IRR_LINEAR_FOG
+global enum $IRR_LINEAR_FOG, $IRR_EXPONENTIAL_FOG
 global Enum $ELT_POINT, $ELT_SPOT, $ELT_DIRECTIONAL ; enum E_LIGHT_TYPE: Light types
 
 global Enum _ ; IRR_COLOR_MATERIAL
@@ -173,11 +173,6 @@ global Enum _ ; IRR_COLOR_FORMAT: ' A color format specifies how color informati
     $ECF_R5G6B5, _		 ; Standard 16 bit color format.
     $ECF_R8G8B8, _		 ; 24 bit color, no alpha channel, but 8 bit for red, green and blue.
     $ECF_A8R8G8B8		 ; Default 32 bit color format. 8 bits are used for every component: red, green, blue and alpha.
-
-global Enum _ ; IRR_MESH_FILE_FORMAT: Enumeration flags defining the file format supported loading and saving
-    $EMWT_IRR_MESH = 0, _ 	; Irrlicht Native mesh writer, for static .irrmesh files.
-    $EMWT_COLLADA, _		; COLLADA mesh writer for .dae and .xml files.
-    $EMWT_STL				; STL mesh writer for .stl files.
 
 global Enum _ ; IRR_TERRAIN_PATCH_SIZE
 			$ETPS_9 = 9, _	; patch size of 9, at most, use 4 levels of detail with this patch size.
@@ -391,49 +386,3 @@ global Enum _ ; IRR_SHADER_CONSTANTS ' Pre-programmed shader constants
 global Enum _ ; IRR_DEBUG
 	$EDS_OFF = 0, $EDS_BBOX = 1, $EDS_NORMALS = 2, $EDS_SKELETON = 4, $EDS_MESH_WIRE_OVERLAY = 8, _
 	$EDS_HALF_TRANSPARENCY = 16, $EDS_BBOX_BUFFERS = 32, $EDS_FULL = 0xffffffff
-
-Global Enum _ ; Constants for 2D Management TEXTURE_CREATION_FLAG
-	$ETCF_ALWAYS_16_BIT = 0x00000001, _
-	$ETCF_ALWAYS_32_BIT = 0x00000002, _
-	$ETCF_OPTIMIZED_FOR_QUALITY = 0x00000004, _
-	$ETCF_OPTIMIZED_FOR_SPEED = 0x00000008, _
-	$ETCF_CREATE_MIP_MAPS = 0x00000010, _
-	$ETCF_NO_ALPHA_CHANNEL = 0x00000020
-
-
-Global Enum _ ; Constants for 2D Management IRR_TEXTURE_BLEND
-	$BLEND_SCREEN, $BLEND_ADD, $BLEND_SUBTRACT, $BLEND_MULTIPLY, $BLEND_DIVIDE
-
-
-
-; vertex struct definition and constants for __CreateVertStruct, __GetVertStruct, __SetVertStruct, _IrrCreateMesh
-Global Const $tagIRR_VERTEX = "float x; " & _ ;         The x position of the vertex
-							"float y; " & _ ;         The y position of the vertex
-							"float z; " & _ ;         The z position of the vertex
-							"float normal_x; " & _ ;  The x normal of the vertex
-							"float normal_y; " & _ ;  The y normal of the vertex
-							"float normal_z; " & _ ;  The z normal of the vertex
-							"uint vcolor; " & _ ;     The 32bit ARGB color of the vertex
-							"float texture_x; " & _ ; the x co-ordinate of the vertex on the texture (0 to 1)
-							"float texture_y; " ;     the y co-ordinate of the vertex on the texture (0 to 1)
-
-global Enum _ ; elements for vertex struct $tagIRR_VERTEX
-	$VERT_X = "x", _
-	$VERT_Y = "y", _
-	$VERT_Z = "z", _
-	$VERT_NORMALX = "normal_x", _
-	$VERT_NORMALY = "normal_y", _
-	$VERT_NORMALZ = "normal_z", _
-	$VERT_VCOLOR = "vcolor", _
-	$VERT_TEXTUREX = "texture_x", _
-	$VERT_TEXTUREY = "texture_y"
-
-; vector struct definition and constants for __CreateVectStruct, __GetVectStruct, __SetVectStruct
-Global Const $tagIRR_VECTOR = "float x; " & _ ;         The x position of the vector
-							"float y; " & _ ;         The y position of the vector
-							"float z; "	;	          The z position of the vector
-
-global Enum _ ; elements for vector struct $tagIRR_VECTOR
-	$VECT_X = "x", _
-	$VECT_Y = "y", _
-	$VECT_Z = "z"

@@ -8,8 +8,7 @@
 ; Language ......: English
 ; Description ...: Calls for creating collision groups and for calculating collisions in the scene.
 ; Author(s) .....: jRowe, linus.
-;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (IrrlichtWrapper.dll),
-;                  and Nikolaus Gebhardt and Irrlicht team (Irrlicht.dll).
+;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
 ; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
@@ -60,7 +59,7 @@
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: [todo]
-; Related .......: _IrrGetCollisionGroupFromComplexMesh, _IrrGetCollisionGroupFromBox, _IrrGetCollisionGroupFromTerrain, _IrrRemoveCollisionGroup, _IrrCreateCombinedCollisionGroup
+; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
@@ -78,19 +77,20 @@ EndFunc   ;==>_IrrGetCollisionGroupFromMesh
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCollisionGroupFromComplexMesh
-; Description ...: Creates an optimized triangle selection group from a large complex mesh like a map.
+; Description ...: [todo]
 ; Syntax.........: _IrrGetCollisionGroupFromComplexMesh($h_Mesh, $h_Node, $i_Frame = 0)
-; Parameters ....: $h_Mesh - Handle of mesh the node was created from.
-;                  $h_Node - Handle of the node to create a selector from.
-;                  $i_Frame - [optional] Number of mesh frame to use.
-; Return values .: success - Handle to a selector object
-;                  failure - False
-; Author ........:
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: The returned triangle selection group can then be used in collision functions to collide objects against this node.
-; Related .......: _IrrGetCollisionGroupFromMesh, _IrrGetCollisionGroupFromBox, _IrrGetCollisionGroupFromTerrain, _IrrRemoveCollisionGroup, _IrrCreateCombinedCollisionGroup
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
 ; Link ..........:
-; Example .......: Yes
+; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetCollisionGroupFromComplexMesh($h_Mesh, $h_Node, $i_Frame = 0)
 	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetCollisionGroupFromComplexMesh", "UINT_PTR", $h_Mesh, "UINT_PTR", $h_Node, "int", $i_Frame)
@@ -115,7 +115,7 @@ EndFunc   ;==>_IrrGetCollisionGroupFromComplexMesh
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: [todo]
-; Related .......: _IrrGetCollisionGroupFromMesh, _IrrGetCollisionGroupFromComplexMesh, _IrrGetCollisionGroupFromTerrain, _IrrRemoveCollisionGroup, _IrrCreateCombinedCollisionGroup
+; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
@@ -142,7 +142,7 @@ EndFunc   ;==>_IrrGetCollisionGroupFromBox
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: [todo]
-; Related .......: _IrrGetCollisionGroupFromMesh, _IrrGetCollisionGroupFromComplexMesh, _IrrGetCollisionGroupFromBox, _IrrRemoveCollisionGroup, _IrrCreateCombinedCollisionGroup
+; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
@@ -169,7 +169,7 @@ EndFunc   ;==>_IrrGetCollisionGroupFromTerrain
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: [todo]
-; Related .......: _IrrGetCollisionGroupFromMesh, _IrrGetCollisionGroupFromComplexMesh, _IrrGetCollisionGroupFromBox, _IrrGetCollisionGroupFromTerrain, _IrrCreateCombinedCollisionGroup
+; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
@@ -196,7 +196,7 @@ EndFunc   ;==>_IrrRemoveCollisionGroup
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: [todo]
-; Related .......: _IrrGetCollisionGroupFromMesh, _IrrGetCollisionGroupFromComplexMesh, _IrrGetCollisionGroupFromBox, _IrrGetCollisionGroupFromTerrain, _IrrRemoveCollisionGroup
+; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================

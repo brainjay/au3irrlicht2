@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted/modified for the au3Irr2 project by linus
+; Converted for JRowe's au3Irrlicht2 UDF project by Linus
 ; ----------------------------------------------------------------------------
 ; Example 11 : Animators
 ; This example demonstrates animators, these are mechanisms applied to nodes
@@ -34,7 +34,9 @@ DIM $RotateBox ; irr_node
 DIM $SplineBox ; irr_node
 DIM $ret ; irr_animator
 DIM $Camera ; irr_camera
-DIM $tVectors ; vector array struct
+DIM $sx[4] ; single
+DIM $sy[4] ; single
+DIM $sz[4] ; single
 DIM $box_index ; integer
 
 
@@ -43,7 +45,7 @@ DIM $box_index ; integer
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
@@ -96,26 +98,37 @@ _IrrSetNodePosition( $AnimatedBox[3], 0,100,0 )
 ; is very natural looking and powerful. A spline is a curved line that passed
 ; through or close to a list of co-ordinates, creating a smooth flight.
 
-; this animator needs a list of coordinates stored in a vector struct array
-; for the X, Y and Z locations of all the points. The struct defined here
-; creates a 4 point circle that wobbles up and down a bit. another good way to
+; this animator needs a list of coordinates stored in three arrays, one array
+; each for the X, Y and Z locations of all the points. The arrays defined here
+; create a 4 point circle that wobbles up and down a bit. another good way to
 ; get co-ordinates is to load in the camera position example and move your
 ; camera to a point and write down its co-ordinates, this is particularly good
 ; for getting points on a map
 
-$tVectors = __CreateVectStruct(4)
-__SetVectStruct($tVectors, 0, -100, 50, 0)
-__SetVectStruct($tVectors, 1, 0, 100, -100)
-__SetVectStruct($tVectors, 2, 100, 50, 0)
-__SetVectStruct($tVectors, 3, 0, 100, 100)
+$sx[0] = -100
+$sy[0] = 50
+$sz[0] = 0
 
-; once the points are defined we can create the animator. First we pass the
-; vector array struct with x, y, z points, the next parameter
+$sx[1] = 0
+$sy[1] = 100
+$sz[1] = -100
+
+$sx[2] = 100
+$sy[2] = 50
+$sz[2] = 0
+
+$sx[3] = 0
+$sy[3] = 100
+$sz[3] = 100
+
+; once the points are defined we can create the animator first we tell it how
+; many points are in the list (in this case 4) then we pass the first element
+; of the array of points for each of the x, y and z arrays, the next parameter
 ; defines the starting point on the curve, the next the speed the node travels
 ; along the curve and the final number specifies how tightly the curve is tied
 ; to the points (0 is angular and 1 is loose)
 
-$ret = _IrrAddSplineAnimator( $AnimatedBox[4], $tVectors, 0, 0.5, 1)
+$ret = _IrrAddSplineAnimator( $AnimatedBox[4], 4, $sx, $sy, $sz, 0, 0.5, 1)
 
 ; add a static camera to the scene to observe the animation
 $Camera = _IrrAddCamera( 150,50,0, 0,50,0 )
@@ -124,7 +137,7 @@ $Camera = _IrrAddCamera( 150,50,0, 0,50,0 )
 ; while the irrlicht environment is still running
 WHILE _IrrRunning()
     ; begin the scene, erasing the canvas with sky-blue before rendering
-    _IrrBeginScene( 0, 0, 25 )
+    _IrrBeginScene( 240, 255, 255 )
 
     ; draw the scene
     _IrrDrawScene()

@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted/modified for the au3Irr2 project by linus
+; Converted for JRowe's au3Irrlicht2 UDF project by Linus
 ; ----------------------------------------------------------------------------
 ; Example 61 : Processing events from the mouse wheel
 ; This example processes mouse wheel events and performs an action based on the
@@ -27,7 +27,7 @@ DIM $MeshTexture ; irr_texture
 DIM $TestNode ; irr_node
 DIM $OurCamera ; irr_camera
 DIM $MouseEvent ; $IRR_MOUSE_EVENT PTR
-DIM $metrics ; string
+DIM $metrics ; wstring * 256
 DIM $BitmapFont ; irr_font
 DIM $mouseDelta ; single
 DIM $scale = 1.0
@@ -38,7 +38,7 @@ DIM $scale = 1.0
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_NO_SHADOWS, $IRR_CAPTURE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
@@ -64,12 +64,13 @@ _IrrSetNodePosition( $OurCamera, 10, 10, -20 )
 ; while the irrlicht environment is still running
 WHILE _IrrRunning()
     ; begin the scene, erasing the canvas with grey before rendering
-    _IrrBeginScene(0, 0, 25)
+    _IrrBeginScene( 128,128,128 )
 
     ; while there are mouse events waiting
     while _IrrMouseEventAvailable()
         ; read the mouse event out
         $MouseEvent = _IrrReadMouseEvent()
+		__getMouseEvt($MouseEvent, $EVT_MOUSE_IACTION)
         ; if this is a mouse wheel event
         if __getMouseEvt($MouseEvent, $EVT_MOUSE_IACTION) = $IRR_EMIE_MOUSE_WHEEL then
 			$mouseDelta = __getMouseEvt($MouseEvent, $EVT_MOUSE_FDELTA)

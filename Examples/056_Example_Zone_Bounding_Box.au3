@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted/modified for the au3Irr2 project by linus
+; Converted for JRowe's au3Irrlicht2 UDF project by Linus
 ; ----------------------------------------------------------------------------
 ; Example 56: Zone Management Bounding Boxes
 ; This example demonstrates the display of bounding boxes created by adding
@@ -45,7 +45,7 @@ _IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
 _IrrSetWindowCaption( "Example 56: Zone Management Bounding Boxes" )
 
 ; load the texture resource for the billboard
-$BillboardTexture = _IrrGetTexture( "../media/au3irr2_logo.jpg" )
+$BillboardTexture = _IrrGetTexture( "../media/freebasiclogo_big.jpg" )
 
 ; add the billboard to the scene, the first two parameters are the size of the
 ; billboard in this instance they match the pixel size of the bitmap to give

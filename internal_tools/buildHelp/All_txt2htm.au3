@@ -46,7 +46,6 @@
 
 ; Modificated for the au3Irrlicht2 UDF from linus
 ; 10-08-11
-; 10-09-17: Added "Copy to Clipboard"-Button for code examples (code from GEOSoft)
 
 ;==============================================================================
 ; Generate HTM files (which comprise the help file source docs)
@@ -259,15 +258,6 @@ Func Convert()
 		put('  <title>Keyword ' & $Name & '</title>')
 	EndIf
 	put('  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">')
-
-	; Thanks to GEOSoft for the code to copy the examples to the clipboard:
-	put('<script LANGUAGE="VBScript">')
-	put('	Sub CodeToClip')
-	put('		strCopy = Code.InnerText')
-  put('			document.parentwindow.clipboardData.SetData "text", strCopy')
-	put('	End Sub')
-	put('</script>')
-
 	put('  <link href="../../html_static/css/default.css" rel="stylesheet" type="text/css">')
 	put('</head>')
 	put('')
@@ -334,9 +324,8 @@ EndIf
 	Local $example = get("###Example###")
 	If StringStripWS($example,3) <> "" Then
 		put('<p><b>Example</b></p>')
-		put('<div id="code"><p class="codebox">')
+		put('<p class="codebox">')
 		put('' & $example & '')
-		put('<input class="button" type="button" value="Copy to Clipboard" onClick="CodeToClip"></div>')
 		put('<p>&nbsp;</p>')
 		put('')
 	EndIf

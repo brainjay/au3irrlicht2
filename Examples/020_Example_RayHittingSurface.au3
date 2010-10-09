@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted/modified for the au3Irr2 project by linus
+; Converted for JRowe's au3Irrlicht2 UDF project by Linus
 ; ----------------------------------------------------------------------------
 ; Example 20 : Getting the point of collision
 ; This example gets the point of collision between a selector group and a ray
@@ -40,7 +40,7 @@ DIM $aCollideAt[3] ; $IRR_VECTOR
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
@@ -91,10 +91,10 @@ _IrrHideMouse()
 WHILE _IrrRunning()
     ; begin the scene, erasing the canvas with sky-blue before rendering
     ;_IrrBeginScene( 240, 255, 255 )
-	_IrrBeginScene( 0, 0, 25 )
+	_IrrBeginScene( 50, 50, 50 )
 
-    $aStartVector = _IrrGetNodePosition($OurCamera)
-    $aEndVector = _IrrGetCameraTarget($OurCamera)
+    _IrrGetNodePosition( $OurCamera, $aStartVector )
+    _IrrGetCameraTarget( $OurCamera, $aEndVector )
 
     ; extend the line through the target point for 5000 times its origonal length
 

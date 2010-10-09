@@ -10,8 +10,7 @@
 ;                  a virtual filling system allowing you to compress data into zipfiles that you can access without
 ;                  decompressing them.
 ; Author(s) .....: jRowe, linus.
-;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (IrrlichtWrapper.dll),
-;                  and Nikolaus Gebhardt and Irrlicht team (Irrlicht.dll).
+;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
 ; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 

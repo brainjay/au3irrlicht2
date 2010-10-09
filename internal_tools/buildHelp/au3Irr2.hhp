@@ -11,10 +11,10 @@ Error log file=_errorlogau3Irr2.txt
 Full-text search=Yes
 Index file=au3Irr2 Index.hhk
 Language=0x809 English (United Kingdom)
-Title=au3Irr2 Help File
+Title=au3Irrlicht2 Help File
 
 [WINDOWS]
-Help Window="au3Irr2 Help","au3Irr2 TOC.hhc","au3Irr2 Index.hhk","html_static/au3irr2.htm","",,,,,0x63520,,0x102806,[0,0,640,480],0x80000,,,,,,0
+Help Window="au3Irrlicht2 Help","au3Irr2 TOC.hhc","au3Irr2 Index.hhk","html_static/au3irr2.htm","",,,,,0x63520,,0x102806,[0,0,640,480],0x80000,,,,,,0
 
 
 [INFOTYPES]

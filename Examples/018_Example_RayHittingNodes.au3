@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted/modified for the au3Irr2 project by linus
+; Converted for JRowe's au3Irrlicht2 UDF project by Linus
 ; ----------------------------------------------------------------------------
 ; Example 18 : Selecting Nodes with a Ray
 ; This example selects a node in the scene that is hit by a ray we specify as
@@ -45,7 +45,7 @@ DIM $i ; integer
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_NO_SHADOWS, $IRR_CAPTURE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
@@ -128,7 +128,7 @@ WHILE _IrrRunning()
 
     ; reposition all of the objects
     for $i = 0 to $TEST_NODES - 1
-        $POS = _IrrGetNodePosition($TestNode[$i])
+        _IrrGetNodePosition( $TestNode[$i], $POS )
         $POS[1] += $x
         $POS[2] += $y
         _IrrSetNodePosition( $TestNode[$i], $POS[0], $POS[1], $POS[2] )

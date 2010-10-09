@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted/modified for the au3Irr2 project by linus
+; Converted for JRowe's au3Irrlicht2 UDF project by Linus
 ; ----------------------------------------------------------------------------
 ; Example 34 : Finding nodes
 ; This example creates and labels nodes in a scene and then finds those nodes
@@ -37,7 +37,7 @@ const $TITLE = "Example 34: Finding nodes"
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; set the window caption
@@ -68,7 +68,9 @@ MsgBox(0, $TITLE, "If this works correctly we should not find nodes 0 and 10")
 ; now search for the nodes through their ID's and position them into a grid
 ; we are deliberately looking for the unknown ID's 0 and 10 to generate an error
 for $i = 0 to 10
+	ConsoleWrite('@@ Debug(' & @ScriptLineNumber & ') : $i = ' & $i & @crlf & '>Error code: ' & @error & @crlf) ;### Debug Console
     $FoundNode = _IrrGetSceneNodeFromId ( $i )
+	ConsoleWrite('@@ Debug(' & @ScriptLineNumber & ') : $FoundNode = ' & $FoundNode & @crlf & '>Error code: ' & @error & @crlf) ;### Debug Console
     if $FoundNode <> 0 then
         _IrrSetNodePosition( $FoundNode, $position[$i-1][0], $position[$i-1][1], 0 )
     else
@@ -90,7 +92,7 @@ _IrrHideMouse()
 ; while the irrlicht environment is still running
 WHILE _IrrRunning()
     ; begin the scene, erasing the canvas with sky-blue before rendering
-    _IrrBeginScene( 0, 0, 75 )
+    _IrrBeginScene( 240, 255, 255 )
 
     ; draw the scene
     _IrrDrawScene()

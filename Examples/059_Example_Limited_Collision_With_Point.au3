@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted/modified for the au3Irr2 project by linus
+; Converted for JRowe's au3Irrlicht2 UDF project by Linus
 ; ----------------------------------------------------------------------------
 ; Example 59: Limited Collision with a Point
 ; This example demonstrates the use of tests of collisions between a point and
@@ -44,7 +44,7 @@ DIM $RootNode ; irr_node
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
@@ -86,7 +86,7 @@ WHILE _IrrRunning()
     _IrrDrawScene()
 
     ; get the position of the camera
-    $vector = _IrrGetNodePosition( $CameraNode)
+    _IrrGetNodePosition( $CameraNode, $vector )
 
     ; get the first object that is the subject of a collision with the specified
     ; point, the call is supplied with the Parent node to test, a bitmask to

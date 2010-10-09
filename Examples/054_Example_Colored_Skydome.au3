@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted/modified for the au3Irr2 project by linus
+; Converted for JRowe's au3Irrlicht2 UDF project by Linus
 ; ----------------------------------------------------------------------------
 ; Example 54 : Colored Skydomes
 ; This example creates a colored skydome onto which a low color texture could
@@ -39,7 +39,7 @@ DIM $SkyDome ; irr_node
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
@@ -60,7 +60,7 @@ _IrrSetNodeMaterialType ( $TerrainNode, $IRR_EMT_DETAIL_MAP )
 _IrrSetNodeMaterialFlag( $TerrainNode, $IRR_EMF_FOG_ENABLE, $IRR_ON )
 
 ; add some fog into the scene
-_IrrSetFog ( 96,96,128, $IRR_LINEAR_FOG, 0.0,4000.0 )
+_IrrSetFog ( 96,96,128, $IRR_EXPONENTIAL_FOG, 0.0,4000.0, 0.5 )
 
 
 ; the skydome is a simple hollow sphere that surrounds the whole scene. a single
@@ -114,7 +114,7 @@ WHILE _IrrRunning()
     ; begin the scene, erasing the canvas with sky-blue before rendering
     _IrrBeginScene( 192, 192, 255 )
 
-    $a_Vector3df = _IrrGetNodePosition($CameraNode)
+    _IrrGetNodePosition( $CameraNode, $a_Vector3df )
     $a_Vector3df[1] = _IrrGetTerrainTileHeight( $Terrain, $a_Vector3df[0], $a_Vector3df[2] )
     _IrrSetNodePosition( $CameraNode, $a_Vector3df[0], $a_Vector3df[1]+80, $a_Vector3df[2] )
 

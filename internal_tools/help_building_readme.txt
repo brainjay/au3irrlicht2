@@ -1,7 +1,7 @@
 
 ==================================================================
 Small howto for building the help file for the au3Irr2 project.
-2010-10-09 by linus.
+2010-09-05 by linus.
 ==================================================================
 
 This workflow is using several tools by different people from the au3 community - thanks to them all!
@@ -17,6 +17,7 @@ and >> UDF_BuildTemplates.htm << in the \buildHelp dir, both written by GaryFros
 if I am not wrong - thanks again!)
 
 Info: help_tool.au3 builds also 
+ - merged help (AutoIt.chm) so au3Irr2 help and au3 help can be used together 
  - a fresh usercalltip file,
  - a history page for the help from the \include\_au3Irr2_changelog.txt
  - updates the release number (taken from changelog) into the introduction page
@@ -48,11 +49,7 @@ To create an up-to-date help file, do this:
 - Run help_tool.au3 again to clean up unneeded things:
   Say "YES" to CleanUp, "CANCEL" to update.
 
-- Recompile exampleLauncher (latest userCallTips and autoIt.chm will be included)
-  and move it to root dir of au3Irr2
-- Run setup of exampleLauncher to update your local machine - launcher will also 
-  move latest au3Irr2.chm to root dir of au3Irr2!
-
+- Move .chm's + usercalltips.au3 to the root dir of au3Irr2. Next release
   ready to be provided ;)
 
 ==================================================================

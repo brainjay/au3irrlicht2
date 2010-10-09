@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted/modified for the au3Irr2 project by linus
+; Converted for JRowe's au3Irrlicht2 UDF project by Linus
 ; ----------------------------------------------------------------------------
 ; Example 57 : Reading and writing the name of objects
 ; This example demonstrates reading and writing the names of objects that can
@@ -34,7 +34,7 @@ DIM $OurCamera ; irr_camera
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_OPENGL, 400, 200, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; set the window caption
@@ -83,7 +83,7 @@ $OurCamera = _IrrAddCamera( 50,0,0, 0,0,0 )
 ; while the irrlicht environment is still running
 WHILE _IrrRunning()
     ; begin the scene, erasing the canvas with sky-blue before rendering
-    _IrrBeginScene( 100, 100, 100 )
+    _IrrBeginScene( 240, 255, 255 )
 
     ; draw the scene
     _IrrDrawScene()

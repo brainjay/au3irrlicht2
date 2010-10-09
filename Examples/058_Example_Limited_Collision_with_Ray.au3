@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted/modified for the au3Irr2 project by linus
+; Converted for JRowe's au3Irrlicht2 UDF project by Linus
 ; ----------------------------------------------------------------------------
 ; Example 58 : Limiting Collision with a Ray
 ; This example highlights a node selected by collision with a ray, the subset
@@ -38,14 +38,14 @@ DIM $end_vector[3] ; $IRR_VECTOR
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_NO_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
 _IrrSetWindowCaption( "Example 58: Limited collision with a ray" )
 
 ; load the test cube texture
-$MeshTexture = _IrrGetTexture( "../media/au3irr2_logo.jpg" )
+$MeshTexture = _IrrGetTexture( "../media/texture.jpg" )
 
 ; create all of the test nodes
 $TestNode = _IrrAddTestSceneNode()
@@ -89,7 +89,7 @@ $SelectedNode = $IRR_NO_OBJECT
 ; while the irrlicht environment is still running
 WHILE _IrrRunning()
     ; begin the scene, erasing the canvas with grey before rendering
-    _IrrBeginScene( 0,0,75 )
+    _IrrBeginScene( 128,128,128 )
 
     ; draw the scene
     _IrrDrawScene()

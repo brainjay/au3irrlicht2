@@ -9,7 +9,7 @@
 
 ; Modificated for the au3Irrlicht2 UDF from linus
 ; 10-08-11
-; 10-09-27 Changed: GetFuncDesc - so function description is found again after added copy-to-clipboard-button in html's ...
+
 ;==============================================================================
 
 Opt("TrayIconDebug", 1)
@@ -103,7 +103,7 @@ Func putEntry()
 EndFunc   ;==>putEntry
 
 Func GetFuncDesc($NFname)
-	Local $funcdesc = FileReadLine($OUTPUT_DIR & $NFname, 13 + 6) ; 6 lines more because of inserted copy-to-clipboard definiton
+	Local $funcdesc = FileReadLine($OUTPUT_DIR & $NFname, 13)
 	$funcdesc = StringReplace($funcdesc, '<p>', '')
 	$funcdesc = StringReplace($funcdesc, '</p>', '')
 	Return $funcdesc

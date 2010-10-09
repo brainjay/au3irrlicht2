@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted/modified for the au3Irr2 project by linus
+; Converted for JRowe's au3Irrlicht2 UDF project by Linus
 ; ----------------------------------------------------------------------------
 ; Example 51 : Clouds
 ; This example demonstrates the billboard cloud objects that are particularly
@@ -41,7 +41,7 @@ dim $TerrainHeight ; single
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
@@ -82,7 +82,7 @@ _IrrSetNodeMaterialType ( $TerrainNode, $IRR_EMT_DETAIL_MAP )
 _IrrSetNodeMaterialFlag( $TerrainNode, $IRR_EMF_FOG_ENABLE, $IRR_ON )
 
 ; add a fog to the scene to gently fade the clouds out in the distance
-_IrrSetFog ( 128,128,255, $IRR_EXPONENTIAL_FOG, 0.0,0.0, 0.0002)
+_IrrSetFog ( 128,128,255, $IRR_EXPONENTIAL_FOG, 0.0,4000.0, 0.5 )
 
 ; we add a first person perspective camera to the scene so you can look about
 ; and move it into the center of the map
@@ -107,7 +107,7 @@ WHILE _IrrRunning()
     ; begin the scene, erasing the canvas with sky-blue before rendering
     _IrrBeginScene( 128, 128, 255 )
 
-    $aVector3df = _IrrGetNodePosition( $CameraNode)
+    _IrrGetNodePosition( $CameraNode, $aVector3df)
     $TerrainHeight = _IrrGetTerrainHeight( $TerrainNode, $aVector3df[0], $aVector3df[2] )+50
     if $aVector3df[1] < $TerrainHeight THEN
         _IrrSetNodePosition( $CameraNode, $aVector3df[0], $TerrainHeight, $aVector3df[2] )

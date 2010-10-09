@@ -1,7 +1,6 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2008)
-; Converted/modified for the au3Irr2 project by linus
 ; ----------------------------------------------------------------------------
 ; Example 23: Testing for Video Features
 ; This example performs each of the available tests on the video capabilities

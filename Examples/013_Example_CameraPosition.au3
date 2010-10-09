@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted/modified for the au3Irr2 project by linus
+; Converted for JRowe's au3Irrlicht2 UDF project by Linus
 ; ----------------------------------------------------------------------------
 ; Example 13: Camera Position
 ; This example creates a map for you to move around and displays the current
@@ -31,17 +31,17 @@ DIM $BitmapFont ; irr_font
 DIM $X ; Single
 DIM $Y ; Single
 DIM $Z ; Single
-DIM $metrics ; String
-dim $a_vector3df[3]
+DIM $metrics ; wstring * 256
+
 
 ; ////////////////////////////////////////////////////////////////////////////
 
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_NO_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
-; set the window caption
+; send the window caption
 _IrrSetWindowCaption( "Example 13: Camera Position and Rotation" )
 
 ; create a frist person perspective camera that can be controlled with mouse
@@ -76,20 +76,21 @@ WHILE _IrrRunning()
     ; draw the scene
     _IrrDrawScene()
 
-    ; get the position of the camera into the supplied array
-	  $a_vector3df = _IrrGetNodePosition($CameraNode)
+    ; get the position of the camera into the three supplied variables
+	dim $a_vector3df[3]
+	_IrrGetNodePosition($CameraNode, $a_vector3df)
 
     ; create a wide string with a list of the positions in
-    $metrics = "POSITION " & int($a_vector3df[0]) & " " & int($a_vector3df[1]) & " " & int($a_vector3df[2]) & "              "
+    $metrics = "POSITION " & round($a_vector3df[0],0) & " " & round($a_vector3df[1],0) & " " & round($a_vector3df[2],0) & "              "
 
     ; draw this position information to the screen
     _Irr2DFontDraw ( $BitmapFont, $metrics, 4, 4, 250, 24 )
 
-    ; get the rotation of the camera into the supplied array
-    $a_vector3df = _IrrGetNodeRotation($CameraNode)
+    ; get the rotation of the camera into the three supplied variables
+    _IrrGetNodeRotation( $CameraNode, $a_vector3df )
 
     ; create a wide string with a list of the rotations in
-    $metrics = "ROTATION " & int($a_vector3df[0]) & " " & int($a_vector3df[1]) & " " & int($a_vector3df[2]) & "              "
+    $metrics = "ROTATION " & round($a_vector3df[0],0) & " " & round($a_vector3df[1],0) & " " & round($a_vector3df[2],0) & "              "
 
     ; draw this position information to the screen
     _Irr2DFontDraw ( $BitmapFont, $metrics, 4, 32, 250, 52 )

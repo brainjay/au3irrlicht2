@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted/modified for the au3Irr2 project by linus
+; Converted for JRowe's au3Irrlicht2 UDF project by Linus
 ; ----------------------------------------------------------------------------
 ; Example 89 : Orthagonal Camera
 ; This example creates a split screen display where one of the cameras displays
@@ -41,7 +41,7 @@ DIM $keyStruct ; needed for setup of FPS cam
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_DIRECT3D9, 800, 400, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_OPENGL, 800, 400, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; set the window caption
@@ -94,7 +94,7 @@ _IrrHideMouse()
 ; while the irrlicht environment is still running
 WHILE _IrrRunning()
     ; begin the scene, erasing the canvas with sky-blue before rendering
-    _IrrBeginScene( 0, 0, 50 )
+    _IrrBeginScene( 240, 255, 255 )
 
     ; draw the scene on the left
     _IrrSetActiveCamera( $FirstCamera )
@@ -119,9 +119,9 @@ WHILE _IrrRunning()
 
     ; Make the second camera track the first camera by copying the first camera
     ; position and target into the second camera
-    $camPos = _IrrGetCameraTarget($FirstCamera)
+    _IrrGetCameraTarget( $FirstCamera, $camPos)
     _IrrSetCameraTarget( $SecondCamera, $camPos[0], $camPos[1], $camPos[2] )
-    $camPos = _IrrGetNodePosition( $FirstCamera)
+    _IrrGetNodePosition( $FirstCamera, $camPos)
     _IrrSetNodePosition( $SecondCamera, $camPos[0], $camPos[1], $camPos[2] )
 
     ; Set the orthagonal settings of the second camera, this switches

@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted/modified for the au3Irr2 project by linus
+; Converted for JRowe's au3Irrlicht2 UDF project by Linus
 ; ----------------------------------------------------------------------------
 ; Example 53 : Grass
 ; An example of a grass object that is layered over a terrain to create extra
@@ -42,7 +42,7 @@ dim $aVector3df[3]
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
@@ -124,7 +124,7 @@ for $x = 0 to 3
 next ;$x
 
 ; now we need to add the fog to the scene
-_IrrSetFog ( 64,100,128, $IRR_LINEAR_FOG, 0.0,5000.0)
+_IrrSetFog ( 64,100,128, $IRR_EXPONENTIAL_FOG, 0.0,4000.0, 0.5 )
 
 
 ; we add a first person perspective camera to the scene so you can look about
@@ -148,7 +148,7 @@ WHILE _IrrRunning()
 ;    _IrrBeginScene( 240, 255, 255 )
     _IrrBeginScene( 64, 100, 125 )
 
-    $aVector3df = _IrrGetNodePosition( $CameraNode)
+    _IrrGetNodePosition( $CameraNode, $aVector3df )
     $aVector3df[1] = _IrrGetTerrainTileHeight( $Terrain, $aVector3df[0], $aVector3df[2] )
     _IrrSetNodePosition( $CameraNode, $aVector3df[0], $aVector3df[1]+160, $aVector3df[2] )
 

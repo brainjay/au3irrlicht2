@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted/modified for the au3Irr2 project by linus
+; Converted for JRowe's au3Irrlicht2 UDF project by Linus
 ; ----------------------------------------------------------------------------
 ; Example 63 : Terrain Tile Splatter
 ; This example applies a texture to a terrain that uses a form of texture
@@ -43,7 +43,7 @@ global const $TILE_SIZE = 128
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
@@ -80,7 +80,7 @@ _IrrSetNodeMaterialFlag( $TerrainNode, $IRR_EMF_LIGHTING, $IRR_OFF )
 _IrrSetNodeMaterialType ( $TerrainNode, $IRR_EMT_FOUR_DETAIL_MAP )
 
 ; now we need to add the fog to the scene.
-_IrrSetFog ( 240,255,255, $IRR_EXPONENTIAL_FOG, 0.0,0.0, 0.0005 )
+_IrrSetFog ( 240,255,255, $IRR_EXPONENTIAL_FOG, 0.0,4000.0, 0.5 )
 
 ; we add a first person perspective camera to the scene so you can look about
 ; and move it into the center of the map
@@ -103,7 +103,7 @@ WHILE _IrrRunning()
     ; begin the scene, erasing the canvas with sky-blue before rendering
     _IrrBeginScene( 240, 255, 255 )
 
-    $vector3df = _IrrGetNodePosition($CameraNode)
+    _IrrGetNodePosition( $CameraNode, $vector3df )
     $vector3df[1] = _IrrGetTerrainTileHeight( $Terrain, $vector3df[0], $vector3df[2] )
     _IrrSetNodePosition( $CameraNode, $vector3df[0], $vector3df[1]+80, $vector3df[2] )
 

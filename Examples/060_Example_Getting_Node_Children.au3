@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------------
 ; Irrlicht Wrapper for Imperative Languages - Freebasic Examples
 ; Frank Dodd (2006)
-; Converted/modified for the au3Irr2 project by linus
+; Converted for JRowe's au3Irrlicht2 UDF project by Linus
 ; ----------------------------------------------------------------------------
 ; Example 60: Getting Node Children
 ; This example demonstrates acquiring the child nodes connected to a parent
@@ -43,14 +43,14 @@ const $SCRIPTTITLE = "Example 60: Getting Node Children"
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; send the window caption
 _IrrSetWindowCaption( $SCRIPTTITLE )
 
 ; load the test cube texture
-$MeshTexture = _IrrGetTexture( "../media/au3irr2_logo.jpg" )
+$MeshTexture = _IrrGetTexture( "../media/texture.jpg" )
 
 ; create a series of zones
 for $x = -3 to 3
@@ -104,7 +104,7 @@ wend
 local $flag = True
 WHILE _IrrRunning()
     ; begin the scene, erasing the canvas
-    _IrrBeginScene( 0, 0, 75 )
+    _IrrBeginScene( 0, 0, 0 )
 
     ; draw the scene
     _IrrDrawScene()
