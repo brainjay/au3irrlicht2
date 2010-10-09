@@ -123,11 +123,12 @@ While true
 
 			; merging the help file:
 			$ret = MsgBox(32 + 8192 + 4, $SCRIPTTITLE, "Merge au3Irr2 help into local autoIt help?" & _
-					@LF & @LF & ">>> Please note: Current merged help is build for autoIt help with version: " & $MERGEHELPVER & @LF & _
-					">>> Backup of original " & $pathAu3Dir & "\AutoIt.chm will be created for later restore.")
+					@LF & @LF & ">>> Please note: Current merged help is build for autoIt help with version: " & $MERGEHELPVER & _
+					@LF & @LF & ">>> Backup of original " & $pathAu3Dir & "\AutoIt.chm will be created for later restore.")
 
 			if $ret = 6 Then ; Yes: merge au3Help
 				if NOT FileCopy($pathHelp, $pathAu3Dir, True) Then ContinueCase
+					ConsoleWrite('@@ Debug(' & @ScriptLineNumber & ') : $pathHelp = ' & $pathHelp & @crlf & '>Error code: ' & @error & @crlf) ;### Debug Console
 				if NOT FileExists($pathAu3Dir & "AutoIt_org.chm") then
 					if NOT FileCopy($pathAu3Dir & "AutoIt.chm", $pathAu3Dir & "\AutoIt_org.chm") Then ContinueCase
 				EndIf
@@ -167,7 +168,7 @@ While true
 
 			EndIf
 		Case 666 ; error during $btnSetup
-			MsgBox(48 + 8192, $SCRIPTTITLE, "Cannot complete setup (missing rights, open files?), sorry!")
+			MsgBox(48 + 8192, $SCRIPTTITLE, "Cannot complete setup (missing rights in au3 installation dir, or open files?), sorry!" & @LF & "Please restart exampleLauncher as Administrator and retry!")
 
 		Case $btnQuit, $GUI_EVENT_CLOSE
 			Exit
