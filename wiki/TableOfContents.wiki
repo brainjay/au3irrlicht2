@@ -1,3 +1,4 @@
  * [Introduction au3Irr2 Introduction]
    * [ChangeLog au3Irr2 ChangeLog]
    * [license Software License]
+   * [Credits Credits]
