@@ -71,12 +71,10 @@
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetNodeName($h_Node)
-	$result = DllCall($_irrDll, "str:cdecl", "IrrGetNodeName", "ptr", $h_Node)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "str:cdecl", "IrrGetNodeName", "ptr", $h_Node)
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetNodeName
 
 
@@ -99,13 +97,8 @@ EndFunc   ;==>_IrrGetNodeName
 ; ===============================================================================================================================
 Func _IrrSetNodeName($h_Node, $s_Name)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeName", "ptr", $h_Node, "str", $s_Name)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNodeName
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -125,16 +118,13 @@ EndFunc   ;==>_IrrSetNodeName
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrGetNodeMesh ($h_Node)
-; Get the mesh assiciated with a given node
-    $result = DllCall($_irrDll, "ptr:cdecl", "IrrGetNodeMesh", "ptr", $h_Node)
-    if @error Then
-        Return Seterror(1,0,False)
-    Else
-        Return $result[0]
-    EndIf
-EndFunc   ;==>__IrrGetNodeMesh
-
+Func _IrrGetNodeMesh($h_Node)
+	; Get the mesh assiciated with a given node
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrGetNodeMesh", "ptr", $h_Node)
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
+EndFunc   ;==>_IrrGetNodeMesh
 
 
 ; #FUNCTION# =============================================================================================================
@@ -155,12 +145,10 @@ EndFunc   ;==>__IrrGetNodeMesh
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetMaterialCount($h_Node)
-	$result = DllCall($_irrDll, "uint:cdecl", "IrrGetMaterialCount", "ptr", $h_Node)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "uint:cdecl", "IrrGetMaterialCount", "ptr", $h_Node)
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetMaterialCount
 
 
@@ -182,12 +170,10 @@ EndFunc   ;==>_IrrGetMaterialCount
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetMaterial($h_Node, $i_Material)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetMaterial", "ptr", $h_Node, "uint", $i_Material)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrGetMaterial", "ptr", $h_Node, "uint", $i_Material)
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetMaterial
 
 
@@ -210,11 +196,7 @@ EndFunc   ;==>_IrrGetMaterial
 ; ===============================================================================================================================
 Func _IrrSetNodeMaterialTexture($h_Node, $h_Texture, $i_Index)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeMaterialTexture", "UINT_PTR", $h_Node, "UINT_PTR", $h_Texture, "int", $i_Index)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNodeMaterialTexture
 
 
@@ -249,11 +231,7 @@ EndFunc   ;==>_IrrSetNodeMaterialTexture
 ; ===============================================================================================================================
 Func _IrrSetNodeMaterialFlag($h_Node, $i_Type, $i_Flag)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeMaterialFlag", "UINT_PTR", $h_Node, "int", $i_Type, "uint", $i_Flag)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNodeMaterialFlag
 
 
@@ -299,11 +277,7 @@ EndFunc   ;==>_IrrSetNodeMaterialFlag
 ; ===============================================================================================================================
 Func _IrrSetNodeMaterialType($h_Node, $i_Type)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeMaterialType", "UINT_PTR", $h_Node, "int", $i_Type)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNodeMaterialType
 
 
@@ -324,13 +298,8 @@ EndFunc   ;==>_IrrSetNodeMaterialType
 ; ===============================================================================================================================
 Func _IrrSetNodePosition($h_Node, $f_X, $f_Y, $f_Z)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodePosition", "UINT_PTR", $h_Node, "float", $f_X, "float", $f_Y, "float", $f_Z)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNodePosition
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -350,11 +319,7 @@ EndFunc   ;==>_IrrSetNodePosition
 ; ===============================================================================================================================
 Func _IrrSetNodeRotation($h_Node, $f_X, $f_Y, $f_Z)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeRotation", "ptr", $h_Node, "float", $f_X, "float", $f_Y, "float", $f_Z)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNodeRotation
 
 
@@ -375,13 +340,8 @@ EndFunc   ;==>_IrrSetNodeRotation
 ; ===============================================================================================================================
 Func _IrrSetNodeScale($h_Node, $f_X, $f_Y, $f_Z)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeScale", "UINT_PTR", $h_Node, "float", $f_X, "float", $f_Y, "float", $f_Z)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNodeScale
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -403,11 +363,7 @@ EndFunc   ;==>_IrrSetNodeScale
 ; ===============================================================================================================================
 Func _IrrDebugDataVisible($h_Node, $i_Visible)
 	DllCall($_irrDll, "none:cdecl", "IrrDebugDataVisible", "ptr", $h_Node, "int", $i_Visible)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrDebugDataVisible
 
 
@@ -416,7 +372,7 @@ EndFunc   ;==>_IrrDebugDataVisible
 ; Description ...: Returns array with position coordinates of a scene node.
 ; Syntax.........: _IrrGetNodePosition($h_Node)
 ; Parameters ....: $h_Node - Handle of a scene node
-; Return values .: success - 0-bases array with three elements for X, Y, Z coordinates.
+; Return values .: success - 0-based array with three elements for X, Y, Z coordinates.
 ;                  failure - False
 ; Author ........:
 ; Modified.......:
@@ -426,18 +382,14 @@ EndFunc   ;==>_IrrDebugDataVisible
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetNodePosition($h_Node)
-	Dim $a_Vector3df[3]
-	$result = DllCall($_irrDll, "none:cdecl", "IrrGetNodePosition", "ptr", $h_Node, "float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2])
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		$a_Vector3df[0] = $result[2]
-		$a_Vector3df[1] = $result[3]
-		$a_Vector3df[2] = $result[4]
-		Return $a_Vector3df
-	EndIf
+	Dim $a_Vector3df[3], $aResult
+	$aResult = DllCall($_irrDll, "none:cdecl", "IrrGetNodePosition", "ptr", $h_Node, "float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2])
+	If @error Or Not IsArray($aResult) Then Return SetError(1, 0, False)
+	$a_Vector3df[0] = $aResult[2]
+	$a_Vector3df[1] = $aResult[3]
+	$a_Vector3df[2] = $aResult[4]
+	Return SetError(0, 0, $a_Vector3df)
 EndFunc   ;==>_IrrGetNodePosition
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -445,7 +397,7 @@ EndFunc   ;==>_IrrGetNodePosition
 ; Description ...: Get the absoloute position of the node in the scene.
 ; Syntax.........: _IrrGetNodeAbsolutePosition($h_Node)
 ; Parameters ....: $h_Node - Handle of a scene node
-; Return values .: success - 0-bases array with three elements for X, Y, Z coordinates.
+; Return values .: success - 0-based array with three elements for X, Y, Z coordinates.
 ;                  failure - False
 ; Author ........:
 ; Modified.......:
@@ -455,16 +407,13 @@ EndFunc   ;==>_IrrGetNodePosition
 ; Example .......: No
 ; ===============================================================================================================================
 Func _IrrGetNodeAbsolutePosition($h_Node)
-	Dim $a_Vector3df[3]
-	$result = DllCall($_irrDll, "none:cdecl", "IrrGetNodeAbsolutePosition", "ptr", $h_Node, "float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2])
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		$a_Vector3df[0] = $result[2]
-		$a_Vector3df[1] = $result[3]
-		$a_Vector3df[2] = $result[4]
-		Return $a_Vector3df
-	EndIf
+	Dim $a_Vector3df[3], $aResult
+	$aResult = DllCall($_irrDll, "none:cdecl", "IrrGetNodeAbsolutePosition", "ptr", $h_Node, "float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2])
+	If @error Or Not IsArray($aResult) Then Return SetError(1, 0, False)
+	$a_Vector3df[0] = $aResult[2]
+	$a_Vector3df[1] = $aResult[3]
+	$a_Vector3df[2] = $aResult[4]
+	Return SetError(0, 0, $a_Vector3df)
 EndFunc   ;==>_IrrGetNodeAbsolutePosition
 
 
@@ -473,7 +422,7 @@ EndFunc   ;==>_IrrGetNodeAbsolutePosition
 ; Description ...: Returns array with rotation values of a scene node.
 ; Syntax.........: _IrrGetNodeRotation($h_Node)
 ; Parameters ....: $h_Node - Handle of a scene node
-; Return values .: success - 0-bases array with three elements for X, Y, Z rotation.
+; Return values .: success - 0-based array with three elements for X, Y, Z rotation.
 ;                  failure - False
 ; Author ........:
 ; Modified.......:
@@ -483,16 +432,13 @@ EndFunc   ;==>_IrrGetNodeAbsolutePosition
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetNodeRotation($h_Node)
-	Dim $a_Vector3df[3]
-	$result = DllCall($_irrDll, "none:cdecl", "IrrGetNodeRotation", "ptr", $h_Node, "float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2])
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		$a_Vector3df[0] = number($result[2])
-		$a_Vector3df[1] = number($result[3])
-		$a_Vector3df[2] = number($result[4])
-		Return $a_Vector3df
-	EndIf
+	Dim $a_Vector3df[3], $aResult
+	$aResult = DllCall($_irrDll, "none:cdecl", "IrrGetNodeRotation", "ptr", $h_Node, "float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2])
+	If @error Or Not IsArray($aResult) Then Return SetError(1, 0, False)
+	$a_Vector3df[0] = Number($aResult[2])
+	$a_Vector3df[1] = Number($aResult[3])
+	$a_Vector3df[2] = Number($aResult[4])
+	Return SetError(0, 0, $a_Vector3df)
 EndFunc   ;==>_IrrGetNodeRotation
 
 
@@ -514,14 +460,11 @@ EndFunc   ;==>_IrrGetNodeRotation
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetJointNode($h_Node, $s_Joint)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetJointNode", "ptr", $h_Node, "str", $s_Joint)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrGetJointNode", "ptr", $h_Node, "str", $s_Joint)
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetJointNode
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -543,13 +486,8 @@ EndFunc   ;==>_IrrGetJointNode
 ; ===============================================================================================================================
 Func _IrrAddChildToParent($h_ChildNode, $h_ParentNode)
 	DllCall($_irrDll, "none:cdecl", "IrrAddChildToParent", "ptr", $h_ChildNode, "ptr", $h_ParentNode)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrAddChildToParent
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -570,21 +508,18 @@ EndFunc   ;==>_IrrAddChildToParent
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetNodeFirstChild($h_Node, ByRef $h_Position)
-; get the first child node of this node, returns 0 if there is no child
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetNodeFirstChild", "UINT_PTR", $h_Node, "UINT_PTR*", $h_Position)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		$h_Position = $result[2]
-		return $result[0]
-	EndIf
+	; get the first child node of this node, returns 0 if there is no child
+	Local $aResult
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetNodeFirstChild", "UINT_PTR", $h_Node, "UINT_PTR*", $h_Position)
+	If @error Or Not IsArray($aResult) Then Return SetError(1, 0, False)
+	$h_Position = $aResult[2]
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetNodeFirstChild
-
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetNodeNextChild
-; Description ...: [todo]
+; Description ...: Get the next child node of this node, returns 0 if there is no child.
 ; Syntax.........: _IrrGetNodeNextChild($h_Node, ByRef $h_Position)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
@@ -600,17 +535,12 @@ EndFunc   ;==>_IrrGetNodeFirstChild
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetNodeNextChild($h_Node, ByRef $h_Position)
-; get the next child node of this node, returns 0 if there is no child
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetNodeNextChild", "UINT_PTR", $h_Node, "UINT_PTR*", $h_Position)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		$h_Position = $result[2]
-		return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetNodeNextChild", "UINT_PTR", $h_Node, "UINT_PTR*", $h_Position)
+	If @error Then Return SetError(1, 0, False)
+	$h_Position = $aResult[2]
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetNodeNextChild
-
-
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrIsNodeLastChild
@@ -630,16 +560,13 @@ EndFunc   ;==>_IrrGetNodeNextChild
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrIsNodeLastChild($h_Node, ByRef $h_Position)
-; returns true if this is the last child of the parent
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrIsNodeLastChild", "UINT_PTR", $h_Node, "ptr*", $h_Position)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		$h_Position = $result[2]
-		return $result[0]
-	EndIf
+	; returns true if this is the last child of the parent
+	Local $aResult
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrIsNodeLastChild", "UINT_PTR", $h_Node, "ptr*", $h_Position)
+	If @error Or Not IsArray($aResult) Then Return SetError(1, 0, False)
+	$h_Position = $aResult[2]
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrIsNodeLastChild
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -662,11 +589,7 @@ EndFunc   ;==>_IrrIsNodeLastChild
 ; ===============================================================================================================================
 Func _IrrAddNodeShadow($h_Node, $h_mesh = 0)
 	DllCall($_irrDll, "none:cdecl", "IrrAddNodeShadow", "ptr", $h_Node, "ptr", $h_mesh)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrAddNodeShadow
 
 
@@ -689,11 +612,7 @@ EndFunc   ;==>_IrrAddNodeShadow
 ; ===============================================================================================================================
 Func _IrrSetNodeVisibility($h_Node, $i_Visible)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeVisibility", "ptr", $h_Node, "int", $i_Visible)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNodeVisibility
 
 
@@ -713,11 +632,7 @@ EndFunc   ;==>_IrrSetNodeVisibility
 ; ===============================================================================================================================
 Func _IrrRemoveNode($h_Node)
 	DllCall($_irrDll, "none:cdecl", "IrrRemoveNode", "ptr", $h_Node)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrRemoveNode
 
 
@@ -740,11 +655,7 @@ EndFunc   ;==>_IrrRemoveNode
 ; ===============================================================================================================================
 Func _IrrRemoveAllNodes()
 	DllCall($_irrDll, "none:cdecl", "IrrRemoveAllNodes")
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrRemoveAllNodes
 
 
@@ -767,13 +678,8 @@ EndFunc   ;==>_IrrRemoveAllNodes
 ; ===============================================================================================================================
 Func _IrrSetNodeParent($h_Node, $h_Parent)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeParent", "ptr", $h_Node, "ptr", $h_Parent)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNodeParent
-
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
@@ -794,11 +700,12 @@ EndFunc   ;==>_IrrSetNodeParent
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetNodeID($h_Node)
-; get the ID of this node
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGetNodeID", "ptr", $h_Node)
-	Return $result[0]
+	; get the ID of this node
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrGetNodeID", "ptr", $h_Node)
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetNodeID
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -819,15 +726,10 @@ EndFunc   ;==>_IrrGetNodeID
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrSetNodeID($h_Node, $i_ID)
-; set the ID of this node
+	; set the ID of this node
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeID", "ptr", $h_Node, "int", $i_ID)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNodeID
-
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
@@ -848,23 +750,17 @@ EndFunc   ;==>_IrrSetNodeID
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetNodeBoundingBox($h_Node, ByRef $a_VectorA3df, ByRef $a_VectorB3df)
-	Dim $a_VectorA3df[3]
-	Dim $a_VectorB3df[3]
-	$result = DllCall($_irrDll, "none:cdecl", "IrrGetNodeBoundingBox", "ptr", $h_Node, "float*", $a_VectorA3df[0], "float*", $a_VectorA3df[1], "float*", $a_VectorA3df[2], "float*", $a_VectorB3df[0], "float*", $a_VectorB3df[1], "float*", $a_VectorB3df[2])
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		$a_VectorA3df[0] = $result[2]
-		$a_VectorA3df[1] = $result[3]
-		$a_VectorA3df[2] = $result[4]
-		$a_VectorB3df[0] = $result[5]
-		$a_VectorB3df[1] = $result[6]
-		$a_VectorB3df[2] = $result[7]
-		Return True
-	EndIf
+	Dim $a_VectorA3df[3], $a_VectorB3df[3], $aResult
+	$aResult = DllCall($_irrDll, "none:cdecl", "IrrGetNodeBoundingBox", "ptr", $h_Node, "float*", $a_VectorA3df[0], "float*", $a_VectorA3df[1], "float*", $a_VectorA3df[2], "float*", $a_VectorB3df[0], "float*", $a_VectorB3df[1], "float*", $a_VectorB3df[2])
+	If @error Then Return SetError(1, 0, False)
+	$a_VectorA3df[0] = $aResult[2]
+	$a_VectorA3df[1] = $aResult[3]
+	$a_VectorA3df[2] = $aResult[4]
+	$a_VectorB3df[0] = $aResult[5]
+	$a_VectorB3df[1] = $aResult[6]
+	$a_VectorB3df[2] = $aResult[7]
+	Return SetError(0, 0, True)
 EndFunc   ;==>_IrrGetNodeBoundingBox
-
-
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
@@ -887,31 +783,27 @@ EndFunc   ;==>_IrrGetNodeBoundingBox
 Func _IrrSetNodeRotationPositionChange($h_Camera, $f_Yaw, $f_Pitch, $f_Roll, $f_Drive, $f_Strafe, $f_Elevate, _
 	ByRef $tForwardVect, ByRef $tUpVector, ByRef $tOffsetVect)
 
-	if not IsDllStruct($tForwardVect) then Return SetError(2, 0, False)
-	if not IsDllStruct($tUpVector) then Return SetError(3, 0, False)
-	if not IsDllStruct($tOffsetVect) then Return SetError(4, 0, False)
-	local $iOffsetVect = DllStructGetSize($tOffsetVect) / DllStructGetSize(DllStructCreate($tagIRR_VECTOR))
-
-	$result = DllCall($_irrDll, "none:cdecl", "IrrSetNodeRotationPositionChange", "ptr", $h_Camera, _
-		"float", $f_Yaw, "float", $f_Pitch, "float", $f_Roll, "float", $f_Drive, "float", $f_Strafe, "float", $f_Elevate, _
-		"ptr", DllStructGetPtr($tForwardVect), "ptr", DllStructGetPtr($tUpVector), _
-		"uint", $iOffsetVect, "ptr", DllStructGetPtr($tOffsetVect) )
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
+	If Not IsDllStruct($tForwardVect) Then Return SetError(2, 0, False)
+	If Not IsDllStruct($tUpVector) Then Return SetError(3, 0, False)
+	If Not IsDllStruct($tOffsetVect) Then Return SetError(4, 0, False)
+	Local $iOffsetVect, $aResult
+	$iOffsetVect = DllStructGetSize($tOffsetVect) / DllStructGetSize(DllStructCreate($tagIRR_VECTOR))
+	$aResult = DllCall($_irrDll, "none:cdecl", "IrrSetNodeRotationPositionChange", "ptr", $h_Camera, _
+			"float", $f_Yaw, "float", $f_Pitch, "float", $f_Roll, "float", $f_Drive, "float", $f_Strafe, "float", $f_Elevate, _
+			"ptr", DllStructGetPtr($tForwardVect), "ptr", DllStructGetPtr($tUpVector), _
+			"uint", $iOffsetVect, "ptr", DllStructGetPtr($tOffsetVect))
+	If @error Or Not IsArray($aResult) Then Return SetError(1, 0, False)
 ;~ 		$aForwardVect[0] = DllStructGetData($tForwardV, 1, 1)
 ;~ 		$aForwardVect[1] = DllStructGetData($tForwardV, 1, 2)
 ;~ 		$aForwardVect[2] = DllStructGetData($tForwardV, 1, 3)
 ;~ 		$aUpVector[0] = DllStructGetData($tUpV, 1, 1)
 ;~ 		$aUpVector[1] = DllStructGetData($tUpV, 1, 2)
 ;~ 		$aUpVector[2] = DllStructGetData($tUpV, 1, 3)
-$tForwardVect = DllStructGetPtr($result[8]) ;DllStructCreate($tagIRR_VECTOR, $result[8])
-$tUpVector = DllStructGetPtr($result[9]); DllStructCreate($tagIRR_VECTOR, $result[9])
-$tOffsetVect = DllStructGetPtr($result[11]);DllStructCreate("float;float;float;float;float;float", $result[11])
-		Return True
-	EndIf
+	$tForwardVect = DllStructGetPtr($aResult[8]) ;DllStructCreate($tagIRR_VECTOR, $aResult[8])
+	$tUpVector = DllStructGetPtr($aResult[9]); DllStructCreate($tagIRR_VECTOR,$aResult[9])
+	$tOffsetVect = DllStructGetPtr($aResult[11]);DllStructCreate("float;float;float;float;float;float", $aResult[11])
+	Return SetError(0, 0, True)
 EndFunc   ;==>_IrrSetNodeRotationPositionChange
-
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
@@ -932,37 +824,25 @@ EndFunc   ;==>_IrrSetNodeRotationPositionChange
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func xxx_IrrSetNodeRotationPositionChange($h_Camera, $f_Yaw, $f_Pitch, $f_Roll, $f_Drive, $f_Strafe, $f_Elevate, _
-	ByRef $aForwardVect, ByRef $aUpVector, ByRef $aOffsetVect)
+		ByRef $aForwardVect, ByRef $aUpVector, ByRef $aOffsetVect)
 
+	Local $i_NumOffsetVectors, $tForwardV, $tUpV
 	$i_NumOffsetVectors = UBound($aOffsetVect)
+	$tForwardV = DllStructCreate("float[3]")
+	$tUpV = DllStructCreate("float[3]")
+	For $i = 1 To 3
+		DllStructSetData($tForwardV, 1, $aForwardVect[0], $i)
+		DllStructSetData($tUpV, 1, $aUpVector[0], $i)
+	Next
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeRotationPositionChange", "ptr", $h_Camera, _
+			"float", $f_Yaw, "float", $f_Pitch, "float", $f_Roll, "float", $f_Drive, "float", $f_Strafe, "float", $f_Elevate, _
+			"ptr", DllStructGetPtr($tForwardV), "ptr", DllStructGetPtr($tUpV), _
+			"uint", $i_NumOffsetVectors, "float*", $aOffsetVect) ; $h_OffsetVect[0][0])
+	If @error Then Return SetError(1, 0, False)
+	For $i = 1 To 3
+		$aForwardVect[$i - 1] = DllStructGetData($tForwardV, 1, $i)
+		$aUpVector[$i - 1] = DllStructGetData($tUpV, 1, $i)
+	Next
+	Return SetError(0, 0, True)
 
-	local $tForwardV = DllStructCreate("float[3]")
-	local $tUpV = DllStructCreate("float[3]")
-
-	DllStructSetData($tForwardV, 1, $aForwardVect[0], 1)
-	DllStructSetData($tForwardV, 1, $aForwardVect[1], 2)
-	DllStructSetData($tForwardV, 1, $aForwardVect[2], 3)
-	DllStructSetData($tUpV, 1, $aUpVector[0], 1)
-	DllStructSetData($tUpV, 1, $aUpVector[1], 2)
-	DllStructSetData($tUpV, 1, $aUpVector[2], 3)
-
-	local $i
-
-
-	$result = DllCall($_irrDll, "none:cdecl", "IrrSetNodeRotationPositionChange", "ptr", $h_Camera, _
-		"float", $f_Yaw, "float", $f_Pitch, "float", $f_Roll, "float", $f_Drive, "float", $f_Strafe, "float", $f_Elevate, _
-		"ptr", DllStructGetPtr($tForwardV), "ptr", DllStructGetPtr($tUpV), _
-		"uint", $i_NumOffsetVectors, "float*", $aOffsetVect ) ; $h_OffsetVect[0][0])
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		$aForwardVect[0] = DllStructGetData($tForwardV, 1, 1)
-		$aForwardVect[1] = DllStructGetData($tForwardV, 1, 2)
-		$aForwardVect[2] = DllStructGetData($tForwardV, 1, 3)
-		$aUpVector[0] = DllStructGetData($tUpV, 1, 1)
-		$aUpVector[1] = DllStructGetData($tUpV, 1, 2)
-		$aUpVector[2] = DllStructGetData($tUpV, 1, 3)
-
-		Return True
-	EndIf
 EndFunc   ;==>xxx_IrrSetNodeRotationPositionChange

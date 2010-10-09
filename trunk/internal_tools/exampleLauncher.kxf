@@ -101,8 +101,25 @@
 				<property name="Top" vt="Int8">9</property>
 				<property name="Width" vt="Int8">73</property>
 				<property name="Height" vt="Int8">25</property>
+				<property name="Hint" vt="String">Open au3Irr2 help</property>
 				<property name="Caption" vt="String">Help file</property>
 				<property name="TabOrder" vt="Int8">5</property>
+				<property name="Color" vt="Ident">clBtnFace</property>
+				<property name="CtrlStyle" vt="Int32">1342390272</property>
+				<property name="CtrlExStyle" vt="Int8">0</property>
+				<property name="Resizing" vt="Set">DockWidth, DockHeight</property>
+			</properties>
+			<components/>
+		</object>
+		<object type="TAButton" name="btnSetup">
+			<properties>
+				<property name="Left" vt="Int16">228</property>
+				<property name="Top" vt="Int8">9</property>
+				<property name="Width" vt="Int8">41</property>
+				<property name="Height" vt="Int8">25</property>
+				<property name="Hint" vt="String">Integrate help file and calltips for SciTE</property>
+				<property name="Caption" vt="String">Setup</property>
+				<property name="TabOrder" vt="Int8">6</property>
 				<property name="Color" vt="Ident">clBtnFace</property>
 				<property name="CtrlStyle" vt="Int32">1342390272</property>
 				<property name="CtrlExStyle" vt="Int8">0</property>

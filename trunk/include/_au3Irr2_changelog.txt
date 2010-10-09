@@ -12,7 +12,7 @@
 ; '[' and ']' can be used to set text to bold in .html
   
 
-=== 2.04 (xxxx-xx-xx) ==========================================================
+=== 2.04 (2010-10-xx) ==========================================================
 [Work in progress!]
 
 
@@ -66,13 +66,18 @@
 
 > Internal tools:
 
-+ Fixed: help_tool.au3 - added functions in UDFs w/o info block were not updated correctly.
+- Fixed: help_tool.au3 - added functions in UDFs w/o info block were not updated correctly.
 + Fixed: Examples could not be opened when running launcher from path with spaces
++ Added: Setup feature to example launcher to merge au3Irr2 help into local au3 help 
+  and add/update calltips for SciTe
+- calltip file and merged autoIt.chm are compiled into exampleLauncher.exe, so removed from root dir
++ Excluded \internal_tools because not too interesting for 99.9% (for the 0.1%: available via the 
+  sources from project page)
 
 
 > Other:
 + Changed: global $result used in UDF files switched to local variables (WIP, finished for 2D, Scene, 
-  Camera, Animation)
+  Camera, Animation, Node)
 
 
 === 2.03 (2010-09-05) ==========================================================

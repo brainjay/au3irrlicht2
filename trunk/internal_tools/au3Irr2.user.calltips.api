@@ -1,5 +1,4 @@
-; userCallTips for au3Irr2 release 2.04 (xxxx-xx-xx)
-; copy or (replace) content of this file to your usercalltips of scite via Tools > UserCallTipEntries.
+; userCallTips for au3Irr2 release 2.04 (2010-10-xx)
 ; === Start of au3Irrlicht2 calltip definitions ======================================================
 
 _IrrSetTextureCreationFlag($i_Flag,$i_Value) Sets texture creation flags controlling how textures are handled when they are created.
