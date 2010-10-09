@@ -1,0 +1,67 @@
+; au3Irrlicht2 Changelog
+; ======================
+; this file is used to create history of help file. So it need to be well formated:
+; empty lines or lines with leading ';' are ignored
+; '=' in row1 defines header for release information (all '=' are removed for .html): 
+; = [release number] ([date info]) ===========
+; First found release info is also used to update the static introduction .html
+; lines with '>' in row start a header
+; lines with '+' in row start a list point in .html (with a bullet)
+; lines with '-' in row start an ignored list point (history details not interesting for normal users)
+; all following indented lines (starting in row >= 3) belong to the current .html or ignored list point
+; '[' and ']' can be used to set text to bold in .html
+  
+
+=== 2.04 (xxxx-xx-xx) ==========================================================
+[Work in progress!]
+
+> Help file:
+
++ Added: Complete documentation including example code for some more functions.
+- Topics completed including example code along examples 1-6, 8
+  Naked reference w/o detailed informations for other examples.
+
+
+
+=== 2.03 (2010-09-05) ==========================================================
+
+> UDF:
+
++ Changed: Splitted UDF per category into \include. Main UDF (and the only one which is
+  needed to be included) is still au3Irrlicht2.au3
++ Changed: All used dll files are moved to \bin to clean up the root dir.
+  _IrrStart is modified to find them anyway.
++ Fixed: _IrrSetNodeVisibility
+
+> Examples:
+
++ Added: 089 (Orthogonal Camera), 106 (Advanced start)
++ Changed: 029 (Skydome)
++ Fixed: 049 (Loaded_Scene_Collision), 051 (Clouds)
+
+> Help file:
+
++ Added: First version as reference of all working + proven functions. Current status:
+  Topics completed including example code along examples 1 to 6.
+  Naked reference w/o detailed informations for other examples.
++ Changed: Moved original freeBasic Wrapper docs from \FB_documentation to 
+  \internal_tools\buildHelp\html_static. It's now included into help file.
++ Added: Merged help to use the au3Irr2 help inside the au3 help.
+
+> Internal tools:
+
++ Added: helper scripts and files for building help file and au3.user.calltips.api
+  (see [\internal tools\help_building_readme.txt]) 
+
+
+> Other:
++ Fixed: \media\fonthaettenschweiler.bmp ([bogQ])
++ Added: msvcr71.dll - possibly missing on some machines ([jl])
+
+=== 2.02 (2010-07-29) ==========================================================
+First release in one package (UDF + all needed .dll's, examples, ExampleLauncher)
+
+
+
+=== 2.0 (2010-05-03) ===========================================================
+First release of jRowe
