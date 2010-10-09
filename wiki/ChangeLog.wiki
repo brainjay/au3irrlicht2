@@ -5,6 +5,49 @@
 
 ----
 
+== 2.04 (2010-10-09) ==
+
+
+==== Script breaking changes: ====
+
+  * IrrAddSplineAnimator: Parameters changed to simplify usage (see examples) 
+  * IrrGetNodePosition, IrrGetNodeRotation, IrrGetNodeAbsolutePosition, IrrGetCameraTarget: Removed required byRef array parameter (see help file/adjusted examples for syntax)
+
+
+==== UDF: ====
+  * Fixed/Added: Some more working functions (mainly around added examples) 
+  * Added: Some missing 2D functions and documentation (contributions from smashly) 
+  * Fixed: IrrSetFog (linear and exponential fog were interchanged) 
+  * Fixed: IrrCreateMesh ($s_MeshName not being passed in the DLL call) 
+  * Fixed: IrrGetScreenCoordinatesFrom3DPosition (did not return anything useable because of wrong dllCall)
+
+
+==== Examples: ====
+  * Added: 015 (CustomMesh), 022 (Indices+Vertices), 024 (Mesh to file), 062 (6D0F_Camera) 
+  * Added: (contribution from smashly): 039 (Texture blending), 070 (Texture_and_Images), 103 (Billboard Groups), 104 (LOD) 
+  * Added: 007/025/027/066/067/068/069/074/075 (ParticleSystem) 
+  * Reworked: 011 (Animators) shows usage of changed IrrAddSplineAnimator 
+  * Fixed: 010 (TerrainAndFog) / 029/054 (Skydomes)
+
+
+==== Help file: ====
+  * Added: Completed documentation including example code for some more functions. Current status: Topics completed along examples 1-16 + several more. At least naked reference w/o detailed informations for all functions inside other examples. 
+  * Added: 'Copy to clipboard'-button for included examples (using VBS code from GEOSoft)
+
+==== Internal tools: ====
+  * Fixed: Examples could not be opened when running launcher from path with spaces 
+  * Added: Setup feature to example launcher to merge au3Irr2 help into local au3 help and add/update calltips for SciTe 
+  * Excluded \internal_tools because not too interesting for 99.9% (for the 0.1%: available via the sources from project page)
+
+
+==== Other: ====
+  * Changed: global $result used in UDF files switched to local variables (WIP, finished for 2D, Scene, Camera, Animation, Node)
+ 
+
+
+
+----
+
 
 
 == 2.03 (2010-09-05) ==
