@@ -223,11 +223,8 @@ EndFunc   ;==>_IrrCreateMesh
 Func _IrrAddSphereSceneMesh($s_MeshName, $f_Radius, $i_PolyCount)
 	local $aResult
 	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddSphereSceneMesh", "str", $s_MeshName, "float", $f_Radius, "int", $i_PolyCount)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $aResult[0]
-	EndIf
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddSphereSceneMesh
 
 
@@ -388,7 +385,6 @@ Func _IrrGetMeshFrameCount($h_Mesh)
 	$aResult = DllCall($_irrDll, "int:cdecl", "IrrGetMeshFrameCount", "ptr", $h_Mesh)
 	If @error Then Return SetError(1, 0, False)
 	Return SetError(0, 0, $aResult[0])
-
 EndFunc   ;==>_IrrGetMeshFrameCount
 
 
@@ -460,20 +456,16 @@ EndFunc   ;==>_IrrGetMeshIndexCount
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetMeshIndices($h_Mesh, $i_FrameNumber, ByRef $a_IndicesArray, $i_MeshBuffer = 0)
-
-	Local $iIndices = _IrrGetMeshIndexCount($h_Mesh, $i_FrameNumber, $i_MeshBuffer)
+	Local $iIndices, $tIndices
+	$iIndices = _IrrGetMeshIndexCount($h_Mesh, $i_FrameNumber, $i_MeshBuffer)
 	Dim $a_IndicesArray[$iIndices]
-	Local $tIndices = DllStructCreate("USHORT[" & $iIndices & "]")
-	Local $ret = DllCall($_irrDll, "none:cdecl", "IrrGetMeshIndices", "UINT_PTR", $h_Mesh, "int", $i_FrameNumber, "ptr", DllStructGetPtr($tIndices), "int", $i_MeshBuffer)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Local $i
-		For $i = 1 To $iIndices
-			$a_IndicesArray[$i - 1] = DllStructGetData($tIndices, 1, $i)
-		Next ; $i
-		Return $iIndices
-	EndIf
+	$tIndices = DllStructCreate("USHORT[" & $iIndices & "]")
+	DllCall($_irrDll, "none:cdecl", "IrrGetMeshIndices", "UINT_PTR", $h_Mesh, "int", $i_FrameNumber, "ptr", DllStructGetPtr($tIndices), "int", $i_MeshBuffer)
+	If @error Then Return SetError(1, 0, False)
+    For $i = 1 To $iIndices
+		$a_IndicesArray[$i - 1] = DllStructGetData($tIndices, 1, $i)
+	Next
+	Return SetError(0, 0, $iIndices)
 EndFunc   ;==>_IrrGetMeshIndices
 
 
@@ -485,8 +477,9 @@ EndFunc   ;==>_IrrGetMeshIndices
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
 ; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+;                  Failure - False and @error
+;                  |@error 1 ~ 4 - AutoIt DllCall failed.
+;                  |@error 5 - $a_IndicesArray parameter is not an Array.
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: [todo]
@@ -495,20 +488,15 @@ EndFunc   ;==>_IrrGetMeshIndices
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrSetMeshIndices($h_Mesh, $i_FrameNumber, ByRef $a_IndicesArray, $i_MeshBuffer = 0)
-	if not IsArray($a_IndicesArray) then Return SetError(2, 0, False)
-
-	local $i, $iIndices = UBound($a_IndicesArray)
-	Local $tIndices = DllStructCreate("USHORT[" & $iIndices & "]")
-	for $i = 1 to $iIndices
+	If Not IsArray($a_IndicesArray) then Return SetError(5, 0, False)
+	Local $iIndices, $tIndices
+	$iIndices = UBound($a_IndicesArray)
+	$tIndices = DllStructCreate("USHORT[" & $iIndices & "]")
+	For $i = 1 To $iIndices
 		DllStructSetData($tIndices, 1, $a_IndicesArray[$i-1], $i)
-	Next ; $i
-
+	Next
 	DllCall($_irrDll, "none:cdecl", "IrrSetMeshIndices", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", DllStructGetPtr($tIndices), "int", $i_MeshBuffer)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+    Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetMeshIndices
 
 
@@ -559,13 +547,9 @@ EndFunc   ;==>_IrrGetMeshVertexCount
 Func _IrrGetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $tVertex, $i_MeshBuffer = 0)
 	Local $iVertices = _IrrGetMeshVertexCount($h_Mesh, $i_FrameNumber, $i_MeshBuffer)
 	$tVertex = __CreateVertStruct($iVertices)
-
 	DllCall($_irrDll, "none:cdecl", "IrrGetMeshVertices", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", DllStructGetPtr($tVertex), "int", $i_MeshBuffer)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return $iVertices
-	EndIf
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $iVertices)
 EndFunc   ;==>_IrrGetMeshVertices
 
 
@@ -578,7 +562,9 @@ EndFunc   ;==>_IrrGetMeshVertices
 ;                  ByRef $tVertex - Vertex array struct as created with __CreateVertStruct or returned from _IrrGetMeshVertices.
 ;                  $i_MeshBuffer - [optional] Mesh buffer to access.
 ; Return values .: Success - None.
-;                  Failure - False and @error = 1
+;                  Failure - False and @error
+;                  |@error 1 ~ 4 - AutoIt DllCall failed.
+;                  |@error 5 - $tVertex parameter is not a DllStruct.
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: Each vertex represents a point in the mesh that is the corner of one of the group of triangles that is used to construct the mesh.
@@ -589,13 +575,9 @@ EndFunc   ;==>_IrrGetMeshVertices
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $tVertex, $i_MeshBuffer = 0)
-	if not IsDllStruct($tVertex) then Return SetError(2, 0, False)
+	If Not IsDllStruct($tVertex) Then Return SetError(5, 0, False)
 	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertices", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", DllStructGetPtr($tVertex), "int", $i_MeshBuffer)
-	If @error Then
-		Return SetError(1, 0, False)
-	Else
-		Return True
-	EndIf
+	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetMeshVertices
 
 
