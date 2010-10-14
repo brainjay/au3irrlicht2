@@ -20,7 +20,6 @@
 ;_IrrSetTileStructure
 ;_IrrLoadSphericalTerrainVertexColor
 ;_IrrGetSphericalTerrainSurfacePosition
-;_IrrGetSphericalTerrainSurfacePositionAndAngle
 ;_IrrGetSphericalTerrainLogicalSurfacePosition
 ; ===============================================================================================================================
 
@@ -35,6 +34,7 @@
 ;_IrrSetTileColor
 ;_IrrSetSphericalTerrainTexture
 ;_IrrScaleSphericalTexture
+;_IrrGetSphericalTerrainSurfacePositionAndAngle
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -459,10 +459,10 @@ Func _IrrGetSphericalTerrainSurfacePosition($h_Terrain, $i_Face, $f_LogicalX, $f
 EndFunc   ;==>_IrrGetSphericalTerrainSurfacePosition
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetSphericalTerrainSurfacePositionAndAngle
 ; Description ...: Get the surface position and angle of a logical point on the terrain.
-; Syntax.........: _IrrGetSphericalTerrainSurfacePositionAndAngle($h_Terrain, $i_Face, $f_LogicalX, $f_LogicalY, $f_LogicalZ)
+; Syntax.........: _IrrGetSphericalTerrainSurfacePositionAndAngle($h_Terrain, $i_Face, $f_LogicalX, $f_LogicalZ)
 ; Parameters ....: $h_Terrain - Handle to a spherical terrain node.
 ;                  $i_Face - Integer value of a Face to calculate for.
 ;                  $f_LogicalX - Float value for Logical X position.
@@ -478,9 +478,9 @@ EndFunc   ;==>_IrrGetSphericalTerrainSurfacePosition
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: This is not the normal of the surface but essentially the angles to the gravitational center.
-; Related .......: [todo: functionName, functionName]
+; Related .......: _IrrAddSphericalTerrain
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetSphericalTerrainSurfacePositionAndAngle($h_Terrain, $i_Face, $f_LogicalX, $f_LogicalZ)
 	Local $aResult, $aReturn[2][3]

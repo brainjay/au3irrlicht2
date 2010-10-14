@@ -19,12 +19,13 @@
 
 > UDFs:
 
++ Fixed/Added: _IrrGetSphericalTerrainSurfacePositionAndAngle  
 - Tidy: au3Irr2_Scene.au3 error return.
 - Tidy: au3Irr2_Terrain.au3 error returns.
-- Fixed: _IrrGetSphericalTerrainSurfacePositionAndAngle, _IrrGetSphericalTerrainLogicalSurfacePosition
-  These 2 functions still need to be verified that the return data is usable.
+- Fixed: _IrrGetSphericalTerrainLogicalSurfacePosition
+  Still needs to be verified that the return data is usable.
 - Changed: parameter $f_Y to $f_Z in _IrrGetTerrainHeight, _IrrGetTerrainTileHeight
-  These functions uses X and Z as input parameters and not X and Y as previously shown.
+  These functions use X and Z as input parameters and not X and Y as previously shown.
 - Changed: _IrrSetSphericalTerrainTexture 6 face texture paramater names from
   $s_XXX to $h_XXX, Changed "str" to "ptr" in 6 instances for the DllCall.
 - Changed: _IrrLoadSphericalTerrainVertexColor 6 face image paramater names from
@@ -32,10 +33,17 @@
   
 
 
+> Examples:
+
++ Added: 071 (Sphere_Terrain_Surface)
+
+
+
 > Help file:
 
 - Added: more examples for help file, _IrrSetSphericalTerrainTexture, 
-  _IrrAreNodesIntersecting, _IrrGetDistanceBetweenNodes, _IrrIsPointInsideNode	
+  _IrrAreNodesIntersecting, _IrrGetDistanceBetweenNodes, _IrrIsPointInsideNode,
+  _IrrGetSphericalTerrainSurfacePositionAndAngle	
 - Added: more header info for functions in au3Irr2_Terrain.au3
 
 
@@ -44,6 +52,7 @@
 
 + Changed: global $result used in UDF files switched to local variables 
   (WIP, finished for 2D, Scene, Camera, Animation, Node, Terrain) 
+
 
 === 2.04 (2010-10-09) ==========================================================
 
