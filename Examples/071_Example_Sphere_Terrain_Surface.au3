@@ -147,7 +147,3 @@ While _IrrRunning() And Sleep(16)
 	; end drawing the scene and render it
 	_IrrEndScene()
 WEnd
-
-; -----------------------------------------------------------------------------
-; Stop the irrlicht engine and release resources
-_IrrStop()
