@@ -51,7 +51,8 @@
 
 > Other:
 
-+ Changed: global $result used in UDF files switched to local variables 
++ Added: Tools\FontTool.exe (used for creating bmp fonts, comes from IrrLicht 1.7.1 sdk) 
+- Changed: global $result used in UDF files switched to local variables 
   (WIP, finished for 2D, Scene, Camera, Animation, Node, Terrain) 
 
 
