@@ -19,8 +19,6 @@
 ;_IrrAttachTile
 ;_IrrSetTileStructure
 ;_IrrLoadSphericalTerrainVertexColor
-;_IrrGetSphericalTerrainSurfacePosition
-;_IrrGetSphericalTerrainLogicalSurfacePosition
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
@@ -34,7 +32,9 @@
 ;_IrrSetTileColor
 ;_IrrSetSphericalTerrainTexture
 ;_IrrScaleSphericalTexture
+;_IrrGetSphericalTerrainSurfacePosition
 ;_IrrGetSphericalTerrainSurfacePositionAndAngle
+;_IrrGetSphericalTerrainLogicalSurfacePosition
 ; ===============================================================================================================================
 
 ; #INTERNAL_USE_ONLY# ===========================================================================================================
@@ -426,7 +426,7 @@ Func _IrrLoadSphericalTerrainVertexColor($h_Terrain, $h_Top, $h_Front, $h_Back, 
 EndFunc   ;==>_IrrLoadSphericalTerrainVertexColor
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetSphericalTerrainSurfacePosition
 ; Description ...: Get the surface position of a logical point on the terrain.
 ; Syntax.........: _IrrGetSphericalTerrainSurfacePosition($h_Terrain, $i_Face, $f_LogicalX, $f_LogicalZ)
@@ -446,7 +446,7 @@ EndFunc   ;==>_IrrLoadSphericalTerrainVertexColor
 ;                  Note: By subtracting the center of the sphere from this co-ordinate and converting this vector to angles you can find the upward direction of the point on the surface.
 ; Related .......: _IrrAddSphericalTerrain
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetSphericalTerrainSurfacePosition($h_Terrain, $i_Face, $f_LogicalX, $f_LogicalZ)
     Local $aResult, $aReturn[3]
@@ -494,7 +494,7 @@ Func _IrrGetSphericalTerrainSurfacePositionAndAngle($h_Terrain, $i_Face, $f_Logi
 EndFunc   ;==>_IrrGetSphericalTerrainSurfacePositionAndAngle
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetSphericalTerrainLogicalSurfacePosition
 ; Description ...: Convert a co-ordinate into a logical Spherical terrain position.
 ; Syntax.........: _IrrGetSphericalTerrainLogicalSurfacePosition($h_Terrain, $f_PosX, $f_PosY, $f_PosZ)
@@ -513,9 +513,9 @@ EndFunc   ;==>_IrrGetSphericalTerrainSurfacePositionAndAngle
 ;                  Please note that this calculation is not 100% accurate, it is advised that the translation is done at altitude and the difference either ignored or blended as the observer decends.
 ;                  Note: The height above the surface can be calculated simply by calculating the length of the center of the planet to the surface and then the center of the planet to the space coordinate and subracting the two.
 ;                  Note: The momentum could be calculated by converting two samples and then measing the difference in height and X and Z on the face
-; Related .......: [todo: functionName, functionName]
+; Related .......: _IrrAddSphericalTerrain
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetSphericalTerrainLogicalSurfacePosition($h_Terrain, $f_PosX, $f_PosY, $f_PosZ)
 	Local $aResult, $aReturn[3]
