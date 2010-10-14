@@ -19,11 +19,11 @@
 
 > UDFs:
 
-+ Fixed/Added: _IrrGetSphericalTerrainSurfacePositionAndAngle  
++ Fixed/Added: _IrrGetSphericalTerrainSurfacePositionAndAngle
++ Fixed/Added: _IrrGetSphericalTerrainLogicalSurfacePosition
++ Fixed/Added: _IrrGetSphericalTerrainSurfacePosition  
 - Tidy: au3Irr2_Scene.au3 error return.
 - Tidy: au3Irr2_Terrain.au3 error returns.
-- Fixed: _IrrGetSphericalTerrainLogicalSurfacePosition
-  Still needs to be verified that the return data is usable.
 - Changed: parameter $f_Y to $f_Z in _IrrGetTerrainHeight, _IrrGetTerrainTileHeight
   These functions use X and Z as input parameters and not X and Y as previously shown.
 - Changed: _IrrSetSphericalTerrainTexture 6 face texture paramater names from
@@ -43,7 +43,8 @@
 
 - Added: more examples for help file, _IrrSetSphericalTerrainTexture, 
   _IrrAreNodesIntersecting, _IrrGetDistanceBetweenNodes, _IrrIsPointInsideNode,
-  _IrrGetSphericalTerrainSurfacePositionAndAngle	
+  _IrrGetSphericalTerrainSurfacePositionAndAngle, _IrrGetSphericalTerrainLogicalSurfacePosition,
+  _IrrGetSphericalTerrainSurfacePosition	
 - Added: more header info for functions in au3Irr2_Terrain.au3
 
 
