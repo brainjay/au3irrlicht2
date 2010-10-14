@@ -1,0 +1,4 @@
+FontTool.exe can used for creating bmp fonts that can be used with au3Irrlicht2.
+You can select any font that is installed on your pc and create a bmp font.
+
+This binary comes from IrrLicht 1.7.1 sdk.
