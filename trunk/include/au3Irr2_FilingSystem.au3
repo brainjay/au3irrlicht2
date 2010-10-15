@@ -51,63 +51,47 @@
 ; ===============================================================================================================================
 Func _IrrAddZipFile($s_Zipfile, $i_IgnoreCase, $i_IgnorePaths)
 	DllCall($_irrDll, "none:cdecl", "IrrAddZipFile", "str", $s_Zipfile, "int", $i_IgnoreCase, "int", $i_IgnorePaths)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+    Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrAddZipFile
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrChangeWorkingDirectory
-; Description ...: [todo]
+; Description ...: Change the working directory of the Irrlicht Environment.
 ; Syntax.........: _IrrChangeWorkingDirectory($s_WorkingDir)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $s_WorkingDir - Path of new working directory.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrGetWorkingDirectory
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrChangeWorkingDirectory($s_WorkingDir)
 	DllCall($_irrDll, "none:cdecl", "IrrChangeWorkingDirectory", "str", $s_WorkingDir)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return true
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrChangeWorkingDirectory
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetWorkingDirectory
-; Description ...: [todo]
+; Description ...: Get the current working directory of the Irrlicht Environment.
 ; Syntax.........: _IrrGetWorkingDirectory()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: None.
+; Return values .: Success - Path of current working directory.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrChangeWorkingDirectory
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetWorkingDirectory()
-	$result = DllCall($_irrDll, "str:cdecl", "IrrGetWorkingDirectory")
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "str:cdecl", "IrrGetWorkingDirectory")
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetWorkingDirectory
