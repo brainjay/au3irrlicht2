@@ -39,6 +39,12 @@ Global enum _ ; enumeration KEY_EVENT for possible Elements readable by __getKey
 	$EVT_KEY_IDIRECTION, _ 	; unsigned integer "direction"
 	$EVT_KEY_IFLAGS			; unsigned integer "flags"
 
+Global enum _ ; enumeration MOUSE_EVENT for possible Elements readable by __getMouseEvt
+	$EVT_MOUSE_IACTION = 1,	_ 	; unsigned integer "action"
+	$EVT_MOUSE_FDELTA, _ 		; single "delta"
+	$EVT_MOUSE_IX, _			; integer "x"
+	$EVT_MOUSE_IY				; integer "y"
+
 ; #FUNCTION# =============================================================================================================
 ; Name...........: __getKeyEvt
 ; Description ...: helper function: returns value of $i_Element inside a keyEvent-structure.
@@ -106,20 +112,12 @@ Global enum _ ; enumeration KEY_EVENT for possible Elements readable by __getKey
 ; Example .......: Yes
 ; ===============================================================================================================================
 func __getKeyEvt($p_KeyEvent, $i_Element = $EVT_KEY_IKEY)
-	local $EventStruct = DllStructCreate("uint;uint;uint", $p_KeyEvent)
-	$result = DllStructGetData($EventStruct, $i_Element)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return $result
-	EndIf
+	Local $tEvent, $iReturn
+	$tEvent = DllStructCreate("uint;uint;uint", $p_KeyEvent)
+	$iReturn = DllStructGetData($tEvent, $i_Element)
+	If @error Then Return SetError(1, 0, False)
+    Return Seterror(0, 0, $iReturn)
 EndFunc ;==> __getKeyEvt
-
-Global enum _ ; enumeration MOUSE_EVENT for possible Elements readable by __getMouseEvt
-	$EVT_MOUSE_IACTION = 1,	_ 	; unsigned integer "action"
-	$EVT_MOUSE_FDELTA, _ 		; single "delta"
-	$EVT_MOUSE_IX, _			; integer "x"
-	$EVT_MOUSE_IY				; integer "y"
 
 
 ; #FUNCTION# =============================================================================================================
@@ -153,13 +151,11 @@ Global enum _ ; enumeration MOUSE_EVENT for possible Elements readable by __getM
 ; Example .......: Yes
 ; ===============================================================================================================================
 func __getMouseEvt($p_MouseEvent, $i_Element = $EVT_MOUSE_IACTION)
-	local $EventStruct = DllStructCreate("uint;float;int;int", $p_MouseEvent)
-	$result = DllStructGetData($EventStruct, $i_Element)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return $result
-	EndIf
+	Local $tEvent, $iReturn
+	$tEvent = DllStructCreate("uint;float;int;int", $p_MouseEvent)
+	$iReturn = DllStructGetData($tEvent, $i_Element)
+	If @error Then Return SetError(1, 0, False)
+    Return Seterror(0, 0, $iReturn)
 EndFunc ;==> __getMouseEvt
 
 
@@ -177,8 +173,10 @@ EndFunc ;==> __getMouseEvt
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrKeyEventAvailable()
-	$result = DllCall($_irrDll, "int:cdecl", "IrrKeyEventAvailable")
-	Return $result[0]
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrKeyEventAvailable")
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrKeyEventAvailable
 
 
@@ -197,12 +195,10 @@ EndFunc   ;==>_IrrKeyEventAvailable
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrReadKeyEvent()
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrReadKeyEvent")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrReadKeyEvent")
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrReadKeyEvent
 
 
@@ -220,12 +216,10 @@ EndFunc   ;==>_IrrReadKeyEvent
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrMouseEventAvailable()
-	$result = DllCall($_irrDll, "int:cdecl", "IrrMouseEventAvailable")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrMouseEventAvailable")
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrMouseEventAvailable
 
 
@@ -244,12 +238,10 @@ EndFunc   ;==>_IrrMouseEventAvailable
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrReadMouseEvent()
-	$result = DllCall($_irrDll, "int:cdecl", "IrrReadMouseEvent")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrReadMouseEvent")
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrReadMouseEvent
 
 
@@ -269,15 +261,14 @@ EndFunc   ;==>_IrrReadMouseEvent
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetMousePosition(ByRef $f_XPos, ByRef $f_YPos)
-	$result = DllCall($_irrDll, "none:cdecl", "IrrSetMousePosition", "float*", $f_XPos, "float*", $f_YPos)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		$f_XPos = $result[1]
-		$f_YPos = $result[2]
-		Return true
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "none:cdecl", "IrrSetMousePosition", "float*", $f_XPos, "float*", $f_YPos)
+	If @error Then Return SetError(1, 0, False)
+	$f_XPos = $aResult[1]
+	$f_YPos = $aResult[2]
+	Return SetError(0, 0, True)
 EndFunc   ;==>_IrrSetMousePosition
+
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetAbsoluteMousePosition
@@ -320,7 +311,7 @@ EndFunc   ;==>_IrrGetAbsoluteMousePosition
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrHideMouse()
-	return _IrrDisplayMouse(False)
+	Return _IrrDisplayMouse(False)
 EndFunc   ;==>_IrrHideMouse
 
 
@@ -339,7 +330,7 @@ EndFunc   ;==>_IrrHideMouse
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrShowMouse()
-	return _IrrDisplayMouse(True)
+	Return _IrrDisplayMouse(True)
 EndFunc   ;==>_IrrShowMouse
 
 
@@ -359,9 +350,5 @@ EndFunc   ;==>_IrrShowMouse
 ; ===============================================================================================================================
 Func _IrrDisplayMouse($i_HideShow)
 	DllCall($_irrDll, "none:cdecl", "IrrDisplayMouse", "int", $i_HideShow)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrDisplayMouse
