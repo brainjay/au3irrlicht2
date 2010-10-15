@@ -49,14 +49,13 @@
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCollisionGroupFromMesh
-; Description ...: [todo]
+; Description ...: Creates a collision object from the triangles contained within the specified mesh as applied to the position, rotation and scale of the supplied node.
 ; Syntax.........: _IrrGetCollisionGroupFromMesh($h_Mesh, $h_Node, $i_Frame = 0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Mesh - Handle of mesh the node was created from.
+;                  $h_Node - Handle of the node to create a selector from.
+;                  $i_Frame - [optional] Number of mesh frame to use.
+; Return values .: Success - Handle to a selector object
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: [todo]
@@ -66,14 +65,11 @@
 ; ===============================================================================================================================
 Func _IrrGetCollisionGroupFromMesh($h_Mesh, $h_Node, $i_Frame = 0)
 ; gets a collision object from an animated mesh
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetCollisionGroupFromMesh", "UINT_PTR", $h_Mesh, "UINT_PTR", $h_Node, "int", $i_Frame)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+    Local $aResult
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetCollisionGroupFromMesh", "UINT_PTR", $h_Mesh, "UINT_PTR", $h_Node, "int", $i_Frame)
+	If @error Or Not $aResult[0] Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetCollisionGroupFromMesh
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -93,12 +89,10 @@ EndFunc   ;==>_IrrGetCollisionGroupFromMesh
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetCollisionGroupFromComplexMesh($h_Mesh, $h_Node, $i_Frame = 0)
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetCollisionGroupFromComplexMesh", "UINT_PTR", $h_Mesh, "UINT_PTR", $h_Node, "int", $i_Frame)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+    Local $aResult
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetCollisionGroupFromComplexMesh", "UINT_PTR", $h_Mesh, "UINT_PTR", $h_Node, "int", $i_Frame)
+	If @error Or Not $aResult[0] Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetCollisionGroupFromComplexMesh
 
 
@@ -120,12 +114,10 @@ EndFunc   ;==>_IrrGetCollisionGroupFromComplexMesh
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetCollisionGroupFromBox($h_Node)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetCollisionGroupFromBox", "ptr", $h_Node)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+    Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrGetCollisionGroupFromBox", "ptr", $h_Node)
+	If @error Or Not $aResult[0] Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetCollisionGroupFromBox
 
 
@@ -147,12 +139,10 @@ EndFunc   ;==>_IrrGetCollisionGroupFromBox
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetCollisionGroupFromTerrain($h_Node, $i_Lod)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetCollisionGroupFromTerrain", "ptr", $h_Node, "int", $i_Lod)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+    Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrGetCollisionGroupFromTerrain", "ptr", $h_Node, "int", $i_Lod)
+	If @error Or Not $aResult[0] Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetCollisionGroupFromTerrain
 
 
@@ -175,11 +165,7 @@ EndFunc   ;==>_IrrGetCollisionGroupFromTerrain
 ; ===============================================================================================================================
 Func _IrrRemoveCollisionGroup($h_CollisionGroup, $h_Node)
 	DllCall($_irrDll, "none:cdecl", "IrrRemoveCollisionGroup", "ptr", $h_CollisionGroup, "ptr", $h_Node)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error)
 EndFunc   ;==>_IrrRemoveCollisionGroup
 
 
@@ -201,12 +187,10 @@ EndFunc   ;==>_IrrRemoveCollisionGroup
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrCreateCombinedCollisionGroup()
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrCreateCombinedCollisionGroup")
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+    Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrCreateCombinedCollisionGroup")
+	If @error Or Not $aResult[0] Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrCreateCombinedCollisionGroup
 
 
@@ -228,12 +212,10 @@ EndFunc   ;==>_IrrCreateCombinedCollisionGroup
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddCollisionGroupToCombination($h_CombinedCollisionGroup, $h_CollisionGroup)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddCollisionGroupToCombination", "ptr", $h_CombinedCollisionGroup, "ptr", $h_CollisionGroup)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+    Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddCollisionGroupToCombination", "ptr", $h_CombinedCollisionGroup, "ptr", $h_CollisionGroup)
+	If @error Or Not $aResult[0] Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddCollisionGroupToCombination
 
 
@@ -256,11 +238,7 @@ EndFunc   ;==>_IrrAddCollisionGroupToCombination
 ; ===============================================================================================================================
 Func _IrrRemoveAllCollisionGroupsFromCombination($h_CombinedCollisionGroup)
 	DllCall($_irrDll, "none:cdecl", "IrrRemoveAllCollisionGroupsFromCombination", "ptr", $h_CombinedCollisionGroup)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error)
 EndFunc   ;==>_IrrRemoveAllCollisionGroupsFromCombination
 
 
@@ -283,25 +261,26 @@ EndFunc   ;==>_IrrRemoveAllCollisionGroupsFromCombination
 ; ===============================================================================================================================
 Func _IrrRemoveCollisionGroupFromCombination($h_CombinedCollisionGroup, $h_CollisionGroup)
 	DllCall($_irrDll, "none:cdecl", "IrrRemoveCollisionGroupFromCombination", "ptr", $h_CombinedCollisionGroup, "ptr", $h_CollisionGroup)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error)
 EndFunc   ;==>_IrrRemoveCollisionGroupFromCombination
-
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCollisionPoint
 ; Description ...: [todo]
 ; Syntax.........: _IrrGetCollisionPoint($a_StartVector, $a_EndVector, $h_CollisionGroup, byRef $a_CollisionVector)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $a_StartVector - [explanation]
+;                  $a_EndVector -
+;                  $h_CollisionGroup - [explanation]
+;                  $a_CollisionVector -
+; Return values .: Success - True and the provided $a_CollisionVector contains the co-ordinates of the point of collision as a 1D Array
+;                  |$a_CollisionVector[0] = X Vector
+;                  |$a_CollisionVector[1] = Y Vector
+;                  |$a_CollisionVector[2] = Z Vector
+;                  Failure - False and set @error
+;                  |@error 1 Failed dll call
+;                  |@error 2 $a_StartVector Param invalid array
+;                  |@error 3 $a_EndVector Param invalid array
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: [todo]
@@ -310,52 +289,58 @@ EndFunc   ;==>_IrrRemoveCollisionGroupFromCombination
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetCollisionPoint($a_StartVector, $a_EndVector, $h_CollisionGroup, byRef $a_CollisionVector)
-
-	Local $StartVectorStruct = DllStructCreate("float;float;float")
-	DllStructSetData($StartVectorStruct, 1, $a_StartVector[0])
-	DllStructSetData($StartVectorStruct, 2, $a_StartVector[1])
-	DllStructSetData($StartVectorStruct, 3, $a_StartVector[2])
-	Local $EndVectorStruct = DllStructCreate("float;float;float")
-	DllStructSetData($EndVectorStruct, 1, $a_EndVector[0])
-	DllStructSetData($EndVectorStruct, 2, $a_EndVector[1])
-	DllStructSetData($EndVectorStruct, 3, $a_EndVector[2])
-
-	Local $CollisionVectorStruct = DllStructCreate("float;float;float")
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGetCollisionPoint", "ptr", DllStructGetPtr($StartVectorStruct), _
-				"ptr", DllStructGetPtr($EndVectorStruct), "ptr", $h_CollisionGroup, "ptr", DllStructGetPtr($CollisionVectorStruct))
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		dim $a_CollisionVector[3] = [DllStructGetData($CollisionVectorStruct, 1), DllStructGetData($CollisionVectorStruct, 2), DllStructGetData($CollisionVectorStruct, 3)]
-		Return $result[0]
-	EndIf
+	Local $tStartVector, $tEndVector, $tCollisionVector, $aResult
+	$tStartVector = DllStructCreate("float;float;float")
+	$tEndVector = DllStructCreate("float;float;float")
+	For $i = 1 To 3
+		DllStructSetData($tStartVector, $i, $a_StartVector[$i - 1])
+	    DllStructSetData($tEndVector, $i, $a_EndVector[$i - 1])
+	Next
+	$tCollisionVector = DllStructCreate("float;float;float")
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrGetCollisionPoint", "ptr", DllStructGetPtr($tStartVector), _
+				"ptr", DllStructGetPtr($tEndVector), "ptr", $h_CollisionGroup, "ptr", DllStructGetPtr($tCollisionVector))
+	If @error Then Return Seterror(1, 0, False)
+	Dim $a_CollisionVector[3]
+	For $i =  1 To 3
+		$a_CollisionVector[$i - 1] = DllStructGetData($tCollisionVector, $i)
+	Next
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetCollisionPoint
-
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetRayFromScreenCoordinates
-; Description ...: [todo]
+; Description ...: Gets a ray that goes from the specified camera and through the screen coordinates the information is copied into the supplied start and end vectors.
 ; Syntax.........: _IrrGetRayFromScreenCoordinates($i_X, $i_Y, $h_Camera)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $i_X - X screen coordinate integer value
+;                  $i_Y - Y screen coordinate integer value
+;                  $h_Camera - Handle of the camera
+; Return values .: Success - 2D Array containing Start and End Vectors of float values
+;                  |$Array[0][0] = Start X
+;                  |$Array[0][1] = Start Y
+;                  |$Array[0][2] = Start Z
+;                  |$Array[1][0] = End X
+;                  |$Array[1][1] = End Y
+;                  |$Array[1][2] = End Z
+;                  Failure - False and  @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: You can then use this ray in other collision operations.
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetRayFromScreenCoordinates($i_X, $i_Y, $h_Camera)
-	Local $StartVectorStruct = DllStructCreate("float;float;float")
-	Local $EndVectorStruct = DllStructCreate("float;float;float")
-	DllCall($_irrDll, "none:cdecl", "IrrGetRayFromScreenCoordinates", "int", $i_X, "int", $i_Y, "ptr", $h_Camera, "ptr", DllStructGetPtr($StartVectorStruct), "ptr", DllStructGetPtr($EndVectorStruct))
-	Local $result[2][3] = [[DllStructGetData($StartVectorStruct, 1), DllStructGetData($StartVectorStruct, 2), DllStructGetData($StartVectorStruct, 3)],[DllStructGetData($EndVectorStruct, 1), DllStructGetData($EndVectorStruct, 2), DllStructGetData($EndVectorStruct, 3)]]
-	Return $result
+	Local $tStartVector, $tEndVector, $aReturn[2][3]
+	$tStartVector = DllStructCreate("float;float;float")
+	$tEndVector = DllStructCreate("float;float;float")
+	DllCall($_irrDll, "none:cdecl", "IrrGetRayFromScreenCoordinates", "int", $i_X, "int", $i_Y, "ptr", $h_Camera, "ptr", DllStructGetPtr($tStartVector), "ptr", DllStructGetPtr($tEndVector))
+	If @error Then Return SetError(1, 0, False)
+	For $i = 1 To 3
+		$aReturn[0][$i - 1] = DllStructGetData($tStartVector, $i)
+		$aReturn[1][$i - 1] = DllStructGetData($tEndVector, $i)
+	Next
+	Return SetError(0, 0, $aReturn)
 EndFunc   ;==>_IrrGetRayFromScreenCoordinates
 
 
@@ -377,14 +362,11 @@ EndFunc   ;==>_IrrGetRayFromScreenCoordinates
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetCollisionNodeFromCamera($h_Camera)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetCollisionNodeFromCamera", "ptr", $h_Camera)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+    Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrGetCollisionNodeFromCamera", "ptr", $h_Camera)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetCollisionNodeFromCamera
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -407,25 +389,17 @@ EndFunc   ;==>_IrrGetCollisionNodeFromCamera
 Func _IrrGetCollisionNodeFromRay(byRef $h_StartVector, byRef $h_EndVector)
 ; a ray is cast through the supplied coordinates and the nearest node that is
 ; hit by the ray is returned. if no node is hit zero is returned for the object
-
-local $structStartVector = DllStructCreate("float;float;float")
-DllStructSetData($structStartVector, 1, $h_StartVector[0])
-DllStructSetData($structStartVector, 2, $h_StartVector[1])
-DllStructSetData($structStartVector, 3, $h_StartVector[2])
-local $structEndVector = DllStructCreate("float;float;float")
-DllStructSetData($structEndVector, 1, $h_EndVector[0])
-DllStructSetData($structEndVector, 2, $h_EndVector[1])
-DllStructSetData($structEndVector, 3, $h_EndVector[2])
-
-$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetCollisionNodeFromRay", "ptr", _
-					DllStructGetPtr($structStartVector), "ptr", DllStructGetPtr($structEndVector) )
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+    Local $tStartVector, $tEndVector, $aResult
+	$tStartVector = DllStructCreate("float;float;float")
+	$tEndVector = DllStructCreate("float;float;float")
+	For $i = 1 To 3
+		DllStructSetData($tStartVector, $i, $h_StartVector[$i - 1])
+		DllStructSetData($tEndVector, $i, $h_EndVector[$i - 1])
+	Next
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetCollisionNodeFromRay", "ptr", DllStructGetPtr($tStartVector), "ptr", DllStructGetPtr($tEndVector))
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetCollisionNodeFromRay
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -449,14 +423,11 @@ Func _IrrGetCollisionNodeFromScreenCoordinates($i_X, $i_Y)
 ; a ray is cast through the screen at the specified co-ordinates and the nearest
 ; node that is hit by the ray is returned. if no node is hit zero is returned
 ; for the object
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetCollisionNodeFromScreenCoordinates", "int", $i_X, "int", $i_Y)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrGetCollisionNodeFromScreenCoordinates", "int", $i_X, "int", $i_Y)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetCollisionNodeFromScreenCoordinates
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -475,19 +446,15 @@ EndFunc   ;==>_IrrGetCollisionNodeFromScreenCoordinates
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetScreenCoordinatesFrom3DPosition(ByRef $i_ScreenX, ByRef $i_ScreenY, $a_3DPositionVector)
-	if not UBound($a_3DPositionVector) = 3 then Return Seterror(2,0,False)
-
-	$result = DllCall($_irrDll, "none:cdecl", "IrrGetScreenCoordinatesFrom3DPosition", "int*", $i_ScreenX, "int*", $i_ScreenY, _
+	If Not UBound($a_3DPositionVector) = 3 then Return Seterror(2, 0, False)
+	Local $aResult
+	$aResult = DllCall($_irrDll, "none:cdecl", "IrrGetScreenCoordinatesFrom3DPosition", "int*", $i_ScreenX, "int*", $i_ScreenY, _
 						"float", $a_3DPositionVector[0], "float", $a_3DPositionVector[1], "float", $a_3DPositionVector[2])
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		$i_ScreenX = $result[1]
-		$i_ScreenY = $result[2]
-		Return true
-	EndIf
+	If @error Then Return Seterror(1, 0, False)
+	$i_ScreenX = $aResult[1]
+	$i_ScreenY = $aResult[2]
+	Return Seterror(0, 0, True)
 EndFunc   ;==>_IrrGetScreenCoordinatesFrom3DPosition
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -511,20 +478,16 @@ Func _IrrGet3DPositionFromScreenCoordinates($i_X, $i_Y, ByRef $a_Vector3df, $h_C
 ; Calculates the intersection between a ray projected through the specified
 ; screen co-ordinates and a plane defined a normal and distance from the
 ; world origin (contributed by agamemnus)
-	$result = DllCall($_irrDll, "none:cdecl", "IrrGet3DPositionFromScreenCoordinates", "int", $i_X, "int", $i_Y, _
+	Local $aResult
+	$aResult = DllCall($_irrDll, "none:cdecl", "IrrGet3DPositionFromScreenCoordinates", "int", $i_X, "int", $i_Y, _
 				"float*", $a_Vector3df[0], "float*", $a_Vector3df[1], "float*", $a_Vector3df[2], _
 				"ptr", $h_Camera, "float", $f_NormalX, "float", $f_NormalY, "float", $f_NormalZ, "float", $f_DistanceFromOrigin)
-
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		$a_Vector3df[0] = $result[3]
-		$a_Vector3df[1] = $result[4]
-		$a_Vector3df[2] = $result[5]
-		Return $a_Vector3df
-	EndIf
+    If @error Then Return Seterror(1, 0, False)
+	$a_Vector3df[0] = $aResult[3]
+	$a_Vector3df[1] = $aResult[4]
+	$a_Vector3df[2] = $aResult[5]
+	Return Seterror(0, 0, $a_Vector3df)
 EndFunc   ;==>_IrrGet3DPositionFromScreenCoordinates
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -547,18 +510,14 @@ EndFunc   ;==>_IrrGet3DPositionFromScreenCoordinates
 Func _IrrGet2DPositionFromScreenCoordinates($i_X, $i_Y, ByRef $f_X, ByRef $f_Y, $h_Camera)
 ; Calculates the intersection between a ray projected through the specified
 ; screen co-ordinates and a flat surface plane (contributed by agamemnus)
-	$result = DllCall($_irrDll, "none:cdecl", "IrrGet2DPositionFromScreenCoordinates", "int", $i_X, "int", $i_Y, _
+	Local $aResult
+	$aResult = DllCall($_irrDll, "none:cdecl", "IrrGet2DPositionFromScreenCoordinates", "int", $i_X, "int", $i_Y, _
 				"float*", $f_X, "float*", $f_Y, "ptr", $h_Camera)
-
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		$f_X = $result[3]
-		$f_Y = $result[4]
-		Return true
-	EndIf
+	If @error Then Return Seterror(1, 0, False)
+	$f_X = $aResult[3]
+	$f_Y = $aResult[4]
+	Return Seterror(0, 0, True)
 EndFunc   ;==>_IrrGet2DPositionFromScreenCoordinates
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -579,53 +538,49 @@ EndFunc   ;==>_IrrGet2DPositionFromScreenCoordinates
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetChildCollisionNodeFromRay($h_Node, $i_Mask, $i_Recurse, $a_StartVector, $a_EndVector)
-	Local $StartVectorStruct = DllStructCreate("float;float;float")
-	DllStructSetData($StartVectorStruct, 1, $a_StartVector[0])
-	DllStructSetData($StartVectorStruct, 2, $a_StartVector[1])
-	DllStructSetData($StartVectorStruct, 3, $a_StartVector[2])
-	Local $EndVectorStruct = DllStructCreate("float;float;float")
-	DllStructSetData($EndVectorStruct, 1, $a_EndVector[0])
-	DllStructSetData($EndVectorStruct, 2, $a_EndVector[1])
-	DllStructSetData($EndVectorStruct, 3, $a_EndVector[2])
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetChildCollisionNodeFromRay", "ptr", $h_Node, "int", $i_Mask, "int", $i_Recurse, "ptr", DllStructGetPtr($StartVectorStruct), "ptr", DllStructGetPtr($EndVectorStruct) )
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $tStartVector, $tEndVector, $aResult
+	$tStartVector = DllStructCreate("float;float;float")
+	$tEndVector = DllStructCreate("float;float;float")
+	For $i = 1 To 3
+		DllStructSetData($tStartVector, $i, $a_StartVector[$i - 1])
+		DllStructSetData($tEndVector, $i, $a_EndVector[$i - 1])
+	Next
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrGetChildCollisionNodeFromRay", "ptr", $h_Node, "int", $i_Mask, "int", $i_Recurse, "ptr", DllStructGetPtr($tStartVector), "ptr", DllStructGetPtr($tEndVector) )
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetChildCollisionNodeFromRay
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetChildCollisionNodeFromPoint
-; Description ...: [todo]
+; Description ...: The node and its children are recursively tested and the first node that contains the matched point is returned.
 ; Syntax.........: _IrrGetChildCollisionNodeFromPoint($h_Node, $i_Mask, $i_Recurse, $a_PointVector)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
+; Parameters ....: $h_Node - [explanation]
+;                  $i_Mask
+;                  $i_Recurse -
+;                  $a_PointVector -
+; Return values .: Success - [explanation]
+;                  Failure - False and @error 1
 ;                  |[moreExplanationIndented]
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: If no node is hit zero is returned for the object, only a subset of objects are tested,
+;                  i.e. the children of the supplied node that match the supplied id.
+;                  If the recurse option is enabled the entire tree of child objects connected to this node are tested.
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetChildCollisionNodeFromPoint($h_Node, $i_Mask, $i_Recurse, $a_PointVector)
-	Local $PointVectorStruct = DllStructCreate("float;float;float")
-	DllStructSetData($PointVectorStruct, 1, $a_PointVector[0])
-	DllStructSetData($PointVectorStruct, 2, $a_PointVector[1])
-	DllStructSetData($PointVectorStruct, 3, $a_PointVector[2])
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrGetChildCollisionNodeFromPoint", "ptr", $h_Node, "int", $i_Mask, "int", $i_Recurse, "ptr", DllStructGetPtr($PointVectorStruct))
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $tPointVector, $aResult
+	$tPointVector = DllStructCreate("float;float;float")
+	DllStructSetData($tPointVector, 1, $a_PointVector[0])
+	DllStructSetData($tPointVector, 2, $a_PointVector[1])
+	DllStructSetData($tPointVector, 3, $a_PointVector[2])
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrGetChildCollisionNodeFromPoint", "ptr", $h_Node, "int", $i_Mask, "int", $i_Recurse, "ptr", DllStructGetPtr($tPointVector))
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetChildCollisionNodeFromPoint
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -650,131 +605,121 @@ Func _IrrGetNodeAndCollisionPointFromRay($a_StartVector, $a_EndVector, ByRef $h_
 ; a collision selector object that is hit by the ray is returned along with the
 ; coordinate of the collision and the normal of the triangle that is hit. if no
 ; node is hit zero is returned for the object
-	Local $StartVectorStruct = DllStructCreate("float;float;float")
-	DllStructSetData($StartVectorStruct, 1, $a_StartVector[0])
-	DllStructSetData($StartVectorStruct, 2, $a_StartVector[1])
-	DllStructSetData($StartVectorStruct, 3, $a_StartVector[2])
-	Local $EndVectorStruct = DllStructCreate("float;float;float")
-	DllStructSetData($EndVectorStruct, 1, $a_EndVector[0])
-	DllStructSetData($EndVectorStruct, 2, $a_EndVector[1])
-	DllStructSetData($EndVectorStruct, 3, $a_EndVector[2])
+	Local $tStartVector, $tEndVector, $aResult
+	$tStartVector = DllStructCreate("float;float;float")
+	$tEndVector = DllStructCreate("float;float;float")
+	For $i = 1 To 3
+	    DllStructSetData($tStartVector, $i, $a_StartVector[$i - 1])
+		DllStructSetData($tEndVector, $i, $a_EndVector[$i - 1])
+	Next
  	$h_Node = DllStructCreate("UINT_PTR")
-	$result = DllCall($_irrDll, "none:cdecl", "IrrGetNodeAndCollisionPointFromRay", _
-			"ptr", DllStructGetPtr($StartVectorStruct), "ptr", DllStructGetPtr($EndVectorStruct), "ptr*", $h_Node, _
+	$aResult = DllCall($_irrDll, "none:cdecl", "IrrGetNodeAndCollisionPointFromRay", _
+			"ptr", DllStructGetPtr($tStartVector), "ptr", DllStructGetPtr($tEndVector), "ptr*", $h_Node, _
 			"float*", $f_PosX, "float*", $f_PosY, "float*", $f_PosZ, _
 			"float*", $f_NormalX, "float*", $f_NormalY, "float*", $f_NormalZ, _
 			"int", $i_ID, "ptr", $h_Node)
-
-	if @error Then
-		Return Seterror(1,0,False)
-	Elseif $result[3] = 0 Then
-		return 0
-	Else
-		$h_Node = $result[3]
-		$f_PosX = $result[4]
-		$f_PosY = $result[5]
-		$f_PosZ = $result[6]
-		$f_NormalX = $result[7]
-		$f_NormalY = $result[8]
-		$f_NormalZ = $result[9]
-		Return $h_Node
-	EndIf
-
+	If @error Then Return Seterror(1, 0, False)
+	If $aResult[3] = 0 Then Return Seterror(0, 0, 0)
+	$h_Node = $aResult[3]
+	$f_PosX = $aResult[4]
+	$f_PosY = $aResult[5]
+	$f_PosZ = $aResult[6]
+	$f_NormalX = $aResult[7]
+	$f_NormalY = $aResult[8]
+	$f_NormalZ = $aResult[9]
+	Return $h_Node
 EndFunc   ;==>_IrrGetNodeAndCollisionPointFromRay
-
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetDistanceBetweenNodes
-; Description ...: [todo]
+; Description ...: The distance between two nodes is measured using fast maths functions that will show inaccuracies.
 ; Syntax.........: _IrrGetDistanceBetweenNodes($h_NodeA, $h_NodeB)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_NodeA - Handle to a node.
+;                  $h_NodeB - Handle to another node.
+; Return values .: Success - Distance between the 2 nodes
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: Useful for when it is nessecary to test distances between many nodes.
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetDistanceBetweenNodes($h_NodeA, $h_NodeB)
-	$result = DllCall($_irrDll, "float:cdecl", "IrrGetDistanceBetweenNodes", "ptr", $h_NodeA, "ptr", $h_NodeB)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "float:cdecl", "IrrGetDistanceBetweenNodes", "ptr", $h_NodeA, "ptr", $h_NodeB)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetDistanceBetweenNodes
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAreNodesIntersecting
-; Description ...: [todo]
+; Description ...: Tests whether the bounding boxes are two nodes are intersecting.
 ; Syntax.........: _IrrAreNodesIntersecting($h_NodeA, $h_NodeB)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_NodeA - Handle to a node.
+;                  $h_NodeB - Handle to another node.
+; Return values .: Success - 0 Nodes not Intersecting, 1 Nodes are Intersecting.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: Bounding boxes are axis aligned and do not rotate when you rotate the nodes.
+;                  This should be kept in mind when testing for collisions.
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAreNodesIntersecting($h_NodeA, $h_NodeB)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrAreNodesIntersecting", "ptr", $h_NodeA, "ptr", $h_NodeB)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrAreNodesIntersecting", "ptr", $h_NodeA, "ptr", $h_NodeB)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAreNodesIntersecting
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrIsPointInsideNode
-; Description ...: [todo]
-; Syntax.........: _IrrIsPointInsideNode($h_NodeA, $f_X, $f_Y, $f_Z)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Description ...: Determine if the specified point is inside the bounding box of the node.
+; Syntax.........: _IrrIsPointInsideNode($h_Node, $f_X, $f_Y, $f_Z)
+; Parameters ....: $h_Node - Handle to a node.
+;                  $f_X - X position
+;                  $f_Y - Y position
+;                  $f_Z - Z position
+; Return values .: Success - 0 point is outside the bounding box of the node., 1 the point is inside the bounding box of the node.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: [todo]
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrIsPointInsideNode($h_NodeA, $f_X, $f_Y, $f_Z)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrIsPointInsideNode", "ptr", $h_NodeA, "float", $f_X, "float", $f_Y, "float", $f_Z)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
-EndFunc   ;==>_IrrIsPointInsideNode
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrIsPointInsideNode", "ptr", $h_NodeA, "float", $f_X, "float", $f_Y, "float", $f_Z)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 
+EndFunc   ;==>_IrrIsPointInsideNode
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCollisionResultPosition
-; Description ...: [todo]
+; Description ...: Collides a moving ellipsoid with a 3d world with gravity and returns the resulting new position of the ellipsoid,
+;                  the point at which the elipsoid collided with the surface and whether the ellipsoid is falling through the air.
 ; Syntax.........: _IrrGetCollisionResultPosition($h_Selector, ByRef $a_EllipsoidPosition, ByRef $a_EllipsoidRadius, ByRef $a_Velocity, ByRef $a_Gravity, $f_SlidingSpeed, ByRef $a_OutPosition, ByRef $a_OutHitPosition, ByRef $i_OutFalling)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
+; Parameters ....: $h_Selector -
+;                  $a_EllipsoidPosition -
+;                  $a_EllipsoidRadius -
+;                  $a_Velocity -
+;                  $a_Gravity -
+;                  $f_SlidingSpeed -
+;                  $a_OutPosition -
+;                  $a_OutHitPosition -
+;                  $i_OutFalling -
+; Return values .: Success - True and ...
+;                  Failure - False @ @error 1
 ;                  |[moreExplanationIndented]
 ; Author ........: [todo]
 ; Modified.......:
@@ -786,35 +731,28 @@ EndFunc   ;==>_IrrIsPointInsideNode
 Func _IrrGetCollisionResultPosition($h_Selector, ByRef $a_EllipsoidPosition, ByRef $a_EllipsoidRadius, ByRef $a_Velocity, ByRef $a_Gravity, $f_SlidingSpeed, ByRef $a_OutPosition, ByRef $a_OutHitPosition, ByRef $i_OutFalling)
 ; Collides a moving ellipsoid with a 3d world with gravity and returns the
 ; resulting new position of the ellipsoid. (contributed by The Car)
-	Local $structEllipsoidPosition = DllStructCreate("float;float;float")
-	DllStructSetData($structEllipsoidPosition, 1, $a_EllipsoidPosition[0])
-	DllStructSetData($structEllipsoidPosition, 2, $a_EllipsoidPosition[1])
-	DllStructSetData($structEllipsoidPosition, 3, $a_EllipsoidPosition[2])
-	Local $structEllipsoidRadius = DllStructCreate("float;float;float")
-	DllStructSetData($structEllipsoidRadius, 1, $a_EllipsoidRadius[0])
-	DllStructSetData($structEllipsoidRadius, 2, $a_EllipsoidRadius[1])
-	DllStructSetData($structEllipsoidRadius, 3, $a_EllipsoidRadius[2])
-	Local $structVelocity = DllStructCreate("float;float;float")
-	DllStructSetData($structVelocity, 1, $a_Velocity[0])
-	DllStructSetData($structVelocity, 2, $a_Velocity[1])
-	DllStructSetData($structVelocity, 3, $a_Velocity[2])
-	Local $structGravity = DllStructCreate("float;float;float")
-	DllStructSetData($structGravity, 1, $a_Gravity[0])
-	DllStructSetData($structGravity, 2, $a_Gravity[1])
-	DllStructSetData($structGravity, 3, $a_Gravity[2])
-	Local $structOutPosition = DllStructCreate("float;float;float")
-	Local $structOutHitPosition = DllStructCreate("float;float;float")
-
-	$result = DllCall($_irrDll, "none:cdecl", "IrrGetCollisionResultPosition", "ptr", $h_Selector, "ptr", DllStructGetPtr($structEllipsoidPosition), "ptr", DllStructGetPtr($structEllipsoidRadius), _
-			"ptr", DllStructGetPtr($structVelocity), "ptr", DllStructGetPtr($structGravity), "float", $f_SlidingSpeed, _
-			"ptr", DllStructGetPtr($structOutPosition), "ptr", DllStructGetPtr($structOutHitPosition), "int*", $i_OutFalling)
-
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		dim $a_OutPosition[3] = [ DllStructGetData($structOutPosition, 1), DllStructGetData($structOutPosition, 2), DllStructGetData($structOutPosition, 3) ]
-		dim $a_OutHitPosition[3] = [ DllStructGetData($structOutHitPosition, 1), DllStructGetData($structOutHitPosition, 2), DllStructGetData($structOutHitPosition, 3) ]
-		$i_OutFalling = $result[9]
-		Return True
-	EndIf
+	Local $tEllipsoidPosition, $tEllipsoidRadius, $tVelocity, $tGravity, $tOutPosition, $tOutHitPosition, $aResult
+	$tEllipsoidPosition = DllStructCreate("float;float;float")
+	$tEllipsoidRadius = DllStructCreate("float;float;float")
+	$tVelocity = DllStructCreate("float;float;float")
+	$tGravity = DllStructCreate("float;float;float")
+	For $i = 1 To 3
+		DllStructSetData($tEllipsoidPosition, $i, $a_EllipsoidPosition[$i - 1])
+	    DllStructSetData($tEllipsoidRadius, $i, $a_EllipsoidRadius[$i - 1])
+	    DllStructSetData($tVelocity, $i, $a_Velocity[$i - 1])
+	    DllStructSetData($tGravity, $i, $a_Gravity[$i - 1])
+	Next
+	$tOutPosition = DllStructCreate("float;float;float")
+	$tOutHitPosition = DllStructCreate("float;float;float")
+	$aResult = DllCall($_irrDll, "none:cdecl", "IrrGetCollisionResultPosition", "ptr", $h_Selector, "ptr", DllStructGetPtr($tEllipsoidPosition), "ptr", DllStructGetPtr($tEllipsoidRadius), _
+			"ptr", DllStructGetPtr($tVelocity), "ptr", DllStructGetPtr($tGravity), "float", $f_SlidingSpeed, _
+			"ptr", DllStructGetPtr($tOutPosition), "ptr", DllStructGetPtr($tOutHitPosition), "int*", $i_OutFalling)
+	If @error Or Not IsArray($aResult) Then Return Seterror(1, 0, False)
+	Dim $a_OutPosition[3], $a_OutHitPosition[3]
+	For $i = 1 To 3
+		$a_OutPosition[$i - 1] = DllStructGetData($tOutPosition, $i)
+		$a_OutHitPosition[$i - 1] = DllStructGetData($tOutHitPosition, $i)
+	Next
+	$i_OutFalling = $aResult[9]
+	Return Seterror(0, 0, True)
 EndFunc   ;==>_IrrGetCollisionResultPosition
