@@ -35,7 +35,7 @@
 
 > Examples:
 
-+ Added: 071 (Sphere_Terrain_Surface)
++ Added: 071 (Sphere_Terrain_Surface), 096 (LightingAndShadowMaps)
 
 
 
