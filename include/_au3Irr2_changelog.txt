@@ -21,9 +21,15 @@
 
 + Fixed/Added: _IrrGetSphericalTerrainSurfacePositionAndAngle
 + Fixed/Added: _IrrGetSphericalTerrainLogicalSurfacePosition
-+ Fixed/Added: _IrrGetSphericalTerrainSurfacePosition  
++ Fixed/Added: _IrrGetSphericalTerrainSurfacePosition
+- Tidy: au3Irr2_Lighting.au3 error return  
 - Tidy: au3Irr2_Scene.au3 error return.
 - Tidy: au3Irr2_Terrain.au3 error returns.
+- Changed: parameter names for _IrrSetLightAttenuation.
+  Looking at the wrapper reference docs the parameters are Red, Green, Blue.
+  Looking at the wrapper source the values are Constant, Linear, Quadratic.
+  This parameter name change won't affect how the function works but
+  at least it may give some indication of what the parameters actually affect.
 - Changed: parameter $f_Y to $f_Z in _IrrGetTerrainHeight, _IrrGetTerrainTileHeight
   These functions use X and Z as input parameters and not X and Y as previously shown.
 - Changed: _IrrSetSphericalTerrainTexture 6 face texture paramater names from
@@ -44,16 +50,16 @@
 - Added: more examples for help file, _IrrSetSphericalTerrainTexture, 
   _IrrAreNodesIntersecting, _IrrGetDistanceBetweenNodes, _IrrIsPointInsideNode,
   _IrrGetSphericalTerrainSurfacePositionAndAngle, _IrrGetSphericalTerrainLogicalSurfacePosition,
-  _IrrGetSphericalTerrainSurfacePosition	
+  _IrrGetSphericalTerrainSurfacePosition, _IrrSetLightAmbientColor, _IrrSetLightRadius	
 - Added: more header info for functions in au3Irr2_Terrain.au3
-
+- Added: more header info for functions in au3Irr2_Lighting.au3
 
 
 > Other:
 
 + Added: Tools\FontTool.exe (used for creating bmp fonts, comes from IrrLicht 1.7.1 sdk) 
 - Changed: global $result used in UDF files switched to local variables 
-  (WIP, finished for 2D, Scene, Camera, Animation, Node, Terrain) 
+  (WIP, finished for 2D, Scene, Camera, Animation, Node, Terrain, Lighting) 
 
 
 === 2.04 (2010-10-09) ==========================================================
