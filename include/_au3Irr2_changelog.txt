@@ -22,6 +22,7 @@
 + Fixed/Added: _IrrGetSphericalTerrainSurfacePositionAndAngle
 + Fixed/Added: _IrrGetSphericalTerrainLogicalSurfacePosition
 + Fixed/Added: _IrrGetSphericalTerrainSurfacePosition
+- Tidy: au3Irr2_FilingSystem.au3 error return
 - Tidy: au3Irr2_Lighting.au3 error return  
 - Tidy: au3Irr2_Scene.au3 error return.
 - Tidy: au3Irr2_Terrain.au3 error returns.
@@ -53,13 +54,15 @@
   _IrrGetSphericalTerrainSurfacePosition, _IrrSetLightAmbientColor, _IrrSetLightRadius	
 - Added: more header info for functions in au3Irr2_Terrain.au3
 - Added: more header info for functions in au3Irr2_Lighting.au3
+- Added function header info in au3Irr2_FilingSystem.au3
+
 
 
 > Other:
 
 + Added: Tools\FontTool.exe (used for creating bmp fonts, comes from IrrLicht 1.7.1 sdk) 
 - Changed: global $result used in UDF files switched to local variables 
-  (WIP, finished for 2D, Scene, Camera, Animation, Node, Terrain, Lighting) 
+  (WIP, finished for 2D, Scene, Camera, Animation, Node, Terrain, Lighting, FilingSystem) 
 
 
 === 2.04 (2010-10-09) ==========================================================
