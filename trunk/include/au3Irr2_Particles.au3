@@ -81,11 +81,11 @@
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func __CreateParticleSettings($minBoxX, $minBoxY, $minBoxZ, $maxBoxX, $maxBoxY, $maxBoxZ, $directionX, $directionY, $directionZ, $minParticlesSecond, $maxParticlesSecond, $minStartColorR, $minStartColorG, $minStartColorB, $maxStartColorR, $maxStartColorG, $maxStartColorB, $minLifetime, $maxLifetime, $minStartSizeX, $minStartSizeY, $maxStartSizeX, $maxStartSizeY, $maxAngleDegrees)
-	local $arr[24] =  [ $minBoxX, $minBoxY, $minBoxZ, $maxBoxX, $maxBoxY, $maxBoxZ, _
+	Local $arr[24] =  [ $minBoxX, $minBoxY, $minBoxZ, $maxBoxX, $maxBoxY, $maxBoxZ, _
 						$directionX, $directionY, $directionZ, $minParticlesSecond, $maxParticlesSecond, _
 						$minStartColorR, $minStartColorG, $minStartColorB, $maxStartColorR, $maxStartColorG, $maxStartColorB, _
 						$minLifetime, $maxLifetime, $minStartSizeX, $minStartSizeY, $maxStartSizeX, $maxStartSizeY, $maxAngleDegrees ]
-	return $arr
+	Return $arr
 EndFunc   ;==>__CreateParticleEmitter
 
 
@@ -105,7 +105,8 @@ EndFunc   ;==>__CreateParticleEmitter
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddParticleEmitter($h_ParticleSystem, $a_Settings)
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddParticleEmitter", "UINT_PTR", $h_ParticleSystem, _
+	Local $aResult
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddParticleEmitter", "UINT_PTR", $h_ParticleSystem, _
 						"float", $a_Settings[0], "float", $a_Settings[1], "float", $a_Settings[2], _
 						"float", $a_Settings[3], "float", $a_Settings[4], "float", $a_Settings[5], _
 						"float", $a_Settings[6], "float", $a_Settings[7], "float", $a_Settings[8], _
@@ -114,7 +115,8 @@ Func _IrrAddParticleEmitter($h_ParticleSystem, $a_Settings)
 						"int", $a_Settings[14], "int", $a_Settings[15], "int", $a_Settings[16], _
 						"UINT", $a_Settings[17], "UINT", $a_Settings[18], "float", $a_Settings[19], _
 						"float", $a_Settings[20], "float", $a_Settings[21], "float", $a_Settings[22], "int", $a_Settings[23])
-	Return $result[0]
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddParticleEmitter
 
 
@@ -137,11 +139,7 @@ EndFunc   ;==>_IrrAddParticleEmitter
 ; ===============================================================================================================================
 Func _IrrSetParticleMinSize($h_Emitter, $f_X, $f_Y)
 	DllCall($_irrDll, "none:cdecl", "IrrSetParticleMinSize", "UINT_PTR", $h_Emitter, "float", $f_X, "float", $f_Y)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetParticleMinSize
 
 
@@ -164,11 +162,7 @@ EndFunc   ;==>_IrrSetParticleMinSize
 ; ===============================================================================================================================
 Func _IrrSetParticleMaxSize($h_Emitter, $f_X, $f_Y)
 	DllCall($_irrDll, "none:cdecl", "IrrSetParticleMaxSize", "UINT_PTR", $h_Emitter, "float", $f_X, "float", $f_Y)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetParticleMaxSize
 
 
@@ -190,7 +184,8 @@ EndFunc   ;==>_IrrSetParticleMaxSize
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddAnimatedMeshSceneNodeEmitter($h_ParticleSystem, $h_Node, $b_UseNormals, $f_NormalModifier, $b_FromAllVertices, $a_Settings)
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddAnimatedMeshSceneNodeEmitter", "UINT_PTR", $h_ParticleSystem, _
+	Local $aResult
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddAnimatedMeshSceneNodeEmitter", "UINT_PTR", $h_ParticleSystem, _
 					"UINT_PTR", $h_Node, "UINT", $b_UseNormals, "float", $f_NormalModifier, "int", $b_FromAllVertices, _
 					"float", $a_Settings[0], "float", $a_Settings[1], "float", $a_Settings[2], _
 					"float", $a_Settings[3], "float", $a_Settings[4], "float", $a_Settings[5], _
@@ -200,11 +195,8 @@ Func _IrrAddAnimatedMeshSceneNodeEmitter($h_ParticleSystem, $h_Node, $b_UseNorma
 					"int", $a_Settings[14], "int", $a_Settings[15], "int", $a_Settings[16], _
 					"UINT", $a_Settings[17], "UINT", $a_Settings[18], "float", $a_Settings[19], _
 					"float", $a_Settings[20], "float", $a_Settings[21], "float", $a_Settings[22], "int", $a_Settings[23])
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddAnimatedMeshSceneNodeEmitter
 
 
@@ -227,13 +219,11 @@ EndFunc   ;==>_IrrAddAnimatedMeshSceneNodeEmitter
 Func _IrrAddRotationAffector($h_ParticleSystem, $f_SpeedX, $f_SpeedY, $f_SpeedZ, $f_PivotX, $f_pivotY, $f_pivotZ)
 ; Creates a rotation affector. This affector modifies the positions of the
 ; particles and attracts them to a specified point at a specified speed per second.
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddRotationAffector", "UINT_PTR", $h_ParticleSystem, _
+	Local $aResult
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddRotationAffector", "UINT_PTR", $h_ParticleSystem, _
 			"float", $f_SpeedX, "float", $f_SpeedY, "float", $f_SpeedZ, "float", $f_PivotX, "float", $f_PivotY, "float", $f_PivotZ)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddRotationAffector
 
 
@@ -255,12 +245,10 @@ EndFunc   ;==>_IrrAddRotationAffector
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddFadeOutParticleAffector($h_ParticleSystem, $i_FadeFactor, $i_Red, $i_Green, $i_Blue)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddFadeOutParticleAffector", "ptr", $h_ParticleSystem, "int", $i_FadeFactor, "int", $i_Red, "int", $i_Green, "int", $i_Blue)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddFadeOutParticleAffector", "ptr", $h_ParticleSystem, "int", $i_FadeFactor, "int", $i_Red, "int", $i_Green, "int", $i_Blue)
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddFadeOutParticleAffector
 
 
@@ -281,13 +269,11 @@ EndFunc   ;==>_IrrAddFadeOutParticleAffector
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddGravityParticleAffector($h_ParticleSystem, $f_X, $f_Y, $f_Z, $i_TimeForceLost = 1000)
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddGravityParticleAffector", "UINT_PTR", $h_ParticleSystem, _
+	Local $aResult
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddGravityParticleAffector", "UINT_PTR", $h_ParticleSystem, _
 						"float", $f_X, "float", $f_Y, "float", $f_Z, "UINT", $i_TimeForceLost)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddGravityParticleAffector
 
 
@@ -312,12 +298,10 @@ EndFunc   ;==>_IrrAddGravityParticleAffector
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddParticleAttractionAffector($h_ParticleSystem, $f_X, $f_Y, $f_Z, $f_Speed = 1, $i_Attract = $IRR_ATTRACT, $b_AffectX = true, $b_AffectY = true, $b_AffectZ = true)
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddParticleAttractionAffector", "UINT_PTR", $h_ParticleSystem, "float", $f_X, "float", $f_Y, "float", $f_Z, "float", $f_Speed, "UINT", $i_Attract, "UINT", $b_AffectX, "UINT", $b_AffectY, "UINT", $b_AffectZ)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddParticleAttractionAffector", "UINT_PTR", $h_ParticleSystem, "float", $f_X, "float", $f_Y, "float", $f_Z, "float", $f_Speed, "UINT", $i_Attract, "UINT", $b_AffectX, "UINT", $b_AffectY, "UINT", $b_AffectZ)
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddParticleAttractionAffector
 
 
@@ -339,12 +323,10 @@ EndFunc   ;==>_IrrAddParticleAttractionAffector
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrCreateRotationAffector($h_ParticleSystem, $f_SpeedX, $f_SpeedY, $f_SpeedZ, $f_RotX, $f_RotY, $f_RotZ)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrCreateRotationAffector", "ptr", $h_ParticleSystem, "float", $f_SpeedX, "float", $f_SpeedY, "float", $f_SpeedZ, "float", $f_RotX, "float", $f_RotY, "float", $f_RotZ)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrCreateRotationAffector", "ptr", $h_ParticleSystem, "float", $f_SpeedX, "float", $f_SpeedY, "float", $f_SpeedZ, "float", $f_RotX, "float", $f_RotY, "float", $f_RotZ)
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrCreateRotationAffector
 
 
@@ -366,12 +348,10 @@ EndFunc   ;==>_IrrCreateRotationAffector
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddStopParticleAffector($h_ParticleSystem, $i_Time, $h_Emitter)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddStopParticleAffector", "ptr", $h_ParticleSystem, "int", $i_Time, "ptr", $h_Emitter)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddStopParticleAffector", "ptr", $h_ParticleSystem, "int", $i_Time, "ptr", $h_Emitter)
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddStopParticleAffector
 
 
@@ -393,12 +373,10 @@ EndFunc   ;==>_IrrAddStopParticleAffector
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddParticlePushAffector($h_ParticleSystem, $f_X, $f_Y, $f_Z, $f_SpeedX, $f_SpeedY, $f_SpeedZ, $f_Far, $f_Near, $f_Column, $i_Distant)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddParticlePushAffector", "ptr", $h_ParticleSystem, "float", $f_X, "float", $f_Y, "float", $f_Z, "float", $f_SpeedX, "float", $f_SpeedY, "float", $f_SpeedZ, "float", $f_Far, "float", $f_Near, "float", $f_Column, "int", $i_Distant)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddParticlePushAffector", "ptr", $h_ParticleSystem, "float", $f_X, "float", $f_Y, "float", $f_Z, "float", $f_SpeedX, "float", $f_SpeedY, "float", $f_SpeedZ, "float", $f_Far, "float", $f_Near, "float", $f_Column, "int", $i_Distant)
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddParticlePushAffector
 
 
@@ -420,30 +398,23 @@ EndFunc   ;==>_IrrAddParticlePushAffector
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddColorMorphAffector($h_ParticleSystem, $a_ParticleColors, $a_ParticleTimes, $b_Smooth)
-	local $iColors = UBound($a_ParticleColors)
-	local $bTimes = IsArray($a_ParticleTimes)
-	local $ColorsStruct = DllStructCreate("UINT[" & $iColors & "]")
-	local $TimesStruct = 0
-
-	local $i
+	Local $iColors, $bTimes, $tColors, $tTimes, $aResult
+	$iColors = UBound($a_ParticleColors)
+	$bTimes = IsArray($a_ParticleTimes)
+	$tColors = DllStructCreate("UINT[" & $iColors & "]")
 	For $i = 1 To $iColors
-		DllStructSetData($ColorsStruct, 1, $a_ParticleColors[$i - 1], $i)
+		DllStructSetData($tColors, 1, $a_ParticleColors[$i - 1], $i)
 	Next
-
-	if $bTimes then
-		$TimesStruct = DllStructCreate("UINT[" & $iColors & "]")
+	If $bTimes then
+		$tTimes = DllStructCreate("UINT[" & $iColors & "]")
 		For $i = 1 To $iColors
-			DllStructSetData($TimesStruct, 1, $a_ParticleTimes[$i - 1], $i)
+			DllStructSetData($tTimes, 1, $a_ParticleTimes[$i - 1], $i)
 		Next
 	EndIf
-
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddColorMorphAffector", "UINT_PTR", $h_ParticleSystem, _
-	"UINT", $iColors, "UINT_PTR", DllStructGetPtr($ColorsStruct), "UINT_PTR", DllStructGetPtr($TimesStruct), "UINT", $b_Smooth)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddColorMorphAffector", "UINT_PTR", $h_ParticleSystem, _
+	"UINT", $iColors, "UINT_PTR", DllStructGetPtr($tColors), "UINT_PTR", DllStructGetPtr($tTimes), "UINT", $b_Smooth)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddColorMorphAffector
 
 
@@ -465,27 +436,21 @@ EndFunc   ;==>_IrrAddColorMorphAffector
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddSplineAffector($h_ParticleSystem, $tVectors, $f_Speed, $f_Tightness, $f_Attraction, $b_DeleteAtEnd)
-	if not IsDllStruct($tVectors) then Return SetError(2, 0, False)
-
-	local $iSplineVerts = DllStructGetSize($tVectors) / DllStructGetSize(DllStructCreate($tagIRR_VECTOR))
-
+	If Not IsDllStruct($tVectors) Then Return SetError(2, 0, False)
+	Local $iSplineVerts, $tVertexArray, $aResult
+	$iSplineVerts = DllStructGetSize($tVectors) / DllStructGetSize(DllStructCreate($tagIRR_VECTOR))
 	; whyever - dll function expects vectors inside vertices array. So prepare needed structure:
-	local $tVertexArray = __CreateVertStruct($iSplineVerts)
-	local $i
-	for $i = 0 to $iSplineVerts - 1
+	$tVertexArray = __CreateVertStruct($iSplineVerts)
+	For $i = 0 To $iSplineVerts - 1
 		__SetVertStruct($tVertexArray, $i, $VERT_X, __GetVectStruct($tVectors, $i, $VECT_X) )
 		__SetVertStruct($tVertexArray, $i, $VERT_Y, __GetVectStruct($tVectors, $i, $VECT_Y) )
 		__SetVertStruct($tVertexArray, $i, $VERT_Z, __GetVectStruct($tVectors, $i, $VECT_Z) )
 	Next
-
-	$result = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddSplineAffector", "UINT_PTR", $h_ParticleSystem, _
+	$aResult = DllCall($_irrDll, "UINT_PTR:cdecl", "IrrAddSplineAffector", "UINT_PTR", $h_ParticleSystem, _
 				"UINT", $iSplineVerts, "ptr", DllStructGetPtr($tVertexArray), "float", $f_Speed, _
 				"float", $f_Tightness, "float", $f_Attraction, "UINT", $b_DeleteAtEnd)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddSplineAffector
 
 
@@ -505,11 +470,7 @@ EndFunc   ;==>_IrrAddSplineAffector
 ; ===============================================================================================================================
 Func _IrrRemoveAffectors($h_ParticleSystem)
 	DllCall($_irrDll, "none:cdecl", "IrrRemoveAffectors", "UINT_PTR", $h_ParticleSystem)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrRemoveAffectors
 
 
@@ -532,11 +493,7 @@ EndFunc   ;==>_IrrRemoveAffectors
 ; ===============================================================================================================================
 Func _IrrSetParticleEmitterDirection($h_ParticleEmitter, $f_X, $f_Y, $f_Z)
 	DllCall($_irrDll, "none:cdecl", "IrrSetParticleEmitterDirection", "ptr", $h_ParticleEmitter, "float", $f_X, "float", $f_Y, "float", $f_Z)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetParticleEmitterDirection
 
 
@@ -559,11 +516,7 @@ EndFunc   ;==>_IrrSetParticleEmitterDirection
 ; ===============================================================================================================================
 Func _IrrSetParticleEmitterMinParticlesPerSecond($h_ParticleEmitter, $i_Min)
 	DllCall($_irrDll, "none:cdecl", "IrrSetParticleEmitterMinParticlesPerSecond", "ptr", $h_ParticleEmitter, "int", $i_Min)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetParticleEmitterMinParticlesPerSecond
 
 
@@ -586,11 +539,7 @@ EndFunc   ;==>_IrrSetParticleEmitterMinParticlesPerSecond
 ; ===============================================================================================================================
 Func _IrrSetParticleEmitterMaxParticlesPerSecond($h_ParticleEmitter, $i_Max)
 	DllCall($_irrDll, "none:cdecl", "IrrSetParticleEmitterMaxParticlesPerSecond", "ptr", $h_ParticleEmitter, "int", $i_Max)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetParticleEmitterMaxParticlesPerSecond
 
 
@@ -613,11 +562,7 @@ EndFunc   ;==>_IrrSetParticleEmitterMaxParticlesPerSecond
 ; ===============================================================================================================================
 Func _IrrSetParticleEmitterMinStartColor($h_ParticleEmitter, $i_Red, $i_Green, $i_Blue)
 	DllCall($_irrDll, "none:cdecl", "IrrSetParticleEmitterMinStartColor", "ptr", $h_ParticleEmitter, "int", $i_Red, "int", $i_Green, "int", $i_Blue)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetParticleEmitterMinStartColor
 
 
@@ -640,11 +585,7 @@ EndFunc   ;==>_IrrSetParticleEmitterMinStartColor
 ; ===============================================================================================================================
 Func _IrrSetParticleEmitterMaxStartColor($h_ParticleEmitter, $i_Red, $i_Green, $i_Blue)
 	DllCall($_irrDll, "none:cdecl", "IrrSetParticleEmitterMaxStartColor", "ptr", $h_ParticleEmitter, "int", $i_Red, "int", $i_Green, "int", $i_Blue)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetParticleEmitterMaxStartColor
 
 
@@ -665,11 +606,7 @@ EndFunc   ;==>_IrrSetParticleEmitterMaxStartColor
 ; ===============================================================================================================================
 Func _IrrSetParticleAffectorEnable($h_ParticleAffector, $b_Enabled)
 	DllCall($_irrDll, "none:cdecl", "IrrSetParticleAffectorEnable", "ptr", $h_ParticleAffector, "int", $b_Enabled)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetParticleAffectorEnable
 
 
@@ -692,11 +629,7 @@ EndFunc   ;==>_IrrSetParticleAffectorEnable
 ; ===============================================================================================================================
 Func _IrrSetFadeOutParticleAffectorTime($h_ParticleAffector, $f_Time)
 	DllCall($_irrDll, "none:cdecl", "IrrSetFadeOutParticleAffectorTime", "ptr", $h_ParticleAffector, "float", $f_Time)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetFadeOutParticleAffectorTime
 
 
@@ -719,11 +652,7 @@ EndFunc   ;==>_IrrSetFadeOutParticleAffectorTime
 ; ===============================================================================================================================
 Func _IrrSetFadeOutParticleAffectorTargetColor($h_ParticleAffector, $i_Red, $i_Green, $i_Blue)
 	DllCall($_irrDll, "none:cdecl", "IrrSetFadeOutParticleAffectorTargetColor", "ptr", $h_ParticleAffector, "int", $i_Red, "int", $i_Green, "int", $i_Blue)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetFadeOutParticleAffectorTargetColor
 
 
@@ -746,11 +675,7 @@ EndFunc   ;==>_IrrSetFadeOutParticleAffectorTargetColor
 ; ===============================================================================================================================
 Func _IrrSetGravityParticleAffectorDirection($h_ParticleAffector, $f_X, $f_Y, $f_Z)
 	DllCall($_irrDll, "none:cdecl", "IrrSetGravityParticleAffectorDirection", "ptr", $h_ParticleAffector, "float", $f_X, "float", $f_Y, "float", $f_Z)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetGravityParticleAffectorDirection
 
 
@@ -773,11 +698,7 @@ EndFunc   ;==>_IrrSetGravityParticleAffectorDirection
 ; ===============================================================================================================================
 Func _IrrSetGravityParticleAffectorTimeForceLost($h_ParticleAffector, $f_TimeForceLost)
 	DllCall($_irrDll, "none:cdecl", "IrrSetGravityParticleAffectorTimeForceLost", "ptr", $h_ParticleAffector, "float", $f_TimeForceLost)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetGravityParticleAffectorTimeForceLost
 
 
@@ -800,11 +721,7 @@ EndFunc   ;==>_IrrSetGravityParticleAffectorTimeForceLost
 ; ===============================================================================================================================
 Func _IrrSetParticleAttractionAffectorAffectX($h_ParticleAffector, $i_Affect)
 	DllCall($_irrDll, "none:cdecl", "IrrSetParticleAttractionAffectorAffectX", "ptr", $h_ParticleAffector, "int", $i_Affect)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetParticleAttractionAffectorAffectX
 
 
@@ -827,11 +744,7 @@ EndFunc   ;==>_IrrSetParticleAttractionAffectorAffectX
 ; ===============================================================================================================================
 Func _IrrSetParticleAttractionAffectorAffectY($h_ParticleAffector, $i_Affect)
 	DllCall($_irrDll, "none:cdecl", "IrrSetParticleAttractionAffectorAffectY", "ptr", $h_ParticleAffector, "int", $i_Affect)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetParticleAttractionAffectorAffectY
 
 
@@ -854,11 +767,7 @@ EndFunc   ;==>_IrrSetParticleAttractionAffectorAffectY
 ; ===============================================================================================================================
 Func _IrrSetParticleAttractionAffectorAffectZ($h_ParticleAffector, $i_Affect)
 	DllCall($_irrDll, "none:cdecl", "IrrSetParticleAttractionAffectorAffectZ", "ptr", $h_ParticleAffector, "int", $i_Affect)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetParticleAttractionAffectorAffectZ
 
 
@@ -881,11 +790,7 @@ EndFunc   ;==>_IrrSetParticleAttractionAffectorAffectZ
 ; ===============================================================================================================================
 Func _IrrSetParticleAttractionAffectorAttract($h_ParticleAffector, $i_Attract)
 	DllCall($_irrDll, "none:cdecl", "IrrSetParticleAttractionAffectorAttract", "ptr", $h_ParticleAffector, "int", $i_Attract)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetParticleAttractionAffectorAttract
 
 
@@ -908,11 +813,7 @@ EndFunc   ;==>_IrrSetParticleAttractionAffectorAttract
 ; ===============================================================================================================================
 Func _IrrSetParticleAttractionAffectorPoint($h_ParticleAffector, $f_X, $f_Y, $f_Z)
 	DllCall($_irrDll, "none:cdecl", "IrrSetParticleAttractionAffectorPoint", "ptr", $h_ParticleAffector, "float", $f_X, "float", $f_Y, "float", $f_Z)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetParticleAttractionAffectorPoint
 
 
@@ -935,11 +836,7 @@ EndFunc   ;==>_IrrSetParticleAttractionAffectorPoint
 ; ===============================================================================================================================
 Func _IrrSetRotationAffectorPivotPoint($h_ParticleAffector, $f_X, $f_Y, $f_Z)
 	DllCall($_irrDll, "none:cdecl", "IrrSetRotationAffectorPivotPoint", "ptr", $h_ParticleAffector, "float", $f_X, "float", $f_Y, "float", $f_Z)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetRotationAffectorPivotPoint
 
 
@@ -962,6 +859,7 @@ EndFunc   ;==>_IrrSetRotationAffectorPivotPoint
 ; ===============================================================================================================================
 Func _IrrSetFurthestDistanceOfEffect($h_ParticleAffector, $f_Distance)
 	DllCall($_irrDll, "none:cdecl", "IrrSetFurthestDistanceOfEffect", "ptr", $h_ParticleAffector, "float", $f_Distance)
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetFurthestDistanceOfEffect
 
 
@@ -984,11 +882,7 @@ EndFunc   ;==>_IrrSetFurthestDistanceOfEffect
 ; ===============================================================================================================================
 Func _IrrSetNearestDistanceOfEffect($h_ParticleAffector, $f_Distance)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNearestDistanceOfEffect", "ptr", $h_ParticleAffector, "float", $f_Distance)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNearestDistanceOfEffect
 
 
@@ -1011,11 +905,7 @@ EndFunc   ;==>_IrrSetNearestDistanceOfEffect
 ; ===============================================================================================================================
 Func _IrrSetColumnDistanceOfEffect($h_ParticleAffector, $f_Distance)
 	DllCall($_irrDll, "none:cdecl", "IrrSetColumnDistanceOfEffect", "ptr", $h_ParticleAffector, "float", $f_Distance)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetColumnDistanceOfEffect
 
 
@@ -1038,11 +928,7 @@ EndFunc   ;==>_IrrSetColumnDistanceOfEffect
 ; ===============================================================================================================================
 Func _IrrSetCenterOfEffect($h_ParticleAffector, $f_X, $f_Y, $f_Z)
 	DllCall($_irrDll, "none:cdecl", "IrrSetCenterOfEffect", "ptr", $h_ParticleAffector, "float", $f_X, "float", $f_Y, "float", $f_Z)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetCenterOfEffect
 
 
@@ -1065,9 +951,5 @@ EndFunc   ;==>_IrrSetCenterOfEffect
 ; ===============================================================================================================================
 Func _IrrSetStrengthOfEffect($h_ParticleAffector, $f_X, $f_Y, $f_Z)
 	DllCall($_irrDll, "none:cdecl", "IrrSetStrengthOfEffect", "ptr", $h_ParticleAffector, "float", $f_X, "float", $f_Y, "float", $f_Z)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetStrengthOfEffect
