@@ -46,7 +46,7 @@ Dim $aLighting[7][4] = [[0.2, 0.2, 0.3, 100.0], _
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart($IRR_EDT_OPENGL, 640, 480, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart($IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
 		$IRR_WINDOWED, $IRR_SHADOWS, $IRR_CAPTURE_EVENTS, $IRR_VERTICAL_SYNC_ON)
 
 ; set the window caption
@@ -97,8 +97,8 @@ _IrrSetNodeMaterialType($hMoon, $IRR_EMT_TRANSPARENT_ALPHA_CHANNEL)
 
 ; add a camera into the scene
 $hCamera = _IrrAddFPSCamera($IRR_NO_OBJECT, 100.0, 0.1)
-_IrrSetNodePosition($hCamera, 30, 25, -60)
-_IrrSetCameraTarget($hCamera, 0, 0, 0)
+_IrrSetNodePosition($hCamera, 40, 40, -100)
+_IrrSetCameraTarget($hCamera, 40, 20, 0)
 
 ; add light sorce to the sun
 $hLight = _IrrAddLight($IRR_NO_PARENT, 0, 0, 0, 0.9, 0.7, 0.3, 1200.0)
