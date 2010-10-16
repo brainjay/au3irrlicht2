@@ -75,27 +75,21 @@ Global enum _ ; enumeration GUI_EVENT for possible Elements readable by __getGui
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 func __getGuiEvt($p_GUIEvent, $i_Element = $EVT_GUI_IID)
-
-	local $EventStruct = DllStructCreate("int;int;int;int", $p_GUIEvent)
-	$result = DllStructGetData($EventStruct, $i_Element)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return $result
-	EndIf
+    Local $tEvent, $iReturn
+	local $tEvent = DllStructCreate("int;int;int;int", $p_GUIEvent)
+	$iReturn = DllStructGetData($tEvent, $i_Element)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $iReturn)
 EndFunc ;==> __getGuiEvt
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGUIClear
-; Description ...: [todo]
+; Description ...: Clears all GUI objects from the display.
 ; Syntax.........: _IrrGUIClear()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: None.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: [todo]
@@ -105,85 +99,64 @@ EndFunc ;==> __getGuiEvt
 ; ===============================================================================================================================
 Func _IrrGUIClear()
 	DllCall($_irrDll, "none:cdecl", "IrrGUIClear")
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrGUIClear
-
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGUIEvents
-; Description ...: [todo]
+; Description ...: Determine whether the GUI consumes events or not.
 ; Syntax.........: _IrrGUIEvents($i_EventsForGUI)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $i_EventsForGUI - 1 the gui consumes events, 0 the gui doesn't consume events.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......:
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGUIEvents($i_EventsForGUI)
 ; whether keyboard and mouse events should be used by the GUI
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGUIEvents", "int", $i_EventsForGUI)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return $result[0]
-	EndIf
+; Noticed a comment in the wrapper KeyboardMouse source for this function .. Redundant ?
+    Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrGUIEvents", "int", $i_EventsForGUI)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGUIEvents
-
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGUIEventAvailable
-; Description ...: [todo]
+; Description ...: Determine if a GUI event is available.
 ; Syntax.........: _IrrGUIEventAvailable()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: None
+; Return values .: Success - True if event available otherwise False.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......:
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGUIEventAvailable()
-; find out if there is a GUI event ready to be read. returns 1 if there is an
-; event available (the event receiver must have been started when the system
-; was initialised)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGUIEventAvailable")
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return $result[0]
-	EndIf
+; The event receiver must have been started when the system was initialised.
+    Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrGUIEventAvailable")
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGUIEventAvailable
-
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrReadGUIEvent
-; Description ...: [todo]
+; Description ...: Read the oldest GUI event in the buffer.
 ; Syntax.........: _IrrReadGUIEvent()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: None.
+; Return values .: Success - Pointer to the gui event buffer.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: [todo]
@@ -193,14 +166,11 @@ EndFunc   ;==>_IrrGUIEventAvailable
 ; ===============================================================================================================================
 Func _IrrReadGUIEvent()
 ; read a GUI event out
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrReadGUIEvent")
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return $result[0]
-	EndIf
+    Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrReadGUIEvent")
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrReadGUIEvent
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -222,17 +192,13 @@ EndFunc   ;==>_IrrReadGUIEvent
 ; ===============================================================================================================================
 Func _IrrGUIRemove($h_Widget)
 	DllCall($_irrDll, "none:cdecl", "IrrGUIRemove", "ptr", $h_Widget)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrGUIRemove
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGUIGetText
-; Description ...: [todo]
+; Description ...: Gets the text associated with a GUI object
 ; Syntax.........: _IrrGUIGetText($h_Widget)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
@@ -248,12 +214,10 @@ EndFunc   ;==>_IrrGUIRemove
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGUIGetText($h_Widget)
-	$result = DllCall($_irrDll, "wstr:cdecl", "IrrGUIGetText", "ptr", $h_Widget)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+    Local $aResult
+	$aResult = DllCall($_irrDll, "wstr:cdecl", "IrrGUIGetText", "ptr", $h_Widget)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGUIGetText
 
 
@@ -276,13 +240,8 @@ EndFunc   ;==>_IrrGUIGetText
 ; ===============================================================================================================================
 Func _IrrGUISetText($h_Widget, $s_Text)
 	DllCall($_irrDll, "none:cdecl", "IrrGUISetText", "ptr", $h_Widget, "wstr", $s_Text)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrGUISetText
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -304,13 +263,8 @@ EndFunc   ;==>_IrrGUISetText
 ; ===============================================================================================================================
 Func _IrrGUISetFont($h_Font)
 	DllCall($_irrDll, "none:cdecl", "IrrGUISetFont", "UINT_PTR", $h_Font)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrGUISetFont
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -333,13 +287,8 @@ EndFunc   ;==>_IrrGUISetFont
 Func _IrrGUISetColor($i_Element, $i_Red, $i_Green, $i_Blue, $i_Alpha)
 ; set the color of an element used by the gui
 	DllCall($_irrDll, "none:cdecl", "IrrGUISetColor", "int", $i_Element, "int", $i_Red, "int", $i_Green, "int", $i_Blue, "int", $i_Alpha)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrGUISetColor
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -361,14 +310,11 @@ EndFunc   ;==>_IrrGUISetColor
 ; ===============================================================================================================================
 Func _IrrAddWindow($s_Title, $i_TopX, $i_TopY, $i_BottomX, $i_BottomY, $i_Modal, $h_Parent = 0)
 ; add a static text object to the gui display
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddWindow", "wstr", $s_Title, "int", $i_TopX, "int", $i_TopY, "int", $i_BottomX, "int", $i_BottomY, "uint", $i_Modal, "ptr", $h_Parent)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddWindow", "wstr", $s_Title, "int", $i_TopX, "int", $i_TopY, "int", $i_BottomX, "int", $i_BottomY, "uint", $i_Modal, "ptr", $h_Parent)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddWindow
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -397,14 +343,11 @@ EndFunc   ;==>_IrrAddWindow
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddStaticText($s_Text, $i_TopX, $i_TopY, $i_BottomX, $i_BottomY, $i_Border, $i_WordWrap, $h_Parent = 0)
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddStaticText", "wstr", $s_Text, "int", $i_TopX, "int", $i_TopY, "int", $i_BottomX, "int", $i_BottomY, "uint", $i_Border, "uint", $i_WordWrap, "ptr", $h_Parent)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddStaticText", "wstr", $s_Text, "int", $i_TopX, "int", $i_TopY, "int", $i_BottomX, "int", $i_BottomY, "uint", $i_Border, "uint", $i_WordWrap, "ptr", $h_Parent)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddStaticText
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -426,15 +369,12 @@ EndFunc   ;==>_IrrAddStaticText
 ; ===============================================================================================================================
 Func _IrrAddButton($i_TopX, $i_TopY, $i_BottomX, $i_BottomY, $i_ID, $s_Text = "", $s_TextTip = "", $h_Parent = 0)
 ; add a clickable button object to the gui display
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddButton", "int", $i_TopX, "int", $i_TopY, "int", $i_BottomX, "int", $i_BottomY, _
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddButton", "int", $i_TopX, "int", $i_TopY, "int", $i_BottomX, "int", $i_BottomY, _
 				"int", $i_ID, "wstr", $s_Text, "wstr", $s_TextTip, "ptr", $h_Parent)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddButton
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -456,12 +396,10 @@ EndFunc   ;==>_IrrAddButton
 ; ===============================================================================================================================
 Func _IrrAddScrollBar($i_Horizontal, $i_TopX, $i_TopY, $i_BottomX, $i_BottomY, $i_ID, $i_CurrentValue, $i_MaxValue, $h_Parent = 0)
 ; add a scrollbar object to the gui display
-$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddScrollBar", "int", $i_Horizontal, "int", $i_TopX, "int", $i_TopY, "int", $i_BottomX, "int", $i_BottomY, "int", $i_ID, "int", $i_CurrentValue, "int", $i_MaxValue, "ptr", $h_Parent)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+    Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddScrollBar", "int", $i_Horizontal, "int", $i_TopX, "int", $i_TopY, "int", $i_BottomX, "int", $i_BottomY, "int", $i_ID, "int", $i_CurrentValue, "int", $i_MaxValue, "ptr", $h_Parent)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddScrollBar
 
 
@@ -485,12 +423,10 @@ EndFunc   ;==>_IrrAddScrollBar
 ; ===============================================================================================================================
 Func _IrrAddListBox($i_TopX, $i_TopY, $i_BottomX, $i_BottomY, $i_ID, $i_Background, $h_Parent=0)
 ; add a listbox object containing a list of items to the gui display
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddListBox", "int", $i_TopX, "int", $i_TopY, "int", $i_BottomX, "int", $i_BottomY, "int", $i_ID, "int", $i_Background, "ptr", $h_Parent)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddListBox", "int", $i_TopX, "int", $i_TopY, "int", $i_BottomX, "int", $i_BottomY, "int", $i_ID, "int", $i_Background, "ptr", $h_Parent)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddListBox
 
 
@@ -513,11 +449,7 @@ EndFunc   ;==>_IrrAddListBox
 ; ===============================================================================================================================
 Func _IrrAddListBoxItem($h_ListBox, $s_Text)
 	DllCall($_irrDll, "none:cdecl", "IrrAddListBoxItem", "ptr", $h_ListBox, "wstr", $s_Text)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrAddListBoxItem
 
 
@@ -540,11 +472,7 @@ EndFunc   ;==>_IrrAddListBoxItem
 ; ===============================================================================================================================
 Func _IrrInsertListBoxItem($h_ListBox, $s_Text, $i_Index)
 	DllCall($_irrDll, "none:cdecl", "IrrInsertListBoxItem", "ptr", $h_ListBox, "str", $s_Text, "int", $i_Index)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrInsertListBoxItem
 
 
@@ -567,11 +495,7 @@ EndFunc   ;==>_IrrInsertListBoxItem
 ; ===============================================================================================================================
 Func _IrrRemoveListBoxItem($h_ListBox, $i_Index)
 	DllCall($_irrDll, "none:cdecl", "IrrRemoveListBoxItem", "ptr", $h_ListBox, "int", $i_Index)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrRemoveListBoxItem
 
 
@@ -594,11 +518,7 @@ EndFunc   ;==>_IrrRemoveListBoxItem
 ; ===============================================================================================================================
 Func _IrrSelectListBoxItem($h_ListBox, $i_Index)
 	DllCall($_irrDll, "none:cdecl", "IrrSelectListBoxItem", "ptr", $h_ListBox, "int", $i_Index)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSelectListBoxItem
 
 
@@ -622,13 +542,11 @@ EndFunc   ;==>_IrrSelectListBoxItem
 ; ===============================================================================================================================
 Func _IrrAddEditBox($s_Text, $i_TopX, $i_TopY, $i_BottomX, $i_BottomY, $i_ID, $i_Border, $i_Password = $IRR_GUI_NOT_PASSWORD, $h_Parent = 0)
 ; add an editbox object to the gui display
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddEditBox", "wstr", $s_Text, "int", $i_TopX, "int", $i_TopY, _
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddEditBox", "wstr", $s_Text, "int", $i_TopX, "int", $i_TopY, _
 				"int", $i_BottomX, "int", $i_BottomY, "int", $i_ID, "int", $i_Border, "int", $i_Password, "ptr", $h_Parent)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddEditBox
 
 
@@ -652,13 +570,11 @@ EndFunc   ;==>_IrrAddEditBox
 ; ===============================================================================================================================
 Func _IrrAddCheckBox($s_Text, $i_TopX, $i_TopY, $i_BottomX, $i_BottomY, $i_ID, $i_Checked, $h_Parent = 0)
 ; add a checkbox object to the gui display
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddCheckBox", "wstr", $s_Text, "int", $i_TopX, "int", $i_TopY, _
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddCheckBox", "wstr", $s_Text, "int", $i_TopX, "int", $i_TopY, _
 				"int", $i_BottomX, "int", $i_BottomY, "int", $i_ID, "int", $i_Checked, "ptr", $h_Parent)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddCheckBox
 
 
@@ -681,11 +597,7 @@ EndFunc   ;==>_IrrAddCheckBox
 ; ===============================================================================================================================
 Func _IrrCheckCheckBox($h_CheckBox, $i_Checked)
 	DllCall($_irrDll, "none:cdecl", "IrrCheckCheckBox", "ptr", $h_CheckBox, "int", $i_Checked)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrCheckCheckBox
 
 
@@ -709,12 +621,10 @@ EndFunc   ;==>_IrrCheckCheckBox
 ; ===============================================================================================================================
 Func _IrrAddImage($h_Texture, $i_X, $i_Y, $i_UseAlpha, $i_ID, $h_Parent = 0)
 ; add an image object to the gui display
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddImage", "UINT_PTR", $h_Texture, "int", $i_X, "int", $i_Y, "int", $i_UseAlpha, "int", $i_ID, "ptr", $h_Parent)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddImage", "UINT_PTR", $h_Texture, "int", $i_X, "int", $i_Y, "int", $i_UseAlpha, "int", $i_ID, "ptr", $h_Parent)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddImage
 
 
@@ -738,14 +648,11 @@ EndFunc   ;==>_IrrAddImage
 ; ===============================================================================================================================
 Func _IrrAddFileOpen($s_Title, $i_ID, $i_Modal, $h_Parent = 0)
 ; open a modal file open dialog
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrAddFileOpen", "wstr", $s_Title, "int", $i_ID, "int", $i_Modal, "ptr", $h_Parent)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddFileOpen", "wstr", $s_Title, "int", $i_ID, "int", $i_Modal, "ptr", $h_Parent)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddFileOpen
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -767,10 +674,8 @@ EndFunc   ;==>_IrrAddFileOpen
 ; ===============================================================================================================================
 Func _IrrGetLastSelectedFile()
 ; get the last file name selected from a file selection dialog
-	$result = DllCall($_irrDll, "wstr:cdecl", "IrrGetLastSelectedFile")
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "wstr:cdecl", "IrrGetLastSelectedFile")
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetLastSelectedFile
