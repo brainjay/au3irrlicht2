@@ -106,26 +106,16 @@
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrStart($i_DeviceType = $IRR_EDT_DIRECT3D9, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel=$IRR_BITS_PER_PIXEL_32, $b_FullScreen=$IRR_WINDOWED, $b_Shadows=$IRR_NO_SHADOWS, $b_InputCapture=$IRR_IGNORE_EVENTS, $b_VSync=$IRR_VERTICAL_SYNC_OFF)
-
 	$_irrDll = DllOpen("IrrlichtWrapper.dll")
-	if $_irrDll = -1 Then ; .dll cannot be opened - try to get it by extending %path%:
+	If $_irrDll = -1 Then ; .dll cannot be opened - try to get it by extending %path%:
 		EnvSet("PATH", @ScriptDir & "\bin;" & @ScriptDir & "\..\bin;" & EnvGet("PATH"))
 		EnvUpdate()
-
 		$_irrDll = DllOpen("IrrlichtWrapper.dll")
-		if $_irrDll = -1 Then ; no chance, so return error:
-			Return Seterror(2,0,False)
-		EndIf
+		If $_irrDll = -1 Then Return Seterror(2, 0, False); no chance, so return error:
 	EndIf
-
 	DllCall($_irrDll, "none:cdecl", "IrrStart", "int", $i_DeviceType, "int", $i_ScreenWidth, "int", $i_ScreenHeight, "int", $i_BitsPerPixel, "uint", $b_FullScreen, "int", $b_Shadows, "int", $b_InputCapture, "int", $b_VSync)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrStart
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -180,28 +170,20 @@ EndFunc   ;==>_IrrStart
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrStartAdvanced($i_DeviceType=$IRR_EDT_DIRECT3D9, $i_ScreenWidth=800, $i_ScreenHeight=600, $i_BitsPerPixel=$IRR_BITS_PER_PIXEL_32, $b_FullScreen=$IRR_WINDOWED, $b_Shadows=$IRR_NO_SHADOWS, $b_InputCapture=$IRR_IGNORE_EVENTS, $b_VSync=$IRR_VERTICAL_SYNC_OFF, $i_TypeOfDevice=0, $b_DoublebufferEnabled=$IRR_OFF, $i_AntialiasEnabled=0, $b_HighPrecisionFpu=$IRR_OFF)
-
+	Local $aResult
 	$_irrDll = DllOpen("IrrlichtWrapper.dll")
-	if $_irrDll = -1 Then ; .dll cannot be opened - try to get it by extending %path%:
+	If $_irrDll = -1 Then ; .dll cannot be opened - try to get it by extending %path%:
 		EnvSet("PATH", @ScriptDir & "\bin;" & @ScriptDir & "\..\bin;" & EnvGet("PATH"))
 		EnvUpdate()
-
 		$_irrDll = DllOpen("IrrlichtWrapper.dll")
-		if $_irrDll = -1 Then ; no chance, so return error:
-			Return Seterror(2,0,False)
-		EndIf
+		If $_irrDll = -1 Then Return Seterror(2, 0, False) ; no chance, so return error:
 	EndIf
-
-	$result = DllCall($_irrDll, "uint:cdecl", "IrrStart", "int", $i_DeviceType, "int", $i_ScreenWidth, "int", $i_ScreenHeight, _
+	$aResult = DllCall($_irrDll, "uint:cdecl", "IrrStart", "int", $i_DeviceType, "int", $i_ScreenWidth, "int", $i_ScreenHeight, _
 			"int", $i_BitsPerPixel, "uint", $b_FullScreen, "uint", $b_Shadows, "uint", $b_InputCapture, "uint", $b_VSync, _
 			"uint", $i_TypeOfDevice, "uint", $b_DoublebufferEnabled, "uint", $i_AntialiasEnabled, "uint", $b_HighPrecisionFpu)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return $result[0]
-	EndIf
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrStartAdvanced
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -219,12 +201,10 @@ EndFunc   ;==>_IrrStartAdvanced
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrRunning()
-	$result = DllCall($_irrDll, "int:cdecl", "IrrRunning")
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrRunning")
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrRunning
 
 
@@ -247,11 +227,7 @@ EndFunc   ;==>_IrrRunning
 ; ===============================================================================================================================
 Func _IrrSetViewPort($i_TopX, $i_TopY, $i_BottomX, $i_BottomY)
 	DllCall($_irrDll, "none:cdecl", "IrrSetViewPort", "int", $i_TopX, "int", $i_TopY, "int", $i_BottomX, "int", $i_BottomY)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetViewPort
 
 
@@ -272,13 +248,8 @@ EndFunc   ;==>_IrrSetViewPort
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrBeginScene($i_Red, $i_Green, $i_Blue)
-; initialise the frame drawing cycle, erasing the canvas ready for drawing
 	DllCall($_irrDll, "none:cdecl", "IrrBeginScene", "int", $i_Red, "int", $i_Green, "int", $i_Blue)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrBeginScene
 
 
@@ -302,13 +273,8 @@ EndFunc   ;==>_IrrBeginScene
 ; ===============================================================================================================================
 Func _IrrBeginSceneAdvanced($i_SceneBGColor, $b_ClearBackBuffer = $IRR_ON, $b_ClearZBuffer = $IRR_ON)
 	DllCall($_irrDll, "none:cdecl", "IrrBeginSceneAdvanced", "UINT", $i_SceneBGColor, "byte", $b_ClearBackBuffer, "byte", $b_ClearZBuffer)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrBeginSceneAdvanced
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -327,11 +293,7 @@ EndFunc   ;==>_IrrBeginSceneAdvanced
 ; ===============================================================================================================================
 Func _IrrDrawScene()
 	DllCall($_irrDll, "none:cdecl", "IrrDrawScene")
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrDrawScene
 
 
@@ -348,20 +310,14 @@ EndFunc   ;==>_IrrDrawScene
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Related .......: _IrrCreateRenderTargetTexture
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrDrawSceneToTexture($h_RenderTargetTexture)
-;use IrrCreateRenderTargetTexture to get $h_RenderTargetTexture
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrDrawSceneToTexture", "ptr", $h_RenderTargetTexture)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+    DllCall($_irrDll, "none:cdecl", "IrrDrawSceneToTexture", "ptr", $h_RenderTargetTexture)
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrDrawSceneToTexture
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -385,13 +341,8 @@ Func _IrrSetRenderTarget($h_Texture, $i_SceneBGColor = 0, $b_ClearBackBuffer = $
 ; Sets a texture as a render target, or sets the device if the pointer is 0.
 	DllCall($_irrDll, "none:cdecl", "IrrSetRenderTarget", "ptr", $h_Texture, "uint", $i_SceneBGColor, _
 			"byte", $b_ClearBackBuffer, "byte", $b_ClearZBuffer)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetRenderTarget
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -410,11 +361,7 @@ EndFunc   ;==>_IrrSetRenderTarget
 ; ===============================================================================================================================
 Func _IrrDrawGUI()
 	DllCall($_irrDll, "none:cdecl", "IrrDrawGUI")
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrDrawGUI
 
 
@@ -434,11 +381,7 @@ EndFunc   ;==>_IrrDrawGUI
 ; ===============================================================================================================================
 Func _IrrEndScene()
 	DllCall($_irrDll, "none:cdecl", "IrrEndScene")
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrEndScene
 
 
@@ -457,14 +400,10 @@ EndFunc   ;==>_IrrEndScene
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrStop()
-
 	DllCall($_irrDll, "none:cdecl", "IrrStop")
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		DllClose($_irrDll)
-		Return true
-	EndIf
+	If @error Then Return Seterror(1, 0, False)
+	DllClose($_irrDll)
+	Return Seterror(0, 0, True)
 EndFunc   ;==>_IrrStop
 
 
@@ -487,11 +426,7 @@ EndFunc   ;==>_IrrStop
 ; ===============================================================================================================================
 Func _IrrTransparentZWrite()
 	DllCall($_irrDll, "none:cdecl", "IrrTransparentZWrite")
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrTransparentZWrite
 
 
@@ -513,12 +448,10 @@ EndFunc   ;==>_IrrTransparentZWrite
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetFPS()
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGetFPS")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrGetFPS")
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetFPS
 
 
@@ -540,12 +473,10 @@ EndFunc   ;==>_IrrGetFPS
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetPrimitivesDrawn()
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGetPrimitivesDrawn")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrGetPrimitivesDrawn")
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetPrimitivesDrawn
 
 
@@ -565,18 +496,13 @@ EndFunc   ;==>_IrrGetPrimitivesDrawn
 ; ===============================================================================================================================
 Func _IrrSetWindowCaption($s_Caption)
 	DllCall($_irrDll, "none:cdecl", "IrrSetWindowCaption", "wstr", $s_Caption)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetWindowCaption
-
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrIsFullscreen
-; Description ...: [todo]
+; Description ...: Checks if the Irrlicht window is running in fullscreen mode.
 ; Syntax.........: _IrrIsFullscreen()
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
@@ -592,19 +518,16 @@ EndFunc   ;==>_IrrSetWindowCaption
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrIsFullscreen()
-; Checks if the Irrlicht window is running in fullscreen mode.
-	$result = DllCall($_irrDll, "int:cdecl", "IrrIsFullscreen")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrIsFullscreen")
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrIsFullscreen
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrIsWindowActive
-; Description ...: [todo]
+; Description ...: Check if the window is active.
 ; Syntax.........: _IrrIsWindowActive()
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
@@ -620,19 +543,16 @@ EndFunc   ;==>_IrrIsFullscreen
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrIsWindowActive()
-; Returns if the window is active.
-	$result = DllCall($_irrDll, "int:cdecl", "IrrIsWindowActive")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrIsWindowActive")
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrIsWindowActive
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrIsWindowFocused
-; Description ...: [todo]
+; Description ...: Checks if the Irrlicht window has focus.
 ; Syntax.........: _IrrIsWindowFocused()
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
@@ -648,19 +568,16 @@ EndFunc   ;==>_IrrIsWindowActive
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrIsWindowFocused()
-; Checks if the Irrlicht window has focus.
-	$result = DllCall($_irrDll, "int:cdecl", "IrrIsWindowFocused")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrIsWindowFocused")
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrIsWindowFocused
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrIsWindowMinimized
-; Description ...: [todo]
+; Description ...: Checks if the Irrlicht window is minimized.
 ; Syntax.........: _IrrIsWindowMinimized()
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
@@ -676,19 +593,16 @@ EndFunc   ;==>_IrrIsWindowFocused
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrIsWindowMinimized()
-; Checks if the Irrlicht window is minimized.
-	$result = DllCall($_irrDll, "int:cdecl", "IrrIsWindowMinimized")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrIsWindowMinimized")
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrIsWindowMinimized
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetScreenSize
-; Description ...: [todo]
+; Description ...: Get the screen size.
 ; Syntax.........: _IrrGetScreenSize(ByRef $i_Width, ByRef $i_Height)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
@@ -704,21 +618,18 @@ EndFunc   ;==>_IrrIsWindowMinimized
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetScreenSize(ByRef $i_Width, ByRef $i_Height)
-; Gets the screen size.
-	$result = DllCall($_irrDll, "none:cdecl", "IrrGetScreenSize", "int*", $i_Width, "int*", $i_Height)
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		$i_Width = $result[1]
-		$i_Height = $result[2]
-		Return true
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "none:cdecl", "IrrGetScreenSize", "int*", $i_Width, "int*", $i_Height)
+	If @error Then Return Seterror(1, 0, False)
+	$i_Width = $aResult[1]
+	$i_Height = $aResult[2]
+	Return Seterror(0, 0, True)
 EndFunc   ;==>_IrrGetScreenSize
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMaximizeWindow
-; Description ...: [todo]
+; Description ...: Maximizes the window if possible.
 ; Syntax.........: _IrrMaximizeWindow()
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
@@ -734,19 +645,14 @@ EndFunc   ;==>_IrrGetScreenSize
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrMaximizeWindow()
-; Maximizes the window if possible.
-	$result = DllCall($_irrDll, "none:cdecl", "IrrMaximizeWindow")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return true
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrMaximizeWindow")
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrMaximizeWindow
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMinimizeWindow
-; Description ...: [todo]
+; Description ...: Minimizes the window if possible.
 ; Syntax.........: _IrrMinimizeWindow()
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
@@ -762,19 +668,14 @@ EndFunc   ;==>_IrrMaximizeWindow
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrMinimizeWindow()
-; Minimizes the window if possible.
-	$result = DllCall($_irrDll, "none:cdecl", "IrrMinimizeWindow")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return true
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrMinimizeWindow")
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrMinimizeWindow
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrRestoreWindow
-; Description ...: [todo]
+; Description ...: Restore the window to normal size if possible.
 ; Syntax.........: _IrrRestoreWindow()
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
@@ -790,19 +691,14 @@ EndFunc   ;==>_IrrMinimizeWindow
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrRestoreWindow()
-; Restore the window to normal size if possible.
-	$result = DllCall($_irrDll, "none:cdecl", "IrrRestoreWindow")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return true
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrRestoreWindow")
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrRestoreWindow
 
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetResizableWindow
-; Description ...: [todo]
+; Description ...: Make the window resizable.
 ; Syntax.........: _IrrSetResizableWindow($i_Resizable)
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
@@ -818,15 +714,9 @@ EndFunc   ;==>_IrrRestoreWindow
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrSetResizableWindow($i_Resizable)
-; Make the window resizable.
-	$result = DllCall($_irrDll, "none:cdecl", "IrrSetResizableWindow")
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return true
-	EndIf
+    DllCall($_irrDll, "none:cdecl", "IrrSetResizableWindow")
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetResizableWindow
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -844,7 +734,7 @@ EndFunc   ;==>_IrrSetResizableWindow
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrMakeARGB($i_Alpha, $i_Red, $i_Green, $i_Blue)
-	return int( ( "0x" & Hex($i_Alpha, 2) & Hex($i_Red, 2) & Hex($i_Green, 2) & Hex($i_Blue, 2) ) )
+	Return int( ( "0x" & Hex($i_Alpha, 2) & Hex($i_Red, 2) & Hex($i_Green, 2) & Hex($i_Blue, 2) ) )
 EndFunc   ;==>_IrrMakeARGB
 
 
@@ -866,12 +756,10 @@ EndFunc   ;==>_IrrMakeARGB
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrQueryFeature($i_Feature)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrQueryFeature", "int", $i_Feature)
-		if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrQueryFeature", "int", $i_Feature)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrQueryFeature
 
 
@@ -893,12 +781,8 @@ EndFunc   ;==>_IrrQueryFeature
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrDisableFeature($i_Feature, $i_Flag)
-	DllCall($_irrDll, "int:cdecl", "IrrDisableFeature", "int", $i_Feature, "int", $i_Flag)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrDisableFeature", "int", $i_Feature, "int", $i_Flag)
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrDisableFeature
 
 
@@ -920,8 +804,10 @@ EndFunc   ;==>_IrrDisableFeature
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrGetTime()
-	$result = DllCall($_irrDll, "int:cdecl", "IrrGetTime")
-	Return $result[0]
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrGetTime")
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetTime
 
 
@@ -944,11 +830,7 @@ EndFunc   ;==>_IrrGetTime
 ; ===============================================================================================================================
 Func _IrrSetTime($i_Time)
 	DllCall($_irrDll, "none:cdecl", "IrrSetTime", "int", $i_Time)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetTime
 
 
@@ -1030,7 +912,6 @@ EndFunc ;==>__GetVertStruct
 Func __SetVertStruct(ByRef $tVertex, $iVertex, $vMember, $vData)
     Local $iSize = DllStructGetSize(DllStructCreate($tagIRR_VERTEX))
     DllStructSetData(DllStructCreate($tagIRR_VERTEX, DllStructGetPtr($tVertex) + $iSize*$iVertex), $vMember, $vData)
-
 EndFunc ;==>__SetVertStruct
 
 
@@ -1052,7 +933,6 @@ Func __CreateVectStruct($iVect)
     Local $iSize = DllStructGetSize(DllStructCreate($tagIRR_VECTOR))
     Return DllStructCreate("byte[" & $iSize * $iVect & "]")
 EndFunc ;==>__CreateVectStruct
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -1100,5 +980,3 @@ Func __SetVectStruct(ByRef $tVector, $iVector, $fX, $fY, $fZ)
 	DllStructSetData(DllStructCreate($tagIRR_VECTOR, DllStructGetPtr($tVector) + $iSize*$iVector), $VECT_Y, $fY)
 	DllStructSetData(DllStructCreate($tagIRR_VECTOR, DllStructGetPtr($tVector) + $iSize*$iVector), $VECT_Z, $fZ)
 EndFunc ;==>__SetVectStruct
-
-

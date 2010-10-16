@@ -22,6 +22,7 @@
 + Fixed/Added: _IrrGetSphericalTerrainSurfacePositionAndAngle
 + Fixed/Added: _IrrGetSphericalTerrainLogicalSurfacePosition
 + Fixed/Added: _IrrGetSphericalTerrainSurfacePosition
+- Tidy: au3Irr2_System.au3 error return
 - Tidy: au3Irr2_Particles.au3 error return
 - Tidy: au3Irr2_Materials.au3 error return
 - Tidy: au3Irr2_GUI.au3 error return
@@ -66,9 +67,7 @@
 > Other:
 
 + Added: Tools\FontTool.exe (used for creating bmp fonts, comes from IrrLicht 1.7.1 sdk) 
-- Changed: global $result used in UDF files switched to local variables 
-  (WIP, finished for 2D, Scene, Camera, Animation, Node, Terrain, Lighting, FilingSystem, 
-  KeyboardMouse, Collision, GUI, Materials, Particles) 
+- Changed: global $result is no longer used and has been removed from au3Irr2_Constants.au3
 
 
 === 2.04 (2010-10-09) ==========================================================
