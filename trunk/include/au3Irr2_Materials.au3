@@ -83,11 +83,7 @@
 ; ===============================================================================================================================
 Func _IrrSetNodeAmbientColor($h_Node, $i_Color)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeAmbientColor", "ptr", $h_Node, "uint", $i_Color)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNodeAmbientColor
 
 
@@ -110,11 +106,7 @@ EndFunc   ;==>_IrrSetNodeAmbientColor
 ; ===============================================================================================================================
 Func _IrrSetNodeDiffuseColor($h_Node, $i_Color)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeDiffuseColor", "ptr", $h_Node, "uint", $i_Color)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNodeDiffuseColor
 
 
@@ -137,11 +129,7 @@ EndFunc   ;==>_IrrSetNodeDiffuseColor
 ; ===============================================================================================================================
 Func _IrrSetNodeSpecularColor($h_Node, $i_Color)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeSpecularColor", "ptr", $h_Node, "uint", $i_Color)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNodeSpecularColor
 
 
@@ -164,11 +152,7 @@ EndFunc   ;==>_IrrSetNodeSpecularColor
 ; ===============================================================================================================================
 Func _IrrSetNodeEmissiveColor($h_Node, $i_Color)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeEmissiveColor", "ptr", $h_Node, "uint", $i_Color)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNodeEmissiveColor
 
 
@@ -193,11 +177,7 @@ EndFunc   ;==>_IrrSetNodeEmissiveColor
 Func _IrrSetNodeColorByVertex($h_Node, $i_ColorMaterial)
 ; Set whether vertex color or material color is used to shade the surface of a node
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeColorByVertex", "ptr", $h_Node, "uint", $i_ColorMaterial)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNodeColorByVertex
 
 
@@ -222,11 +202,7 @@ EndFunc   ;==>_IrrSetNodeColorByVertex
 ; ===============================================================================================================================
 Func _IrrMaterialVertexColorAffects($h_Material, $i_AffectedProperty)
 	DllCall($_irrDll, "none:cdecl", "IrrMaterialVertexColorAffects", "ptr", $h_Material, "int", $i_AffectedProperty)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrMaterialVertexColorAffects
 
 
@@ -249,11 +225,7 @@ EndFunc   ;==>_IrrMaterialVertexColorAffects
 ; ===============================================================================================================================
 Func _IrrSetMaterialBlend($h_Material, $i_SrcBlend, $i_DstBlend)
 	DllCall($_irrDll, "none:cdecl", "IrrSetMaterialBlend", "ptr", $h_Material, "int", $i_SrcBlend, "int", $i_DstBlend)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetMaterialBlend
 
 
@@ -276,11 +248,7 @@ EndFunc   ;==>_IrrSetMaterialBlend
 ; ===============================================================================================================================
 Func _IrrMaterialSetShininess($h_Material, $f_Shininess)
 	DllCall($_irrDll, "none:cdecl", "IrrMaterialSetShininess", "ptr", $h_Material, "float", $f_Shininess)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrMaterialSetShininess
 
 
@@ -303,11 +271,7 @@ EndFunc   ;==>_IrrMaterialSetShininess
 ; ===============================================================================================================================
 Func _IrrMaterialSetSpecularColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
 	DllCall($_irrDll, "none:cdecl", "IrrMaterialSetSpecularColor", "ptr", $h_Material, "uint", $i_Alpha, "uint", $i_Red, "uint", $i_Green, "uint", $i_Blue)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrMaterialSetSpecularColor
 
 
@@ -330,11 +294,7 @@ EndFunc   ;==>_IrrMaterialSetSpecularColor
 ; ===============================================================================================================================
 Func _IrrMaterialSetDiffuseColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
 	DllCall($_irrDll, "none:cdecl", "IrrMaterialSetDiffuseColor", "ptr", $h_Material, "uint", $i_Alpha, "uint", $i_Red, "uint", $i_Green, "uint", $i_Blue)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrMaterialSetDiffuseColor
 
 
@@ -357,11 +317,7 @@ EndFunc   ;==>_IrrMaterialSetDiffuseColor
 ; ===============================================================================================================================
 Func _IrrMaterialSetAmbientColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
 	DllCall($_irrDll, "none:cdecl", "IrrMaterialSetAmbientColor", "ptr", $h_Material, "uint", $i_Alpha, "uint", $i_Red, "uint", $i_Green, "uint", $i_Blue)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrMaterialSetAmbientColor
 
 
@@ -384,11 +340,7 @@ EndFunc   ;==>_IrrMaterialSetAmbientColor
 ; ===============================================================================================================================
 Func _IrrMaterialSetEmissiveColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
 	DllCall($_irrDll, "none:cdecl", "IrrMaterialSetEmissiveColor", "ptr", $h_Material, "uint", $i_Alpha, "uint", $i_Red, "uint", $i_Green, "uint", $i_Blue)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrMaterialSetEmissiveColor
 
 
@@ -411,11 +363,7 @@ EndFunc   ;==>_IrrMaterialSetEmissiveColor
 ; ===============================================================================================================================
 Func _IrrMaterialSetMaterialTypeParam($h_Material, $f_Param)
 	DllCall($_irrDll, "none:cdecl", "IrrMaterialSetMaterialTypeParam", "ptr", $h_Material, "float", $f_Param)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrMaterialSetMaterialTypeParam
 
 
@@ -438,11 +386,7 @@ EndFunc   ;==>_IrrMaterialSetMaterialTypeParam
 ; ===============================================================================================================================
 Func _IrrSetMaterialLineThickness($h_Material, $f_Thickness)
 	DllCall($_irrDll, "none:cdecl", "IrrSetMaterialLineThickness", "ptr", $h_Material, "float", $f_Thickness)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetMaterialLineThickness
 
 
@@ -464,12 +408,10 @@ EndFunc   ;==>_IrrSetMaterialLineThickness
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddHighLevelShaderMaterial($h_VertexProgram, $s_StartFunction, $i_ProgType, $s_pixelProg, $s_PixelStartFunction, $i_PixelProgTpe, $i_MaterialType);IrrAddHighLevelShaderMaterial
-	$result = DllCall($_irrDll, "int:cdecl", "IrrAddHighLevelShaderMaterial", "ptr", $h_VertexProgram, "str", $s_StartFunction, "int", $i_ProgType, "str", $s_pixelProg, "str", $s_PixelStartFunction, "int", $i_PixelProgTpe, "int", $i_MaterialType)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrAddHighLevelShaderMaterial", "ptr", $h_VertexProgram, "str", $s_StartFunction, "int", $i_ProgType, "str", $s_pixelProg, "str", $s_PixelStartFunction, "int", $i_PixelProgTpe, "int", $i_MaterialType)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 	;potentially screwed up
 EndFunc   ;==>_IrrAddHighLevelShaderMaterial
 
@@ -492,12 +434,10 @@ EndFunc   ;==>_IrrAddHighLevelShaderMaterial
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddHighLevelShaderMaterialFromFiles($s_VertexProgram, $s_StartFunction, $i_ProgType, $s_pixelProg, $s_PixelStartFunction, $i_PixelProgTpe, $i_MaterialType);IrrAddHighLevelShaderMaterial
-	$result = DllCall($_irrDll, "int:cdecl", "IrrAddHighLevelShaderMaterialFromFiles", "str", $s_VertexProgram, "str", $s_StartFunction, "int", $i_ProgType, "str", $s_pixelProg, "str", $s_PixelStartFunction, "int", $i_PixelProgTpe, "int", $i_MaterialType)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrAddHighLevelShaderMaterialFromFiles", "str", $s_VertexProgram, "str", $s_StartFunction, "int", $i_ProgType, "str", $s_pixelProg, "str", $s_PixelStartFunction, "int", $i_PixelProgTpe, "int", $i_MaterialType)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 	;potentially screwed up
 EndFunc   ;==>_IrrAddHighLevelShaderMaterialFromFiles
 
@@ -520,12 +460,10 @@ EndFunc   ;==>_IrrAddHighLevelShaderMaterialFromFiles
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddShaderMaterial($h_VertexProgram, $h_PixelProgram, $i_MaterialType)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrAddShaderMaterial", "ptr", $h_VertexProgram, "ptr", $h_PixelProgram, "int", $i_MaterialType)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrAddShaderMaterial", "ptr", $h_VertexProgram, "ptr", $h_PixelProgram, "int", $i_MaterialType)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddShaderMaterial
 
 
@@ -547,12 +485,10 @@ EndFunc   ;==>_IrrAddShaderMaterial
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddShaderMaterialFromFiles($s_VertexProgram, $s_PixelProgram, $i_MaterialType)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrAddShaderMaterialFromFiles", "str", $s_VertexProgram, "str", $s_PixelProgram, "int", $i_MaterialType)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrAddShaderMaterialFromFiles", "str", $s_VertexProgram, "str", $s_PixelProgram, "int", $i_MaterialType)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddShaderMaterialFromFiles
 
 
@@ -574,12 +510,10 @@ EndFunc   ;==>_IrrAddShaderMaterialFromFiles
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrCreateNamedVertexShaderConstant($s_VertexProgram, $s_PixelProgram, $i_MaterialType)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrCreateNamedVertexShaderConstant", "str", $s_VertexProgram, "str", $s_PixelProgram, "int", $i_MaterialType)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrCreateNamedVertexShaderConstant", "str", $s_VertexProgram, "str", $s_PixelProgram, "int", $i_MaterialType)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrCreateNamedVertexShaderConstant
 
 
@@ -601,12 +535,10 @@ EndFunc   ;==>_IrrCreateNamedVertexShaderConstant
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrCreateNamedPixelShaderConstant($h_Shader, $s_Name, $i_Preset, $i_Data, $i_Count)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrCreateNamedPixelShaderConstant", "ptr", $h_Shader, "str", $s_Name, "int", $i_Preset, "int", $i_Data, "int", $i_Count)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrCreateNamedPixelShaderConstant", "ptr", $h_Shader, "str", $s_Name, "int", $i_Preset, "int", $i_Data, "int", $i_Count)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrCreateNamedPixelShaderConstant
 
 
@@ -628,12 +560,10 @@ EndFunc   ;==>_IrrCreateNamedPixelShaderConstant
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrCreateAddressedVertexShaderConstant($h_Shader, $i_Address, $i_Preset, $i_Data, $i_Count)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrCreateAddressedVertexShaderConstant", "ptr", $h_Shader, "int", $i_Address, "int", $i_Preset, "int", $i_Data, "int", $i_Count)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrCreateAddressedVertexShaderConstant", "ptr", $h_Shader, "int", $i_Address, "int", $i_Preset, "int", $i_Data, "int", $i_Count)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrCreateAddressedVertexShaderConstant
 
 
@@ -655,12 +585,10 @@ EndFunc   ;==>_IrrCreateAddressedVertexShaderConstant
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrCreateAddressedPixelShaderConstant($h_Shader, $i_Address, $i_Preset, $i_Data, $i_Count)
-	$result = DllCall($_irrDll, "int:cdecl", "IrrCreateAddressedPixelShaderConstant", "ptr", $h_Shader, "int", $i_Address, "int", $i_Preset, "int", $i_Data, "int", $i_Count)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		Return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrCreateAddressedPixelShaderConstant", "ptr", $h_Shader, "int", $i_Address, "int", $i_Preset, "int", $i_Data, "int", $i_Count)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrCreateAddressedPixelShaderConstant
 
 
@@ -685,14 +613,10 @@ EndFunc   ;==>_IrrCreateAddressedPixelShaderConstant
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
-Func _IrrXEffectsStart($i_Vsm=$IRR_OFF, $i_SoftShadows=$IRR_OFF, $iBitdepth32=$IRR_OFF)
+Func _IrrXEffectsStart($i_Vsm = $IRR_OFF, $i_SoftShadows = $IRR_OFF, $iBitdepth32 = $IRR_OFF)
 ; start the XEffects system
-	$result = DllCall($_irrDll, "none:cdecl", "IrrXEffectsStart", "int", $i_Vsm, "int", $i_SoftShadows, "int", $iBitdepth32)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrXEffectsStart", "int", $i_Vsm, "int", $i_SoftShadows, "int", $iBitdepth32)
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrXEffectsStart
 
 
@@ -715,12 +639,10 @@ EndFunc   ;==>_IrrXEffectsStart
 ; ===============================================================================================================================
 Func _IrrXEffectsAddShadowToNode($h_Node, $i_FilterType=$EFT_NONE, $i_shadowType=$ESM_BOTH)
 ; start the XEffects system
-	$result = DllCall($_irrDll, "ptr:cdecl", "IrrXEffectsAddShadowToNode", "ptr", $h_Node, "int", $i_FilterType, "int", $i_shadowType)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return $result[0]
-	EndIf
+	Local $aResult
+	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrXEffectsAddShadowToNode", "ptr", $h_Node, "int", $i_FilterType, "int", $i_shadowType)
+	If @error Then Return Seterror(1, 0, False)
+	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrXEffectsAddShadowToNode
 
 
@@ -754,16 +676,12 @@ Func _IrrXEffectsAddShadowLight($i_ShadowDimen, $f_PosX, $f_PosY, $f_PosZ, $f_Ta
 ; a spot light, the field of view will determine its area of influence. Anything that
 ; is outside of a lights frustum (Too close, too far, or outside of it's field of view)
 ; will be unlit by this particular light, similar to how a spot light works.
-	$result = DllCall($_irrDll, "none:cdecl", "IrrXEffectsAddShadowLight", "int", $i_ShadowDimen, _
+	DllCall($_irrDll, "none:cdecl", "IrrXEffectsAddShadowLight", "int", $i_ShadowDimen, _
 					"float", $f_PosX, "float", $f_PosY, "float", $f_PosZ, _
 					"float", $f_TargetX, "float", $f_TargetY, "float", $f_TargetZ, _
 					"float", $f_R, "float", $f_G, "float", $f_B, "float", $f_Alpha, _
 					"float", $f_LightNearDist, "float", $f_LightFarDist, "float", $f_AngleDegrees )
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrXEffectsAddShadowLight
 
 
@@ -786,12 +704,8 @@ EndFunc   ;==>_IrrXEffectsAddShadowLight
 ; ===============================================================================================================================
 Func _IrrXEffectsSetAmbientColor($i_R, $i_G, $i_B, $i_Alpha)
 ; sets the ambient lighting procuded in the scene by the XEffects system
-	$result = DllCall($_irrDll, "none:cdecl", "IrrXEffectsSetAmbientColor", "uint", $i_R, "uint", $i_G, "uint", $i_B, "uint", $i_Alpha)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrXEffectsSetAmbientColor", "uint", $i_R, "uint", $i_G, "uint", $i_B, "uint", $i_Alpha)
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrXEffectsSetAmbientColor
 
 
@@ -815,12 +729,8 @@ EndFunc   ;==>_IrrXEffectsSetAmbientColor
 Func _IrrXEffectsSetClearColor($i_R, $i_G, $i_B, $i_Alpha)
 ; the XEffects system uses a different background color to the one specified in
 ; the IrrBeginScene call use this call to set this default background color
-	$result = DllCall($_irrDll, "none:cdecl", "IrrXEffectsSetClearColor", "float", $i_R, "uint", $i_G, "uint", $i_B, "uint", $i_Alpha)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrXEffectsSetClearColor", "float", $i_R, "uint", $i_G, "uint", $i_B, "uint", $i_Alpha)
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrXEffectsSetClearColor
 
 
@@ -844,13 +754,9 @@ EndFunc   ;==>_IrrXEffectsSetClearColor
 Func _IrrXEffectsSetShadowLightPosition($i_Index, $f_PosX, $f_PosY, $f_PosZ)
 ; Set the position of a shadow light. the index refers to the numerical order
 ; in which the lights were added.
-	$result = DllCall($_irrDll, "none:cdecl", "IrrXEffectsSetShadowLightPosition", "int", $i_Index, _
+	DllCall($_irrDll, "none:cdecl", "IrrXEffectsSetShadowLightPosition", "int", $i_Index, _
 				"float", $f_PosX, "float", $f_PosY, "float", $f_PosZ)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrXEffectsSetShadowLightPosition
 
 
@@ -873,12 +779,8 @@ EndFunc   ;==>_IrrXEffectsSetShadowLightPosition
 ; ===============================================================================================================================
 Func _IrrXEffectsEnableDepthPass($i_Enable)
 ; enable XEffects depth pass
-	$result = DllCall($_irrDll, "none:cdecl", "IrrXEffectsEnableDepthPass", "int", $i_Enable)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrXEffectsEnableDepthPass", "int", $i_Enable)
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrXEffectsEnableDepthPass
 
 
@@ -901,12 +803,8 @@ EndFunc   ;==>_IrrXEffectsEnableDepthPass
 ; ===============================================================================================================================
 Func _IrrXEffectsAddPostProcessingFromFile($s_Name, $i_Enable=0)
 ; enable XEffects depth pass
-	$result = DllCall($_irrDll, "none:cdecl", "IrrXEffectsAddPostProcessingFromFile", "str", $s_Name, "int", $i_Enable)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrXEffectsAddPostProcessingFromFile", "str", $s_Name, "int", $i_Enable)
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrXEffectsAddPostProcessingFromFile
 
 
@@ -929,12 +827,8 @@ EndFunc   ;==>_IrrXEffectsAddPostProcessingFromFile
 ; ===============================================================================================================================
 Func _IrrXEffectsAddNodeToDepthPass($h_Node)
 ; adds a node to the list of nodes used for calculating the depth pass
-	$result = DllCall($_irrDll, "none:cdecl", "IrrXEffectsAddNodeToDepthPass", "ptr", $h_Node)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrXEffectsAddNodeToDepthPass", "ptr", $h_Node)
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrXEffectsAddNodeToDepthPass
 
 
@@ -959,12 +853,8 @@ Func _IrrXEffectsSetPostProcessingUserTexture($h_Texture)
 ; Sets the user defined post processing texture. This is used internally for
 ; the SSAO shader but is used primarily for the water shader where it defines
 ; the specular surface pattern of the water.
-	$result = DllCall($_irrDll, "none:cdecl", "IrrXEffectsSetPostProcessingUserTexture", "ptr", $h_Texture)
-	if @error Then
-		Return Seterror(1,0,False)
-	Else
-		return True
-	EndIf
+	DllCall($_irrDll, "none:cdecl", "IrrXEffectsSetPostProcessingUserTexture", "ptr", $h_Texture)
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrXEffectsSetPostProcessingUserTexture
 
 
