@@ -18,7 +18,6 @@
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
 ;_IrrAddSphereSceneMesh
-;_IrrGetMeshFrameCount
 ;_IrrGetMeshBufferCount
 ;_IrrSetMeshVertexColors
 ;_IrrSetMeshVertexCoords
@@ -26,7 +25,6 @@
 ;_IrrAddEmptySceneNode
 ;_IrrSetZoneManagerAttachTerrain
 ;_IrrGetGrassDrawCount
-;_IrrSetFlareScale
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
@@ -38,6 +36,7 @@
 ;_IrrRemoveMesh
 ;_IrrClearUnusedMeshes
 ;_IrrSetMeshHardwareAccelerated
+;_IrrGetMeshFrameCount
 ;_IrrGetMeshIndexCount
 ;_IrrGetMeshIndices
 ;_IrrSetMeshIndices
@@ -75,6 +74,7 @@
 ;_IrrSetZoneManagerBoundingBox
 ;_IrrSetGrassDensity
 ;_IrrSetGrassWind
+;_IrrSetFlareScale
 ;_IrrCreateBatchingMesh
 ;_IrrAddToBatchingMesh
 ;_IrrFinalizeBatchingMesh
@@ -161,7 +161,6 @@ Func _IrrGetMesh($s_MeshFile)
 EndFunc   ;==>_IrrGetMesh
 
 
-
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrCreateMesh
 ; Description ...: Create a new mesh from lists of vertices and indices.
@@ -201,8 +200,6 @@ Func _IrrCreateMesh($s_MeshName, $tVertexArray, $a_Indices)
 EndFunc   ;==>_IrrCreateMesh
 
 
-
-
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddSphereSceneMesh
 ; Description ...: [todo]
@@ -226,7 +223,6 @@ Func _IrrAddSphereSceneMesh($s_MeshName, $f_Radius, $i_PolyCount)
 	If @error Then Return SetError(1, 0, False)
 	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddSphereSceneMesh
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -364,8 +360,7 @@ Func _IrrSetMeshHardwareAccelerated($h_Mesh, $i_frame = 0)
 EndFunc   ;==>_IrrSetMeshHardwareAccelerated
 
 
-
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetMeshFrameCount
 ; Description ...: Gets the number of frames in the supplied mesh.
 ; Syntax.........: _IrrGetMeshFrameCount($h_Mesh)
@@ -376,9 +371,9 @@ EndFunc   ;==>_IrrSetMeshHardwareAccelerated
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: You can use this value to traverse the indicies and vertices in a mesh containing a number of frames.
-; Related .......: [todo: functionName, functionName]
+; Related .......: _IrrGetMesh
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetMeshFrameCount($h_Mesh)
 	Local $aResult
@@ -435,7 +430,6 @@ Func _IrrGetMeshIndexCount($h_Mesh, $i_frame, $i_MeshBuffer = 0)
 	If @error Then Return SetError(1, 0, False)
 	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrGetMeshIndexCount
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -653,9 +647,6 @@ Func _IrrSetMeshVertexSingleColor($h_Mesh, $i_FrameNumber, $h_VertexColourStruct
 EndFunc   ;==>_IrrSetMeshVertexSingleColor
 
 
-
-
-
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddMeshToScene
 ; Description ...: Adds a mesh to the scene as a new 3D node.
@@ -798,7 +789,6 @@ Func _IrrGetSceneNodeFromId($i_ID)
 EndFunc   ;==>_IrrGetSceneNodeFromId
 
 
-
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetSceneNodeFromName
 ; Description ...: [todo]
@@ -850,7 +840,6 @@ Func _IrrAddBillBoardToScene($f_XSize, $f_YSize, $f_XPos = 0.0, $f_YPos = 0.0, $
 EndFunc   ;==>_IrrAddBillBoardToScene
 
 
-
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetBillBoardSize
 ; Description ...: [todo]
@@ -872,7 +861,6 @@ Func _IrrSetBillBoardSize($h_Node, $f_Width, $f_Height)
 	DllCall($_irrDll, "none:cdecl", "IrrSetBillBoardSize", "ptr", $h_Node, "float", $f_Width, "float", $f_Height)
 	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetBillBoardSize
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -900,7 +888,6 @@ Func _IrrAddBillboardTextSceneNode($h_Font, $s_Text, $f_XSize, $f_YSize, $f_XPos
 	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
 	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddBillboardTextSceneNode
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -1078,7 +1065,6 @@ Func _IrrAddSphereSceneNode($f_Size, $i_PolyCount = 16)
 	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
 	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddSphereSceneNode
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -1532,7 +1518,7 @@ Func _IrrGetGrassDrawCount($h_Grass)
 EndFunc   ;==>_IrrGetGrassDrawCount
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetFlareScale
 ; Description ...: Sets the scale of optics in the scene.
 ; Syntax.........: _IrrSetFlareScale($h_Flare, $f_Source, $f_Optics)
@@ -1552,8 +1538,6 @@ Func _IrrSetFlareScale($h_Flare, $f_Source, $f_Optics)
 	DllCall($_irrDll, "none:cdecl", "IrrSetFlareScale", "ptr", $h_Flare, "float", $f_Source, "float", $f_Optics)
 	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetFlareScale
-
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -1636,7 +1620,6 @@ Func _IrrFinalizeBatchingMesh($h_meshBatch)
 EndFunc   ;==>_IrrFinalizeBatchingMesh
 
 
-
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetMeshMaterialTexture
 ; Description ...: [todo]
@@ -1660,28 +1643,31 @@ Func _IrrSetMeshMaterialTexture($h_Mesh, $h_Texture, $i_index, $i_buffer = 0)
 EndFunc   ;==>_IrrSetMeshMaterialTexture
 
 
-
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrScaleMesh
-; Description ...: [todo]
+; Description ...: Scales the verticies in a mesh without affecting the normals, tangents or texture co-ordinates.
 ; Syntax.........: _IrrScaleMesh($h_mesh, $f_scale, $i_frame = 0, $i_meshBuffer = 0, $h_sourceMesh = 0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_mesh - Handle to mesh object.
+;                  $f_scale - Scale size ( > 1.0 scale bigger, < 1.0 scale smaller)
+;                  $i_frame - Default 0
+;                  $i_meshBuffer - Default 0
+;                  $h_sourceMesh - Default 0
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: This is particularly useful for enlarging a mesh without affecting lighting.
+;                  It should be noted though that scaling the mesh will scale all of the nodes that use it as their source.
+;                  The scaling is applied uniformly to all axis.
+; Related .......: _IrrGetMesh
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrScaleMesh($h_Mesh, $f_scale, $i_frame = 0, $i_MeshBuffer = 0, $h_sourceMesh = 0)
 	DllCall($_irrDll, "none:cdecl", "IrrScaleMesh", "ptr", $h_Mesh, "float", $f_scale, "int", $i_frame, "int", $i_MeshBuffer, "ptr", $h_sourceMesh)
 	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrScaleMesh
+
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddBeamSceneNode
@@ -1704,7 +1690,6 @@ Func _IrrAddBeamSceneNode()
 	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
 	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddBeamSceneNode
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -1810,8 +1795,6 @@ Func _IrrSetBoltProperties($h_BoltNode, $f_SX, $f_SY, $f_SZ, $f_EX, $f_EY, $f_EZ
 EndFunc   ;==>_IrrSetBoltProperties
 
 
-
-
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetBillBoardColor
 ; Description ...: [todo]
@@ -1833,8 +1816,6 @@ Func _IrrSetBillBoardColor($h_Node, $i_TopColor, $i_BottomColor)
 	DllCall($_irrDll, "none:cdecl", "IrrSetBillBoardColor", "ptr", $h_Node, "UINT", $i_TopColor, "UINT", $i_BottomColor)
 	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetBillBoardColor
-
-
 
 
 ; #FUNCTION# =============================================================================================================
@@ -1937,8 +1918,6 @@ Func _IrrAddBillBoardByAxisToGroup($h_BillboardGroup, $f_XSize, $f_YSize, $f_XPo
 EndFunc   ;==>_IrrAddBillBoardByAxisToGroup
 
 
-
-
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrRemoveBillBoardFromGroup
 ; Description ...: Removes the specified billboard from the billboard group.
@@ -1958,10 +1937,6 @@ Func _IrrRemoveBillBoardFromGroup($h_BillboardGroup, $h_BillboardGroupSceneNode)
 	DllCall($_irrDll, "none:cdecl", "IrrRemoveBillBoardFromGroup", "ptr", $h_BillboardGroup, "ptr", $h_BillboardGroupSceneNode)
 	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrRemoveBillBoardFromGroup
-
-
-
-
 
 
 ; #FUNCTION# =============================================================================================================

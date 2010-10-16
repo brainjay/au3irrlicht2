@@ -57,7 +57,9 @@
 - Added: more examples for help file, _IrrSetSphericalTerrainTexture, 
   _IrrAreNodesIntersecting, _IrrGetDistanceBetweenNodes, _IrrIsPointInsideNode,
   _IrrGetSphericalTerrainSurfacePositionAndAngle, _IrrGetSphericalTerrainLogicalSurfacePosition,
-  _IrrGetSphericalTerrainSurfacePosition, _IrrSetLightAmbientColor, _IrrSetLightRadius	
+  _IrrGetSphericalTerrainSurfacePosition, _IrrSetLightAmbientColor, _IrrSetLightRadius,
+  _IrrSetCameraFOV, _IrrScaleMesh
+- Added: more header info for functions in au3Irr2_Scene.au3	
 - Added: more header info for functions in au3Irr2_Terrain.au3
 - Added: more header info for functions in au3Irr2_Lighting.au3
 - Added function header info in au3Irr2_FilingSystem.au3

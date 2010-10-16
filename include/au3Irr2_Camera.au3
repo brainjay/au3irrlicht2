@@ -381,9 +381,9 @@ EndFunc   ;==>_IrrSetActiveCamera
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: A wide field of vision will give a distorted perspective, if the angle is too narrow the display will feel restricted.
-; Related .......: [todo: functionName, functionName]
+; Related .......: _IrrAddCamera, _IrrAddFPSCamera
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetCameraFOV($h_Camera, $f_FOV)
 	DllCall($_irrDll, "none:cdecl", "IrrSetCameraFOV", "ptr", $h_Camera, "float", $f_FOV)
