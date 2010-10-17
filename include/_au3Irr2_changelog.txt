@@ -73,7 +73,8 @@
 + Added: Tools\FontTool.exe (used for creating bmp fonts, comes from IrrLicht 1.7.1 sdk) 
 - Changed: global $result is no longer used and has been removed from au3Irr2_Constants.au3
 - Added: example.zip to \media directory (for Load Scene examples, 200KB in size)
-
+- Removed: SimpleScene.irr from \media directory as it's no longer needed.
+- Moved: FontTool.exe, FontTool.txt to \Bin directory and removed \Tools directory 
 === 2.04 (2010-10-09) ==========================================================
 
 
