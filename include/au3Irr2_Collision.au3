@@ -98,17 +98,14 @@ EndFunc   ;==>_IrrGetCollisionGroupFromComplexMesh
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCollisionGroupFromBox
-; Description ...: [todo]
+; Description ...: Creates a collision object from the bounding box of a node.
 ; Syntax.........: _IrrGetCollisionGroupFromBox($h_Node)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Node - Handle to a node.
+; Return values .: Success - Handle to a selector object.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: None.
 ; Related .......: _IrrGetCollisionGroupFromMesh, _IrrGetCollisionGroupFromComplexMesh, _IrrGetCollisionGroupFromTerrain, _IrrRemoveCollisionGroup, _IrrCreateCombinedCollisionGroup
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
@@ -123,17 +120,16 @@ EndFunc   ;==>_IrrGetCollisionGroupFromBox
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCollisionGroupFromTerrain
-; Description ...: [todo]
-; Syntax.........: _IrrGetCollisionGroupFromTerrain($h_Node, $i_Lod)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Description ...: Creates a collision object from a terrain node.
+; Syntax.........: _IrrGetCollisionGroupFromTerrain($h_Node, $i_Lod = 1)
+; Parameters ....: $h_Node - Handle to the terain node.
+;                  $i_Lod - Level of detail
+;                  |A higher level of detail improves the collision detection but consumes more resources and can effect the speed of the process.
+; Return values .: Success - Handle to a terrain selector object.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: None.
 ; Related .......: _IrrGetCollisionGroupFromMesh, _IrrGetCollisionGroupFromComplexMesh, _IrrGetCollisionGroupFromBox, _IrrRemoveCollisionGroup, _IrrCreateCombinedCollisionGroup
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
@@ -148,17 +144,15 @@ EndFunc   ;==>_IrrGetCollisionGroupFromTerrain
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrRemoveCollisionGroup
-; Description ...: [todo]
+; Description ...: Remove the collision selector from memory.
 ; Syntax.........: _IrrRemoveCollisionGroup($h_CollisionGroup, $h_Node)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_CollisionGroup - Handle to the collision selector object.
+;                  $h_Node - Handle to the node.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: This collision selector must not be attached to another collision group when it is removed, the collision group is first removed from the node you supply.
 ; Related .......: _IrrGetCollisionGroupFromMesh, _IrrGetCollisionGroupFromComplexMesh, _IrrGetCollisionGroupFromBox, _IrrGetCollisionGroupFromTerrain, _IrrCreateCombinedCollisionGroup
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
@@ -171,17 +165,14 @@ EndFunc   ;==>_IrrRemoveCollisionGroup
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrCreateCombinedCollisionGroup
-; Description ...: [todo]
+; Description ...: Creates a collision object that can be used to combine several collision objects together.
 ; Syntax.........: _IrrCreateCombinedCollisionGroup()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: None.
+; Return values .: Success - Handle to a combined collision selector object.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: You could add a couple of maps and a terrain for example. Initially the combined collision object is empty.
 ; Related .......: _IrrGetCollisionGroupFromMesh, _IrrGetCollisionGroupFromComplexMesh, _IrrGetCollisionGroupFromBox, _IrrGetCollisionGroupFromTerrain, _IrrRemoveCollisionGroup
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
@@ -196,43 +187,36 @@ EndFunc   ;==>_IrrCreateCombinedCollisionGroup
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddCollisionGroupToCombination
-; Description ...: [todo]
+; Description ...: Adds a collision object to group of collision objects.
 ; Syntax.........: _IrrAddCollisionGroupToCombination($h_CombinedCollisionGroup, $h_CollisionGroup)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_CombinedCollisionGroup - Handle to a combined collision selector object.
+;                  $h_CollisionGroup - Handle to a collision selector object.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrCreateCombinedCollisionGroup, _IrrCreateCombinedCollisionGroup, _IrrRemoveAllCollisionGroupsFromCombination
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrAddCollisionGroupToCombination($h_CombinedCollisionGroup, $h_CollisionGroup)
-    Local $aResult
-	$aResult = DllCall($_irrDll, "ptr:cdecl", "IrrAddCollisionGroupToCombination", "ptr", $h_CombinedCollisionGroup, "ptr", $h_CollisionGroup)
-	If @error Or Not $aResult[0] Then Return Seterror(1, 0, False)
-	Return Seterror(0, 0, $aResult[0])
+    DllCall($_irrDll, "none:cdecl", "IrrAddCollisionGroupToCombination", "ptr", $h_CombinedCollisionGroup, "ptr", $h_CollisionGroup)
+	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrAddCollisionGroupToCombination
 
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrRemoveAllCollisionGroupsFromCombination
-; Description ...: [todo]
+; Description ...: Empty a collision group object so that you can add different collision groups to it.
 ; Syntax.........: _IrrRemoveAllCollisionGroupsFromCombination($h_CombinedCollisionGroup)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_CombinedCollisionGroup - Handle to a combined collision selector object.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrAddCollisionGroupToCombination, _IrrAddCollisionGroupToCombination
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
@@ -244,18 +228,16 @@ EndFunc   ;==>_IrrRemoveAllCollisionGroupsFromCombination
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrRemoveCollisionGroupFromCombination
-; Description ...: [todo]
+; Description ...: Remove a single specified collision object from a group of collision objects.
 ; Syntax.........: _IrrRemoveCollisionGroupFromCombination($h_CombinedCollisionGroup, $h_CollisionGroup)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_CombinedCollisionGroup - Handle to a combined collision selector object.
+;                  $h_CollisionGroup - Handle to a collision selector object.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrCreateCombinedCollisionGroup, _IrrAddCollisionGroupToCombination
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
@@ -346,20 +328,17 @@ EndFunc   ;==>_IrrGetRayFromScreenCoordinates
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCollisionNodeFromCamera
-; Description ...: [todo]
+; Description ...: A ray is cast through the camera and the nearest node that is hit by the ray is returned.
 ; Syntax.........: _IrrGetCollisionNodeFromCamera($h_Camera)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Camera - Handle to a camera node.
+; Return values .: Success - Handle of the node the camera ray is hitting. If no node is hit zero is returned for the object.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrAddCamera, _IrrAddFpsCamera
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetCollisionNodeFromCamera($h_Camera)
     Local $aResult

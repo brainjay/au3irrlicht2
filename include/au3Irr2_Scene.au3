@@ -719,20 +719,17 @@ EndFunc   ;==>_IrrAddStaticMeshForNormalMappingToScene
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrLoadScene
-; Description ...: [todo]
+; Description ...: Loads all meshes and creates nodes for a scene defined within a file created by au3irrlicht2 or IrrEdit.
 ; Syntax.........: _IrrLoadScene($s_Filename)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $s_Filename - Path to .irr scene file to load.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: The .irr scene file is a XML file exported from IrrEdit or _IrrSaveScene containing all relevant scene information.
+; Related .......: _IrrSaveScene
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrLoadScene($s_Filename)
 	DllCall($_irrDll, "none:cdecl", "IrrLoadScene", "str", $s_Filename)
@@ -742,18 +739,15 @@ EndFunc   ;==>_IrrLoadScene
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSaveScene
-; Description ...: [todo]
+; Description ...: Saves the current scene into a file that can be loaded by au3irrlicht2 or irrEdit.
 ; Syntax.........: _IrrSaveScene($s_Filename)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $s_Filename - Path to save .irr scene file.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: The .irr scene file is a XML file containing all relevant scene information.
+; Related .......: _IrrLoadScene
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================

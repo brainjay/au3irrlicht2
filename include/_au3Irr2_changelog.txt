@@ -49,6 +49,8 @@
 > Examples:
 
 + Added: 071 (Sphere_Terrain_Surface), 096 (LightingAndShadowMaps)
+- Changed: 031 (Loading_Scene) for example.irr scene from irrlicht-1.7.1 sdk.
+  (The scene shows the potential of IrrLicht a bit better)
 
 
 
@@ -58,7 +60,7 @@
   _IrrAreNodesIntersecting, _IrrGetDistanceBetweenNodes, _IrrIsPointInsideNode,
   _IrrGetSphericalTerrainSurfacePositionAndAngle, _IrrGetSphericalTerrainLogicalSurfacePosition,
   _IrrGetSphericalTerrainSurfacePosition, _IrrSetLightAmbientColor, _IrrSetLightRadius,
-  _IrrSetCameraFOV, _IrrScaleMesh
+  _IrrSetCameraFOV, _IrrScaleMesh, _IrrGetCollisionNodeFromCamera, _IrrLoadScene
 - Added: more header info for functions in au3Irr2_Scene.au3	
 - Added: more header info for functions in au3Irr2_Terrain.au3
 - Added: more header info for functions in au3Irr2_Lighting.au3
@@ -70,7 +72,7 @@
 
 + Added: Tools\FontTool.exe (used for creating bmp fonts, comes from IrrLicht 1.7.1 sdk) 
 - Changed: global $result is no longer used and has been removed from au3Irr2_Constants.au3
-
+- Added: example.zip to \media directory (for Load Scene examples, 200KB in size)
 
 === 2.04 (2010-10-09) ==========================================================
 
