@@ -19,9 +19,10 @@
 
 > UDFs:
 
-+ Fixed/Added: _IrrGetSphericalTerrainSurfacePositionAndAngle
-+ Fixed/Added: _IrrGetSphericalTerrainLogicalSurfacePosition
-+ Fixed/Added: _IrrGetSphericalTerrainSurfacePosition
++ Added: _IrrGetNodeScale to au3Irr2_Node.au3
++ Fixed/Added: _IrrGetSphericalTerrainSurfacePositionAndAngle in au3Irr2_Terrain.au3
++ Fixed/Added: _IrrGetSphericalTerrainLogicalSurfacePosition in au3Irr2_Terrain.au3
++ Fixed/Added: _IrrGetSphericalTerrainSurfacePosition in au3Irr2_Terrain.au3
 - Tidy: au3Irr2_System.au3 error return
 - Tidy: au3Irr2_Particles.au3 error return
 - Tidy: au3Irr2_Materials.au3 error return
@@ -62,7 +63,8 @@
   _IrrGetSphericalTerrainSurfacePosition, _IrrSetLightAmbientColor, _IrrSetLightRadius,
   _IrrSetCameraFOV, _IrrScaleMesh, _IrrGetCollisionNodeFromCamera, _IrrLoadScene, _IrrGetNodeName,
   _IrrSetNodeName, _IrrGetNodeMesh, _IrrGetMaterialCount, _IrrGetMaterial, _IrrAddChildToParent,
-  _IrrSetNodeVisibility
+  _IrrSetNodeVisibility, _IrrGetNodeScale, _IrrGetNodeID, _IrrSetNodeID, _IrrGetJointNode,
+  _IrrRemoveAllNodes
 - Added: more header info for functions in au3Irr2_Scene.au3	
 - Added: more header info for functions in au3Irr2_Terrain.au3
 - Added: more header info for functions in au3Irr2_Lighting.au3

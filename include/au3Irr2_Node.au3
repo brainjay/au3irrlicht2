@@ -16,7 +16,6 @@
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
 ;_IrrSetNodeParent
-;_IrrGetNodeID
 ;_IrrGetNodeBoundingBox
 ;_IrrSetNodeRotationPositionChange
 ;xxx_IrrSetNodeRotationPositionChange
@@ -38,6 +37,7 @@
 ;_IrrGetNodePosition
 ;_IrrGetNodeAbsolutePosition
 ;_IrrGetNodeRotation
+;_IrrGetNodeScale
 ;_IrrGetJointNode
 ;_IrrAddChildToParent
 ;_IrrGetNodeFirstChild
@@ -47,6 +47,7 @@
 ;_IrrSetNodeVisibility
 ;_IrrRemoveNode
 ;_IrrRemoveAllNodes
+;_IrrGetNodeID
 ;_IrrSetNodeID
 ; ===============================================================================================================================
 
@@ -63,7 +64,7 @@
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: None.
-; Related .......: _IrrSetNodeName
+; Related .......: _IrrSetNodeName, _IrrGetSceneNodeFromName
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -86,7 +87,7 @@ EndFunc   ;==>_IrrGetNodeName
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: None.
-; Related .......: _IrrGetNodeName
+; Related .......: _IrrGetNodeName, _IrrGetSceneNodeFromName
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -274,7 +275,7 @@ EndFunc   ;==>_IrrSetNodeMaterialType
 ; Name...........: _IrrSetNodePosition
 ; Description ...: Moves the node to the specified position
 ; Syntax.........: _IrrSetNodePosition($h_Node, $f_X, $f_Y, $f_Z)
-; Parameters ....: $h_Node - Handle of a scene node
+; Parameters ....: $h_Node - Handle of a scene node.
 ;                  $f_X, $f_Y, $f_Z - X, Y, Z values of new position
 ; Return values .: Success - True
 ;                  Failure - False
@@ -437,21 +438,49 @@ EndFunc   ;==>_IrrGetNodeRotation
 
 
 ; #FUNCTION# =============================================================================================================
+; Name...........: _IrrGetNodeScale
+; Description ...: Get the scale of a node in the scene.
+; Syntax.........: _IrrGetNodeScale($h_Node, $f_X, $f_Y, $f_Z)
+; Parameters ....: $h_Node - Handle of a scene node
+; Return values .: Success - 1D Array containing X, Y, Z scale of the node.
+;                  |$Array[0] = X Scale float value
+;                  |$Array[1] = Y Scale float value
+;                  |$Array[2] = Z Scale float value
+;                  Failure - False and @error 1
+; Author ........:
+; Modified.......:
+; Remarks .......: None
+; Related .......: _IrrSetNodeScale
+; Link ..........:
+; Example .......: Yes
+; ===============================================================================================================================
+Func _IrrGetNodeScale($h_Node)
+	Local $aRestult, $aReturn[3]
+	$aRestult = DllCall($_irrDll, "none:cdecl", "IrrGetNodeScale", "UINT_PTR", $h_Node, "float*", 0, "float*", 0, "float*", 0)
+	If @error Then Return SetError(1, 0, False)
+	For $i = 0 To 2
+		$aReturn[$i] = $aRestult[$i + 2]
+	Next
+	Return SetError(0, 0, $aReturn)
+EndFunc   ;==>_IrrSetNodeScale
+
+
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetJointNode
-; Description ...: [todo]
+; Description ...: This supplies you with an invisible node that follows the motion of a particular joint in an animated models skeleton.
 ; Syntax.........: _IrrGetJointNode($h_Node, $s_Joint)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Node - Handle to a character node.
+;                  $s_Joint - The name of a joint in the model.
+; Return values .: Success - Handle to an invisible node that is attached to the specified joint on the animated node.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: You can use this to attach child nodes that represent objects a person is carrying for example.
+;                  (This call now replaces IrrGetMS3DJointNode and IrrGetDirectXJointNode which are only supplied for backwards compatibility).
+;                  It can now also be used to manually move the joint.
+; Related .......: _IrrAddChildToParent, _IrrSetNodePosition, _IrrSetNodeRotation
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetJointNode($h_Node, $s_Joint)
 	Local $aResult
@@ -618,8 +647,8 @@ EndFunc   ;==>_IrrSetNodeVisibility
 ;                  Failure - False
 ; Author ........:
 ; Modified.......:
-; Remarks .......: None
-; Related .......: None
+; Remarks .......: None.
+; Related .......: _IrrRemoveAllNodes
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -631,20 +660,17 @@ EndFunc   ;==>_IrrRemoveNode
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrRemoveAllNodes
-; Description ...: [todo]
+; Description ...: Clears the entire scene, any references to nodes in the scene will become invalid.
 ; Syntax.........: _IrrRemoveAllNodes()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: None.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrRemoveNode
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrRemoveAllNodes()
 	DllCall($_irrDll, "none:cdecl", "IrrRemoveAllNodes")
@@ -675,25 +701,22 @@ Func _IrrSetNodeParent($h_Node, $h_Parent)
 EndFunc   ;==>_IrrSetNodeParent
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetNodeID
-; Description ...: [todo]
+; Description ...: Get the ID of a scene node.
 ; Syntax.........: _IrrGetNodeID($h_Node)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Node - Handle of a scene node.
+; Return values .: Success - ID number of the node or -1 if an invalid node handle is given.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: Each node can have a 32 bit signed identification number assigned to them this can be used in
+;				   collision operations to filter out particular classes of object.
+; Related .......: _IrrSetNodeID, _IrrGetSceneNodeFromId
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetNodeID($h_Node)
-	; get the ID of this node
 	Local $aResult
 	$aResult = DllCall($_irrDll, "int:cdecl", "IrrGetNodeID", "ptr", $h_Node)
 	If @error Then Return SetError(1, 0, False)
@@ -703,23 +726,21 @@ EndFunc   ;==>_IrrGetNodeID
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeID
-; Description ...: [todo]
+; Description ...: Set the ID of a scene node.
 ; Syntax.........: _IrrSetNodeID($h_Node, $i_ID)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Node - Handle of a scene node.
+;                  $i_ID - Number ID to set the node.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: Each node can have a 32 bit signed identification number assigned to them this can be used in
+;				   collision operations to filter out particular classes of object.
+; Related .......: _IrrGetNodeID, _IrrGetSceneNodeFromId
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetNodeID($h_Node, $i_ID)
-	; set the ID of this node
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeID", "ptr", $h_Node, "int", $i_ID)
 	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetNodeID
@@ -746,12 +767,10 @@ Func _IrrGetNodeBoundingBox($h_Node, ByRef $a_VectorA3df, ByRef $a_VectorB3df)
 	Dim $a_VectorA3df[3], $a_VectorB3df[3], $aResult
 	$aResult = DllCall($_irrDll, "none:cdecl", "IrrGetNodeBoundingBox", "ptr", $h_Node, "float*", $a_VectorA3df[0], "float*", $a_VectorA3df[1], "float*", $a_VectorA3df[2], "float*", $a_VectorB3df[0], "float*", $a_VectorB3df[1], "float*", $a_VectorB3df[2])
 	If @error Then Return SetError(1, 0, False)
-	$a_VectorA3df[0] = $aResult[2]
-	$a_VectorA3df[1] = $aResult[3]
-	$a_VectorA3df[2] = $aResult[4]
-	$a_VectorB3df[0] = $aResult[5]
-	$a_VectorB3df[1] = $aResult[6]
-	$a_VectorB3df[2] = $aResult[7]
+	For $i = 0 To 2
+	    $a_VectorA3df[$i] = $aResult[$i + 2]
+		$a_VectorB3df[$i] = $aResult[$i + 5]
+	Next
 	Return SetError(0, 0, True)
 EndFunc   ;==>_IrrGetNodeBoundingBox
 
@@ -759,7 +778,7 @@ EndFunc   ;==>_IrrGetNodeBoundingBox
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeRotationPositionChange
 ; Description ...: [todo]
-; Syntax.........: Func _IrrSetNodeRotationPositionChange($h_Camera, $f_Yaw, $f_Pitch, $f_Roll, $f_Drive, $f_Strafe, $f_Elevate, _
+; Syntax.........: _IrrSetNodeRotationPositionChange($h_Camera, $f_Yaw, $f_Pitch, $f_Roll, $f_Drive, $f_Strafe, $f_Elevate, _
 ; Parameters ....: [param1] - [explanation]
 ;                  |[moreTextForParam1]
 ;                  [param2] - [explanation]
