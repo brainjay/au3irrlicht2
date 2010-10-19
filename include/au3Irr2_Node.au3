@@ -55,20 +55,17 @@
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetNodeName
-; Description ...: [todo]
+; Description ...: Get the name of the node.
 ; Syntax.........: _IrrGetNodeName($h_Node)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Node - Handle of a node in the scene.
+; Return values .: Success - Name of the node, if the node doesn't have a name then an empty string is returned.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrSetNodeName
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetNodeName($h_Node)
 	Local $aResult
@@ -80,20 +77,18 @@ EndFunc   ;==>_IrrGetNodeName
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeName
-; Description ...: [todo]
+; Description ...: Set the name of a node.
 ; Syntax.........: _IrrSetNodeName($h_Node, $s_Name)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Node - Handle of a node in the scene.
+;                  $s_Name - Name for node.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrGetNodeName
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetNodeName($h_Node, $s_Name)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeName", "ptr", $h_Node, "str", $s_Name)
@@ -103,20 +98,17 @@ EndFunc   ;==>_IrrSetNodeName
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetNodeMesh
-; Description ...: [todo]
+; Description ...: Get the mesh that is associated with a node
 ; Syntax.........: _IrrGetNodeMesh ($h_Node)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Node - Handle of a node in the scene.
+; Return values .: Success - Handle to the mesh asocciated with the node.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrGetMesh, _IrrAddMeshToScene
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetNodeMesh($h_Node)
 	; Get the mesh assiciated with a given node
@@ -129,20 +121,17 @@ EndFunc   ;==>_IrrGetNodeMesh
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetMaterialCount
-; Description ...: [todo]
+; Description ...: Get the number of materials associated with a node.
 ; Syntax.........: _IrrGetMaterialCount($h_Node)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Node - Handle of a node in the scene.
+; Return values .: Success - Number of materials associated with the node.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrGetMaterial, _IrrSetNodeMaterialTexture
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetMaterialCount($h_Node)
 	Local $aResult
@@ -154,20 +143,20 @@ EndFunc   ;==>_IrrGetMaterialCount
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetMaterial
-; Description ...: [todo]
+; Description ...: Get the material associated with the node at the particular index.
 ; Syntax.........: _IrrGetMaterial($h_Node, $i_Material)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Node - Handle of a node in the scene.
+;                  $i_Material - Index of the material to retieve.
+; Return values .: Success - Handle to cureent material at the specified index.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrGetMaterialCount, _IrrSetMaterialBlend, _IrrMaterialSetShininess, _IrrMaterialSetSpecularColor,
+;                  _IrrMaterialSetDiffuseColor, _IrrMaterialSetAmbientColor, _IrrMaterialSetEmissiveColor,
+;                  _IrrMaterialSetMaterialTypeParam
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrGetMaterial($h_Node, $i_Material)
 	Local $aResult
@@ -474,20 +463,20 @@ EndFunc   ;==>_IrrGetJointNode
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddChildToParent
-; Description ...: [todo]
+; Description ...: Attaches the child node to the parent node.
 ; Syntax.........: _IrrAddChildToParent($h_ChildNode, $h_ParentNode)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_ChildNode - Handle to a scene node that will be the child.
+;                  $h_ParentNode - Handle to a scene node that will be the parent.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: Whenever you change the parent node the child node changes too.
+;                  This is useful for putting a cup in a characters hand for example.
+;                  You can move and rotate the child node to move the object into position against its parent.
+; Related .......:  _IrrAddMeshToScene
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddChildToParent($h_ChildNode, $h_ParentNode)
 	DllCall($_irrDll, "none:cdecl", "IrrAddChildToParent", "ptr", $h_ChildNode, "ptr", $h_ParentNode)
@@ -600,20 +589,19 @@ EndFunc   ;==>_IrrAddNodeShadow
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeVisibility
-; Description ...: [todo]
+; Description ...: This allows you to hide nodes from the display.
 ; Syntax.........: _IrrSetNodeVisibility($h_Node, $i_Visible)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Node - Handle to a scene node.
+;                  $i_Visible - 0 hide node, 1 Show node
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: You can quickly and easily switch objects out to improve performance or create effects,
+;                  like one node transforming into another node (perhaps in a puff of particle smoke).
+; Related .......: None.
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetNodeVisibility($h_Node, $i_Visible)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeVisibility", "ptr", $h_Node, "int", $i_Visible)

@@ -60,11 +60,14 @@
   _IrrAreNodesIntersecting, _IrrGetDistanceBetweenNodes, _IrrIsPointInsideNode,
   _IrrGetSphericalTerrainSurfacePositionAndAngle, _IrrGetSphericalTerrainLogicalSurfacePosition,
   _IrrGetSphericalTerrainSurfacePosition, _IrrSetLightAmbientColor, _IrrSetLightRadius,
-  _IrrSetCameraFOV, _IrrScaleMesh, _IrrGetCollisionNodeFromCamera, _IrrLoadScene
+  _IrrSetCameraFOV, _IrrScaleMesh, _IrrGetCollisionNodeFromCamera, _IrrLoadScene, _IrrGetNodeName,
+  _IrrSetNodeName, _IrrGetNodeMesh, _IrrGetMaterialCount, _IrrGetMaterial, _IrrAddChildToParent,
+  _IrrSetNodeVisibility
 - Added: more header info for functions in au3Irr2_Scene.au3	
 - Added: more header info for functions in au3Irr2_Terrain.au3
 - Added: more header info for functions in au3Irr2_Lighting.au3
-- Added function header info in au3Irr2_FilingSystem.au3
+- Added: more header info for functions in au3Irr2_FilingSystem.au3
+- Added: more header info for functions in au3Irr2_Node.au3
 
 
 
@@ -75,6 +78,7 @@
 - Added: example.zip to \media directory (for Load Scene examples, 200KB in size)
 - Removed: SimpleScene.irr from \media directory as it's no longer needed.
 - Moved: FontTool.exe, FontTool.txt to \Bin directory and removed \Tools directory 
+
 === 2.04 (2010-10-09) ==========================================================
 
 
