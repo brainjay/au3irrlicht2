@@ -49,7 +49,8 @@
 
 > Examples:
 
-+ Added: 071 (Sphere_Terrain_Surface), 096 (LightingAndShadowMaps)
++ Added: 071 (Sphere_Terrain_Surface), 073 (Sphere_Terrain_Coordinates), 
+  3096 (LightingAndShadowMaps)
 - Changed: 031 (Loading_Scene) for example.irr scene from irrlicht-1.7.1 sdk.
   (The scene shows the potential of IrrLicht a bit better)
 
