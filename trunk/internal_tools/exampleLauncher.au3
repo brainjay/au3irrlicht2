@@ -34,7 +34,7 @@
 opt("MustDeclareVars", True)
 
 
-Global const $SCRIPTTITLE = "au3Irr2 Example Launcher V0.92 - 2010 by linus"
+Global const $SCRIPTTITLE = "au3Irr2.05dev Example Launcher V0.92 - 2010 by linus"
 global const $MERGEHELPVER = "v3.3.6.1"
 
 Global const $pathScite = RegRead("HKLM\Software\Microsoft\Windows\Currentversion\App Paths\Scite.Exe", "")

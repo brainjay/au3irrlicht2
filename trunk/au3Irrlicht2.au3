@@ -26,3 +26,4 @@
 #include ".\include\au3Irr2_Terrain.au3"
 #include ".\include\au3Irr2_Particles.au3"
 #include ".\include\au3Irr2_GUI.au3"
+#include ".\include\au3Irr2_Sound.au3"

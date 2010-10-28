@@ -25,6 +25,7 @@
 ;_IrrAddEmptySceneNode
 ;_IrrSetZoneManagerAttachTerrain
 ;_IrrGetGrassDrawCount
+;_IrrSetFlareScale
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
@@ -74,7 +75,6 @@
 ;_IrrSetZoneManagerBoundingBox
 ;_IrrSetGrassDensity
 ;_IrrSetGrassWind
-;_IrrSetFlareScale
 ;_IrrCreateBatchingMesh
 ;_IrrAddToBatchingMesh
 ;_IrrFinalizeBatchingMesh
@@ -1527,6 +1527,24 @@ EndFunc   ;==>_IrrGetGrassDrawCount
 ; Related .......: _IrrAddLensFlare
 ; Link ..........:
 ; Example .......: Yes
+; ===============================================================================================================================
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetFlareScale
+; Description ...: [todo]
+; Syntax.........: _IrrSetFlareScale($h_Flare, $f_Source, $f_Optics)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrSetFlareScale($h_Flare, $f_Source, $f_Optics)
 	DllCall($_irrDll, "none:cdecl", "IrrSetFlareScale", "ptr", $h_Flare, "float", $f_Source, "float", $f_Optics)

@@ -1,0 +1,1406 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+
+
+  
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+
+  
+  <title>Reference Manual for the Wrapper Library for Irrlicht</title>
+</head>
+
+
+<body>
+
+
+<hr style="width: 100%; height: 2px;"><br>
+
+
+<table style="width: 100%; height: 100px;" border="0" cellpadding="0" cellspacing="0">
+
+
+  <tbody>
+
+
+    <tr>
+
+
+      <td style="background-color: rgb(255, 186, 0);"></td>
+
+
+      <td style="width: 512px;" background="media/squigle.jpg">
+      
+      <h1 style="text-align: center;">Wrapper Library for
+IrrKlang</h1>
+
+
+      
+      <h1 style="text-align: center;">Reference Manual</h1>
+
+
+      </td>
+
+
+      <td></td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+
+<hr style="width: 100%; height: 2px;">
+<h2>Table of Contents</h2>
+
+
+<ul>
+
+
+  <li><a href="#Overview">Overview</a></li>
+
+
+  <li><a href="#System">System</a></li>
+
+
+  <li><a href="#Sounds">Sounds</a></li>
+</ul>
+<br>
+
+
+<hr style="width: 100%; height: 2px;">
+<h2><a name="Overview"></a>Overview</h2>
+
+
+Before using this manual I suggest that you first read the introduction
+document that will introduce the basic concepts. While I have made
+great effort to make this document both comprehensive and accurate
+there are bound to be errors and omissions please be careful when
+relying on the information when solving problems.<br>
+
+
+<br>
+IrrKlang is a simple and powerful audio engine that has
+a wide range of operations that can be used for adding audio media to
+your application, it has an impressive, clean and well designed object
+oriented structure that is linked to through a simple DLL interface.<br>
+
+
+<br>
+
+
+Unfortunately its object oriented structure makes it extremely
+difficult
+to use from imperative languages like FreeBasic that do not support an
+object model. This is where the wrapper come in. It provides an
+interface between languages like FreeBasic and the objected oriented
+model of IrrKlang. Many functions are translated into simple calls that
+return the objects back to FreeBasic as simple variables that it can
+then manage, there is some overhead in going through the wrapper
+although the interface code has been kept simple to reduce to a minimum.<br>
+
+
+<br>
+
+
+<hr style="width: 100%; height: 2px;">
+<h2><a name="System"></a>System</h2>
+
+
+These calls deal with starting, running and stopping the IrrKlang
+engine, it also includes calls that control the overall sound engine and some other
+miscellaneous tools.
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="1" cellspacing="1">
+
+
+  <tbody>
+
+
+    <tr style="font-weight: bold;">
+
+
+      <td style="background-color: rgb(255, 204, 51);">IrrKlangStart</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+
+
+IrrKlangStart<br>
+
+
+      <br>
+
+
+Description<br>
+
+
+Starts the IrrKlang interface ready to manage sounds.<br>
+
+
+      <br>
+Example<br>
+
+
+      </td>
+
+
+    </tr>
+
+
+    <tr style="font-family: monospace;">
+
+
+      <td>IrrKlangStart<br>
+
+
+IrrKlangStop</td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr style="font-weight: bold;">
+
+
+      <td style="background-color: rgb(255, 204, 51);">IrrKlangUpdate</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+IrrKlangUpdate<br>
+
+
+      <br>
+
+
+Description<br>
+Update the IrrKlang system when running in single threaded mode. Please
+not that IrrKlang is now started in multi-threaded mode and this call
+is not needed at this time.<br>
+
+
+      <br>
+
+
+Example<br>
+
+
+      </td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td><span style="font-family: monospace;">IrrKlangStart</span><br style="font-family: monospace;">
+
+
+      <span style="font-family: monospace;">While NOT Inkey = "q"<br>
+&nbsp; &nbsp; IrrKlangUpdate<br style="font-family: monospace;">
+      </span>
+
+      <span style="font-family: monospace;">Wend</span><br style="font-family: monospace;">
+
+
+      <span style="font-family: monospace;">IrrKlangStop</span><br>
+
+
+      </td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr>
+
+
+      <td style="background-color: rgb(255, 204, 51);"> <span style="font-weight: bold;">IrrKlangPlay2D</span></td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+irr_sound = IrrKlangPlay2D (&nbsp;file as zstring ptr,&nbsp;playLooped
+as uinteger, startPaused as uinteger, track as uinteger, streamMode,
+enableSoundEffects )<br>
+
+
+      <br>
+
+
+Description<br>
+Play a 2D sound, this sound is unaffected by the location of the listener and is idea for music or ambient sound.  <span style="font-weight: bold;">To use any of the sound effect functions you need to set the track property to IRR_KLANG_TRUE.</span><br>
+      <br>
+file provides the filename and path to the sound.<br>
+playLooped determines whether the sound will repeat once it has finished. By default this is set to IRR_KLANG_FALSE<br>
+startPaused determines whether the sound starts paused. By default this is set to IRR_KLANG_FALSE<br>
+track determines whether the sound object is returned as a sound object
+or simply played and discarded. By default this is set to
+IRR_KLANG_FALSE<br>
+streamMode determines how the sound is loaded and played. By default the mode is ESM_AUTO_DETECT<br>
+&nbsp;&nbsp;&nbsp; ESM_AUTO_DETECT<br>
+&nbsp;&nbsp;&nbsp; ESM_STREAMING<br>
+&nbsp;&nbsp;&nbsp; ESM_NO_STREAMING<br>
+&nbsp;&nbsp;&nbsp; ESM_FORCE_32_BIT<br>
+      <br>
+enableSoundEffects enables sound effects on this sound. By default this is set to IRR_KLANG_FALSE<br>
+      <br>
+
+
+Example<br>
+
+
+      </td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td><span style="font-family: monospace;">IrrKlangPlay2D ( "./media/introduction.wav" )</span><span style="font-family: monospace;"></span><br>
+
+
+      </td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr>
+
+
+      <td style="background-color: rgb(255, 204, 51);"> <span style="font-weight: bold;">IrrKlangPlay3D</span></td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+irr_sound
+= IrrKlangPlay3D (&nbsp;file as zstring ptr, positionX, as single,
+positionY as single, positionZ as single, playLooped as uinteger,
+startPaused as uinteger, track as uinteger, streamMode,
+enableSoundEffects )<br>
+
+
+      <br>
+
+
+Description<br>
+Play a 3D sound, the volume and stereo balance of&nbsp;this sound
+is&nbsp;affected by the location of the listener and the location of
+the sound, this is ideal for a sound that is sourced from a specific
+location such as a person shouting or the sound of a gunshot. <span style="font-weight: bold;">To use any of the sound effect functions you need to set the track property to IRR_KLANG_TRUE.</span><br>
+      <br>
+file provides the filename and path to the sound.<br>
+positionX, positionY, positionZ define the spacial co-ordinates of the sound<br>
+playLooped determines whether the sound will repeat once it has finished. By default this is set to IRR_KLANG_FALSE<br>
+startPaused determines whether the sound starts paused. By default this is set to IRR_KLANG_FALSE<br>
+track
+determines whether the sound object is returned as a sound object or
+simply played and discarded. By default this is set to IRR_KLANG_FALSE,<br>
+streamMode determines how the sound is loaded and played. By default the mode is ESM_AUTO_DETECT<br>
+&nbsp;&nbsp;&nbsp; ESM_AUTO_DETECT<br>
+&nbsp;&nbsp;&nbsp; ESM_STREAMING<br>
+&nbsp;&nbsp;&nbsp; ESM_NO_STREAMING<br>
+&nbsp;&nbsp;&nbsp; ESM_FORCE_32_BIT<br>
+      <br>
+enableSoundEffects enables sound effects on this sound. By default this is set to IRR_KLANG_FALSE<br>
+      <br>
+
+
+Example<br>
+
+
+      </td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td><span style="font-family: monospace;">IrrKlangPlay3D ( "./media/footsteps.wav", monsterX, monsterY, monsterZ )</span><span style="font-family: monospace;"></span><br>
+
+
+      </td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr style="font-weight: bold;">
+
+
+      <td style="background-color: rgb(255, 204, 51);">IrrKlangSetAllSoundsPaused</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+
+
+IrrKlangSetAllSoundsPaused ( pause as&nbsp;integer )<br>
+
+
+      <br>
+
+
+Description<br>
+Pauses all sounds effectivly muting the application.<br>
+
+
+      <br>
+
+
+Example<br>
+
+
+      </td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td><span style="font-family: monospace;">IrrKlangSetAllSoundsPaused( IRR_KLANG_TRUE )</span><span style="font-family: monospace;"></span><br>
+
+
+      </td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr style="font-weight: bold;">
+
+
+      <td style="background-color: rgb(255, 204, 51);">IrrKlangStopAllSounds</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+
+
+IrrKlangStopAllSounds<br>
+
+
+      <br>
+
+
+Description<br>
+Perminantly stop all playing sounds.<br>
+
+
+      <br>
+
+
+Example<br>
+
+
+      </td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td><span style="font-family: monospace;">IrrKlangStopAllSounds</span><br>
+
+
+      </td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr style="font-weight: bold;">
+
+
+      <td style="background-color: rgb(255, 204, 51);">IrrRemoveSoundSource</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+
+
+IrrRemoveSoundSource( &nbsp;file as zstring ptr )<br>
+
+
+      <br>
+
+
+Description<br>
+Removes the specified sound source from memory freeing up resources.<br>
+
+
+      <br>
+
+
+Example<br>
+
+
+      </td>
+
+
+    </tr>
+
+
+    <tr style="font-family: monospace;">
+
+
+      <td>IrrRemoveSoundSource( "./media/level_01_music.mod" )</td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr style="font-weight: bold;">
+
+
+      <td style="background-color: rgb(255, 204, 51);">IrrKlangRemoveAllSoundSources</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+
+
+IrrKlangRemoveAllSoundSources<br>
+
+
+      <br>
+
+
+Description<br>
+Stop all sounds and remove all sound files from memory.<br>
+
+
+      <br>
+
+
+Example<br>
+
+
+      </td>
+
+
+    </tr>
+
+
+    <tr style="font-family: monospace;">
+
+
+      <td>IrrKlangRemoveAllSoundSources</td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr style="font-weight: bold;">
+
+
+      <td style="background-color: rgb(255, 204, 51);">IrrKlangSetListenerPosition</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+IrrKlangSetListenerPosition ( posX as single, posY as single, posZ as
+single, lookX as single, lookY as single, lookZ as single, velocityX as
+single, velocityY as single, velocityZ as single, upX as single, upY as
+single, upZ as single )<br>
+
+
+      <br>
+
+
+Description<br>
+Set the position of the observer effecting the volume and stereo balance of 3D sounds.<br>
+
+
+      <br>
+posX, posY, posZ define the position of the observer in space.<br>
+lookX, lookY, lookZ define the position at which the observer is looking<br>
+velocityX, velocityY,&nbsp;velocityZ define the velocity of the
+observer (this is only required for doppler effects). By default this
+vector is set to 0,0,0<br>
+upX, upY, upZ define the upward direction of the observer (useful for
+when an observer is in a rolling vehicle for example). By default this
+vector is set to 0,1,0<br>
+      <br>
+
+
+Example<br>
+
+
+      </td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td><span style="font-family: monospace;">IrrKlangSetListenerPosition( HeroX,HeroY,HeroZ, TargetX,TargetY,TargetZ )</span><span style="font-family: monospace;"></span><br>
+
+
+      </td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr style="font-weight: bold;">
+
+
+      <td style="background-color: rgb(255, 204, 51);">IrrKlangStop</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+
+
+IrrKlangStop<br>
+
+
+      <br>
+
+
+Description<br>
+Stop the sound engine.<br>
+
+
+      <br>
+
+
+Example<br>
+
+
+      </td>
+
+
+    </tr>
+
+
+    <tr style="font-family: monospace;">
+
+
+      <td>IrrStop</td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+
+<br>
+
+
+<hr style="width: 100%; height: 2px;">
+<h2><a name="Sounds"></a>Sounds</h2>
+These calls allow you manage sounds you have loaded. These sound
+commands can only be used on 2D and 3D sounds that have been started
+with the <span style="font-weight: bold;">track</span> property set to IRR_KLANG_TRUE.<br>
+
+
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr style="font-weight: bold;">
+
+
+      <td style="background-color: rgb(102, 255, 153);">IrrReleaseSound</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+
+
+IrrReleaseSound ( sound as irr_sound )<br>
+
+
+      <br>
+
+
+Description<br>
+Remove the sound from memory.<br>
+
+
+      <br>
+
+
+Example</td>
+
+
+    </tr>
+
+
+    <tr style="font-family: monospace;">
+
+
+      <td>IrrReleaseSound( BarkingSound )<br>
+
+
+      </td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr style="font-weight: bold;">
+
+
+      <td style="background-color: rgb(102, 255, 153);">IrrKlangGetPlayLength</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+
+
+uinteger = IrrKlangGetPlayLength ( sound as irr_sound )<br>
+
+
+      <br>
+
+
+Description<br>
+Get the play length of the sound in miliseconds.<br>
+
+
+      <br>
+
+
+Example</td>
+
+
+    </tr>
+
+
+    <tr style="font-family: monospace;">
+
+
+      <td>DIM soundLength as uinteger = IrrKlangGetPlayLength( userSample )</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr style="font-weight: bold;">
+
+
+      <td style="background-color: rgb(102, 255, 153);">IrrKlangGetPlayPosition</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+
+
+uinteger = 
+
+IrrKlangGetPlayPosition ( sound as irr_sound )<br>
+
+
+      <br>
+
+
+Description<br>
+Get the position of play in the sound in milliseconds.<br>
+
+
+      <br>
+
+
+Example</td>
+
+
+    </tr>
+
+
+    <tr style="font-family: monospace;">
+
+
+      <td>playPosition = IrrKlangGetPlayPosition( timeoutSound )</td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr style="font-weight: bold;">
+
+
+      <td style="background-color: rgb(102, 255, 153);">IrrKlangIsFinished</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+uinteger = IrrKlangIsFinished ( sound as irr_sound )<br>
+
+
+      <br>
+
+
+Description<br>
+
+
+Read a mouse event from the Irrlicht window the properties of the mouse
+event are stored in the returned type.<br>
+
+
+      <br>
+
+
+Example</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td><span style="font-family: monospace;">while IrrKlangIsFinished = IRR_KLANG_FALSE</span><br>
+      <span style="font-family: monospace;">&nbsp; &nbsp; sleep 1</span><br style="font-family: monospace;">
+      <span style="font-family: monospace;"></span>
+
+      <span style="font-family: monospace;"></span><span style="font-family: monospace;">wend</span></td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr style="font-weight: bold;">
+
+
+      <td style="background-color: rgb(102, 255, 153);">IrrKlangSetIsPaused</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+IrrKlangSetIsPaused ( sound as irr_sound, pause as uinteger )<br>
+
+
+      <br>
+
+
+Description<br>
+Pause and unpause the sound<br>
+
+
+      <br>
+
+
+Example</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td><span style="font-family: monospace;">IrrKlangSetIsPaused ( currentTrack, IRR_KLANG_TRUE )</span><span style="font-family: monospace;"><br>
+      </span></td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr style="font-weight: bold;">
+
+
+      <td style="background-color: rgb(102, 255, 153);">IrrKlangSetPlaybackSpeed</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+IrrKlangSetPlaybackSpeed&nbsp;( sound as irr_sound, speed as single )<br>
+
+
+      <br>
+
+
+Description<br>
+Set the playback speed of the sound.<br>
+
+
+      <br>
+
+
+Example</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td><span style="font-family: monospace;">IrrKlangSetPlaybackSpeed&nbsp;( strangeVoice, 0.5 )</span><span style="font-family: monospace;"><br>
+      </span></td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr style="font-weight: bold;">
+
+
+      <td style="background-color: rgb(102, 255, 153);">IrrKlangSetPlayPosition</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+IrrKlangSetPlayPosition&nbsp;( sound as irr_sound, position as uinteger )<br>
+
+
+      <br>
+
+
+Description<br>
+Set the playback position of the sound in miliseconds.<br>
+
+
+      <br>
+
+
+Example</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td><span style="font-family: monospace;">IrrKlangSetPlayPosition&nbsp;( musicTrack, 5000 )</span><span style="font-family: monospace;"><br>
+      </span></td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr style="font-weight: bold;">
+
+
+      <td style="background-color: rgb(102, 255, 153);">IrrKlangSetPosition</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+IrrKlangSetPosition&nbsp;( sound as irr_sound, positionX as single,  positionY as single,  positionZ as single )<br>
+
+
+      <br>
+
+
+Description<br>
+Set the position of the sound in 3D space.<br>
+
+
+      <br>
+
+
+Example</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td><span style="font-family: monospace;">IrrKlangSetPosition&nbsp;( spookyGrowl, monsterX, monsterY, monsterZ )</span><span style="font-family: monospace;"><br>
+      </span></td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr style="font-weight: bold;">
+
+
+      <td style="background-color: rgb(102, 255, 153);">IrrKlangSetVolume</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+IrrKlangSetVolume&nbsp;( sound as irr_sound, volume as single )<br>
+
+
+      <br>
+
+
+Description<br>
+Set the volume of the sound.<br>
+
+
+      <br>
+
+
+Example</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td><span style="font-family: monospace;">IrrKlangSetVolume&nbsp;( brokenTurbine, 0.25 )</span><span style="font-family: monospace;"><br>
+      </span></td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr style="font-weight: bold;">
+
+
+      <td style="background-color: rgb(102, 255, 153);">IrrKlangSetMinDistance</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+IrrKlangSetMinDistance&nbsp;( sound as irr_sound, distance as single )<br>
+
+
+      <br>
+
+
+Description<br>
+Set the minimum distance at which the sound can be heard, at this distance from the sound the volume will be zero.<br>
+
+
+      <br>
+
+
+Example</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td><span style="font-family: monospace;">IrrKlangSetMinDistance&nbsp;( helicopterEngine, 400.0 )</span><span style="font-family: monospace;"><br>
+      </span></td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+<br>
+
+
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+
+  <tbody>
+
+
+    <tr style="font-weight: bold;">
+
+
+      <td style="background-color: rgb(102, 255, 153);">IrrKlangStopSound</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td>Syntax<br>
+IrrKlangStopSound&nbsp;( sound as irr_sound, distance as single )<br>
+
+
+      <br>
+
+
+Description<br>
+Stop the sound playing.<br>
+
+
+      <br>
+
+
+Example</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td><span style="font-family: monospace;">IrrKlangStopSound&nbsp;( fallingBoxes )</span><span style="font-family: monospace;"><br>
+      </span></td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+<br>
+
+
+</body>
+</html>

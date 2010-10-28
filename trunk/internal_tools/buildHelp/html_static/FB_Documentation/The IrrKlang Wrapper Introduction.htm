@@ -1,0 +1,380 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html style="direction: ltr;">
+<head>
+
+
+  
+  <meta content="text/html; charset=windows-1252" http-equiv="CONTENT-TYPE">
+
+  
+
+
+  
+  <title>Introduction to the Wrapper Library for Irrlicht</title>
+  <meta content="OpenOffice.org 1.1.2 (Win32)" name="GENERATOR">
+
+
+  
+  <meta content="Frank Dodd" name="AUTHOR">
+
+
+  
+  <meta content="20060401;17312090" name="CREATED">
+
+
+  
+  <meta content="Frank Dodd" name="CHANGEDBY">
+
+
+  
+  <meta content="20060402;9384696" name="CHANGED">
+
+
+  
+  <style>
+<!--
+@page { size: 21cm 29.7cm; margin: 2cm }
+P { margin-bottom: 0.21cm }
+-->
+  </style>
+</head>
+
+
+<body style="direction: ltr;">
+
+
+<table style="width: 100%; height: 100px; text-align: left; margin-left: auto; margin-right: auto;" border="0" cellpadding="0" cellspacing="0">
+
+
+  <tbody>
+
+
+    <tr>
+
+
+      <td style="background-color: rgb(255, 186, 0);"></td>
+
+
+      <td style="width: 512px;" background="media/squigle.jpg">
+      
+      <h1 style="text-align: center;">Wrapper Library for
+IrrKlang</h1>
+
+
+      
+      <h1 style="text-align: center;">Introduction</h1>
+
+
+      </td>
+
+
+      <td></td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+
+<h2>Overview</h2>
+
+
+<span style="font-weight: bold; color: rgb(255, 0, 0);">Important: </span><span style="color: rgb(255, 0, 0);">Please
+note that although the IrrKlang wrapper is free for both commercial and
+non comercial use </span><span style="font-weight: bold; color: rgb(255, 0, 0);">IrrKlang</span><span style="color: rgb(255, 0, 0);"> is licensed free for </span><span style="font-weight: bold; color: rgb(255, 0, 0);">non commercial use only</span><span style="color: rgb(255, 0, 0);">,
+please visit </span><a style="color: rgb(255, 0, 0);" href="http://www.ambiera.com/irrklang">http://www.ambiera.com/irrklang</a><span style="color: rgb(255, 0, 0);">
+for further details.<br>
+<br>
+<span style="font-weight: bold;">MP3 Licensing Issues:</span> This
+package does not include the MP3 plugin module required to play MP3
+sound files (although you can download IrrKlang and copy the <span style="font-weight: bold;">ikpMP3.dll</span>
+into your IrrKlangWrapper directory for full MP3 support). A large
+number of companies have claimed ownership of patents nessecary to
+implement MP3 and Thompson Consumer Electronics in particular has been
+activlty enforcing those patents (although they themselves have also
+been subject to lawsuites alledging IP infringment) &nbsp;These patents
+do not expire until 2012 at the earliest and possibly 2017 if some
+questionable claims can be enforced. To avoid problems my personal
+recommendation is to <span style="font-weight: bold;">use the Open Source Patent free OGG Vorbis format</span> that delievers comparable or superior quality and performance <a href="http://www.vorbis.com/">http://www.vorbis.com/</a>.<br>
+</span>
+
+<br>
+
+
+The first thing I must do
+is acknowledge
+the fantastic work that has been carried out by the many different
+authors whos amazing work makes it possible for this package to enable
+BASIC programmers to easily incorporate audio and manage the sound
+system for a complete multi-media application.
+<p style="margin-bottom: 0cm;">This wrapper library
+provides a <span style="font-weight: bold;">simple</span>
+and <span style="font-weight: bold;">partial</span>
+gateway from non object-oriented
+languages like <span style="font-weight: bold;">FreeBasic</span>
+into the object oriented audio engine <span style="font-weight: bold;">IrrKlang</span>.
+Although the wrapper only exposes part of the
+functionality of IrrKlang it endevours to expose the most important
+parts to give you access to IrrKlangs powerful features. It does not
+directly expose the IrrKlang commands but provides a seperate syntax
+to encapsulate the engine. </p>
+
+
+<p style="margin-bottom: 0cm;">In total it provides
+over 20 commands that
+cover streaming and memory playback of&nbsp;2D and 3D sounds.</p>
+
+
+<p style="margin-bottom: 0cm;">This document serves
+as an
+introduction
+into the wrapper, from here I suggest you follow the installation
+instructions below and then try out the examples, these practical
+demonstrations provide an excellent way to learn how the wrapper
+functions. If you need specific information your first port of call
+will be the reference manual and your last port of call the&nbsp;<b><i>IrrKlangWrapper.bi</i></b>
+which hopefully you will not need.</p>
+
+<p style="margin-bottom: 0cm;"></p>
+
+
+<table style="text-align: left; width: 100%;" border="0" cellpadding="0" cellspacing="0">
+
+
+  <tbody>
+
+
+    <tr>
+
+
+      <td>
+      
+      <h2>Installation</h2>
+
+
+      
+      <p style="margin-bottom: 0cm;">The installation of
+the
+IrrKklangWrapper for FreeBasic package is very simple, just extract the
+zip file to a folder of your choice and your ready to go. You may
+prefer to&nbsp;move the <b><i>IrrKlangWrapper.bi</i></b>
+file to
+your <b><i>FreeBasic\inc </i></b>directory
+however I leave it where it is and create my project files within the
+same directory.
+The wrapper uses a standard IrrKlang DLL and as such you can import any
+IrrKlang DLL you wish to use however this library was built with a
+specific version of IrrKlang and newer versions may not operate as
+expected.</p>
+
+
+      <br>
+
+
+      <span style="font-weight: bold;">Note: You will need
+FreeBasic verion 0.20 or better to use the wrapper</span>
+      
+      <h2>The Audio Engine</h2>
+
+
+When you start Irrlicht
+with the <b><i>IrrKlangStart</i></b> command
+you create an object that manages your loaded library of sounds, it
+provides commands that allow you to control the playback of those
+sounds and to free them up to release memory for other things you may
+wish to load.</td>
+
+
+      <td>
+      
+      <p style="margin-bottom: 0cm;" align="center"><img style="width: 256px; height: 256px;" alt="" src="media/diagram.jpg"><br>
+
+
+      </p>
+
+
+      </td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+
+<br>
+
+<h2>The Sound Object</h2>
+
+
+A sound object is an audio file that may be a WAV sample. MP3 Music and
+even some tracker modules.<br>
+
+
+<br>
+
+
+The sound object is stored in main memory and can be used to create a
+momentary sound effect such as walking feet or the roar of a beast, or
+it can be used in a looped mannar to create ambient background sound or
+to play a musical track.<br>
+
+
+<br>
+
+
+When you load a new sound the wrapper will return the object to you as
+an <b><i>irr_sound </i></b>type <span style="font-weight: bold;">only if you set the track
+parameter to true</span>, otherwise it will return an empty
+object to you that you cannot use later. If you have a large number of
+sounds you should store the sound objects and remove them from memory
+when they are no longer needed.<br>
+
+<h2>License</h2>
+
+<p style="margin-bottom: 0cm;">The IrrKlang library and its associated
+modules are licensed seperately under the terms described within the
+readme.txt file supplied with this package.</p>
+
+<p style="margin-bottom: 0cm;">The IrrKlang Wrapper is provided
+'as-is',
+without any express or implied warranty. In no event will the author
+be held liable for any damages arising from the use of this software.
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute
+it freely, subject to the following restrictions:</p>
+
+
+<p style="margin-bottom: 0cm;">1. The origin of this
+software must not
+be misrepresented; you must not claim that you wrote the original
+software. If you use this software in a product, an acknowledgment in
+the product documentation would be appreciated but is not required.</p>
+
+
+<p style="margin-bottom: 0cm;">2. Altered source versions
+must be
+plainly marked as such, and must not be misrepresented as being the
+original software.</p>
+
+
+<p style="margin-bottom: 0cm;">3. This notice may not be
+removed or
+altered from any source distribution.</p>
+
+
+<p style="margin-bottom: 0cm;"></p>
+
+
+<h2>Contact</h2>
+
+
+If you have any problems or
+suggestions
+I would be happy to receive them. Although I can not promise any
+action or an individual response I do try to help where possible and
+to look after my babies even when I release them into the
+wild. Mail::frankdodd@ukonline.co.uk<br>
+
+
+<br>
+
+
+<h2>Acknowledgements</h2>
+
+
+I wish to express my gratitude &nbsp;to the following people that
+have helped with contributions to the wrapper or with technical
+assistance for various features and problems.<br>
+
+
+<br>
+
+
+<table style="width: 100%;" border="0" cellpadding="0" cellspacing="0">
+
+
+  <tbody>
+
+
+    <tr>
+
+
+      <td style="font-weight: bold;">IrrKlang</td>
+
+
+      <td>Nikolaus Gebhardt: http://www.ambiera.com/irrklang</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td style="font-weight: bold;">FreeBasic</td>
+
+
+      <td>
+http://www.freebasic.net/index.php/about?section=credits</td>
+
+
+    </tr>
+
+
+
+
+
+
+
+
+    <tr>
+
+
+      <td style="font-weight: bold;">Many
+thanks for the development tools</td>
+
+
+      <td> Code::Blocks (www.codeblocks.org);
+GCC Compiler (gcc.gnu.org); FBIde (www.freebasic.net); FBEdit
+(fbedit.freebasic.net); NVu</td>
+
+
+    </tr>
+
+
+    <tr>
+
+
+      <td style="font-weight: bold;">Lots of thanks for
+help in the Forums</td>
+
+
+      <td><span class="postbody">Eponasoft;&nbsp;</span><span class="postbody"></span><span class="name">Daiwa;
+      </span><span class="postbody"></span><span class="name">C</span><span class="name">rocodudule,
+      </span><span class="postbody">John K, AlecZ,
+Alvaro Victor;&nbsp;</span><span class="name">thebignic
+and everyone that has offered their support. Thanks.</span></td>
+
+
+    </tr>
+
+
+  
+  </tbody>
+</table>
+
+
+<br>
+
+
+<br>
+
+
+</body>
+</html>

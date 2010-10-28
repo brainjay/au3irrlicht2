@@ -535,7 +535,7 @@ EndFunc   ;==>_IrrGetChildCollisionNodeFromRay
 ; Description ...: The node and its children are recursively tested and the first node that contains the matched point is returned.
 ; Syntax.........: _IrrGetChildCollisionNodeFromPoint($h_Node, $i_Mask, $i_Recurse, $a_PointVector)
 ; Parameters ....: $h_Node - [explanation]
-;                  $i_Mask
+;                  $i_Mask -
 ;                  $i_Recurse -
 ;                  $a_PointVector -
 ; Return values .: Success - [explanation]
@@ -685,8 +685,7 @@ EndFunc   ;==>_IrrIsPointInsideNode
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetCollisionResultPosition
-; Description ...: Collides a moving ellipsoid with a 3d world with gravity and returns the resulting new position of the ellipsoid,
-;                  the point at which the elipsoid collided with the surface and whether the ellipsoid is falling through the air.
+; Description ...: Collides moving ellipsoid with 3d world with gravity and returns resulting new position of the ellipsoid.
 ; Syntax.........: _IrrGetCollisionResultPosition($h_Selector, ByRef $a_EllipsoidPosition, ByRef $a_EllipsoidRadius, ByRef $a_Velocity, ByRef $a_Gravity, $f_SlidingSpeed, ByRef $a_OutPosition, ByRef $a_OutHitPosition, ByRef $i_OutFalling)
 ; Parameters ....: $h_Selector -
 ;                  $a_EllipsoidPosition -
@@ -702,7 +701,7 @@ EndFunc   ;==>_IrrIsPointInsideNode
 ;                  |[moreExplanationIndented]
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: Returned resulting new position of the ellipsoid is the point at which the elipsoid collided with the surface and whether the ellipsoid is falling through the air.
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]

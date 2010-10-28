@@ -13,8 +13,8 @@
   
 
 
-=== 2.05 (2010-10-14) ==========================================================  
-
+=== 2.05 (2010-xx-xx) ==========================================================  
+[work in progress!]
 
 
 > UDFs:
@@ -44,7 +44,8 @@
   $s_XXX to $h_XXX, Changed "str" to "ptr" in 6 instances for the DllCall.
 - Changed: _IrrLoadSphericalTerrainVertexColor 6 face image paramater names from
   $s_XXX to $h_XXX, changed "str" to "ptr" in 6 instances for the DllCall.
-  
++ Added: new include Sound.au3 in \include for usage of Irrklang.dll and IrrKlangWrapper.dll (now included in \bin). No change in general usage - including of au3Irrlicht2.au3 will handle all needed things.
+
 
 
 > Examples:
@@ -53,7 +54,7 @@
   3096 (LightingAndShadowMaps)
 - Changed: 031 (Loading_Scene) for example.irr scene from irrlicht-1.7.1 sdk.
   (The scene shows the potential of IrrLicht a bit better)
-
++ Changed: 001 (HelloWorld) to show basic usage of sound.
 
 
 > Help file:
@@ -71,16 +72,16 @@
 - Added: more header info for functions in au3Irr2_Lighting.au3
 - Added: more header info for functions in au3Irr2_FilingSystem.au3
 - Added: more header info for functions in au3Irr2_Node.au3
-
++ Added original IrrKlangWrapper documentation below FreeBasic Wrapper docs
 
 
 > Other:
 
-+ Added: Tools\FontTool.exe (used for creating bmp fonts, comes from IrrLicht 1.7.1 sdk) 
++ Added: bin\FontTool.exe (used for creating bmp fonts, comes from IrrLicht 1.7.1 sdk) 
 - Changed: global $result is no longer used and has been removed from au3Irr2_Constants.au3
 - Added: example.zip to \media directory (for Load Scene examples, 200KB in size)
 - Removed: SimpleScene.irr from \media directory as it's no longer needed.
-- Moved: FontTool.exe, FontTool.txt to \Bin directory and removed \Tools directory 
+
 
 === 2.04 (2010-10-09) ==========================================================
 

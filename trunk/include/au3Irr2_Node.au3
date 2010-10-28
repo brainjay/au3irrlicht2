@@ -153,9 +153,7 @@ EndFunc   ;==>_IrrGetMaterialCount
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: None.
-; Related .......: _IrrGetMaterialCount, _IrrSetMaterialBlend, _IrrMaterialSetShininess, _IrrMaterialSetSpecularColor,
-;                  _IrrMaterialSetDiffuseColor, _IrrMaterialSetAmbientColor, _IrrMaterialSetEmissiveColor,
-;                  _IrrMaterialSetMaterialTypeParam
+; Related .......: _IrrGetMaterialCount, _IrrSetMaterialBlend, _IrrMaterialSetShininess, _IrrMaterialSetSpecularColor, _IrrMaterialSetDiffuseColor, _IrrMaterialSetAmbientColor, _IrrMaterialSetEmissiveColor, _IrrMaterialSetMaterialTypeParam
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -711,7 +709,7 @@ EndFunc   ;==>_IrrSetNodeParent
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: Each node can have a 32 bit signed identification number assigned to them this can be used in
-;				   collision operations to filter out particular classes of object.
+;                  collision operations to filter out particular classes of object.
 ; Related .......: _IrrSetNodeID, _IrrGetSceneNodeFromId
 ; Link ..........:
 ; Example .......: Yes
@@ -735,7 +733,7 @@ EndFunc   ;==>_IrrGetNodeID
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: Each node can have a 32 bit signed identification number assigned to them this can be used in
-;				   collision operations to filter out particular classes of object.
+;                  collision operations to filter out particular classes of object.
 ; Related .......: _IrrGetNodeID, _IrrGetSceneNodeFromId
 ; Link ..........:
 ; Example .......: Yes
