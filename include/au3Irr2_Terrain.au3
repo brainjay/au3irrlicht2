@@ -30,8 +30,8 @@
 ;_IrrGetTerrainTileHeight
 ;_IrrScaleTileTexture
 ;_IrrSetTileColor
-;_IrrSetSphericalTerrainTexture
 ;_IrrScaleSphericalTexture
+;_IrrSetSphericalTerrainTexture
 ;_IrrGetSphericalTerrainSurfacePosition
 ;_IrrGetSphericalTerrainSurfacePositionAndAngle
 ;_IrrGetSphericalTerrainLogicalSurfacePosition

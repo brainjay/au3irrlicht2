@@ -1,4 +1,4 @@
-; userCallTips for au3Irr2 release 2.04 (2010-10-09)
+; userCallTips for au3Irr2 release 2.05 (2010-xx-xx)
 ; === Start of au3Irrlicht2 calltip definitions ======================================================
 
 _IrrSetTextureCreationFlag($i_Flag,$i_Value) Sets texture creation flags controlling how textures are handled when they are created.
@@ -58,30 +58,30 @@ _IrrSetActiveCamera($h_Camera) When you have several camera objects in the scene
 _IrrSetCameraFOV($h_Camera,$f_FOV) Sets the field of vision of the camera.
 _IrrSetCameraAspectRatio($h_Camera,$f_AspectRatio) Sets the aspect ratio of the camera in the same way you think of standard screens and widescreens.
 __CreatePtrKeyMapArray(ByRef $keyStruct,$i_kForward=$KEY_KEY_W,$i_kBackward=$KEY_KEY_S,$i_kLeft=$KEY_KEY_A,$i_kRight=$KEY_KEY_D,$i_kJump=$KEY_SPACE) Helper function: returns pointer to a keymap for _IrrAddFPSCamera.
-_IrrGetCollisionGroupFromMesh($h_Mesh,$h_Node,$i_Frame=0) 
+_IrrGetCollisionGroupFromMesh($h_Mesh,$h_Node,$i_Frame=0) Creates a collision object from the triangles contained within the specified mesh as applied to the position, rotation and scale of the supplied node.
 _IrrGetCollisionGroupFromComplexMesh($h_Mesh,$h_Node,$i_Frame=0) Creates an optimized triangle selection group from a large complex mesh like a map.
-_IrrGetCollisionGroupFromBox($h_Node) 
-_IrrGetCollisionGroupFromTerrain($h_Node,$i_Lod) 
-_IrrRemoveCollisionGroup($h_CollisionGroup,$h_Node) 
-_IrrCreateCombinedCollisionGroup() 
-_IrrAddCollisionGroupToCombination($h_CombinedCollisionGroup,$h_CollisionGroup) 
-_IrrRemoveAllCollisionGroupsFromCombination($h_CombinedCollisionGroup) 
-_IrrRemoveCollisionGroupFromCombination($h_CombinedCollisionGroup,$h_CollisionGroup) 
+_IrrGetCollisionGroupFromBox($h_Node) Creates a collision object from the bounding box of a node.
+_IrrGetCollisionGroupFromTerrain($h_Node,$i_Lod=1) Creates a collision object from a terrain node.
+_IrrRemoveCollisionGroup($h_CollisionGroup,$h_Node) Remove the collision selector from memory.
+_IrrCreateCombinedCollisionGroup() Creates a collision object that can be used to combine several collision objects together.
+_IrrAddCollisionGroupToCombination($h_CombinedCollisionGroup,$h_CollisionGroup) Adds a collision object to group of collision objects.
+_IrrRemoveAllCollisionGroupsFromCombination($h_CombinedCollisionGroup) Empty a collision group object so that you can add different collision groups to it.
+_IrrRemoveCollisionGroupFromCombination($h_CombinedCollisionGroup,$h_CollisionGroup) Remove a single specified collision object from a group of collision objects.
 _IrrGetCollisionPoint($a_StartVector,$a_EndVector,$h_CollisionGroup,byRef $a_CollisionVector) 
-_IrrGetRayFromScreenCoordinates($i_X,$i_Y,$h_Camera) 
-_IrrGetCollisionNodeFromCamera($h_Camera) 
+_IrrGetRayFromScreenCoordinates($i_X,$i_Y,$h_Camera) Gets a ray that goes from the specified camera and through the screen coordinates the information is copied into the supplied start and end vectors.
+_IrrGetCollisionNodeFromCamera($h_Camera) A ray is cast through the camera and the nearest node that is hit by the ray is returned.
 _IrrGetCollisionNodeFromRay(byRef $h_StartVector,byRef $h_EndVector) 
 _IrrGetCollisionNodeFromScreenCoordinates($i_X,$i_Y) 
 _IrrGetScreenCoordinatesFrom3DPosition(ByRef $i_ScreenX,ByRef $i_ScreenY,$a_3DPositionVector) Screen co-ordinates are returned for the position of the specified 3D co-ordinates.
 _IrrGet3DPositionFromScreenCoordinates($i_X,$i_Y,ByRef $a_Vector3df,$h_Camera,$f_NormalX=0.0,$f_NormalY=0.0,$f_NormalZ=1.0,$f_DistanceFromOrigin=0.0) 
 _IrrGet2DPositionFromScreenCoordinates($i_X,$i_Y,ByRef $f_X,ByRef $f_Y,$h_Camera) 
 _IrrGetChildCollisionNodeFromRay($h_Node,$i_Mask,$i_Recurse,$a_StartVector,$a_EndVector) 
-_IrrGetChildCollisionNodeFromPoint($h_Node,$i_Mask,$i_Recurse,$a_PointVector) 
+_IrrGetChildCollisionNodeFromPoint($h_Node,$i_Mask,$i_Recurse,$a_PointVector) The node and its children are recursively tested and the first node that contains the matched point is returned.
 _IrrGetNodeAndCollisionPointFromRay($a_StartVector,$a_EndVector,ByRef $h_Node,ByRef $f_PosX,ByRef $f_PosY,ByRef $f_PosZ,ByRef $f_NormalX,ByRef $f_NormalY,ByRef $f_NormalZ,$i_ID=0,$h_RootNode=$IRR_NO_OBJECT) 
-_IrrGetDistanceBetweenNodes($h_NodeA,$h_NodeB) 
-_IrrAreNodesIntersecting($h_NodeA,$h_NodeB) 
-_IrrIsPointInsideNode($h_NodeA,$f_X,$f_Y,$f_Z) 
-_IrrGetCollisionResultPosition($h_Selector,ByRef $a_EllipsoidPosition,ByRef $a_EllipsoidRadius,ByRef $a_Velocity,ByRef $a_Gravity,$f_SlidingSpeed,ByRef $a_OutPosition,ByRef $a_OutHitPosition,ByRef $i_OutFalling) 
+_IrrGetDistanceBetweenNodes($h_NodeA,$h_NodeB) The distance between two nodes is measured using fast maths functions that will show inaccuracies.
+_IrrAreNodesIntersecting($h_NodeA,$h_NodeB) Tests whether the bounding boxes are two nodes are intersecting.
+_IrrIsPointInsideNode($h_Node,$f_X,$f_Y,$f_Z) Determine if the specified point is inside the bounding box of the node.
+_IrrGetCollisionResultPosition($h_Selector,ByRef $a_EllipsoidPosition,ByRef $a_EllipsoidRadius,ByRef $a_Velocity,ByRef $a_Gravity,$f_SlidingSpeed,ByRef $a_OutPosition,ByRef $a_OutHitPosition,ByRef $i_OutFalling) Collides a moving ellipsoid with a 3d world with gravity and returns the resulting new position of the ellipsoid,
 $IRR_EDT_NULL
 $IRR_EDT_SOFTWARE
 $IRR_EDT_SOFTWARE2
@@ -521,19 +521,19 @@ $VECT_X
 $VECT_Y
 $VECT_Z
 _IrrAddZipFile($s_Zipfile,$i_IgnoreCase,$i_IgnorePaths) Adds a zip archive to the filing system allowing to load files out of the zip file.
-_IrrChangeWorkingDirectory($s_WorkingDir) 
-_IrrGetWorkingDirectory() 
+_IrrChangeWorkingDirectory($s_WorkingDir) Change the working directory of the Irrlicht Environment.
+_IrrGetWorkingDirectory() Get the current working directory of the Irrlicht Environment.
 $EVT_GUI_IID
 $EVT_GUI_IEVENT
 $EVT_GUI_IX
 $EVT_GUI_IY				
 __getGuiEvt($p_GUIEvent,$i_Element=$EVT_GUI_IID) Helper function: returns value of $i_Element inside a GuiEvent-structure.
-_IrrGUIClear() 
-_IrrGUIEvents($i_EventsForGUI) 
-_IrrGUIEventAvailable() 
-_IrrReadGUIEvent() 
+_IrrGUIClear() Clears all GUI objects from the display.
+_IrrGUIEvents($i_EventsForGUI) Determine whether the GUI consumes events or not.
+_IrrGUIEventAvailable() Determine if a GUI event is available.
+_IrrReadGUIEvent() Read the oldest GUI event in the buffer.
 _IrrGUIRemove($h_Widget) 
-_IrrGUIGetText($h_Widget) 
+_IrrGUIGetText($h_Widget) Gets the text associated with a GUI object
 _IrrGUISetText($h_Widget,$s_Text) 
 _IrrGUISetFont($h_Font) 
 _IrrGUISetColor($i_Element,$i_Red,$i_Green,$i_Blue,$i_Alpha) 
@@ -555,11 +555,11 @@ _IrrGetLastSelectedFile()
 $EVT_KEY_IKEY
 $EVT_KEY_IDIRECTION
 $EVT_KEY_IFLAGS			
-__getKeyEvt($p_KeyEvent,$i_Element=$EVT_KEY_IKEY) helper function: returns value of $i_Element inside a keyEvent-structure.
 $EVT_MOUSE_IACTION
 $EVT_MOUSE_FDELTA
 $EVT_MOUSE_IX
 $EVT_MOUSE_IY				
+__getKeyEvt($p_KeyEvent,$i_Element=$EVT_KEY_IKEY) helper function: returns value of $i_Element inside a keyEvent-structure.
 __getMouseEvt($p_MouseEvent,$i_Element=$EVT_MOUSE_IACTION) helper function: returns value of $i_Element inside a MouseEvent-structure.
 _IrrKeyEventAvailable() Determine if there are any keystrokes waiting to be read.
 _IrrReadKeyEvent() Read a key event from the Irrlicht window.
@@ -572,16 +572,16 @@ _IrrShowMouse() Shows the mouse pointer
 _IrrDisplayMouse($i_HideShow) Hide or show the mouse pointer while it is within the Irrlicht display.
 _IrrAddLight($h_parentNode,$f_X,$f_Y,$f_Z,$f_Red,$f_Green,$f_Blue,$f_Size) Adds a light node into scene to naturally illuminate your scene.
 _IrrSetAmbientLight($f_Red,$f_Green,$f_Blue) Sets the ambient lighting level across entire scene.
-_IrrSetLightAmbientColor($h_Light,$f_Red,$f_Green,$f_Blue) 
-_IrrSetLightAttenuation($h_Light,$f_Red,$f_Green,$f_Blue) 
-_IrrSetLightCastShadows($h_Light,$i_Shadows) 
-_IrrSetLightDiffuseColor($h_Light,$f_Red,$f_Green,$f_Blue) 
-_IrrSetLightFalloff($h_Light,$f_Falloff) 
-_IrrSetLightInnerCone($h_Light,$f_InnerCone) 
-_IrrSetLightOuterCone($h_Light,$f_OuterCone) 
-_IrrSetLightRadius($h_Light,$f_Radius) 
-_IrrSetLightSpecularColor($h_Light,$f_Red,$f_Green,$f_Blue) 
-_IrrSetLightType($h_Light,$i_Type) 
+_IrrSetLightAmbientColor($h_Light,$f_Red,$f_Green,$f_Blue) Set the ambient color emitted by the light.
+_IrrSetLightAttenuation($h_Light,$f_Constant,$f_Linear,$f_Quadratic) Changes the light strength fading over distance.
+_IrrSetLightCastShadows($h_Light,$i_Shadows) Specifies whether the light casts shadows in the scene or not.
+_IrrSetLightDiffuseColor($h_Light,$f_Red,$f_Green,$f_Blue) Set the light diffuse color.
+_IrrSetLightFalloff($h_Light,$f_Falloff) Sets the light strength's decrease between Outer and Inner cone.
+_IrrSetLightInnerCone($h_Light,$f_InnerCone) The angle of the spot's inner cone. Ignored for other lights.
+_IrrSetLightOuterCone($h_Light,$f_OuterCone) The angle of the spot's outer cone. Ignored for other lights.
+_IrrSetLightRadius($h_Light,$f_Radius) Set the radius of light.
+_IrrSetLightSpecularColor($h_Light,$f_Red,$f_Green,$f_Blue) Sets specular color emitted by the light.
+_IrrSetLightType($h_Light,$i_Type) Set the type of light to be used.
 _IrrSetNodeAmbientColor($h_Node,$i_Color) 
 _IrrSetNodeDiffuseColor($h_Node,$i_Color) 
 _IrrSetNodeSpecularColor($h_Node,$i_Color) 
@@ -614,11 +614,11 @@ _IrrXEffectsEnableDepthPass($i_Enable)
 _IrrXEffectsAddPostProcessingFromFile($s_Name,$i_Enable=0) 
 _IrrXEffectsAddNodeToDepthPass($h_Node) 
 _IrrXEffectsSetPostProcessingUserTexture($h_Texture) 
-_IrrGetNodeName($h_Node) 
-_IrrSetNodeName($h_Node,$s_Name) 
-_IrrGetNodeMesh ($h_Node) 
-_IrrGetMaterialCount($h_Node) 
-_IrrGetMaterial($h_Node,$i_Material) 
+_IrrGetNodeName($h_Node) Get the name of the node.
+_IrrSetNodeName($h_Node,$s_Name) Set the name of a node.
+_IrrGetNodeMesh ($h_Node) Get the mesh that is associated with a node
+_IrrGetMaterialCount($h_Node) Get the number of materials associated with a node.
+_IrrGetMaterial($h_Node,$i_Material) Get the material associated with the node at the particular index.
 _IrrSetNodeMaterialTexture($h_Node,$h_Texture,$i_Index) Applys a texture to a node in the scene.
 _IrrSetNodeMaterialFlag($h_Node,$i_Type,$i_Flag) Sets material properies of a node that will effect its appearance on the screen.
 _IrrSetNodeMaterialType($h_Node,$i_Type) Set the way that materials are applied to a scene node
@@ -629,20 +629,21 @@ _IrrDebugDataVisible($h_Node,$i_Visible=$EDS_BBOX) Displays debugging data aroun
 _IrrGetNodePosition($h_Node) Returns array with position coordinates of a scene node.
 _IrrGetNodeAbsolutePosition($h_Node) Get the absoloute position of the node in the scene.
 _IrrGetNodeRotation($h_Node) Returns array with rotation values of a scene node.
-_IrrGetJointNode($h_Node,$s_Joint) 
-_IrrAddChildToParent($h_ChildNode,$h_ParentNode) 
+_IrrGetNodeScale($h_Node,$f_X,$f_Y,$f_Z) Get the scale of a node in the scene.
+_IrrGetJointNode($h_Node,$s_Joint) This supplies you with an invisible node that follows the motion of a particular joint in an animated models skeleton.
+_IrrAddChildToParent($h_ChildNode,$h_ParentNode) Attaches the child node to the parent node.
 _IrrGetNodeFirstChild($h_Node,ByRef $h_Position) 
 _IrrGetNodeNextChild($h_Node,ByRef $h_Position) Get the next child node of this node, returns 0 if there is no child.
 _IrrIsNodeLastChild($h_Node,ByRef $h_Position) 
 _IrrAddNodeShadow($h_Node,$h_mesh=0) Adds shadows to a node that are cast across other nodes in the scene.
-_IrrSetNodeVisibility($h_Node,$i_Visible) 
+_IrrSetNodeVisibility($h_Node,$i_Visible) This allows you to hide nodes from the display.
 _IrrRemoveNode($h_Node) Removes a node from the scene deleting it.
-_IrrRemoveAllNodes() 
+_IrrRemoveAllNodes() Clears the entire scene, any references to nodes in the scene will become invalid.
 _IrrSetNodeParent($h_Node,$h_Parent) 
-_IrrGetNodeID($h_Node) 
-_IrrSetNodeID($h_Node,$i_ID) 
+_IrrGetNodeID($h_Node) Get the ID of a scene node.
+_IrrSetNodeID($h_Node,$i_ID) Set the ID of a scene node.
 _IrrGetNodeBoundingBox($h_Node,ByRef $a_VectorA3df,ByRef $a_VectorB3df) 
-Func _IrrSetNodeRotationPositionChange($h_Camera,$f_Yaw,$f_Pitch,$f_Roll,$f_Drive,$f_Strafe,$f_Elevate,_ 
+_IrrSetNodeRotationPositionChange($h_Camera,$f_Yaw,$f_Pitch,$f_Roll,$f_Drive,$f_Strafe,$f_Elevate,_ 
 Func xxx_IrrSetNodeRotationPositionChange($h_Camera,$f_Yaw,$f_Pitch,$f_Roll,$f_Drive,$f_Strafe,$f_Elevate,_ 
 __CreateParticleSettings($minBoxX,$minBoxY,$minBoxZ,$maxBoxX,$maxBoxY,$maxBoxZ,$directionX,$directionY,$directionZ,$minParticlesSecond,$maxParticlesSecond,$minStartColorR,$minStartColorG,$minStartColorB,$maxStartColorR,$maxStartColorG,$maxStartColorB,$minLifetime,$maxLifetime,$minStartSizeX,$minStartSizeY,$maxStartSizeX,$maxStartSizeY,$maxAngleDegrees) Helper function: Creates particle settings as required from _IrrAddParticleEmitter.
 _IrrAddParticleEmitter($h_ParticleSystem,$a_Settings) Adds a particle emitter to a particle system.
@@ -703,8 +704,8 @@ _IrrSetMeshVertexSingleColor($h_Mesh,$i_FrameNumber,$h_VertexColourStruct,$h_Ver
 _IrrAddMeshToScene($h_Mesh) Adds a mesh to the scene as a new 3D node.
 _IrrAddMeshToSceneAsOcttree($h_Mesh) Adds a mesh to the scene as a new 3D node, optimised with an Octtree.
 _IrrAddStaticMeshForNormalMappingToScene($h_Mesh) 
-_IrrLoadScene($s_Filename) 
-_IrrSaveScene($s_Filename) 
+_IrrLoadScene($s_Filename) Loads all meshes and creates nodes for a scene defined within a file created by au3irrlicht2 or IrrEdit.
+_IrrSaveScene($s_Filename) Saves the current scene into a file that can be loaded by au3irrlicht2 or irrEdit.
 _IrrGetSceneNodeFromId($i_ID) 
 _IrrGetSceneNodeFromName($s_Name) 
 _IrrAddBillBoardToScene($f_XSize,$f_YSize,$f_XPos=0.0,$f_YPos=0.0,$f_ZPos=0.0) Adds a billboard to the scene of the specified size and at the specified position.
@@ -735,11 +736,12 @@ _IrrSetGrassDensity($h_Grass,$f_Density,$f_Distance) Set the grass density.
 _IrrSetGrassWind($h_Grass,$f_Strength,$f_Resolution) Set the grass wind effect.
 _IrrGetGrassDrawCount($h_Grass) Get the number of grass objects drawn.
 _IrrSetFlareScale($h_Flare,$f_Source,$f_Optics) Sets the scale of optics in the scene.
+_IrrSetFlareScale($h_Flare,$f_Source,$f_Optics) 
 _IrrCreateBatchingMesh() Create a batching mesh that will be a collection of other meshes into a single source mesh.
 _IrrAddToBatchingMesh($h_meshBatch,$h_mesh,$f_posX=0.0,$f_posY=0.0,$f_posZ=0.0,$f_rotX=0.0,$f_rotY=0.0,$f_rotZ=0.0,$f_scaleX=1.0,$f_scaleY=1.0,$f_scaleZ=1.0) Adds a mesh to the batching mesh at the specified position, rotation and scale.
 _IrrFinalizeBatchingMesh($h_meshBatch) Finalises the batching mesh.
 _IrrSetMeshMaterialTexture($h_mesh,$h_texture,$i_index,$i_buffer=0) 
-_IrrScaleMesh($h_mesh,$f_scale,$i_frame=0,$i_meshBuffer=0,$h_sourceMesh=0) 
+_IrrScaleMesh($h_mesh,$f_scale,$i_frame=0,$i_meshBuffer=0,$h_sourceMesh=0) Scales the verticies in a mesh without affecting the normals, tangents or texture co-ordinates.
 _IrrAddBeamSceneNode() Add a beam scene node.
 _IrrSetBeamSize($h_BeamNode,$f_Size) Sets the width of a beam node.
 _IrrSetBeamPosition($h_BeamNode,$f_SX,$f_SY,$f_SZ,$f_EX,$f_EY,$f_EZ) Sets the start and end positions of a beam node. The beam will stretch between the two nodes.
@@ -756,6 +758,16 @@ _IrrBillBoardForceUpdate($h_BillboardGroup) Force the billboard group update the
 _IrrAddLODManager($u_FadeScale,$u_UseAlpha[,$p_Callback=0]) Adds a level of detail manager to the scene.
 _IrrAddLODMesh($h_LODManager,$f_Distance,$h_Mesh) Set the distance at which a particular mesh is to be applied to child mesh nodes.
 _IrrSetLODMaterialMap($h_LODManager,$i_SourceType,$i_TargetType) Specifies which material is used to apply the fade effect for another material type.
+$ESM_AUTO_DETECT
+$ESM_STREAMING
+$ESM_NO_STREAMING
+$ESM_FORCE_32_BIT
+_IrrKlangStart() Starts the IrrKlang sound engine ready to manage sounds.
+_IrrKlangStop() Stops the IrrKlang sound engine.
+_IrrKlangPlay2D($sFile,$bLooped=False,$bStartPaused=False,$bTrack=False,$iStreamMode=$ESM_AUTO_DETECT,$bSoundEffects=False) 
+_IrrKlangSetVolume($hSound,$fVolume) 
+_IrrKlangIsFinished($hSound) 
+_IrrReleaseSound($hSound) 
 _IrrStart($i_DeviceType=$IRR_EDT_DIRECT3D9,$i_ScreenWidth=800,$i_ScreenHeight=600,$i_BitsPerPixel=$IRR_BITS_PER_PIXEL_32,$b_FullScreen=$IRR_WINDOWED,$b_Shadows=$IRR_NO_SHADOWS,$b_InputCapture=$IRR_IGNORE_EVENTS,$b_VSync=$IRR_VERTICAL_SYNC_OFF) Opens the IrrlichtWrapper.dll, starts Irrlicht interface and opens a window for rendering.
 _IrrStartAdvanced($i_DeviceType=$IRR_EDT_DIRECT3D9,$i_ScreenWidth=800,$i_ScreenHeight=600,$i_BitsPerPixel=$IRR_BITS_PER_PIXEL_32,$b_FullScreen=$IRR_WINDOWED,$b_Shadows=$IRR_NO_SHADOWS,$b_InputCapture=$IRR_IGNORE_EVENTS,$b_VSync=$IRR_VERTICAL_SYNC_OFF,$i_TypeOfDevice=0,$b_DoublebufferEnabled=$IRR_OFF,$i_AntialiasEnabled=0,$b_HighPrecisionFpu=$IRR_OFF) Opens the IrrlichtWrapper.dll and starts Irrlicht engine with advanced method.
 _IrrRunning() Used to determine if the Irrlicht engine is still running.
@@ -772,15 +784,15 @@ _IrrTransparentZWrite()
 _IrrGetFPS() 
 _IrrGetPrimitivesDrawn() 
 _IrrSetWindowCaption($s_Caption) Set the caption in the Irrlicht window title bar.
-_IrrIsFullscreen() 
-_IrrIsWindowActive() 
-_IrrIsWindowFocused() 
-_IrrIsWindowMinimized() 
-_IrrGetScreenSize(ByRef $i_Width,ByRef $i_Height) 
-_IrrMaximizeWindow() 
-_IrrMinimizeWindow() 
-_IrrRestoreWindow() 
-_IrrSetResizableWindow($i_Resizable) 
+_IrrIsFullscreen() Checks if the Irrlicht window is running in fullscreen mode.
+_IrrIsWindowActive() Check if the window is active.
+_IrrIsWindowFocused() Checks if the Irrlicht window has focus.
+_IrrIsWindowMinimized() Checks if the Irrlicht window is minimized.
+_IrrGetScreenSize(ByRef $i_Width,ByRef $i_Height) Get the screen size.
+_IrrMaximizeWindow() Maximizes the window if possible.
+_IrrMinimizeWindow() Minimizes the window if possible.
+_IrrRestoreWindow() Restore the window to normal size if possible.
+_IrrSetResizableWindow($i_Resizable) Make the window resizable.
 _IrrMakeARGB($i_Alpha,$i_Red,$i_Green,$i_Blue) Computes valid 32bit color value including alpha (translucency) as expected from several functions.
 _IrrQueryFeature($i_Feature) 
 _IrrDisableFeature($i_Feature,$i_Flag) 
@@ -793,20 +805,20 @@ __CreateVectStruct($iVect) Helper function: creates a structure array of vectors
 __GetVectStruct(ByRef $tVector,$iVector,$vMember) Helper function: Returns a specific value from a structure array of vectors.
 __SetVectStruct(ByRef $tVector,$iVector,$fX,$fY,$fZ) Helper function: Sets x, y, z values into a structure array of vectors.
 _IrrAddTerrain($s_Path,$f_PosX=0.0,$f_PosY=0.0,$f_PosZ=0.0,$f_RotX=0.0,$f_RotY=0.0,$f_RotZ=0.0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0,$i_VertexAlpha=255,$i_VertexRed=255,$i_VertexGreen=255,$i_VertexBlue=255,$i_Smoothing=0,$i_MaxLOD=5,$i_PatchSize=$ETPS_17) Creates a terrain object from a gray scale bitmap.
-_IrrAddTerrainTile($h_Image,$i_TileSize=256,$i_DataX=0,$i_DataY=0,$f_PosX=0.0,$f_PosY=0.0,$f_PosZ=0.0,$f_RotX=0.0,$f_RotY=0.0,$f_RotZ=0.0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0,$i_Smoothing=1,$i_MaxLOD=5,$i_PatchSize=$ETPS_17) 
-_IrrAddSphericalTerrain($s_TopPath,$s_FrontPath,$s_BackPath,$s_LeftPath,$RightPath,$s_BottomPath,$f_PosX=0.0,$f_PosY=0.0,$f_PosZ=0.0,$f_RotX=0.0,$f_RotY=0.0,$f_RotZ=0.0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0,$i_VertexAlpha=255,$i_VertexRed=255,$i_VertexGreen=255,$i_VertexBlue=255,$i_Smoothing=0,$i_Spherical=0,$i_MaxLOD=5,$i_PatchSize=$ETPS_17) 
-_IrrGetTerrainHeight($h_Terrain,$f_X,$f_Y) 
+_IrrAddTerrainTile($h_Image,$i_TileSize=256,$i_DataX=0,$i_DataY=0,$f_PosX=0.0,$f_PosY=0.0,$f_PosZ=0.0,$f_RotX=0.0,$f_RotY=0.0,$f_RotZ=0.0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0,$i_Smoothing=1,$i_MaxLOD=5,$i_PatchSize=$ETPS_17) Creates a tilable terrain object from a gray scale bitmap where bright pixels are high points on the terrain and black pixels are low points.
+_IrrAddSphericalTerrain($s_TopPath,$s_FrontPath,$s_BackPath,$s_LeftPath,$s_RightPath,$s_BottomPath,$f_PosX=0.0,$f_PosY=0.0,$f_PosZ=0.0,$f_RotX=0.0,$f_RotY=0.0,$f_RotZ=0.0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0,$i_VertexAlpha=255,$i_VertexRed=255,$i_VertexGreen=255,$i_VertexBlue=255,$i_Smoothing=0,$i_Spherical=0,$i_MaxLOD=5,$i_PatchSize=$ETPS_17) Creates a spherical terrain that represents a planetary body.
+_IrrGetTerrainHeight($h_Terrain,$f_X,$f_Z) Get the height of a point on a terrain.
 _IrrScaleTexture($h_Terrain,$f_X,$f_Y) Specifies the scaling of a terrain object detail texture
-_IrrGetTerrainTileHeight($h_Terrain,$f_X,$f_Y) 
-_IrrScaleTileTexture($h_Terrain,$f_X,$f_Y) 
-_IrrAttachTile($h_Terrain,$h_Neighbor,$i_Edge) 
-_IrrSetTileStructure($h_Terrain,$h_Image,$i_X,$i_Y) 
-_IrrSetTileColor($h_Terrain,$h_Image,$i_X=0,$i_Y=0) 
-_IrrScaleSphericalTexture($h_Terrain,$f_X,$f_Y) 
-_IrrSetSphericalTerrainTexture($h_Terrain,$s_Top,$s_Front,$s_Back,$s_Left,$s_Right,$s_Bottom,$i_MaterialIndex) 
-_IrrLoadSphericalTerrainVertexColor($h_Terrain,$s_Top,$s_Front,$s_Back,$s_Left,$s_Right,$s_Bottom) 
+_IrrGetTerrainTileHeight($h_Terrain,$f_X,$f_Z) Get the height of a point on a terrain tile.
+_IrrScaleTileTexture($h_Terrain,$f_X,$f_Y) This call specifies the scaling of the detail texture.
+_IrrAttachTile($h_Terrain,$h_Neighbor,$i_Edge) Set the adjacent tile to this tile node.
+_IrrSetTileStructure($h_Terrain,$h_Image,$i_X,$i_Y) Loads the tile structure from the supplied image file.
+_IrrSetTileColor($h_Terrain,$h_Image,$i_X=0,$i_Y=0) Loads the tile vertex colors from the supplied image file.
+_IrrScaleSphericalTexture($h_Terrain,$f_X,$f_Y) This call specifies the scaling of the detail texture.
+_IrrSetSphericalTerrainTexture($h_Terrain,$h_Top,$h_Front,$h_Back,$h_Left,$h_Right,$h_Bottom,$i_MaterialIndex=0) Apply six textures to the surface of a spherical terrain.
+_IrrLoadSphericalTerrainVertexColor($h_Terrain,$h_Top,$h_Front,$h_Back,$h_Left,$h_Right,$h_Bottom) Apply six images to the vertex colors of the faces.
 _IrrGetSphericalTerrainSurfacePosition($h_Terrain,$i_Face,$f_LogicalX,$f_LogicalZ) Get the surface position of a logical point on the terrain.
-_IrrGetSphericalTerrainSurfacePositionAndAngle($h_Terrain,$i_Face,$f_LogicalX,$f_LogicalY,$f_LogicalZ) 
-_IrrGetSphericalTerrainLogicalSurfacePosition($h_Terrain,$i_Face,$f_LogicalX,$f_LogicalY,$f_LogicalZ) 
+_IrrGetSphericalTerrainSurfacePositionAndAngle($h_Terrain,$i_Face,$f_LogicalX,$f_LogicalZ) Get the surface position and angle of a logical point on the terrain.
+_IrrGetSphericalTerrainLogicalSurfacePosition($h_Terrain,$f_PosX,$f_PosY,$f_PosZ) Convert a co-ordinate into a logical Spherical terrain position.
 
 ; === End of au3Irrlicht2 calltip definitions ========================================================
