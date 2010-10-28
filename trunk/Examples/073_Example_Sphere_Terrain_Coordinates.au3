@@ -69,7 +69,7 @@ EndFunc   ;==>_AddPlanet
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart($IRR_EDT_OPENGL, 512, 512, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart($IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
 		$IRR_WINDOWED, $IRR_SHADOWS, $IRR_IGNORE_EVENTS, $IRR_VERTICAL_SYNC_ON)
 
 ; send the window caption
