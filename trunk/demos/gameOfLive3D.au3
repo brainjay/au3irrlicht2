@@ -47,7 +47,7 @@ Func main()
 
 	Local $skyDome = _IrrAddSkyDomeToScene(_IrrGetTexture("../media/stars_.jpg"), 16, 16, 1, 2)
 	_IrrAddRotationAnimator($skyDome, 0.005, 0, 0.002)
-	_IrrSetAmbientLight(0.4, 0.4, 0.4)
+	_IrrSetAmbientLight(0.2, 0.2, 0.2)
 
 	initGrid($Grid, $turns, $cells)
 	updateGrid($Grid, $cells, $turns)
@@ -285,7 +285,7 @@ func addLightCam()
 	_IrrSetNodeMaterialTexture( $node, _IrrGetTexture("..\media\beam.png"), 0 )
 	_IrrSetNodeMaterialFlag( $node, $IRR_EMF_LIGHTING, $IRR_OFF )
 	_IrrSetNodeMaterialType($node, $IRR_EMT_TRANSPARENT_ALPHA_CHANNEL)
-	_IrrAddLight($node, 0, 0, 0, 1, 1, 1, $GRIDSIZE*3)
+	_IrrAddLight($node, 0, 0, 0, 1, 0.8, 0.8, $GRIDSIZE*2)
 	_IrrAddFlyCircleAnimator($cam, $GRIDSIZE/2, 20, $GRIDSIZE/2, $GRIDSIZE*2, 0.0001)
 	_IrrAddChildToParent($node, $cam)
 
