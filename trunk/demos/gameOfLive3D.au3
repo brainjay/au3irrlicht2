@@ -17,7 +17,7 @@ Opt("MustDeclareVars", True)
 
 #include "../au3Irrlicht2.au3"
 
-Global Const $SZTITLE = "Conway's Game of Live 3D V0.91"
+Global Const $SZTITLE = "Conway's Game of Life 3D V0.91"
 Global Const $Refresh = 1500 ;delay time between 2 states, in ms
 Global Const $GRIDSIZE = 25 ;Toric grid, 25x25
 
