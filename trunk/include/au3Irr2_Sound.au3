@@ -197,3 +197,10 @@ Func _IrrReleaseSound($hSound)
 	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrReleaseSound
 
+
+
+Func _IrrKlangSetAllSoundsPaused($bPaused)
+; Pause all sounds
+	local $aResult = DllCall($_irrKlangDll, "none:cdecl", "IrrKlangSetAllSoundsPaused", "BOOLEAN", $bPaused)
+	Return SetError(@error, 0, @error = 0)
+EndFunc   ;==>_IrrKlangSetAllSoundsPaused

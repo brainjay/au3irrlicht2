@@ -48,6 +48,11 @@
 
 
 
+> Demos:
++ Added: \demos directory containing first bigger demo 'Conway's Game of Life 3D'  
+
+
+
 > Examples:
 
 + Added: 071 (Sphere_Terrain_Surface), 073 (Sphere_Terrain_Coordinates), 
