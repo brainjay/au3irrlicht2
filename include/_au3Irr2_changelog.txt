@@ -55,6 +55,7 @@
 - Changed: 031 (Loading_Scene) for example.irr scene from irrlicht-1.7.1 sdk.
   (The scene shows the potential of IrrLicht a bit better)
 + Changed: 001 (HelloWorld) to show basic usage of sound.
++ Fixed: 004 (3D model) - wrong path caused script to crash
 
 
 > Help file:

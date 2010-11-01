@@ -33,17 +33,14 @@ DIM $OurCamera ; irr_camera
 
 ; -----------------------------------------------------------------------------
 ; start the irrlicht interface
-_IrrStart( $IRR_EDT_OPENGL, 800, 600, $IRR_BITS_PER_PIXEL_32, _
+_IrrStart( $IRR_EDT_DIRECT3D9, 800, 600, $IRR_BITS_PER_PIXEL_32, _
         $IRR_WINDOWED, $IRR_SHADOWS, $IRR_CAPTURE_EVENTS, $IRR_VERTICAL_SYNC_ON )
 
 ; set the window caption
-_IrrSetWindowCaption( "Example 04: 3D Models - Meshes and Nodes" )
-
-; add credits for the model ; a static text GUI object on the display
-_IrrAddStaticText( "Zumlin model by Rowan 'Sumaleth; Crawford", 4,0,200,16, $IRR_GUI_NO_BORDER, $IRR_GUI_NO_WRAP )
+_IrrSetWindowCaption( "Example 04: 3D Models - Meshes and Nodes (Zumlin model by Rowan 'Sumaleth' Crawford)" )
 
 ; load a mesh this acts ; a blue print for the model
-$MD2Mesh = _IrrGetMesh( ".../media/zumlin.md2" )
+$MD2Mesh = _IrrGetMesh( "../media/zumlin.md2" )
 
 ; load texture resources for texturing the scene nodes
 $MeshTexture = _IrrGetTexture( "../media/zumlin.pcx" )
@@ -74,7 +71,7 @@ $OurCamera = _IrrAddCamera( 50,0,0, 0,0,0 )
 ; while the irrlicht environment is still running
 WHILE _IrrRunning()
     ; begin the scene, erasing the canvas with sky-blue before rendering
-    _IrrBeginScene( 240, 255, 255 )
+    _IrrBeginScene( 0, 0, 50 )
 
     ; draw the scene
     _IrrDrawScene()
