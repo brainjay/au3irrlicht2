@@ -56,29 +56,37 @@
 > Examples:
 
 + Added: 071 (Sphere_Terrain_Surface), 073 (Sphere_Terrain_Coordinates), 
-  3096 (LightingAndShadowMaps)
+  096 (LightingAndShadowMaps)
 - Changed: 031 (Loading_Scene) for example.irr scene from irrlicht-1.7.1 sdk.
   (The scene shows the potential of IrrLicht a bit better)
 + Changed: 001 (HelloWorld) to show basic usage of sound.
 + Fixed: 004 (3D model) - wrong path caused script to crash
 
 
+
 > Help file:
+
 
 - Added: more examples for help file, _IrrSetSphericalTerrainTexture, 
   _IrrAreNodesIntersecting, _IrrGetDistanceBetweenNodes, _IrrIsPointInsideNode,
   _IrrGetSphericalTerrainSurfacePositionAndAngle, _IrrGetSphericalTerrainLogicalSurfacePosition,
   _IrrGetSphericalTerrainSurfacePosition, _IrrSetLightAmbientColor, _IrrSetLightRadius,
-  _IrrSetCameraFOV, _IrrScaleMesh, _IrrGetCollisionNodeFromCamera, _IrrLoadScene, _IrrGetNodeName,
-  _IrrSetNodeName, _IrrGetNodeMesh, _IrrGetMaterialCount, _IrrGetMaterial, _IrrAddChildToParent,
-  _IrrSetNodeVisibility, _IrrGetNodeScale, _IrrGetNodeID, _IrrSetNodeID, _IrrGetJointNode,
-  _IrrRemoveAllNodes
+  _IrrSetCameraFOV, _IrrScaleMesh, _IrrGetCollisionNodeFromCamera, _IrrLoadScene, 
+  _IrrGetNodeName,_IrrSetNodeName, _IrrGetNodeMesh, _IrrGetMaterialCount, _IrrGetMaterial, 
+  _IrrAddChildToParent,_IrrSetNodeVisibility, _IrrGetNodeScale, _IrrGetNodeID, 
+  _IrrSetNodeID, _IrrGetJointNode, _IrrRemoveAllNodes
 - Added: more header info for functions in au3Irr2_Scene.au3	
 - Added: more header info for functions in au3Irr2_Terrain.au3
 - Added: more header info for functions in au3Irr2_Lighting.au3
 - Added: more header info for functions in au3Irr2_FilingSystem.au3
 - Added: more header info for functions in au3Irr2_Node.au3
 + Added original IrrKlangWrapper documentation below FreeBasic Wrapper docs
+- Moved: _IrrSetFlareScale from No Doc Function to Function.. again ?
+  (I've supplied a working help example a while back and header info is there)
+- Added: more header info for functions in au3Irr2_Materials.au3
+- Added: more examples for help file, _IrrSetNodeAmbientColor, _IrrSetNodeEmissiveColor,  
+  _IrrMaterialSetShininess, _IrrMaterialSetAmbientColor, _IrrMaterialSetEmissiveColor
+
 
 
 > Other:
