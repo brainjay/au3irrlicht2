@@ -66,20 +66,18 @@
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeAmbientColor
-; Description ...: [todo]
+; Description ...: Sets the ambient color of all materials in a node.
 ; Syntax.........: _IrrSetNodeAmbientColor($h_Node, $i_Color)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Node - Handle to a scene node object.
+;                  $i_Color - This color value can be created with a call to _IrrMakeARGB
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: The ambient color is a color applied to the whole node as a simulation of ambient lighting reflected from the objects around it.
+; Related .......: _IrrMakeARGB
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetNodeAmbientColor($h_Node, $i_Color)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeAmbientColor", "ptr", $h_Node, "uint", $i_Color)
@@ -89,20 +87,18 @@ EndFunc   ;==>_IrrSetNodeAmbientColor
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeDiffuseColor
-; Description ...: [todo]
+; Description ...: Sets the diffuse color of all materials in a node.
 ; Syntax.........: _IrrSetNodeDiffuseColor($h_Node, $i_Color)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Node - Handle to a scene node object.
+;                  $i_Color - This color value can be created with a call to _IrrMakeARGB
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: The diffuse color is the indirectly lit surface colour.
+; Related .......: _IrrMakeARGB
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrSetNodeDiffuseColor($h_Node, $i_Color)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeDiffuseColor", "ptr", $h_Node, "uint", $i_Color)
@@ -112,20 +108,18 @@ EndFunc   ;==>_IrrSetNodeDiffuseColor
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeSpecularColor
-; Description ...: [todo]
+; Description ...: Sets the specular color of all materials in a node.
 ; Syntax.........: _IrrSetNodeSpecularColor($h_Node, $i_Color)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Node - Handle to a scene node object.
+;                  $i_Color - This color value can be created with a call to _IrrMakeARGB
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: The specular color is the color of the highlights on the node representing reflections of light sources.
+; Related .......: _IrrMakeARGB
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrSetNodeSpecularColor($h_Node, $i_Color)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeSpecularColor", "ptr", $h_Node, "uint", $i_Color)
@@ -135,20 +129,19 @@ EndFunc   ;==>_IrrSetNodeSpecularColor
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeEmissiveColor
-; Description ...: [todo]
+; Description ...: Sets the emissive color of all materials in a node.
 ; Syntax.........: _IrrSetNodeEmissiveColor($h_Node, $i_Color)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Node - Handle to a scene node object.
+;                  $i_Color - This color value can be created with a call to _IrrMakeARGB
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: The emissive colour is the light 'generated within' the node.
+;                  Setting this to 255,255,255,255 will make the node appear as though it has the no lighting effect applied to it.
+; Related .......: _IrrMakeARGB
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetNodeEmissiveColor($h_Node, $i_Color)
 	DllCall($_irrDll, "none:cdecl", "IrrSetNodeEmissiveColor", "ptr", $h_Node, "uint", $i_Color)
@@ -159,20 +152,24 @@ EndFunc   ;==>_IrrSetNodeEmissiveColor
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetNodeColorByVertex
-; Description ...: [todo]
+; Description ...: Sets which aspect of all of the materials in a node is affected by the vertex colour.
 ; Syntax.........: _IrrSetNodeColorByVertex($h_Node, $i_ColorMaterial)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Node - Handle to a scene node object.
+;                  $i_ColorMaterial - Can be one of the following;
+;                  |$ECM_NONE - Dont use vertex color for lighting
+;                  |$ECM_DIFFUSE - Use vertex color for diffuse light, (default)
+;                  |$ECM_AMBIENT - Use vertex color for ambient light
+;                  |$ECM_EMISSIVE - Use vertex color for emissive light
+;                  |$ECM_SPECULAR - Use vertex color for specular light
+;                  |$ECM_DIFFUSE_AND_AMBIENT - Use vertex color for both diffuse and ambient light
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrGetMaterial
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrSetNodeColorByVertex($h_Node, $i_ColorMaterial)
 ; Set whether vertex color or material color is used to shade the surface of a node
@@ -185,20 +182,24 @@ EndFunc   ;==>_IrrSetNodeColorByVertex
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMaterialVertexColorAffects
-; Description ...: [todo]
+; Description ...: Sets which aspect of the material is affected by the vertex colour.
 ; Syntax.........: _IrrMaterialVertexColorAffects($h_Material, $i_AffectedProperty)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Material - Handle to a material object as returned by _IrrGetMaterial
+;                  $i_AffectedProperty - Can be one of the following;
+;                  |$ECM_NONE - Dont use vertex color for lighting
+;                  |$ECM_DIFFUSE - Use vertex color for diffuse light, (default)
+;                  |$ECM_AMBIENT - Use vertex color for ambient light
+;                  |$ECM_EMISSIVE - Use vertex color for emissive light
+;                  |$ECM_SPECULAR - Use vertex color for specular light
+;                  |$ECM_DIFFUSE_AND_AMBIENT - Use vertex color for both diffuse and ambient light
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrGetMaterial
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrMaterialVertexColorAffects($h_Material, $i_AffectedProperty)
 	DllCall($_irrDll, "none:cdecl", "IrrMaterialVertexColorAffects", "ptr", $h_Material, "int", $i_AffectedProperty)
@@ -208,20 +209,31 @@ EndFunc   ;==>_IrrMaterialVertexColorAffects
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetMaterialBlend
-; Description ...: [todo]
+; Description ...: Sets the source and destination surface blend factors for the ONETEXTURE_BLEND material.
 ; Syntax.........: _IrrSetMaterialBlend($h_Material, $i_SrcBlend, $i_DstBlend)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Material - Handle to a material object as returned by _IrrGetMaterial
+;                  $i_SrcBlend, $i_DstBlend - can each be one of the following;
+;                  |$EBF_ZERO - A fixed value of zero.
+;                  |$EBF_ONE - A fixed value of one.
+;                  |$EBF_DST_COLOR - The destination color.
+;                  |$EBF_ONE_MINUS_DST_COLOR - The inverted destination color.
+;                  |$EBF_SRC_COLOR - The source color.
+;                  |$EBF_ONE_MINUS_SRC_COLOR - The inverted source color
+;                  |$EBF_SRC_ALPHA - The source alpha value.
+;                  |$EBF_ONE_MINUS_SRC_ALPHA - The inverted source alpha value.
+;                  |$EBF_DST_ALPHA - The destination alpha value.
+;                  |$EBF_ONE_MINUS_DST_ALPHA - The inverted destination alpha value.
+;                  |$EBF_SRC_ALPHA_SATURATE -
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: This is mainly useful in multi-pass rendering, where you render the scene to the display and then
+;                  render the scene a second time with the ONETEXTURE_BLEND material setting which mixes the existing
+;                  pixels and the new pixels using the blend setting defined here.
+; Related .......: _IrrGetMaterial
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrSetMaterialBlend($h_Material, $i_SrcBlend, $i_DstBlend)
 	DllCall($_irrDll, "none:cdecl", "IrrSetMaterialBlend", "ptr", $h_Material, "int", $i_SrcBlend, "int", $i_DstBlend)
@@ -231,20 +243,18 @@ EndFunc   ;==>_IrrSetMaterialBlend
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMaterialSetShininess
-; Description ...: [todo]
+; Description ...: Set how shiny the material is.
 ; Syntax.........: _IrrMaterialSetShininess($h_Material, $f_Shininess)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Material - Handle to a material object as returned by _IrrGetMaterial
+;                  $f_Shininess - The higher the value the more defined the highlights.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrGetMaterial
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrMaterialSetShininess($h_Material, $f_Shininess)
 	DllCall($_irrDll, "none:cdecl", "IrrMaterialSetShininess", "ptr", $h_Material, "float", $f_Shininess)
@@ -254,20 +264,18 @@ EndFunc   ;==>_IrrMaterialSetShininess
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMaterialSetSpecularColor
-; Description ...: [todo]
+; Description ...: Set the color of specular highlights on objects with this material applied.
 ; Syntax.........: _IrrMaterialSetSpecularColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Material - Handle to a material object as returned by _IrrGetMaterial
+;                  $i_Alpha, $i_Red, $i_Green, $i_Blue - Color values from 0 to 255
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrGetMaterial
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrMaterialSetSpecularColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
 	DllCall($_irrDll, "none:cdecl", "IrrMaterialSetSpecularColor", "ptr", $h_Material, "uint", $i_Alpha, "uint", $i_Red, "uint", $i_Green, "uint", $i_Blue)
@@ -279,18 +287,16 @@ EndFunc   ;==>_IrrMaterialSetSpecularColor
 ; Name...........: _IrrMaterialSetDiffuseColor
 ; Description ...: [todo]
 ; Syntax.........: _IrrMaterialSetDiffuseColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Material - Handle to a material object as returned by _IrrGetMaterial
+;                  $i_Alpha, $i_Red, $i_Green, $i_Blue - Color values from 0 to 255
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrGetMaterial
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrMaterialSetDiffuseColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
 	DllCall($_irrDll, "none:cdecl", "IrrMaterialSetDiffuseColor", "ptr", $h_Material, "uint", $i_Alpha, "uint", $i_Red, "uint", $i_Green, "uint", $i_Blue)
@@ -300,20 +306,18 @@ EndFunc   ;==>_IrrMaterialSetDiffuseColor
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMaterialSetAmbientColor
-; Description ...: [todo]
+; Description ...: Set the color of ambient light reflected by objects with this material applied.
 ; Syntax.........: _IrrMaterialSetAmbientColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Material - Handle to a material object as returned by _IrrGetMaterial
+;                  $i_Alpha, $i_Red, $i_Green, $i_Blue - Color values from 0 to 255
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrGetMaterial
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrMaterialSetAmbientColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
 	DllCall($_irrDll, "none:cdecl", "IrrMaterialSetAmbientColor", "ptr", $h_Material, "uint", $i_Alpha, "uint", $i_Red, "uint", $i_Green, "uint", $i_Blue)
@@ -323,20 +327,16 @@ EndFunc   ;==>_IrrMaterialSetAmbientColor
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMaterialSetEmissiveColor
-; Description ...: [todo]
+; Description ...: Set the color of light emitted by objects with this material applied.
 ; Syntax.........: _IrrMaterialSetEmissiveColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Material - Handle to a material object as returned by _IrrGetMaterial
+;                  $i_Alpha, $i_Red, $i_Green, $i_Blue - Color values from 0 to 255
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrGetMaterial
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrMaterialSetEmissiveColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
 	DllCall($_irrDll, "none:cdecl", "IrrMaterialSetEmissiveColor", "ptr", $h_Material, "uint", $i_Alpha, "uint", $i_Red, "uint", $i_Green, "uint", $i_Blue)
@@ -346,20 +346,18 @@ EndFunc   ;==>_IrrMaterialSetEmissiveColor
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrMaterialSetMaterialTypeParam
-; Description ...: [todo]
+; Description ...: Set material specific parameter.
 ; Syntax.........: _IrrMaterialSetMaterialTypeParam($h_Material, $f_Param)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Material - Handle to a material object as returned by _IrrGetMaterial
+;                  $f_Param - Float value associated with the material type param.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: Used in a couple of vertex alpha and normal mapping material types.
+; Related .......: _IrrGetMaterial
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrMaterialSetMaterialTypeParam($h_Material, $f_Param)
 	DllCall($_irrDll, "none:cdecl", "IrrMaterialSetMaterialTypeParam", "ptr", $h_Material, "float", $f_Param)
@@ -369,20 +367,18 @@ EndFunc   ;==>_IrrMaterialSetMaterialTypeParam
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetMaterialLineThickness
-; Description ...: [todo]
+; Description ...: Sets the line thickness of none 3D elements associated with this material.
 ; Syntax.........: _IrrSetMaterialLineThickness($h_Material, $f_Thickness)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Material - Handle to a material object as returned by _IrrGetMaterial
+;                  $f_Thickness -
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Related .......: _IrrGetMaterial
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrSetMaterialLineThickness($h_Material, $f_Thickness)
 	DllCall($_irrDll, "none:cdecl", "IrrSetMaterialLineThickness", "ptr", $h_Material, "float", $f_Thickness)
