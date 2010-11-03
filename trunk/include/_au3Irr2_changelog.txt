@@ -45,7 +45,7 @@
 - Changed: _IrrLoadSphericalTerrainVertexColor 6 face image paramater names from
   $s_XXX to $h_XXX, changed "str" to "ptr" in 6 instances for the DllCall.
 + Added: new include Sound.au3 in \include for usage of Irrklang.dll and IrrKlangWrapper.dll (now included in \bin). No change in general usage - including of au3Irrlicht2.au3 will handle all needed things.
-
++ Added/Fixed: _IrrSetMeshVertexSingleColor, _IrrSetMeshVertexColors
 
 
 > Demos:
@@ -84,12 +84,14 @@
 - Moved: _IrrSetFlareScale from No Doc Function to Function.. again ?
   (I've supplied a working help example a while back and header info is there)
 - Moved: _IrrAddEmptySceneNode from No Doc function to Function.
-- Moved: _IrrAddSphereSceneMesh from No Doc function to Function 
+- Moved: _IrrAddSphereSceneMesh from No Doc function to Function.
+- Moved: _IrrSetMeshVertexSingleColor from No Doc function to Function. 
 - Added: more header info for functions in au3Irr2_Materials.au3
 - Added: more header info for functions in au3Irr2_Scene.au3
 - Added: more examples for help file, _IrrSetNodeAmbientColor, _IrrSetNodeEmissiveColor,  
   _IrrMaterialSetShininess, _IrrMaterialSetAmbientColor, _IrrMaterialSetEmissiveColor,
-  _IrrAddEmptySceneNode, _IrrAddSphereSceneMesh
+  _IrrAddEmptySceneNode, _IrrAddSphereSceneMesh, _IrrSetMeshVertexSingleColor,
+  _IrrSetMeshVertexColors
 
 
 
