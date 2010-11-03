@@ -22,7 +22,6 @@
 ;_IrrSetMeshVertexColors
 ;_IrrSetMeshVertexCoords
 ;_IrrSetMeshVertexSingleColor
-;_IrrAddEmptySceneNode
 ;_IrrSetZoneManagerAttachTerrain
 ;_IrrGetGrassDrawCount
 ; ===============================================================================================================================
@@ -56,6 +55,7 @@
 ;_IrrAddParticleSystemToScene
 ;_IrrAddSkyBoxToScene
 ;_IrrAddSkyDomeToScene
+;_IrrAddEmptySceneNode
 ;_IrrAddTestSceneNode
 ;_IrrAddCubeSceneNode
 ;_IrrAddSphereSceneNode
@@ -968,22 +968,19 @@ Func _IrrAddSkyDomeToScene($h_Texture, $i_HorizontalRes, $i_VerticalRes, $d_Text
 EndFunc   ;==>_IrrAddSkyDomeToScene
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddEmptySceneNode
-; Description ...: [todo]
+; Description ...: Adds an empty node to the scene.
 ; Syntax.........: _IrrAddEmptySceneNode()
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: None.
+; Return values .: Success - Handle to an empty scene node object.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: This is required if you wish to add custom OpenGL commands with no Irrlicht Objects.
+; Related .......: None
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddEmptySceneNode()
 	Local $aResult
