@@ -83,9 +83,11 @@
 + Added original IrrKlangWrapper documentation below FreeBasic Wrapper docs
 - Moved: _IrrSetFlareScale from No Doc Function to Function.. again ?
   (I've supplied a working help example a while back and header info is there)
+- Moved: _IrrAddEmptySceneNode from No Doc function to Function.
 - Added: more header info for functions in au3Irr2_Materials.au3
 - Added: more examples for help file, _IrrSetNodeAmbientColor, _IrrSetNodeEmissiveColor,  
-  _IrrMaterialSetShininess, _IrrMaterialSetAmbientColor, _IrrMaterialSetEmissiveColor
+  _IrrMaterialSetShininess, _IrrMaterialSetAmbientColor, _IrrMaterialSetEmissiveColor,
+  _IrrAddEmptySceneNode
 
 
 
