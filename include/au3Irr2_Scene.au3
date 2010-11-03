@@ -18,9 +18,7 @@
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
 ;_IrrGetMeshBufferCount
-;_IrrSetMeshVertexColors
 ;_IrrSetMeshVertexCoords
-;_IrrSetMeshVertexSingleColor
 ;_IrrSetZoneManagerAttachTerrain
 ;_IrrGetGrassDrawCount
 ; ===============================================================================================================================
@@ -78,6 +76,8 @@
 ;_IrrAddToBatchingMesh
 ;_IrrFinalizeBatchingMesh
 ;_IrrSetMeshMaterialTexture
+;_IrrSetMeshVertexColors
+;_IrrSetMeshVertexSingleColor
 ;_IrrScaleMesh
 ;_IrrAddBeamSceneNode
 ;_IrrSetBeamSize
@@ -496,18 +496,17 @@ EndFunc   ;==>_IrrSetMeshIndices
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetMeshVertexCount
-; Description ...: [todo]
-; Syntax.........: _IrrGetMeshVertexCount($h_Mesh, $i_Frame, $i_MeshBuffer = 0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Description ...: Gets the number of Vertices in the supplied mesh.
+; Syntax.........: _IrrGetMeshVertexCount($h_Mesh, $i_Frame = 0, $i_MeshBuffer = 0)
+; Parameters ....: $h_Mesh - Handle to a mesh object.
+;                  $i_Frame - If the mesh is animated frame number indicates the number of the frame to recover.
+;                  $i_MeshBuffer - If the mesh contains a number of mesh buffers you can specify which mesh buffer you want to access.
+; Return values .: Success - Number of vertices the mesh contains.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: You can use this value to allocate an array for reading out the list of vertices in a mesh.
+; Related .......: _IrrGetMesh, _IrrCreateMesh, _IrrGetNodeMesh, _IrrAddSphereSceneMesh
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
@@ -575,26 +574,29 @@ Func _IrrSetMeshVertices($h_Mesh, $i_FrameNumber, ByRef $tVertex, $i_MeshBuffer 
 EndFunc   ;==>_IrrSetMeshVertices
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetMeshVertexColors
-; Description ...: [todo]
-; Syntax.........: _IrrSetMeshVertexColors($h_Mesh, $i_FrameNumber, $h_VertexColourArrayStruct, $h_VertexGroupStartIndices, $h_VertexGroupEndIndices, $i_NumberOfGroups, $i_MeshBuffer)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Description ...: Sets the color of groups of verticies in a mesh.
+; Syntax.........: _IrrSetMeshVertexColors($h_Mesh, $h_VertexColourArrayStruct, $h_VertexGroupStartIndices = 0, $h_VertexGroupEndIndices = 0, $i_NumberOfGroups = 0, $i_FrameNumber = 0, $i_MeshBuffer = 0)
+; Parameters ....: $h_Mesh - Handle to a mesh object.
+;                  $h_VertexColour - Pointer to a struct containing an array of colors.
+;                  $h_VertexGroupStartIndices - Default 0, means all vertices will be colored.
+;                  $h_VertexGroupEndIndices - Default 0, means all vertices will be colored.
+;                  $i_NumberOfGroups - Default 0, means all vertices will be colored. You can define any number of groups of verticies and set the color of those groups invividually.
+;                  $i_FrameNumber - Default 0, if the mesh is animated then you may select which frame you want to access.
+;                  $i_MeshBuffer - Default 0, if the mesh contains a number of mesh buffers you can specific which mesh buffer you want to access.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None.
+; Related .......: _IrrMakeARGB, _IrrGetMeshVertexCount
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrSetMeshVertexColors($h_Mesh, $i_FrameNumber, $h_VertexColourArrayStruct, $h_VertexGroupStartIndices, $h_VertexGroupEndIndices, $i_NumberOfGroups, $i_MeshBuffer)
+Func _IrrSetMeshVertexColors($h_Mesh, $h_VertexColourArrayStruct, $h_VertexGroupStartIndices = 0, $h_VertexGroupEndIndices = 0, $i_NumberOfGroups = 0, $i_FrameNumber = 0, $i_MeshBuffer = 0)
 	;RETURN TO THIS;
-	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertexColors", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", $h_VertexColourArrayStruct, "ptr", $h_VertexGroupStartIndices, "ptr", $h_VertexGroupEndIndices, "int", $i_NumberOfGroups, "int", $i_MeshBuffer)
+	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertexColors", "ptr", $h_Mesh, "uint", $i_FrameNumber, "ptr", $h_VertexColourArrayStruct, "uint", $i_NumberOfGroups, "ptr", $h_VertexGroupStartIndices, "ptr", $h_VertexGroupEndIndices, "uint", $i_MeshBuffer)
 	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetMeshVertexColors
 
@@ -623,26 +625,29 @@ Func _IrrSetMeshVertexCoords($h_Mesh, $i_FrameNumber, $h_VertexCoordArrayStruct,
 EndFunc   ;==>_IrrSetMeshVertexCoords
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetMeshVertexSingleColor
-; Description ...: [todo]
-; Syntax.........: _IrrSetMeshVertexSingleColor($h_Mesh, $i_FrameNumber, $h_VertexColourStruct, $h_VertexGroupStartIndices, $h_VertexGroupEndIndices, $i_NumberOfGroups, $i_MeshBuffer)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Description ...: Sets the color of groups of verticies in a mesh.
+; Syntax.........: _IrrSetMeshVertexSingleColor($h_Mesh, $i_VertexColour, $h_VertexGroupStartIndices = 0, $h_VertexGroupEndIndices = 0, $i_NumberOfGroups = 0, $i_FrameNumber = 0, $i_MeshBuffer = 0)
+; Parameters ....: $h_Mesh - Handle to a mesh object.
+;                  $i_VertexColour - Vertex color, use _IrrMakeARGB to create the color.
+;                  $h_VertexGroupStartIndices - Default 0, means all vertices will be colored.
+;                  $h_VertexGroupEndIndices - Default 0, means all vertices will be colored.
+;                  $i_NumberOfGroups - Default 0, means all vertices will be colored. You can define any number of groups of verticies and set the color of those groups invividually.
+;                  $i_FrameNumber - Default 0, if the mesh is animated then you may select which frame you want to access.
+;                  $i_MeshBuffer - Default 0, if the mesh contains a number of mesh buffers you can specific which mesh buffer you want to access.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: This function makes it so you can set all vertices in a mesh to one color with one quick call.
+;                  An example would be to set the alpha vertex color of the mesh to use with normal texture mapping to create a partially transparent textured node.
+; Related .......: _IrrMakeARGB, _IrrGetMeshVertexCount
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrSetMeshVertexSingleColor($h_Mesh, $i_FrameNumber, $h_VertexColourStruct, $h_VertexGroupStartIndices, $h_VertexGroupEndIndices, $i_NumberOfGroups, $i_MeshBuffer)
-	;RETURN TO THIS;
-	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertexSingleColor", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", $h_VertexColourStruct, "ptr", $h_VertexGroupStartIndices, "ptr", $h_VertexGroupEndIndices, "int", $i_NumberOfGroups, "int", $i_MeshBuffer)
+Func _IrrSetMeshVertexSingleColor($h_Mesh, $i_VertexColour, $h_VertexGroupStartIndices = 0, $h_VertexGroupEndIndices = 0, $i_NumberOfGroups = 0, $i_FrameNumber = 0, $i_MeshBuffer = 0)
+	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertexSingleColor", "ptr", $h_Mesh, "uint", $i_FrameNumber, "uint", $i_VertexColour, "uint", $i_NumberOfGroups, "ptr", $h_VertexGroupStartIndices, "ptr", $h_VertexGroupEndIndices, "uint", $i_MeshBuffer)
 	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetMeshVertexSingleColor
 
