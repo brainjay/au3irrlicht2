@@ -84,10 +84,12 @@
 - Moved: _IrrSetFlareScale from No Doc Function to Function.. again ?
   (I've supplied a working help example a while back and header info is there)
 - Moved: _IrrAddEmptySceneNode from No Doc function to Function.
+- Moved: _IrrAddSphereSceneMesh from No Doc function to Function 
 - Added: more header info for functions in au3Irr2_Materials.au3
+- Added: more header info for functions in au3Irr2_Scene.au3
 - Added: more examples for help file, _IrrSetNodeAmbientColor, _IrrSetNodeEmissiveColor,  
   _IrrMaterialSetShininess, _IrrMaterialSetAmbientColor, _IrrMaterialSetEmissiveColor,
-  _IrrAddEmptySceneNode
+  _IrrAddEmptySceneNode, _IrrAddSphereSceneMesh
 
 
 
@@ -97,6 +99,7 @@
 - Changed: global $result is no longer used and has been removed from au3Irr2_Constants.au3
 - Added: example.zip to \media directory (for Load Scene examples, 200KB in size)
 - Removed: SimpleScene.irr from \media directory as it's no longer needed.
+- Added: earth.jpg from irrlicht-1.7.1 sdk to \media directory since earth.x mesh looks for it when loading.
 
 
 === 2.04 (2010-10-09) ==========================================================

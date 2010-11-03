@@ -17,7 +17,6 @@
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
-;_IrrAddSphereSceneMesh
 ;_IrrGetMeshBufferCount
 ;_IrrSetMeshVertexColors
 ;_IrrSetMeshVertexCoords
@@ -31,6 +30,7 @@
 ;_IrrGetMesh
 ;_IrrCreateMesh
 ;_IrrAddHillPlaneMesh
+;_IrrAddSphereSceneMesh
 ;_IrrWriteMesh
 ;_IrrRemoveMesh
 ;_IrrClearUnusedMeshes
@@ -200,22 +200,22 @@ Func _IrrCreateMesh($s_MeshName, $tVertexArray, $a_Indices)
 EndFunc   ;==>_IrrCreateMesh
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddSphereSceneMesh
-; Description ...: [todo]
-; Syntax.........: _IrrAddSphereSceneMesh($s_MeshName, $f_Radius, $i_PolyCount)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Description ...: Create a sphere mesh object.
+; Syntax.........: _IrrAddSphereSceneMesh($s_MeshName, $f_Radius , $i_PolyCount = 16)
+; Parameters ....: $s_MeshName - String name for the shere mesh object.
+;                  $f_Radius - Radius of the sphere meash object.
+;                  $i_PolyCount - How many polygons are used to make the mesh object.
+; Return values .: Success - Handle to a sphere mesh object.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: Unlike _IrrAddSphereSceneNode, this sphere mesh can be maipulated and edited before adding it as a scene node.
+;                  eg: You can edit and manipulate vertex colors, coordinates etc..
+; Related .......: _IrrAddMeshToScene, _IrrAddStaticMeshForNormalMappingToScene
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddSphereSceneMesh($s_MeshName, $f_Radius, $i_PolyCount)
 	local $aResult
