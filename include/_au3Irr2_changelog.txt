@@ -45,8 +45,8 @@
 - Changed: _IrrLoadSphericalTerrainVertexColor 6 face image paramater names from
   $s_XXX to $h_XXX, changed "str" to "ptr" in 6 instances for the DllCall.
 + Added: new include Sound.au3 in \include for usage of Irrklang.dll and IrrKlangWrapper.dll (now included in \bin). No change in general usage - including of au3Irrlicht2.au3 will handle all needed things.
-+ Added/Fixed: _IrrSetMeshVertexSingleColor, _IrrSetMeshVertexColors
-
++ Added/Fixed: _IrrSetMeshVertexSingleColor, _IrrSetMeshVertexColors, _IrrSetMeshVertexCoords
+  Note: These functions I may change in future so that they can use __CreateVertStruct type structure to simplify the use of the functions. 
 
 > Demos:
 + Added: \demos directory containing first bigger demo 'Conway's Game of Life 3D'  
@@ -91,7 +91,8 @@
 - Added: more examples for help file, _IrrSetNodeAmbientColor, _IrrSetNodeEmissiveColor,  
   _IrrMaterialSetShininess, _IrrMaterialSetAmbientColor, _IrrMaterialSetEmissiveColor,
   _IrrAddEmptySceneNode, _IrrAddSphereSceneMesh, _IrrSetMeshVertexSingleColor,
-  _IrrSetMeshVertexColors
+  _IrrSetMeshVertexColors, _IrrAddStaticMeshForNormalMappingToScene,
+  _IrrSetMeshMaterialTexture, _IrrSetMeshVertexCoords
 
 
 

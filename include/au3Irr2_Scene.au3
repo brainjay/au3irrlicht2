@@ -18,7 +18,6 @@
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
 ;_IrrGetMeshBufferCount
-;_IrrSetMeshVertexCoords
 ;_IrrSetZoneManagerAttachTerrain
 ;_IrrGetGrassDrawCount
 ; ===============================================================================================================================
@@ -77,6 +76,7 @@
 ;_IrrFinalizeBatchingMesh
 ;_IrrSetMeshMaterialTexture
 ;_IrrSetMeshVertexColors
+;_IrrSetMeshVertexCoords
 ;_IrrSetMeshVertexSingleColor
 ;_IrrScaleMesh
 ;_IrrAddBeamSceneNode
@@ -229,7 +229,7 @@ EndFunc   ;==>_IrrAddSphereSceneMesh
 ; Name...........: _IrrAddHillPlaneMesh
 ; Description ...: Creates a hill plane mesh that represents a simple terrain.
 ; Syntax.........: _IrrAddHillPlaneMesh($s_Name, $f_TileSizeX, $f_TileSizeY, $i_TileCountX, $i_TileCountY, $h_Material = 0, $f_HillHeight = 0, $f_CountHillsX = 0, $f_CountHillsY = 0, $f_TextureRepeatCountX = 1, $f_TextureRepeatCountY = 1)
-; Parameters ....: $s_Name -
+; Parameters ....: $s_Name - String name for the mesh.
 ;                  $f_TileSizeX -
 ;                  $f_TileSizeY -
 ;                  $i_TileCountX -
@@ -409,20 +409,19 @@ EndFunc   ;==>_IrrGetMeshBufferCount
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetMeshIndexCount
-; Description ...: [todo]
-; Syntax.........: _IrrGetMeshIndexCount($h_Mesh, $i_Frame, $i_MeshBuffer = 0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Description ...: Gets the number of Indicies in the supplied mesh.
+; Syntax.........: _IrrGetMeshIndexCount($h_Mesh, $i_Frame = 0, $i_MeshBuffer = 0)
+; Parameters ....: $h_Mesh - Handle to a mesh object.
+;                  $i_Frame - If the mesh is animated frame number indicates the number of the frame to recover. (default 0 for not animated)
+;                  $i_MeshBuffer - If the mesh contains a number of mesh buffers you can specific which mesh buffer you want to access. (default 0)
+; Return values .: Success - Number of indicies the mesh contains.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: You can use this value to allocate an array for reading out the list of indicies in a mesh.
+; Related .......: _IrrGetMesh, _IrrCreateMesh, _IrrAddSphereSceneMesh
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrGetMeshIndexCount($h_Mesh, $i_frame, $i_MeshBuffer = 0)
 	Local $aResult
@@ -465,18 +464,22 @@ EndFunc   ;==>_IrrGetMeshIndices
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetMeshIndices
-; Description ...: [todo]
+; Description ...: Set the value of the list of indicies in a mesh copying them from the supplied buffer.
 ; Syntax.........: _IrrSetMeshIndices($h_Mesh, $i_FrameNumber, ByRef $a_IndicesArray, $i_MeshBuffer = 0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
+; Parameters ....: $h_Mesh - Handle to a mesh object.
+;                  $i_FrameNumber - If the mesh is animated frame number indicates the number of the frame to recover mesh data for.
+;                  $a_IndicesArray - 1D array 0 based first element of indicies to set.
+;                  $i_MeshBuffer - If the mesh contains a number of mesh buffers you can specific which mesh buffer you want to access.
+; Return values .: Success - True and Sets the indices of the specfied mesh with the indicies from the $a_IndicesArray.
 ;                  Failure - False and @error
 ;                  |@error 1 ~ 4 - AutoIt DllCall failed.
 ;                  |@error 5 - $a_IndicesArray parameter is not an Array.
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: Indices should be the first element of an array or the first integer in a pool of allocated memory,
+;                  it is passed into the wrapper by reference as a pointer.
+;                  You must ensure that the array you supply is large enough to contain all of the indices otherwise an
+;                  overflow will occur and erroneous values will be written into the mesh causing unpredictable results.
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
@@ -595,32 +598,33 @@ EndFunc   ;==>_IrrSetMeshVertices
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetMeshVertexColors($h_Mesh, $h_VertexColourArrayStruct, $h_VertexGroupStartIndices = 0, $h_VertexGroupEndIndices = 0, $i_NumberOfGroups = 0, $i_FrameNumber = 0, $i_MeshBuffer = 0)
-	;RETURN TO THIS;
 	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertexColors", "ptr", $h_Mesh, "uint", $i_FrameNumber, "ptr", $h_VertexColourArrayStruct, "uint", $i_NumberOfGroups, "ptr", $h_VertexGroupStartIndices, "ptr", $h_VertexGroupEndIndices, "uint", $i_MeshBuffer)
 	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetMeshVertexColors
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetMeshVertexCoords
-; Description ...: [todo]
-; Syntax.........: _IrrSetMeshVertexCoords($h_Mesh, $i_FrameNumber, $h_VertexCoordArrayStruct, $h_VertexGroupStartIndices, $h_VertexGroupEndIndices, $i_NumberOfGroups, $i_MeshBuffer)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Description ...: Set the co-ordinates of groups of verticies in a mesh.
+; Syntax.........: _IrrSetMeshVertexCoords($h_Mesh, $h_VertexCoordArrayStruct, $h_VertexGroupStartIndices = 0, $h_VertexGroupEndIndices = 0, $i_NumberOfGroups = 0, $i_FrameNumber = 0, $i_MeshBuffer = 0)
+; Parameters ....: $h_Mesh - Handle to a mesh object.
+;                  $h_VertexCoordArrayStruct - Pointer to a struct containing an array of vertice co-ordinates.
+;                  $h_VertexGroupStartIndices - Default 0, means co-ordinates will be applied to all vertices.
+;                  $h_VertexGroupEndIndices - Default 0, means co-ordinates will be applied to all vertices.
+;                  $i_NumberOfGroups - Default 0, means co-ordinates will be applied to all vertices. You can define any number of groups of verticies and set the co-ordinates of those groups invividually.
+;                  $i_FrameNumber - Default 0, if the mesh is animated then you may select which frame you want to access.
+;                  $i_MeshBuffer - Default 0, if the mesh contains a number of mesh buffers you can specific which mesh buffer you want to access.
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: None.
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrSetMeshVertexCoords($h_Mesh, $i_FrameNumber, $h_VertexCoordArrayStruct, $h_VertexGroupStartIndices, $h_VertexGroupEndIndices, $i_NumberOfGroups, $i_MeshBuffer)
-	;RETURN TO THIS;
-	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertexCoords", "ptr", $h_Mesh, "int", $i_FrameNumber, "ptr", $h_VertexCoordArrayStruct, "ptr", $h_VertexGroupStartIndices, "ptr", $h_VertexGroupEndIndices, "int", $i_NumberOfGroups, "int", $i_MeshBuffer)
+Func _IrrSetMeshVertexCoords($h_Mesh, $h_VertexCoordArrayStruct, $h_VertexGroupStartIndices = 0, $h_VertexGroupEndIndices = 0, $i_NumberOfGroups = 0, $i_FrameNumber = 0, $i_MeshBuffer = 0)
+	DllCall($_irrDll, "none:cdecl", "IrrSetMeshVertexCoords", "ptr", $h_Mesh, "uint", $i_FrameNumber, "ptr", $h_VertexCoordArrayStruct, "uint", $i_NumberOfGroups, "ptr", $h_VertexGroupStartIndices, "ptr", $h_VertexGroupEndIndices, "uint", $i_MeshBuffer)
 	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetMeshVertexCoords
 
@@ -699,20 +703,18 @@ EndFunc   ;==>_IrrAddMeshToSceneAsOcttree
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddStaticMeshForNormalMappingToScene
-; Description ...: [todo]
+; Description ...: Adds a mesh to the scene as a static object.
 ; Syntax.........: _IrrAddStaticMeshForNormalMappingToScene($h_Mesh)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Mesh - Handle of a mesh object.
+; Return values .: Success - Handle to a scene node.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: The mesh is altered so that it is suitable for the application of a Normal or Parallax mapping material,
+;                  any animation information is lost.
+; Related .......: _IrrGetMesh
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddStaticMeshForNormalMappingToScene($h_Mesh)
 	Local $aResult
@@ -764,20 +766,17 @@ EndFunc   ;==>_IrrSaveScene
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetSceneNodeFromId
-; Description ...: [todo]
+; Description ...: Get a scene node based on its ID.
 ; Syntax.........: _IrrGetSceneNodeFromId($i_ID)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $i_ID - Number which is the ID of the node you want the handle to.
+; Return values .: Success - Handle to the node or 0 if no node matches the specified ID.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: This is particularly useful for obtaining references to nodes created automatically when using IrrLoadScene.
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrGetSceneNodeFromId($i_ID)
 	; get a scene node based on its ID and returns null if no node is found
@@ -790,20 +789,17 @@ EndFunc   ;==>_IrrGetSceneNodeFromId
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrGetSceneNodeFromName
-; Description ...: [todo]
+; Description ...: Get a scene node based on its name.
 ; Syntax.........: _IrrGetSceneNodeFromName($s_Name)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $s_Name - String name of node.
+; Return values .: Success - Handle to scene node matching the specified name, 0 if no node is found.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: This is particularly useful for obtaining references to nodes created automatically when using IrrLoadScene.
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrGetSceneNodeFromName($s_Name)
 	Local $aResult
@@ -841,20 +837,19 @@ EndFunc   ;==>_IrrAddBillBoardToScene
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetBillBoardSize
-; Description ...: [todo]
+; Description ...: Set the size of a BillBoard.
 ; Syntax.........: _IrrSetBillBoardSize($h_Node, $f_Width, $f_Height)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Node - Handle to a billboard node.
+;                  $f_Width - Width of the billboard (float value)
+;                  $f_Height - Height of the billboard (float value)
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: None
+; Related .......: _IrrAddBillBoardToScene, _IrrAddBillboardTextSceneNode
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: No
 ; ===============================================================================================================================
 Func _IrrSetBillBoardSize($h_Node, $f_Width, $f_Height)
 	DllCall($_irrDll, "none:cdecl", "IrrSetBillBoardSize", "ptr", $h_Node, "float", $f_Width, "float", $f_Height)
@@ -864,18 +859,22 @@ EndFunc   ;==>_IrrSetBillBoardSize
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddBillboardTextSceneNode
-; Description ...: [todo]
+; Description ...: Adds a text billboard to the scene of the specified size and at the specified position.
 ; Syntax.........: _IrrAddBillboardTextSceneNode($h_Font, $s_Text, $f_XSize, $f_YSize, $f_XPos=0, $f_YPos=0, $f_ZPos=0, $h_Parent=0, $i_TopRGBA=0xFFFFFFFF, $i_BottomRGBA=0xFFFFFFFF)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
+; Parameters ....: $h_Font - Handle to a font object.
+;                  $s_Text - String of text to display on the billboard.
+;                  $f_XSize, $f_YSize - Width and Height of the billboard (float values)
+;                  $f_XPos, $f_YPos, $f_ZPos - X, Y Z position of the billboard (float values, default 0)
+;                  $h_Parent -  Object that is the parent to this billboard (Default 0 no parent)
+;                  $i_TopRGBA, $i_BottomRGBA - Color value of the Top and Bottom of the text on the billboard.
+;                  |This can be created with _IrrMakeARGB. (Default is White for top and bottom)
+; Return values .: Success - Handle to Text BillBoard scene node.
+;                  Failure - False and @error 1
 ;                  |[moreExplanationIndented]
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: You should not texture this element.
+; Related .......: _IrrGetFont, _IrrMakeARGB
 ; Link ..........:
 ; Example .......: Yes
 ; ===============================================================================================================================
@@ -950,20 +949,20 @@ EndFunc   ;==>_IrrAddSkyBoxToScene
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddSkyDomeToScene
-; Description ...: [todo]
+; Description ...: Adds a skydome node to the scene.
 ; Syntax.........: _IrrAddSkyDomeToScene($h_Texture, $i_HorizontalRes, $i_VerticalRes, $d_TexturePercent, $d_SpherePercent, $d_SphereRadius = 1000.0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Texture - Handle to a texture object.
+;                  $i_HorizontalRes, $i_VerticalRes - Define the number of segments in the mesh of the sphere (setting these too high can quickly produce a very costly mesh).
+;                  $d_TexturePercent - Amount of the texture that is mapped to the scene, this should be a value between 0 and 1 (0 being non of the texture and 1 being the whole texture).
+;                  $d_SphereRadius - How much of a sphere is created and should be a value between 0 and 2 (0 being none of a sphere, 1 being a hemi-sphere and 2 being a full sphere).
+; Return values .: Success - Handle to a SkyDome scene node.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: _IrrAddSkyBoxToScene, _IrrSetSkyDomeColor, _IrrSetSkyDomeColorBand, _IrrSetSkyDomeColorPoint
+; Remarks .......: This is huge hollow sphere (or part of a sphere) that encapsulates the entire scene to represent a distant sky or matte scene.
+; Related .......: _IrrGetTexture, _IrrAddSkyBoxToScene, _IrrSetSkyDomeColor, _IrrSetSkyDomeColorBand, _IrrSetSkyDomeColorPoint
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrAddSkyDomeToScene($h_Texture, $i_HorizontalRes, $i_VerticalRes, $d_TexturePercent, $d_SpherePercent, $d_SphereRadius = 1000.0)
 	Local $aResult
@@ -1065,17 +1064,24 @@ EndFunc   ;==>_IrrAddSphereSceneNode
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddWaterSurfaceSceneNode
-; Description ...: [todo]
+; Description ...: Adds a mesh with a water animator applied to it.
 ; Syntax.........: _IrrAddWaterSurfaceSceneNode($h_Mesh, $f_WaveHeight = 2.0, $f_WaveSpeed = 300.0, $f_WaveLength = 10.0, $h_Parent = 0, $i_ID = -1, $f_PosX = 0, $f_PosY = 0, $f_PosZ = 0, $f_RotX = 0, $f_RotY = 0, $f_RotZ = 0, $f_ScaleX = 1.0, $f_ScaleY = 1.0, $f_ScaleZ = 1.0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Mesh -
+;                  $f_WaveHeight -
+;                  $f_WaveSpeed -
+;                  $f_WaveLength
+;                  $h_Parent
+;                  $i_ID
+;                  $f_PosX, $f_PosY $f_PosZ -
+;                  $f_RotX, $f_RotY, $f_RotZ -
+;                  $f_ScaleX, $f_ScaleY, $f_ScaleZ -
+; Return values .: Success - Handle to water scene node.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: The mesh is animated automatically to simulate a water effect across its surface.
+;                  Many properties are predefined for this node and a convincing water effect can be created simply by supplying the parameter for the mesh.
+;                  However the node can be positioned, rotated and scaled by this call and the appearance of the waves on its surface can be adjusted.
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
@@ -1090,17 +1096,19 @@ EndFunc   ;==>_IrrAddWaterSurfaceSceneNode
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddZoneManager
-; Description ...: [todo]
+; Description ...: Adds a zone/distance management node to the scene.
 ; Syntax.........: _IrrAddZoneManager($f_NearDistance=0, $f_FarDistance=12000)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $f_NearDistance - Near distance at which objects become visible.
+;                  $f_FarDistance - Far distance at which object disappear.
+; Return values .: Success - Handle to a zone node.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
+; Remarks .......: This simple but very powerful object has no visible geometry in the scene, it is used by attaching other nodes to it as children.
+;                  When the camera is further away than the far distance and closer than the near distance to the zone manager all of the zones child objects are made invisible.
+;                  This allows you to group objects together and automatically have them hidden from the scene when they are too far away to see.
+;                  By using the near distance you could have two sets of objects in the scene one with high detail for when you are close and another with low detail for when you are far away.
+;                  Another way to use the zone manager would be to test when your camera is inside the zones bounding box and switch its visibility on and off manually.
 ; Related .......: [todo: functionName, functionName]
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
@@ -1115,18 +1123,20 @@ EndFunc   ;==>_IrrAddZoneManager
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrAddClouds
-; Description ...: [todo]
+; Description ...: Adds a set of clouds to the scene.
 ; Syntax.........: _IrrAddClouds($h_Texture, $i_Lod, $i_Depth, $i_Density)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_Texture - Handle to a texture object.
+;                  $i_Lod - Level of detail in the cloud, more detail is added into the cloud depending on the distance of the observer from the object.
+;                  $i_Depth - Depth of recursion when creating the cloud.
+;                  $i_Density - Number of clouds in the cloud object.
+; Return values .: Success - Handle to a cloud node.
+;                  Failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: These clouds are most appropriate to a cloud effect experienced by a vehicle flying through them and
+;                  could be of particular use in masking the transition of a spacecraft from an orbital vantage point to a flat terrain object.
+;                  They do make a nice ordernary cloud effect too but can appear unrealistic when they are directly over the observer.
+; Related .......: _IrrGetTexture
 ; Link ..........:
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
@@ -1243,8 +1253,8 @@ EndFunc   ;==>_IrrSetShadowColor
 ;                  |Values are ignored for exponential fog.
 ;                  $f_Density - [optional] Determines how quickly the exponential change takes place, with value from 0 to 1.
 ;                  |Example: A value of 0.025 equals 20% visibility at 50 units distance. Value is ignored for linear fog.
-; Return values .: success - True
-;                  failure - False
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........:
 ; Modified.......:
 ; Remarks .......: None.
@@ -1368,8 +1378,8 @@ EndFunc   ;==>_IrrSetSkyDomeColorPoint
 ; Description ...: Sets the draw distances of nodes in the zone/distance management node and whether or not the zone manager is to accumulate the bounding boxes of its children as they are added.
 ; Syntax.........: _IrrSetZoneManagerProperties($h_ZoneManager, $f_NearDistance, $f_FarDistance, $i_AccumulateBoxes)
 ; Parameters ....: $h_ZoneManager - Handle to the zone node.
-;                  $f_NearDistance -
-;                  $f_FarDistance -
+;                  $f_NearDistance - Distance where objects become visible.
+;                  $f_FarDistance - Distance where objects become invisible.
 ;                  $i_AccumulateBoxes -
 ; Return values .: Success - True
 ;                  Failure - False
@@ -1598,7 +1608,7 @@ EndFunc   ;==>_IrrAddToBatchingMesh
 ; Description ...: Finalises the batching mesh.
 ; Syntax.........: _IrrFinalizeBatchingMesh($h_meshBatch)
 ; Parameters ....: $h_meshBatch - Handle to a bactching mesh as returned by _IrrCreateBatchingMesh.
-; Return values .: Success - Handle to a new mesh
+; Return values .: Success - Handle to a new mesh.
 ;                  Failure - False and @error 1
 ; Author ........:
 ; Modified.......:
@@ -1618,20 +1628,21 @@ EndFunc   ;==>_IrrFinalizeBatchingMesh
 
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetMeshMaterialTexture
-; Description ...: [todo]
+; Description ...: Apply the supplied texture to the specified mesh.
 ; Syntax.........: _IrrSetMeshMaterialTexture($h_mesh, $h_texture, $i_index, $i_buffer = 0)
-; Parameters ....: [param1] - [explanation]
-;                  |[moreTextForParam1]
-;                  [param2] - [explanation]
-; Return values .: [success] - [explanation]
-;                  [failure] - [explanation]
-;                  |[moreExplanationIndented]
+; Parameters ....: $h_mesh - Handle to a mesh object.
+;                  $h_texture - Handle to a texture object.
+;                  $i_index - Upto four textures (0 To 3) can be applied to the material by applying them to different material indicies,
+;                  |these textures can be used by  materials or shader functions. (0 To 3)
+;                  $i_buffer - Default 0
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
-; Remarks .......: [todo]
-; Related .......: [todo: functionName, functionName]
+; Remarks .......: Setting a mesh texture will apply the texture to all nodes that use that mesh it can also used for texturing a mesh before it is added to a batch mesh.
+; Related .......: _IrrGetMesh, _IrrCreateMesh, _IrrAddSphereSceneMesh, _IrrGetTexture, _IrrAddToBatchingMesh
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrSetMeshMaterialTexture($h_Mesh, $h_Texture, $i_index, $i_buffer = 0)
 	DllCall($_irrDll, "none:cdecl", "IrrSetMeshMaterialTexture", "ptr", $h_Mesh, "ptr", $h_Texture, "int", $i_index, "int", $i_buffer)
