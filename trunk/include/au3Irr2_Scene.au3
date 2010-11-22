@@ -18,7 +18,6 @@
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
 ;_IrrGetMeshBufferCount
-;_IrrSetZoneManagerAttachTerrain
 ;_IrrGetGrassDrawCount
 ; ===============================================================================================================================
 
@@ -69,6 +68,7 @@
 ;_IrrSetSkyDomeColorPoint
 ;_IrrSetZoneManagerProperties
 ;_IrrSetZoneManagerBoundingBox
+;_IrrSetZoneManagerAttachTerrain
 ;_IrrSetGrassDensity
 ;_IrrSetGrassWind
 ;_IrrCreateBatchingMesh
@@ -1422,17 +1422,17 @@ Func _IrrSetZoneManagerBoundingBox($h_ZoneManager, $f_X, $f_Y, $f_Z, $f_BoxWidth
 EndFunc   ;==>_IrrSetZoneManagerBoundingBox
 
 
-; #NO_DOC_FUNCTION# =============================================================================================================
+; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetZoneManagerAttachTerrain
 ; Description ...: Attach a terrain node to a the zone manager.
-; Syntax.........: _IrrSetZoneManagerAttachTerrain($h_ZoneNode, $h_Terrain, $s_StructureMapFile, $s_ColorMapFile, $s_DetailMapFile, $i_ImageX, $i_ImageY, $i_SliceSize)
+; Syntax.........: _IrrSetZoneManagerAttachTerrain($h_ZoneNode, $h_Terrain, $p_StructureMapFile, $p_ColorMapFile, $p_DetailMapFile, $i_ImageX, $i_ImageY, $i_SliceSize)
 ; Parameters ....: $h_ZoneNode - Handle to a zone node.
 ;                  $h_Terrain - Handle to an irr terrain object.
-;                  $s_StructureMapFile - Name of an RGBA bitmap file that is to be used to set the structure of the terrain.
+;                  $p_StructureMapFile - Pointer to a dllstruct char array containg the name of an RGBA bitmap file that is to be used to set the structure of the terrain.
 ;                  |The Alpha channel is used to set the height and the RGB channels are used to set the color of the vertex at that position.
 ;                  |This can be used to load lighting into the scene or to load detail map blending into the scene for simple terrain spattering
-;                  $s_ColorMapFile - Color map file to apply new color to the terrain, if not need use $IRR_NO_OBJECT
-;                  $s_DetailMapFile - Detail map file to apply new detail to the terrain, if not need use $IRR_NO_OBJECT
+;                  $p_ColorMapFile - Pointer to a dllstruct char array containg the name of the Color map file to apply new color to the terrain, if not need use $IRR_NO_OBJECT
+;                  $p_DetailMapFile - Pointer to a dllstruct char array containg the name Detail map file to apply new detail to the terrain, if not need use $IRR_NO_OBJECT
 ;                  $i_ImageX - X, $i_ImageY - X and Y position of this tile on the structure and color images,
 ;                  |so you could load a 1024x1024 structure image and a 1024x1024 detail image in and have your zones form a grid across these large bitmaps.
 ;                  $i_SliceSize - Allows you to only process a slice of the terrain on each frame,
@@ -1446,13 +1446,14 @@ EndFunc   ;==>_IrrSetZoneManagerBoundingBox
 ; Remarks .......: A special feature of the zone manager is its ability to manage tiled terrain nodes, a zone does this by taking position of an attached terrain object that it shares with other zone objects whenever the camera starts to come into range.
 ;                  The terrain object is loaded with new height information, color and detail ready for when it becomes visible to the camera.
 ;                  You can load your images manually to save them with IrrGetImage and IrrGetTexture and let them stay in memory to avoid having to load images while the scene is running however you should stay aware of how much memory you are using especially the graphics card memory used by IrrGetTexture.
-; Related .......: [todo: functionName, functionName]
+;                  For the parameters $p_StructureMapFile, $p_ColorMapFile, $p_DetailMapFile a pointer to DllStruct containing a "char[" & StringLeng("filename")& "]"  array that contains a string of the file name, see example for better understanding.
+; Related .......: _IrrAddTerrainTile, _IrrAttachTile, _IrrAddZoneManager
 ; Link ..........:
-; Example .......: [todo: Yes, No]
+; Example .......: Yes
 ; ===============================================================================================================================
-Func _IrrSetZoneManagerAttachTerrain($h_ZoneNode, $h_Terrain, $s_StructureMapFile, $s_ColorMapFile, $s_DetailMapFile, $i_ImageX, $i_ImageY, $i_SliceSize)
+Func _IrrSetZoneManagerAttachTerrain($h_ZoneNode, $h_Terrain, $p_StructureMapFile, $p_ColorMapFile, $p_DetailMapFile, $i_ImageX, $i_ImageY, $i_SliceSize)
 	DllCall($_irrDll, "none:cdecl", "IrrSetZoneManagerAttachTerrain", "UINT_PTR", $h_ZoneNode, "UINT_PTR", $h_Terrain, _
-			"str", $s_StructureMapFile, "str", $s_ColorMapFile, "str", $s_DetailMapFile, "int", $i_ImageX, "int", $i_ImageY, "int", $i_SliceSize)
+			"ptr", $p_StructureMapFile, "ptr", $p_ColorMapFile, "ptr", $p_DetailMapFile, "int", $i_ImageX, "int", $i_ImageY, "int", $i_SliceSize)
 	Return SetError(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetZoneManagerAttachTerrain
 
