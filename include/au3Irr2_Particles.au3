@@ -628,7 +628,7 @@ EndFunc   ;==>_IrrSetParticleAffectorEnable
 ; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrSetFadeOutParticleAffectorTime($h_ParticleAffector, $f_Time)
-	DllCall($_irrDll, "none:cdecl", "IrrSetFadeOutParticleAffectorTime", "ptr", $h_ParticleAffector, "float", $f_Time)
+	DllCall($_irrDll, "none:cdecl", "IrrSetFadeOutParticleAffectorTime", "ptr", $h_ParticleAffector, "int", $f_Time)
 	Return Seterror(@error, 0, @error = 0)
 EndFunc   ;==>_IrrSetFadeOutParticleAffectorTime
 
