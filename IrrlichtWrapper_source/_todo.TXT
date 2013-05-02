@@ -1,0 +1,26 @@
+
+2013-05-01
+==========
+
+Replaced Irrlicht.dll and IrrlichtWrapper.dll with re-compiled and re-patched builds (on top of Irrlicht 1.8 / Visual Studio 2012 Express):
+- Replaced fonttool.exe with build from Irrlicht 1.8
+- removed msvcp71.dll and msvcr71.dll (as they should no longer be needed)
+
+- dropped support for DX8 (not worth to compile Irrlicht.dll with it)
+  A: to be merged into help files
+
+- currently not working: particle examples / XEffects examples ()
+  A: check patched irrlicht source
+  particles: example 007: _IrrSetNodeMaterialType ( $SmokeParticles, $IRR_EMT_TRANSPARENT_VERTEX_ALPHA ) <<< works with $IRR_EMT_SOLID! 
+  
+  shader: glsl vs. hlsl (dx?)
+  
+Win7/64
+- A: check support/required changes (e.g. in Setup of Example launcher, Useability after typical installation of AU3
+
+Rift
+- A: check how implementation of Rift SDK could be done
+
+Sound
+- A: also re-compile Irrklang and IrrklangWrapper. Possible to merge IrklangWrapper to IrrlichtWrapper?
+- A: check if 3D-sound can be added to a node (additional func in Wrapper)
