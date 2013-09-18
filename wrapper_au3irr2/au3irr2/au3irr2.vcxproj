@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E7FF20C9-D4C9-4CF9-978C-DB87F557CCA5}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>au3irr2</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <GenerateManifest>true</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;AU3IRR2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\_sdks\OculusSDK_204\LibOVR\Include;..\..\..\..\_sdks\irrlicht-1.7.1\source\irrlicht;..\..\..\..\_sdks\irrlicht-1.7.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>.\au3irr2.def</ModuleDefinitionFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(OutDir)$(TargetName)$(TargetExt) ..\..\bin\</Command>
+      <Message>&gt;&gt;&gt; copying .dll to ..\..\bin\</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;AU3IRR2_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\_sdks\OculusSDK_204\LibOVR\Include;..\..\..\..\_sdks\irrlicht-1.7.1\source\irrlicht;..\..\..\..\_sdks\irrlicht-1.7.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <ModuleDefinitionFile>.\au3irr2.def</ModuleDefinitionFile>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(OutDir)$(TargetName)$(TargetExt) ..\..\bin\</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>&gt;&gt;&gt; copying .dll to ..\..\bin\</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="au3irr2.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="au3irr2.h" />
+    <ClInclude Include="CBatchingMesh.h" />
+    <ClInclude Include="CBeamSceneNode.h" />
+    <ClInclude Include="CBillboardGroupSceneNode.h" />
+    <ClInclude Include="CBoltSceneNode.h" />
+    <ClInclude Include="CCloudSceneNode.h" />
+    <ClInclude Include="CColorMorphAffector.h" />
+    <ClInclude Include="CGrassPatchSceneNode.h" />
+    <ClInclude Include="CImpostorSceneNode.h" />
+    <ClInclude Include="CLensFlareSceneNode.h" />
+    <ClInclude Include="CLODSceneNode.h" />
+    <ClInclude Include="CParticleEmissionAffector.h" />
+    <ClInclude Include="CParticlePushAffector.h" />
+    <ClInclude Include="CSceneNodeAnimatorFade.h" />
+    <ClInclude Include="CScreenQuad.h" />
+    <ClInclude Include="CShaderPre.h" />
+    <ClInclude Include="CSkyDomeColorSceneNode.h" />
+    <ClInclude Include="CSplineAffector.h" />
+    <ClInclude Include="CTerrainSphereNode.h" />
+    <ClInclude Include="CTerrainTileSceneNode.h" />
+    <ClInclude Include="CWindGenerator.h" />
+    <ClInclude Include="CZoneSceneNode.h" />
+    <ClInclude Include="EffectCB.h" />
+    <ClInclude Include="EffectHandler.h" />
+    <ClInclude Include="EffectShaders.h" />
+    <ClInclude Include="HMDStereoRender.h" />
+    <ClInclude Include="ILensFlareSceneNode.h" />
+    <ClInclude Include="IWindGenerator.h" />
+    <ClInclude Include="XEffects.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="au3irr2.cpp" />
+    <ClCompile Include="CBatchingMesh.cpp" />
+    <ClCompile Include="CBeamSceneNode.cpp" />
+    <ClCompile Include="CBillboardGroupSceneNode.cpp" />
+    <ClCompile Include="CBoltSceneNode.cpp" />
+    <ClCompile Include="CCloudSceneNode.cpp" />
+    <ClCompile Include="CColorMorphAffector.cpp" />
+    <ClCompile Include="CGrassPatchSceneNode.cpp" />
+    <ClCompile Include="CLensFlareSceneNode.cpp" />
+    <ClCompile Include="CLODSceneNode.cpp" />
+    <ClCompile Include="CParticleEmissionAffector.cpp" />
+    <ClCompile Include="CParticlePushAffector.cpp" />
+    <ClCompile Include="CSceneNodeAnimatorFade.cpp" />
+    <ClCompile Include="CShaderPre.cpp" />
+    <ClCompile Include="CSkyDomeColorSceneNode.cpp" />
+    <ClCompile Include="CSplineAffector.cpp" />
+    <ClCompile Include="CTerrainSphereNode.cpp" />
+    <ClCompile Include="CTerrainTileSceneNode.cpp" />
+    <ClCompile Include="CZoneSceneNode.cpp" />
+    <ClCompile Include="EffectHandler.cpp" />
+    <ClCompile Include="HMDStereoRender.cpp" />
+    <ClCompile Include="main.c" />
+    <ClCompile Include="wrapper2d.cpp" />
+    <ClCompile Include="wrapperanimation.cpp" />
+    <ClCompile Include="wrappercamera.cpp" />
+    <ClCompile Include="wrappercollision.cpp" />
+    <ClCompile Include="wrapperfiling.cpp" />
+    <ClCompile Include="wrappergui.cpp" />
+    <ClCompile Include="wrapperHMDStereoRender.cpp" />
+    <ClCompile Include="wrapperkeyboardmouse.cpp" />
+    <ClCompile Include="wrapperlighting.cpp" />
+    <ClCompile Include="wrappernode.cpp" />
+    <ClCompile Include="wrapperparticles.cpp" />
+    <ClCompile Include="wrapperscene.cpp" />
+    <ClCompile Include="wrappershaders.cpp" />
+    <ClCompile Include="wrappersystem.cpp" />
+    <ClCompile Include="wrapperterrain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\..\_sdks\irrlicht-1.7.1\lib\Win32-visualstudio\Irrlicht.lib" />
+    <Library Include="..\..\..\..\_sdks\OculusSDK_204\LibOVR\Lib\Win32\libovr.lib" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
