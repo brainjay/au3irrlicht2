@@ -13,12 +13,17 @@
   
 
 
-=== 2.05 (2010-xx-xx) ==========================================================  
+=== 2.05 (2010/2013-xx-xx) ==========================================================  
 [work in progress!]
 
 
-> UDFs:
+> UDFs/au3Irr2.dll:
 
++ ?? Fixed: _IrrStop caused an aprupt end of the script. Changed IrrStop() in wrapper-dll to avoid this.
++ Improved support of Win7/64bit (changes in main UDF au3irrlicht2.au3, Launcher, internal tools)
++ Changed: Wrapper-dll re-build with VS2012. Removed msvcp71.dll and msvcr71.dll from \bin because should be obsolete now with change of compiler.
+  Also renamed irrlichtwrapper.dll to au3irr2.dll for beauty reasons and, above all, to illustrate forking from original wrapper source (which is no longer maintained by Frank Dodd :( )
++ Added experimental support of HMD Oculus Rift to the wrapper.
 + Added: _IrrGetNodeScale to au3Irr2_Node.au3
 + Fixed/Added: _IrrGetSphericalTerrainSurfacePositionAndAngle in au3Irr2_Terrain.au3
 + Fixed/Added: _IrrGetSphericalTerrainLogicalSurfacePosition in au3Irr2_Terrain.au3
@@ -51,6 +56,7 @@
 
 
 > Demos:
+
 + Added: \demos directory containing first bigger demo 'Conway's Game of Life 3D'  
 
 
@@ -67,7 +73,6 @@
 
 
 > Help file:
-
 
 - Added: more examples for help file, _IrrSetSphericalTerrainTexture, 
   _IrrAreNodesIntersecting, _IrrGetDistanceBetweenNodes, _IrrIsPointInsideNode,
@@ -101,6 +106,7 @@
 
 > Other:
 
++ Fixed: Setup function of ExampleLauncher did not properly update the calltips for SciTe.
 + Added: bin\FontTool.exe (used for creating bmp fonts, comes from IrrLicht 1.7.1 sdk) 
 - Changed: global $result is no longer used and has been removed from au3Irr2_Constants.au3
 - Added: example.zip to \media directory (for Load Scene examples, 200KB in size)

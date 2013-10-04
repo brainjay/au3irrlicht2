@@ -3,17 +3,17 @@
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: Sound
-; AutoIt Version : v3.3.6.1
+; AutoIt Version : v3.3.8.1
 ; Language ......: English
 ; Description ...: 2D and 3D sound functions based on the IrrKlang engine.
 ; Author(s) .....: linus
-;                  DLL functionality by Frank Dodd (IrrKlangWrapper.dll),
+;                  DLL functionality by Frank Dodd (original IrrKlangWrapper.dll),
 ;                  and Nikolaus Gebhardt(IrrKlang.dll).
-; Dll(s) ........: IrrKlangWrapper.dll, IrrKlang.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
+;_IrrKlangSetAllSoundsPaused
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
@@ -199,6 +199,24 @@ EndFunc   ;==>_IrrReleaseSound
 
 
 
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrKlangSetAllSoundsPaused
+; Description ...: [todo]
+; Syntax.........: _IrrKlangSetAllSoundsPaused($bPaused)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
 Func _IrrKlangSetAllSoundsPaused($bPaused)
 ; Pause all sounds
 	local $aResult = DllCall($_irrKlangDll, "none:cdecl", "IrrKlangSetAllSoundsPaused", "BOOLEAN", $bPaused)

@@ -4,7 +4,7 @@
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: System
-; AutoIt Version : v3.3.6.1
+; AutoIt Version : v3.3.8.1
 ; Language ......: English
 ; Description ...: Calls for creating and manipulating materials that can be applied to a node to color and texture the object.
 ;                  Basic Materials set common properties like the shininess and reflective color of the objects. Advanced
@@ -13,9 +13,8 @@
 ;                  Irrlicht supports Vertex Shaders, Pixel Shaders, ARB Vertex programs, ARB Fragment programs,
 ;                  HLSL (DirectX 9) and GLSL (OpenGL).
 ; Author(s) .....: jRowe, linus.
-;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (IrrlichtWrapper.dll),
+;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (original IrrlichtWrapper.dll),
 ;                  and Nikolaus Gebhardt and Irrlicht team (Irrlicht.dll).
-; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
@@ -331,6 +330,8 @@ EndFunc   ;==>_IrrMaterialSetAmbientColor
 ; Syntax.........: _IrrMaterialSetEmissiveColor($h_Material, $i_Alpha, $i_Red, $i_Green, $i_Blue)
 ; Parameters ....: $h_Material - Handle to a material object as returned by _IrrGetMaterial
 ;                  $i_Alpha, $i_Red, $i_Green, $i_Blue - Color values from 0 to 255
+; Return values .: Success - True
+;                  Failure - False
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: None

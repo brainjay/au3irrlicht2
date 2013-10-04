@@ -3,7 +3,7 @@ Compatibility=1.1 or later
 Compiled file=AutoIt.chm
 Contents file=AutoItM.hhc
 Default Window=$global_TP
-Default topic=html/introduction.htm
+Default topic=AutoIt.chm::/AutoIt3.chm::/html/introduction.htm
 Display compile progress=Yes
 Error log file=_errorlogM.txt
 Full-text search=Yes
@@ -23,7 +23,7 @@ au3Irr2.chm
 [INFOTYPES]
 
 [ALIAS]
-IDH_History=ms-its:AutoIt3.chm::/html/history.htm
+IDH_History=ms-its:AutoIt3.chm::/html/introduction.htm
 
 [MAP]
 #define IDH_History 1000

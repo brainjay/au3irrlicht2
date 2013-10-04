@@ -4,14 +4,13 @@
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: Camera
-; AutoIt Version : v3.3.6.1
+; AutoIt Version : v3.3.8.1
 ; Language ......: English
 ; Description ...: Calls for creating and controlling cameras in the scene. The camera objects are used for
 ;                  defining a view point and a target point which is used to render the scene.
 ; Author(s) .....: jRowe, linus.
-;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (IrrlichtWrapper.dll),
+;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (original IrrlichtWrapper.dll),
 ;                  and Nikolaus Gebhardt and Irrlicht team (Irrlicht.dll).
-; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
@@ -73,6 +72,7 @@ Func _IrrAddFPSCamera($h_ParentNode = 0, $f_RotateSpeed = 100.0, $f_MoveSpeed = 
 	If @error Or Not $aResult[0] Then Return SetError(1, 0, False)
 	Return SetError(0, 0, $aResult[0])
 EndFunc   ;==>_IrrAddFPSCamera
+
 
 
 ; #FUNCTION# =============================================================================================================

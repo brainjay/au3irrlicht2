@@ -7,7 +7,7 @@
 <UL>
 <LI> <OBJECT type="text/sitemap">
    <param name="Name" value="Merge">
-   <param name="Local" value="html/introduction.htm">
+   <param name="Local" value="=AutoIt3.chm::/html/introduction.htm">
 		</OBJECT>
 </UL>
 </BODY></HTML>

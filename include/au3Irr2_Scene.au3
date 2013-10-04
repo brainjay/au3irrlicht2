@@ -5,28 +5,28 @@
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: Scene
-; AutoIt Version : v3.3.6.1
+; AutoIt Version : v3.3.8.1
 ; Language ......: English
 ; Description ...: Calls for managing the scene, loading and creating mesh objects and then adding them to the scene
 ;                  as nodes to be rendered on the screen.
 ; Author(s) .....: jRowe, linus.
-;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (IrrlichtWrapper.dll),
+;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (original IrrlichtWrapper.dll),
 ;                  and Nikolaus Gebhardt and Irrlicht team (Irrlicht.dll).
-; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
 ;_IrrGetMeshBufferCount
 ;_IrrGetGrassDrawCount
+;_IrrSetFlareScale
 ; ===============================================================================================================================
 
 ; #CURRENT# =====================================================================================================================
 ;_IrrGetRootSceneNode
 ;_IrrGetMesh
 ;_IrrCreateMesh
-;_IrrAddHillPlaneMesh
 ;_IrrAddSphereSceneMesh
+;_IrrAddHillPlaneMesh
 ;_IrrWriteMesh
 ;_IrrRemoveMesh
 ;_IrrClearUnusedMeshes
@@ -38,6 +38,9 @@
 ;_IrrGetMeshVertexCount
 ;_IrrGetMeshVertices
 ;_IrrSetMeshVertices
+;_IrrSetMeshVertexColors
+;_IrrSetMeshVertexCoords
+;_IrrSetMeshVertexSingleColor
 ;_IrrAddMeshToScene
 ;_IrrAddMeshToSceneAsOcttree
 ;_IrrAddStaticMeshForNormalMappingToScene
@@ -75,9 +78,6 @@
 ;_IrrAddToBatchingMesh
 ;_IrrFinalizeBatchingMesh
 ;_IrrSetMeshMaterialTexture
-;_IrrSetMeshVertexColors
-;_IrrSetMeshVertexCoords
-;_IrrSetMeshVertexSingleColor
 ;_IrrScaleMesh
 ;_IrrAddBeamSceneNode
 ;_IrrSetBeamSize
@@ -92,7 +92,6 @@
 ;_IrrBillBoardGroupShadows
 ;_IrrGetBillBoardGroupCount
 ;_IrrBillBoardForceUpdate
-;_IrrSetFlareScale
 ;_IrrAddLODManager
 ;_IrrAddLODMesh
 ;_IrrSetLODMaterialMap
@@ -1066,17 +1065,9 @@ EndFunc   ;==>_IrrAddSphereSceneNode
 ; Name...........: _IrrAddWaterSurfaceSceneNode
 ; Description ...: Adds a mesh with a water animator applied to it.
 ; Syntax.........: _IrrAddWaterSurfaceSceneNode($h_Mesh, $f_WaveHeight = 2.0, $f_WaveSpeed = 300.0, $f_WaveLength = 10.0, $h_Parent = 0, $i_ID = -1, $f_PosX = 0, $f_PosY = 0, $f_PosZ = 0, $f_RotX = 0, $f_RotY = 0, $f_RotZ = 0, $f_ScaleX = 1.0, $f_ScaleY = 1.0, $f_ScaleZ = 1.0)
-; Parameters ....: $h_Mesh -
-;                  $f_WaveHeight -
-;                  $f_WaveSpeed -
-;                  $f_WaveLength
-;                  $h_Parent
-;                  $i_ID
-;                  $f_PosX, $f_PosY $f_PosZ -
-;                  $f_RotX, $f_RotY, $f_RotZ -
-;                  $f_ScaleX, $f_ScaleY, $f_ScaleZ -
-; Return values .: Success - Handle to water scene node.
-;                  Failure - False and @error 1
+; Parameters ....: todo
+; Return values .: success - Handle to water scene node.
+;                  failure - False and @error 1
 ; Author ........: [todo]
 ; Modified.......:
 ; Remarks .......: The mesh is animated automatically to simulate a water effect across its surface.
@@ -1540,6 +1531,24 @@ EndFunc   ;==>_IrrGetGrassDrawCount
 ; Related .......: _IrrAddLensFlare
 ; Link ..........:
 ; Example .......: Yes
+; ===============================================================================================================================
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetFlareScale
+; Description ...: [todo]
+; Syntax.........: _IrrSetFlareScale($h_Flare, $f_Source, $f_Optics)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
 ; ===============================================================================================================================
 Func _IrrSetFlareScale($h_Flare, $f_Source, $f_Optics)
 	DllCall($_irrDll, "none:cdecl", "IrrSetFlareScale", "ptr", $h_Flare, "float", $f_Source, "float", $f_Optics)

@@ -4,14 +4,13 @@
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: System
-; AutoIt Version : v3.3.6.1
+; AutoIt Version : v3.3.8.1
 ; Language ......: English
 ; Description ...: These calls deal with starting, running and stopping the Irrlicht engine,
 ;                  it also includes calls that get system metrics and some other miscellaneous tools.
 ; Author(s) .....: jRowe, linus.
-;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (IrrlichtWrapper.dll),
+;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (original IrrlichtWrapper.dll),
 ;                  and Nikolaus Gebhardt and Irrlicht team (Irrlicht.dll).
-; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
@@ -27,16 +26,21 @@
 ; #CURRENT# =====================================================================================================================
 ;_IrrStart
 ;_IrrStartAdvanced
+;_IrrRiftInit
 ;_IrrRunning
+;_IrrRiftRunning
+;_IrrRiftReadSensorData
 ;_IrrSetViewPort
 ;_IrrBeginScene
 ;_IrrBeginSceneAdvanced
 ;_IrrDrawScene
 ;_IrrDrawSceneToTexture
+;_IrrRiftDrawScene
 ;_IrrSetRenderTarget
 ;_IrrDrawGUI
 ;_IrrEndScene
 ;_IrrStop
+;_IrrRiftStop
 ;_IrrTransparentZWrite
 ;_IrrGetFPS
 ;_IrrGetPrimitivesDrawn
@@ -106,11 +110,11 @@
 ; Example .......: Yes
 ; ===============================================================================================================================
 Func _IrrStart($i_DeviceType = $IRR_EDT_DIRECT3D9, $i_ScreenWidth = 800, $i_ScreenHeight = 600, $i_BitsPerPixel=$IRR_BITS_PER_PIXEL_32, $b_FullScreen=$IRR_WINDOWED, $b_Shadows=$IRR_NO_SHADOWS, $b_InputCapture=$IRR_IGNORE_EVENTS, $b_VSync=$IRR_VERTICAL_SYNC_OFF)
-	$_irrDll = DllOpen("IrrlichtWrapper.dll")
+	$_irrDll = DllOpen("au3irr2.dll")
 	If $_irrDll = -1 Then ; .dll cannot be opened - try to get it by extending %path%:
 		EnvSet("PATH", @ScriptDir & "\bin;" & @ScriptDir & "\..\bin;" & EnvGet("PATH"))
 		EnvUpdate()
-		$_irrDll = DllOpen("IrrlichtWrapper.dll")
+		$_irrDll = DllOpen("au3irr2.dll")
 		If $_irrDll = -1 Then Return Seterror(2, 0, False); no chance, so return error:
 	EndIf
 	DllCall($_irrDll, "none:cdecl", "IrrStart", "int", $i_DeviceType, "int", $i_ScreenWidth, "int", $i_ScreenHeight, "int", $i_BitsPerPixel, "uint", $b_FullScreen, "int", $b_Shadows, "int", $b_InputCapture, "int", $b_VSync)
@@ -171,11 +175,11 @@ EndFunc   ;==>_IrrStart
 ; ===============================================================================================================================
 Func _IrrStartAdvanced($i_DeviceType=$IRR_EDT_DIRECT3D9, $i_ScreenWidth=800, $i_ScreenHeight=600, $i_BitsPerPixel=$IRR_BITS_PER_PIXEL_32, $b_FullScreen=$IRR_WINDOWED, $b_Shadows=$IRR_NO_SHADOWS, $b_InputCapture=$IRR_IGNORE_EVENTS, $b_VSync=$IRR_VERTICAL_SYNC_OFF, $i_TypeOfDevice=0, $b_DoublebufferEnabled=$IRR_OFF, $i_AntialiasEnabled=0, $b_HighPrecisionFpu=$IRR_OFF)
 	Local $aResult
-	$_irrDll = DllOpen("IrrlichtWrapper.dll")
+	$_irrDll = DllOpen("au3irr2.dll")
 	If $_irrDll = -1 Then ; .dll cannot be opened - try to get it by extending %path%:
 		EnvSet("PATH", @ScriptDir & "\bin;" & @ScriptDir & "\..\bin;" & EnvGet("PATH"))
 		EnvUpdate()
-		$_irrDll = DllOpen("IrrlichtWrapper.dll")
+		$_irrDll = DllOpen("au3irr2.dll")
 		If $_irrDll = -1 Then Return Seterror(2, 0, False) ; no chance, so return error:
 	EndIf
 	$aResult = DllCall($_irrDll, "uint:cdecl", "IrrStart", "int", $i_DeviceType, "int", $i_ScreenWidth, "int", $i_ScreenHeight, _
@@ -184,6 +188,30 @@ Func _IrrStartAdvanced($i_DeviceType=$IRR_EDT_DIRECT3D9, $i_ScreenWidth=800, $i_
 	If @error Then Return Seterror(1, 0, False)
 	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrStartAdvanced
+
+
+; #FUNCTION# =============================================================================================================
+; Name...........: _IrrRiftInit
+; Description ...: [todo]
+; Syntax.........: _IrrRiftInit()
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: _IrrRiftStop, _IrrRiftDrawScene, _IrrRiftRunning, _IrrRiftReadSensorData
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrRiftInit()
+	DllCall($_irrDll, "none:cdecl", "IrrRiftInit")
+	Return SetError(@error, 0, @error = 0)
+EndFunc   ;==> _IrrRiftInit
+
 
 
 ; #FUNCTION# =============================================================================================================
@@ -206,6 +234,62 @@ Func _IrrRunning()
 	If @error Then Return Seterror(1, 0, False)
 	Return Seterror(0, 0, $aResult[0])
 EndFunc   ;==>_IrrRunning
+
+
+
+; #FUNCTION# =============================================================================================================
+; Name...........: _IrrRiftRunning
+; Description ...: [todo]
+; Syntax.........: _IrrRiftRunning()
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: _IrrRiftInit, _IrrRiftStop, _IrrRiftDrawScene, _IrrRiftReadSensorData
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrRiftRunning()
+	Local $aResult
+	$aResult = DllCall($_irrDll, "int:cdecl", "IrrRiftRunning")
+	If @error Then Return SetError(1, 0, False)
+	Return SetError(0, 0, $aResult[0])
+EndFunc   ;==>_IrrRiftRunning
+
+
+; #FUNCTION# =============================================================================================================
+; Name...........: _IrrRiftReadSensorData
+; Description ...: [todo]
+; Syntax.........: _IrrRiftReadSensorData(ByRef $f_Pitch, ByRef $f_Yaw, ByRef $f_Roll)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: _IrrRiftInit, _IrrRiftStop, _IrrRiftDrawScene, _IrrRiftRunning
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrRiftReadSensorData(ByRef $f_Pitch, ByRef $f_Yaw, ByRef $f_Roll)
+	Local $aResult
+	$aResult = DllCall($_irrDll, "none:cdecl", "IrrRiftReadSensorData", "float*", $f_Pitch, "float*", $f_Yaw, "float*", $f_Roll)
+
+	If @error Then Return Seterror(1, 0, False)
+	$f_Pitch = $aResult[1]
+	$f_Yaw = $aResult[2]
+	$f_Roll = $aResult[3]
+	Return Seterror(0, 0, True)
+
+EndFunc   ;==> _IrrRiftReadSensorData
 
 
 ; #FUNCTION# =============================================================================================================
@@ -320,6 +404,31 @@ Func _IrrDrawSceneToTexture($h_RenderTargetTexture)
 EndFunc   ;==>_IrrDrawSceneToTexture
 
 
+
+; #FUNCTION# =============================================================================================================
+; Name...........: _IrrRiftDrawScene
+; Description ...: [todo]
+; Syntax.........: _IrrRiftDrawScene()
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: _IrrRiftInit, _IrrRiftStop, _IrrRiftRunning, _IrrRiftReadSensorData
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrRiftDrawScene()
+	DllCall($_irrDll, "none:cdecl", "IrrRiftDrawScene")
+	Return SetError(@error, 0, @error = 0)
+EndFunc   ;==> _IrrRiftDrawScene
+
+
+
 ; #FUNCTION# =============================================================================================================
 ; Name...........: _IrrSetRenderTarget
 ; Description ...: [todo]
@@ -405,6 +514,32 @@ Func _IrrStop()
 	DllClose($_irrDll)
 	Return Seterror(0, 0, True)
 EndFunc   ;==>_IrrStop
+
+
+
+
+; #FUNCTION# =============================================================================================================
+; Name...........: _IrrRiftStop
+; Description ...: [todo]
+; Syntax.........: _IrrRiftStop()
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: _IrrRiftInit, _IrrRiftDrawScene, _IrrRiftRunning, _IrrRiftReadSensorData
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrRiftStop()
+	DllCall($_irrDll, "none:cdecl", "IrrRiftStop")
+	Return SetError(@error, 0, @error = 0)
+EndFunc   ;==> _IrrRiftStop
+
 
 
 ; #FUNCTION# =============================================================================================================

@@ -1,22 +1,7 @@
 #cs ----------------------------------------------------------------------------
 
- AutoIt Version: 3.3.6.1
+ AutoIt Version: 3.3.8.1
  Author:         linus
-
- History:
- 2010-10-09: Changed file name for calltips to "au3Irr2.user.calltips.api"
- 2010-09-16: Fixed parseUDF - added functions in UDFs w/o info block were not updated correctly
- 2010-09-05: Added some preparation for a merged help file (original au3 help + au3Irr2 help)
- 2010-09-04: Added automatic building of the au3.user.calltips.api
- 2010-08-24: Fixed list building in buildHistoryHTML
- 2010-08-21: Added updateIntroductionHTML and some fixes on buildHistoryHTML.
- 2010-08-19: Added buildHistoryHTML for automatic update of au3irr2's history info
- 2010-08-11: Deletes now also *.bck in \include when cleaning
- 2010-08-08: Fixed handling of #INTERNAL_USE_ONLY# and #NO_DOC_FUNCTION# blocks
- 2010-08-08: Added handling of several .au3 (for \include), cleanup of files + dirs,
-             building of Categories.toc + includes.txt
- 2010-08-01: Fixed header blocks so GuiTemplateBuilder.exe accepts them
- 2010-07-31: Init
 
  Script Function:
 	Helper tool for documentation of the au3Irrlicht2 UDF.
@@ -29,12 +14,32 @@
 	Not too much error handling when updating the UDF's - so final files should be compared
 	with originals (as backuped in \include)!
 
+ History:
+ 2010-07-31: Init
+ 2010-08-01: Fixed header blocks so GuiTemplateBuilder.exe accepts them
+ 2010-08-08: Added handling of several .au3 (for \include), cleanup of files + dirs,
+             building of Categories.toc + includes.txt
+ 2010-08-08: Fixed handling of #INTERNAL_USE_ONLY# and #NO_DOC_FUNCTION# blocks
+ 2010-08-11: Deletes now also *.bck in \include when cleaning
+ 2010-08-19: Added buildHistoryHTML for automatic update of au3irr2's history info
+ 2010-08-21: Added updateIntroductionHTML and some fixes on buildHistoryHTML.
+ 2010-08-24: Fixed list building in buildHistoryHTML
+ 2010-09-04: Added automatic building of the au3.user.calltips.api
+ 2010-09-05: Added some preparation for a merged help file (original au3 help + au3Irr2 help)
+ 2010-09-16: Fixed parseUDF - added functions in UDFs w/o info block were not updated correctly
+ 2010-10-09: Changed file name for calltips to "au3Irr2.user.calltips.api"
+ 2013-22-09: (V0.4c) No more copy of introduction.htm (start page for the merging help file autoit.chm) because in
+             autitM.hhp now set the start page to autoit3.chm::/introduction.htm
+ 2013-28-09: - Default dir for UpdateUDF is now set directly to \include dir
+             - Some adjustments for better support on 64bit (regread/copy of chm-files)
+
 #ce ----------------------------------------------------------------------------
 
 #include <Array.au3>
+#include <File.au3>
 Opt("MustDeclareVars", True)
 
-const $SCRIPTTITLE = "Help tool V0.4b - 2010 by linus"
+const $SCRIPTTITLE = "Help tool V0.4c - 2010-2013 by linus"
 global $sLastMsg = ""
 
 
@@ -112,7 +117,9 @@ func main()
 	local $pathDir, $sUDF, $hFile
 	local $sCurrent, $sCategories, $sIncludes, $sCalltips
 	local $pathBuild = @ScriptDir & "\buildHelp\"
-	local $pathAu3 = RegRead("HKLM\SOFTWARE\AutoIt v3\AutoIt", "InstallDir") & "\"
+	Local $Wow64 = ""
+    If @AutoItX64 Then $Wow64 = "\Wow6432Node"
+	local $pathAu3 = RegRead("HKEY_LOCAL_MACHINE\SOFTWARE" & $Wow64 & "\AutoIt v3\AutoIt", "InstallDir")
 
 ; clean the build directories
 	$ret = MsgBox(4 + 32, $SCRIPTTITLE, "Clean buildHelp dir?")
@@ -151,9 +158,8 @@ func main()
 
 	ElseIf $ret = 6 then ; YES: update all .au3 in a dir and build other files for help
 
-		Do
-			$pathDir = FileSelectFolder("Include dir (all .au3 inside will be modified!)", "", 0, @ScriptDir)
-		Until $pathDir <> @ScriptDir ; protect scriptdir before too fast clickin' ...
+		local $defaultDir = _PathFull(@ScriptDir & "\..\include")
+		$pathDir = FileSelectFolder("Include dir (all .au3 inside will be modified!)", "", 0, $defaultDir)
 		$hFile = FileFindFirstFile($pathDir & "\*.au3")
 		if $hFile = -1 then
 			$sLastMsg = "main: No .au3 in dir!"
@@ -161,16 +167,16 @@ func main()
 		EndIf
 
 	; Create/update/copy additional files needed for help file:
-		if NOT FileCopy($pathAu3 & "AutoIt3.chm", $pathBuild, 1) _
-			OR NOT FileCopy($pathAu3 & "UDFs3.chm", $pathBuild, 1) Then
+		if NOT FileCopy($pathAu3 & "\AutoIt3.chm", $pathBuild, 1) _
+			OR NOT FileCopy($pathAu3 & "\UDFs3.chm", $pathBuild, 1) Then
 			$sLastMsg = "main: Cannot copy AutoIt3.chm and/or UDFs3.chm from Au3 dir to " & $pathBuild
 			Return False
 		EndIf
 
 		DirCreate($pathBuild & "html")
 		; copy introduction page for merged help together with needed files. Has to be in \htm to be shown properly later
-		if NOT FileCopy($pathBuild & "html_static\introduction.htm", $pathBuild & "html", 1) _
-		   OR NOT FileCopy($pathBuild & "html_static\css", $pathBuild & "html\css\", 1 + 8) _
+		;if NOT FileCopy($pathBuild & "html_static\introduction.htm", $pathBuild & "html", 1) _
+		if not FileCopy($pathBuild & "html_static\css", $pathBuild & "html\css\", 1 + 8) _
 		   OR NOT FileCopy($pathBuild & "html_static\images", $pathBuild & "html\images\", 1 + 8) Then
 			$sLastMsg = "main: Cannot copy \html_static\introduction.htm and/or \css + \images to \html!"
 			Return False
