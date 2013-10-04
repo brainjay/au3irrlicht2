@@ -4,14 +4,13 @@
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: 2D
-; AutoIt Version : v3.3.6.1
+; AutoIt Version : v3.3.8.1
 ; Language ......: English
 ; Description ...: Support for 2D operations including the loading of bitmaps that can be used for texturing
 ;                  3D objects or for display on the screen as 2D sprites.
 ; Author(s) .....: jRowe, linus.
-;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (IrrlichtWrapper.dll),
+;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (original IrrlichtWrapper.dll),
 ;                  and Nikolaus Gebhardt and Irrlicht team (Irrlicht.dll).
-; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================

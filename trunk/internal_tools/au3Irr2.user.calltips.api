@@ -1,4 +1,4 @@
-; userCallTips for au3Irr2 release 2.05 (2010-xx-xx)
+; userCallTips for au3Irr2 release 2.05 (2010/2013-xx-xx)
 ; === Start of au3Irrlicht2 calltip definitions ======================================================
 
 _IrrSetTextureCreationFlag($i_Flag,$i_Value) Sets texture creation flags controlling how textures are handled when they are created.
@@ -63,6 +63,7 @@ _IrrGetCollisionGroupFromComplexMesh($h_Mesh,$h_Node,$i_Frame=0) Creates an opti
 _IrrGetCollisionGroupFromBox($h_Node) Creates a collision object from the bounding box of a node.
 _IrrGetCollisionGroupFromTerrain($h_Node,$i_Lod=1) Creates a collision object from a terrain node.
 _IrrRemoveCollisionGroup($h_CollisionGroup,$h_Node) Remove the collision selector from memory.
+_IrrSetNodeTriangleSelector($h_Node,$h_CollisionGroup) 
 _IrrCreateCombinedCollisionGroup() Creates a collision object that can be used to combine several collision objects together.
 _IrrAddCollisionGroupToCombination($h_CombinedCollisionGroup,$h_CollisionGroup) Adds a collision object to group of collision objects.
 _IrrRemoveAllCollisionGroupsFromCombination($h_CombinedCollisionGroup) Empty a collision group object so that you can add different collision groups to it.
@@ -81,7 +82,7 @@ _IrrGetNodeAndCollisionPointFromRay($a_StartVector,$a_EndVector,ByRef $h_Node,By
 _IrrGetDistanceBetweenNodes($h_NodeA,$h_NodeB) The distance between two nodes is measured using fast maths functions that will show inaccuracies.
 _IrrAreNodesIntersecting($h_NodeA,$h_NodeB) Tests whether the bounding boxes are two nodes are intersecting.
 _IrrIsPointInsideNode($h_Node,$f_X,$f_Y,$f_Z) Determine if the specified point is inside the bounding box of the node.
-_IrrGetCollisionResultPosition($h_Selector,ByRef $a_EllipsoidPosition,ByRef $a_EllipsoidRadius,ByRef $a_Velocity,ByRef $a_Gravity,$f_SlidingSpeed,ByRef $a_OutPosition,ByRef $a_OutHitPosition,ByRef $i_OutFalling) Collides a moving ellipsoid with a 3d world with gravity and returns the resulting new position of the ellipsoid,
+_IrrGetCollisionResultPosition($h_Selector,ByRef $a_EllipsoidPosition,ByRef $a_EllipsoidRadius,ByRef $a_Velocity,ByRef $a_Gravity,$f_SlidingSpeed,ByRef $a_OutPosition,ByRef $a_OutHitPosition,ByRef $i_OutFalling) Collides moving ellipsoid with 3d world with gravity and returns resulting new position of the ellipsoid.
 $IRR_EDT_NULL
 $IRR_EDT_SOFTWARE
 $IRR_EDT_SOFTWARE2
@@ -582,20 +583,20 @@ _IrrSetLightOuterCone($h_Light,$f_OuterCone) The angle of the spot's outer cone.
 _IrrSetLightRadius($h_Light,$f_Radius) Set the radius of light.
 _IrrSetLightSpecularColor($h_Light,$f_Red,$f_Green,$f_Blue) Sets specular color emitted by the light.
 _IrrSetLightType($h_Light,$i_Type) Set the type of light to be used.
-_IrrSetNodeAmbientColor($h_Node,$i_Color) 
-_IrrSetNodeDiffuseColor($h_Node,$i_Color) 
-_IrrSetNodeSpecularColor($h_Node,$i_Color) 
-_IrrSetNodeEmissiveColor($h_Node,$i_Color) 
-_IrrSetNodeColorByVertex($h_Node,$i_ColorMaterial) 
-_IrrMaterialVertexColorAffects($h_Material,$i_AffectedProperty) 
-_IrrSetMaterialBlend($h_Material,$i_SrcBlend,$i_DstBlend) 
-_IrrMaterialSetShininess($h_Material,$f_Shininess) 
-_IrrMaterialSetSpecularColor($h_Material,$i_Alpha,$i_Red,$i_Green,$i_Blue) 
+_IrrSetNodeAmbientColor($h_Node,$i_Color) Sets the ambient color of all materials in a node.
+_IrrSetNodeDiffuseColor($h_Node,$i_Color) Sets the diffuse color of all materials in a node.
+_IrrSetNodeSpecularColor($h_Node,$i_Color) Sets the specular color of all materials in a node.
+_IrrSetNodeEmissiveColor($h_Node,$i_Color) Sets the emissive color of all materials in a node.
+_IrrSetNodeColorByVertex($h_Node,$i_ColorMaterial) Sets which aspect of all of the materials in a node is affected by the vertex colour.
+_IrrMaterialVertexColorAffects($h_Material,$i_AffectedProperty) Sets which aspect of the material is affected by the vertex colour.
+_IrrSetMaterialBlend($h_Material,$i_SrcBlend,$i_DstBlend) Sets the source and destination surface blend factors for the ONETEXTURE_BLEND material.
+_IrrMaterialSetShininess($h_Material,$f_Shininess) Set how shiny the material is.
+_IrrMaterialSetSpecularColor($h_Material,$i_Alpha,$i_Red,$i_Green,$i_Blue) Set the color of specular highlights on objects with this material applied.
 _IrrMaterialSetDiffuseColor($h_Material,$i_Alpha,$i_Red,$i_Green,$i_Blue) 
-_IrrMaterialSetAmbientColor($h_Material,$i_Alpha,$i_Red,$i_Green,$i_Blue) 
-_IrrMaterialSetEmissiveColor($h_Material,$i_Alpha,$i_Red,$i_Green,$i_Blue) 
-_IrrMaterialSetMaterialTypeParam($h_Material,$f_Param) 
-_IrrSetMaterialLineThickness($h_Material,$f_Thickness) 
+_IrrMaterialSetAmbientColor($h_Material,$i_Alpha,$i_Red,$i_Green,$i_Blue) Set the color of ambient light reflected by objects with this material applied.
+_IrrMaterialSetEmissiveColor($h_Material,$i_Alpha,$i_Red,$i_Green,$i_Blue) Set the color of light emitted by objects with this material applied.
+_IrrMaterialSetMaterialTypeParam($h_Material,$f_Param) Set material specific parameter.
+_IrrSetMaterialLineThickness($h_Material,$f_Thickness) Sets the line thickness of none 3D elements associated with this material.
 _IrrAddHighLevelShaderMaterial($h_VertexProgram,$s_StartFunction,$i_ProgType,$s_pixelProg,$s_PixelStartFunction,$i_PixelProgTpe,$i_MaterialType) 
 _IrrAddHighLevelShaderMaterialFromFiles($s_VertexProgram,$s_StartFunction,$i_ProgType,$s_pixelProg,$s_PixelStartFunction,$i_PixelProgTpe,$i_MaterialType) 
 _IrrAddShaderMaterial($h_VertexProgram,$h_PixelProgram,$i_MaterialType) 
@@ -684,7 +685,7 @@ _IrrSetStrengthOfEffect($h_ParticleAffector,$f_X,$f_Y,$f_Z)
 _IrrGetRootSceneNode() Get the scenes root node, all scene nodes are children of this node.
 _IrrGetMesh($s_MeshFile) Loads the specified mesh ready to be added to the scene.
 _IrrCreateMesh($s_MeshName,$tVertexArray,$a_Indices) Create a new mesh from lists of vertices and indices.
-_IrrAddSphereSceneMesh($s_MeshName,$f_Radius,$i_PolyCount) 
+_IrrAddSphereSceneMesh($s_MeshName,$f_Radius ,$i_PolyCount=16) Create a sphere mesh object.
 _IrrAddHillPlaneMesh($s_Name,$f_TileSizeX,$f_TileSizeY,$i_TileCountX,$i_TileCountY,$h_Material=0,$f_HillHeight=0,$f_CountHillsX=0,$f_CountHillsY=0,$f_TextureRepeatCountX=1,$f_TextureRepeatCountY=1) Creates a hill plane mesh that represents a simple terrain.
 _IrrWriteMesh($h_Mesh,$i_FileFormat,$s_Filename) Write the first frame of the supplied animated mesh out to a file using the specified file format.
 _IrrRemoveMesh($h_Mesh) Removes a mesh from the scene cache, freeing up resources.
@@ -692,35 +693,35 @@ _IrrClearUnusedMeshes() Clears all meshes that are held in the mesh cache but no
 _IrrSetMeshHardwareAccelerated($h_mesh,$i_frame=0) Set the supplied mesh as a Hardware Accelerated object.
 _IrrGetMeshFrameCount($h_Mesh) Gets the number of frames in the supplied mesh.
 _IrrGetMeshBufferCount($h_Mesh,$i_FrameNumber) Gets the number of mesh buffers in the supplied mesh.
-_IrrGetMeshIndexCount($h_Mesh,$i_Frame,$i_MeshBuffer=0) 
+_IrrGetMeshIndexCount($h_Mesh,$i_Frame=0,$i_MeshBuffer=0) Gets the number of Indicies in the supplied mesh.
 _IrrGetMeshIndices($h_Mesh,$i_FrameNumber,ByRef $a_IndicesArray,$i_MeshBuffer=0) Gets the list of indices in a mesh and copies them into the supplied variable.
-_IrrSetMeshIndices($h_Mesh,$i_FrameNumber,ByRef $a_IndicesArray,$i_MeshBuffer=0) 
-_IrrGetMeshVertexCount($h_Mesh,$i_Frame,$i_MeshBuffer=0) 
+_IrrSetMeshIndices($h_Mesh,$i_FrameNumber,ByRef $a_IndicesArray,$i_MeshBuffer=0) Set the value of the list of indicies in a mesh copying them from the supplied buffer.
+_IrrGetMeshVertexCount($h_Mesh,$i_Frame=0,$i_MeshBuffer=0) Gets the number of Vertices in the supplied mesh.
 _IrrGetMeshVertices($h_Mesh,$i_FrameNumber,ByRef $tVertex,$i_MeshBuffer=0) Gets the list of vertices in a mesh and copies them into the supplied variable.
 _IrrSetMeshVertices($h_Mesh,$i_FrameNumber,ByRef $tVertex,$i_MeshBuffer=0) This sets the value of the list of vertices in a mesh copying them from the supplied vertex array struct.
-_IrrSetMeshVertexColors($h_Mesh,$i_FrameNumber,$h_VertexColourArrayStruct,$h_VertexGroupStartIndices,$h_VertexGroupEndIndices,$i_NumberOfGroups,$i_MeshBuffer) 
-_IrrSetMeshVertexCoords($h_Mesh,$i_FrameNumber,$h_VertexCoordArrayStruct,$h_VertexGroupStartIndices,$h_VertexGroupEndIndices,$i_NumberOfGroups,$i_MeshBuffer) 
-_IrrSetMeshVertexSingleColor($h_Mesh,$i_FrameNumber,$h_VertexColourStruct,$h_VertexGroupStartIndices,$h_VertexGroupEndIndices,$i_NumberOfGroups,$i_MeshBuffer) 
+_IrrSetMeshVertexColors($h_Mesh,$h_VertexColourArrayStruct,$h_VertexGroupStartIndices=0,$h_VertexGroupEndIndices=0,$i_NumberOfGroups=0,$i_FrameNumber=0,$i_MeshBuffer=0) Sets the color of groups of verticies in a mesh.
+_IrrSetMeshVertexCoords($h_Mesh,$h_VertexCoordArrayStruct,$h_VertexGroupStartIndices=0,$h_VertexGroupEndIndices=0,$i_NumberOfGroups=0,$i_FrameNumber=0,$i_MeshBuffer=0) Set the co-ordinates of groups of verticies in a mesh.
+_IrrSetMeshVertexSingleColor($h_Mesh,$i_VertexColour,$h_VertexGroupStartIndices=0,$h_VertexGroupEndIndices=0,$i_NumberOfGroups=0,$i_FrameNumber=0,$i_MeshBuffer=0) Sets the color of groups of verticies in a mesh.
 _IrrAddMeshToScene($h_Mesh) Adds a mesh to the scene as a new 3D node.
 _IrrAddMeshToSceneAsOcttree($h_Mesh) Adds a mesh to the scene as a new 3D node, optimised with an Octtree.
-_IrrAddStaticMeshForNormalMappingToScene($h_Mesh) 
+_IrrAddStaticMeshForNormalMappingToScene($h_Mesh) Adds a mesh to the scene as a static object.
 _IrrLoadScene($s_Filename) Loads all meshes and creates nodes for a scene defined within a file created by au3irrlicht2 or IrrEdit.
 _IrrSaveScene($s_Filename) Saves the current scene into a file that can be loaded by au3irrlicht2 or irrEdit.
-_IrrGetSceneNodeFromId($i_ID) 
-_IrrGetSceneNodeFromName($s_Name) 
+_IrrGetSceneNodeFromId($i_ID) Get a scene node based on its ID.
+_IrrGetSceneNodeFromName($s_Name) Get a scene node based on its name.
 _IrrAddBillBoardToScene($f_XSize,$f_YSize,$f_XPos=0.0,$f_YPos=0.0,$f_ZPos=0.0) Adds a billboard to the scene of the specified size and at the specified position.
-_IrrSetBillBoardSize($h_Node,$f_Width,$f_Height) 
-_IrrAddBillboardTextSceneNode($h_Font,$s_Text,$f_XSize,$f_YSize,$f_XPos=0,$f_YPos=0,$f_ZPos=0,$h_Parent=0,$i_TopRGBA=0xFFFFFFFF,$i_BottomRGBA=0xFFFFFFFF) 
+_IrrSetBillBoardSize($h_Node,$f_Width,$f_Height) Set the size of a BillBoard.
+_IrrAddBillboardTextSceneNode($h_Font,$s_Text,$f_XSize,$f_YSize,$f_XPos=0,$f_YPos=0,$f_ZPos=0,$h_Parent=0,$i_TopRGBA=0xFFFFFFFF,$i_BottomRGBA=0xFFFFFFFF) Adds a text billboard to the scene of the specified size and at the specified position.
 _IrrAddParticleSystemToScene($b_AddEmitter,$h_Parent=0,$i_Id=-1,$f_PosX=0,$f_PosY=0,$f_PosZ=0,$f_RotX=0,$f_RotY=0,$f_RotZ=0,$f_ScaleX=1,$f_ScaleY=1,$f_ScaleZ=1) Adds a particle system to the irrlicht scene manager.
 _IrrAddSkyBoxToScene($h_UpTexture,$h_DownTexture,$h_LeftTexture,$h_RightTexture,$h_FrontTexture,$h_BackTexture) Adds a skybox node to the scene.
-_IrrAddSkyDomeToScene($h_Texture,$i_HorizontalRes,$i_VerticalRes,$d_TexturePercent,$d_SpherePercent,$d_SphereRadius=1000.0) 
-_IrrAddEmptySceneNode() 
+_IrrAddSkyDomeToScene($h_Texture,$i_HorizontalRes,$i_VerticalRes,$d_TexturePercent,$d_SpherePercent,$d_SphereRadius=1000.0) Adds a skydome node to the scene.
+_IrrAddEmptySceneNode() Adds an empty node to the scene.
 _IrrAddTestSceneNode() Adds a simple cube node to the scene
 _IrrAddCubeSceneNode($f_Size) Adds a cube object to the scene with the specified dimensions.
 _IrrAddSphereSceneNode($f_Size,$i_PolyCount=16) Adds a simple sphere object to the scene
-_IrrAddWaterSurfaceSceneNode($h_Mesh,$f_WaveHeight=2.0,$f_WaveSpeed=300.0,$f_WaveLength=10.0,$h_Parent=0,$i_ID=-1,$f_PosX=0,$f_PosY=0,$f_PosZ=0,$f_RotX=0,$f_RotY=0,$f_RotZ=0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0) 
-_IrrAddZoneManager($f_NearDistance=0,$f_FarDistance=12000) 
-_IrrAddClouds($h_Texture,$i_Lod,$i_Depth,$i_Density) 
+_IrrAddWaterSurfaceSceneNode($h_Mesh,$f_WaveHeight=2.0,$f_WaveSpeed=300.0,$f_WaveLength=10.0,$h_Parent=0,$i_ID=-1,$f_PosX=0,$f_PosY=0,$f_PosZ=0,$f_RotX=0,$f_RotY=0,$f_RotZ=0,$f_ScaleX=1.0,$f_ScaleY=1.0,$f_ScaleZ=1.0) Adds a mesh with a water animator applied to it.
+_IrrAddZoneManager($f_NearDistance=0,$f_FarDistance=12000) Adds a zone/distance management node to the scene.
+_IrrAddClouds($h_Texture,$i_Lod,$i_Depth,$i_Density) Adds a set of clouds to the scene.
 _IrrAddLensFlare($h_Texture) Adds a lens flare patch object to the scene, this object simulates the effect of bright lights on the optics of a camera.
 _IrrAddGrass($h_Terrain,$i_X,$i_Y,$i_PatchSize,$f_FadeDistance,$i_Crossed,$f_GrassScale,$i_MaxDensity,$i_DataPosX,$i_DataPosY,$h_HeightMap,$h_TextureMap,$h_GrassMap,$h_GrassTexture) Adds a grass object to the scene.
 _IrrSetShadowColor($i_Alpha,$i_Red,$i_Green,$i_Blue) Sets the colour of shadows cast by objects in the scene.
@@ -731,7 +732,7 @@ _IrrSetSkyDomeColorBand($h_Dome,$i_HorizontalRed,$i_HorizontalGreen,$i_Horizonta
 _IrrSetSkyDomeColorPoint($h_Dome,$i_Red,$i_Green,$i_Blue,$f_PosX,$f_PosY,$f_PosZ,$f_Radius,$f_PointFade,$i_Additive) Set the color of the verticies in the skydome radiating out from a point.
 _IrrSetZoneManagerProperties($h_ZoneManager,$f_NearDistance,$f_FarDistance,$i_AccumulateBoxes) Sets the draw distances of nodes in the zone/distance management node and whether or not the zone manager is to accumulate the bounding boxes of its children as they are added.
 _IrrSetZoneManagerBoundingBox($h_ZoneManager,$f_X,$f_Y,$f_Z,$f_BoxWidth,$f_BoxHeight,$f_BoxDepth) Allows the user to manually set the bounding box of a zone manager node.
-_IrrSetZoneManagerAttachTerrain($h_ZoneNode,$h_Terrain,$s_StructureMapFile,$s_ColorMapFile,$s_DetailMapFile,$i_ImageX,$i_ImageY,$i_SliceSize) Attach a terrain node to a the zone manager.
+_IrrSetZoneManagerAttachTerrain($h_ZoneNode,$h_Terrain,$p_StructureMapFile,$p_ColorMapFile,$p_DetailMapFile,$i_ImageX,$i_ImageY,$i_SliceSize) Attach a terrain node to a the zone manager.
 _IrrSetGrassDensity($h_Grass,$f_Density,$f_Distance) Set the grass density.
 _IrrSetGrassWind($h_Grass,$f_Strength,$f_Resolution) Set the grass wind effect.
 _IrrGetGrassDrawCount($h_Grass) Get the number of grass objects drawn.
@@ -740,7 +741,7 @@ _IrrSetFlareScale($h_Flare,$f_Source,$f_Optics)
 _IrrCreateBatchingMesh() Create a batching mesh that will be a collection of other meshes into a single source mesh.
 _IrrAddToBatchingMesh($h_meshBatch,$h_mesh,$f_posX=0.0,$f_posY=0.0,$f_posZ=0.0,$f_rotX=0.0,$f_rotY=0.0,$f_rotZ=0.0,$f_scaleX=1.0,$f_scaleY=1.0,$f_scaleZ=1.0) Adds a mesh to the batching mesh at the specified position, rotation and scale.
 _IrrFinalizeBatchingMesh($h_meshBatch) Finalises the batching mesh.
-_IrrSetMeshMaterialTexture($h_mesh,$h_texture,$i_index,$i_buffer=0) 
+_IrrSetMeshMaterialTexture($h_mesh,$h_texture,$i_index,$i_buffer=0) Apply the supplied texture to the specified mesh.
 _IrrScaleMesh($h_mesh,$f_scale,$i_frame=0,$i_meshBuffer=0,$h_sourceMesh=0) Scales the verticies in a mesh without affecting the normals, tangents or texture co-ordinates.
 _IrrAddBeamSceneNode() Add a beam scene node.
 _IrrSetBeamSize($h_BeamNode,$f_Size) Sets the width of a beam node.
@@ -768,18 +769,24 @@ _IrrKlangPlay2D($sFile,$bLooped=False,$bStartPaused=False,$bTrack=False,$iStream
 _IrrKlangSetVolume($hSound,$fVolume) 
 _IrrKlangIsFinished($hSound) 
 _IrrReleaseSound($hSound) 
+_IrrKlangSetAllSoundsPaused($bPaused) 
 _IrrStart($i_DeviceType=$IRR_EDT_DIRECT3D9,$i_ScreenWidth=800,$i_ScreenHeight=600,$i_BitsPerPixel=$IRR_BITS_PER_PIXEL_32,$b_FullScreen=$IRR_WINDOWED,$b_Shadows=$IRR_NO_SHADOWS,$b_InputCapture=$IRR_IGNORE_EVENTS,$b_VSync=$IRR_VERTICAL_SYNC_OFF) Opens the IrrlichtWrapper.dll, starts Irrlicht interface and opens a window for rendering.
 _IrrStartAdvanced($i_DeviceType=$IRR_EDT_DIRECT3D9,$i_ScreenWidth=800,$i_ScreenHeight=600,$i_BitsPerPixel=$IRR_BITS_PER_PIXEL_32,$b_FullScreen=$IRR_WINDOWED,$b_Shadows=$IRR_NO_SHADOWS,$b_InputCapture=$IRR_IGNORE_EVENTS,$b_VSync=$IRR_VERTICAL_SYNC_OFF,$i_TypeOfDevice=0,$b_DoublebufferEnabled=$IRR_OFF,$i_AntialiasEnabled=0,$b_HighPrecisionFpu=$IRR_OFF) Opens the IrrlichtWrapper.dll and starts Irrlicht engine with advanced method.
+_IrrRiftInit() 
 _IrrRunning() Used to determine if the Irrlicht engine is still running.
+_IrrRiftRunning() 
+_IrrRiftReadSensorData(ByRef $f_Pitch,ByRef $f_Yaw,ByRef $f_Roll) 
 _IrrSetViewPort($i_TopX,$i_TopY,$i_BottomX,$i_BottomY) 
 _IrrBeginScene($i_Red,$i_Green,$i_Blue) Starts to draw a frame, erasing the canvas with the specified color.
 _IrrBeginSceneAdvanced($i_SceneBGColor,$b_ClearBackBuffer=$IRR_ON,$b_ClearZBuffer=$IRR_ON) 
 _IrrDrawScene() This renders the 3D scene to the canvas, drawing all 3D elements: nodes, particles, billboards, etc .
 _IrrDrawSceneToTexture($h_RenderTargetTexture) 
+_IrrRiftDrawScene() 
 _IrrSetRenderTarget($h_Texture,$i_SceneBGColor=0,$b_ClearBackBuffer=$IRR_ON,$b_ClearZBuffer=$IRR_ON) 
 _IrrDrawGUI() This renders the 2D graphical user interface that has been created to the scene.
 _IrrEndScene() This renders the 3D scene to the canvas, drawing all 3D elements: nodes, particles, billboards, etc .
 _IrrStop() Stops the Irrlicht Engine freeing all of the resources, closing the display window and IrrlichtWrapper.dll.
+_IrrRiftStop() 
 _IrrTransparentZWrite() 
 _IrrGetFPS() 
 _IrrGetPrimitivesDrawn() 

@@ -3,13 +3,22 @@
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: au3Irrlicht2
-; AutoIt Version : v3.3.6.1
+; AutoIt Version : v3.3.8.1
 ; Language ......: English
 ; Description ...: Main UDF for au3Irrlicht2 which includes all other irrLicht category specific UDF's.
 ; Author(s) .....: jRowe, linus.
-;                  DLL functionality by Frank Dodd (IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
-; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll
+;                  DLL functionality by Frank Dodd (original IrrlichtWrapper), Nikolaus Gebhardt and Irrlicht team (Irrlicht).
 ; ===============================================================================================================================
+
+if @AutoItX64 then
+   MsgBox(0 + 16 + 4096, "au3Irr2 system info", "Sorry, au3Irr2 cannot be used with x64 version of autoIt." & @LF & _
+                  "Please re-run by right-clicking the script and selecting" & @LF & _
+				  "'Run Script (x86)'."  & @LF & _
+				  "If this message is from an .exe, re-compile the source script" & @LF & _
+				  "for x86 systems (see 'Using AutoIt' in AutoIt help if any" & @LF & _
+				  "questions left).")
+   exit(false)
+EndIf
 
 #include ".\include\au3Irr2_Constants.au3"
 #include ".\include\au3Irr2_System.au3"

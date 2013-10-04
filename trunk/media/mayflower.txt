@@ -1,0 +1,29 @@
+-- 3dvia.com   --
+
+The zip file mayflower.3ds.zip contains the following files :
+- readme.txt
+- mayflower.3ds
+
+
+-- Model information --
+
+Model Name : Mayflower
+Author : NA
+Publisher : Imagine
+
+You can view this model here :
+http://www.3dvia.com/Imagine/media/39351D2F01132537
+More models about this author :
+http://www.3dvia.com/Imagine
+
+
+-- Attached license --
+
+A license is attached to the Mayflower model and all related media.
+You must agree with this licence before using the enclosed media.
+
+License : Attribution-NonCommercial-ShareAlike 2.5
+Detailled license : http://creativecommons.org/licenses/by-nc-sa/2.5/
+
+The licenses used by 3dvia are based on Creative Commons Licenses.
+More info: http://creativecommons.org/about/licenses/meet-the-licenses

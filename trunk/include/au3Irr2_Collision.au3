@@ -4,19 +4,19 @@
 
 ; #INDEX# =======================================================================================================================
 ; Title .........: Collision
-; AutoIt Version : v3.3.6.1
+; AutoIt Version : v3.3.8.1
 ; Language ......: English
 ; Description ...: Calls for creating collision groups and for calculating collisions in the scene.
 ; Author(s) .....: jRowe, linus.
-;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (IrrlichtWrapper.dll),
+;                  DLL functionality by Frank Dodd and IrrlichtWrapper for FreeBasic team (original IrrlichtWrapper.dll),
 ;                  and Nikolaus Gebhardt and Irrlicht team (Irrlicht.dll).
-; Dll(s) ........: IrrlichtWrapper.dll, Irrlicht.dll, msvcp71.dll, msvcr71.dll
 ; ===============================================================================================================================
 
 ; #NO_DOC_FUNCTION# =============================================================================================================
 ; Not working/documented/implemented at this time
 ;_IrrGetCollisionGroupFromTerrain
 ;_IrrRemoveCollisionGroup
+;_IrrSetNodeTriangleSelector
 ;_IrrRemoveAllCollisionGroupsFromCombination
 ;_IrrRemoveCollisionGroupFromCombination
 ;_IrrGetRayFromScreenCoordinates
@@ -161,6 +161,33 @@ Func _IrrRemoveCollisionGroup($h_CollisionGroup, $h_Node)
 	DllCall($_irrDll, "none:cdecl", "IrrRemoveCollisionGroup", "ptr", $h_CollisionGroup, "ptr", $h_Node)
 	Return Seterror(@error, 0, @error)
 EndFunc   ;==>_IrrRemoveCollisionGroup
+
+
+
+
+
+; #NO_DOC_FUNCTION# =============================================================================================================
+; Name...........: _IrrSetNodeTriangleSelector
+; Description ...: [todo]
+; Syntax.........: _IrrSetNodeTriangleSelector($h_Node, $h_CollisionGroup)
+; Parameters ....: [param1] - [explanation]
+;                  |[moreTextForParam1]
+;                  [param2] - [explanation]
+; Return values .: [success] - [explanation]
+;                  [failure] - [explanation]
+;                  |[moreExplanationIndented]
+; Author ........: [todo]
+; Modified.......:
+; Remarks .......: [todo]
+; Related .......: [todo: functionName, functionName]
+; Link ..........:
+; Example .......: [todo: Yes, No]
+; ===============================================================================================================================
+Func _IrrSetNodeTriangleSelector($h_Node, $h_CollisionGroup)
+	DllCall($_irrDll, "none:cdecl", "IrrSetNodeTriangleSelector", "ptr", $h_Node, "ptr", $h_CollisionGroup)
+	Return Seterror(@error, 0, @error)
+EndFunc
+
 
 
 ; #FUNCTION# =============================================================================================================
