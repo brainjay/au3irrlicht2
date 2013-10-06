@@ -69,7 +69,9 @@ void DLL_EXPORT IrrRiftInit()
 
 void DLL_EXPORT IrrRiftStop()
 {
+	if(renderer->isRiftRunning()) {
 	renderer->OVRStop();
+	}
 }
 
 bool DLL_EXPORT IrrRiftRunning()
